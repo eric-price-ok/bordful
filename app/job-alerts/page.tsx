@@ -3,6 +3,8 @@ import { JobAlertsForm } from "@/components/job-alerts/JobAlertsForm";
 import { Metadata } from "next";
 import config from "@/config";
 import { redirect } from "next/navigation";
+import { getJobs } from "@/lib/db/airtable";
+import { CompactJobCardList } from "@/components/jobs/CompactJobCardList";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -29,11 +31,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function JobAlertsPage() {
+// Revalidate every 5 minutes
+export const revalidate = 300;
+
+export default async function JobAlertsPage() {
   // Redirect to home page if job alerts feature is disabled
   if (!config.jobAlerts?.enabled) {
     redirect("/");
   }
+
+  // Fetch the latest jobs
+  const allJobs = await getJobs();
+  const latestJobs = allJobs.slice(0, 7); // Show 10 jobs
 
   return (
     <main className="min-h-screen bg-background">
@@ -44,8 +53,23 @@ export default function JobAlertsPage() {
       />
 
       <div className="container mx-auto px-4 py-12">
-        <div className="max-w-[720px] mx-auto">
-          <JobAlertsForm />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Job alerts form */}
+          <div className="lg:col-span-1">
+            <h2 className="text-xl font-semibold mb-4">
+              Subscribe for Updates
+            </h2>
+            <p className="text-zinc-600 mb-6">
+              Get notified when new jobs are posted. We'll also subscribe you to{" "}
+              {config.nav.title} newsletter.
+            </p>
+            <JobAlertsForm />
+          </div>
+
+          {/* Latest jobs */}
+          <div className="lg:col-span-2">
+            <CompactJobCardList jobs={latestJobs} className="bg-white" />
+          </div>
         </div>
       </div>
     </main>

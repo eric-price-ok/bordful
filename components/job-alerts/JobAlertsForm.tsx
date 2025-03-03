@@ -5,7 +5,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle, RefreshCw } from "lucide-react";
+import { CheckCircle, RefreshCw, ArrowRight } from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 
 export function JobAlertsForm() {
   const [name, setName] = useState("");
@@ -114,64 +122,82 @@ export function JobAlertsForm() {
   return (
     <div className="w-full max-w-md mx-auto">
       {isSuccess ? (
-        <div className="bg-green-50 p-6 rounded-lg border border-green-200 text-center">
-          <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-green-800 mb-2">
-            Subscription Confirmed!
-          </h3>
-          <p className="text-green-700 mb-4">
-            Thank you for subscribing to job alerts. You&apos;ll receive emails
-            when jobs matching your interests are posted.
-          </p>
-          <Button onClick={handleReset} variant="outline">
-            Subscribe with another email
-          </Button>
-        </div>
+        <Card className="border-green-200">
+          <CardHeader>
+            <div className="flex justify-center mb-2">
+              <CheckCircle className="w-12 h-12 text-green-500" />
+            </div>
+            <CardTitle className="text-xl text-center text-green-800">
+              Subscription Confirmed!
+            </CardTitle>
+            <CardDescription className="text-center text-green-700">
+              Thank you for subscribing to job alerts. You&apos;ll receive
+              emails when jobs matching your interests are posted.
+            </CardDescription>
+          </CardHeader>
+          <CardFooter className="flex justify-center pt-2">
+            <Button onClick={handleReset} variant="outline" size="sm">
+              Subscribe with another email
+            </Button>
+          </CardFooter>
+        </Card>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">Name *</Label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="Your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              disabled={isSubmitting}
-              required
-            />
-            {errors.name && (
-              <p className="text-sm text-red-500 mt-1">{errors.name}</p>
-            )}
-          </div>
+        <Card>
+          <form onSubmit={handleSubmit}>
+            <CardContent className="pt-6 space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Name *</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  disabled={isSubmitting}
+                  required
+                />
+                {errors.name && (
+                  <p className="text-sm text-red-500 mt-1">{errors.name}</p>
+                )}
+              </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="email">Email *</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="your@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={isSubmitting}
-            />
-            {errors.email && (
-              <p className="text-sm text-red-500 mt-1">{errors.email}</p>
-            )}
-          </div>
-
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? (
-              <>
-                <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                Subscribing...
-              </>
-            ) : (
-              "Subscribe to Job Alerts"
-            )}
-          </Button>
-        </form>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email *</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={isSubmitting}
+                />
+                {errors.email && (
+                  <p className="text-sm text-red-500 mt-1">{errors.email}</p>
+                )}
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button
+                type="submit"
+                className="w-full bg-zinc-900 text-white hover:bg-zinc-800"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                    Subscribing...
+                  </>
+                ) : (
+                  <>
+                    Subscribe to Job Alerts
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </>
+                )}
+              </Button>
+            </CardFooter>
+          </form>
+        </Card>
       )}
     </div>
   );

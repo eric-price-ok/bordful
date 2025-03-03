@@ -2,7 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.0.62] - 2025-03-04
+## [0.0.63] - 2025-03-03
+
+### Added
+- Compact job card system:
+  - New `CompactJobCard` and `CompactJobCardList` components
+  - Space-efficient row layout with badges
+  - Latest jobs preview on alerts page
+
+### Changed
+- Improved job alerts form and layout:
+  - Added name field validation
+  - Enhanced server-side validation
+  - Added client-side validation
+  - Improved form styling and layout
+
+## [0.0.62] - 2025-03-03
 
 ### Added
 - Made job alerts feature optional:
