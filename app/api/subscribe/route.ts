@@ -4,8 +4,68 @@ import { emailProvider } from "@/lib/email";
 // Prevent caching
 export const dynamic = "force-dynamic";
 
+// Simple in-memory rate limiter
+// In a production environment, you would use Redis or another distributed cache
+interface RateLimitInfo {
+  count: number;
+  resetTime: number;
+}
+
+// Store IP addresses and their request counts
+// This will be reset when the server restarts
+const rateLimitMap = new Map<string, RateLimitInfo>();
+
+// Rate limit configuration
+const RATE_LIMIT_MAX = 5; // Maximum requests per window
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute window
+
+// Rate limiting function
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const rateLimitInfo = rateLimitMap.get(ip);
+
+  if (!rateLimitInfo) {
+    // First request from this IP
+    rateLimitMap.set(ip, {
+      count: 1,
+      resetTime: now + RATE_LIMIT_WINDOW_MS,
+    });
+    return false;
+  }
+
+  if (now > rateLimitInfo.resetTime) {
+    // Reset window has passed
+    rateLimitMap.set(ip, {
+      count: 1,
+      resetTime: now + RATE_LIMIT_WINDOW_MS,
+    });
+    return false;
+  }
+
+  // Increment count
+  rateLimitInfo.count += 1;
+  rateLimitMap.set(ip, rateLimitInfo);
+
+  // Check if over limit
+  return rateLimitInfo.count > RATE_LIMIT_MAX;
+}
+
 export async function POST(request: Request) {
   try {
+    // Get client IP with fallback for development
+    const clientIp =
+      request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+      request.headers.get("x-real-ip") ||
+      (process.env.NODE_ENV === "development" ? "203.0.113.1" : "unknown");
+
+    // Check rate limit
+    if (isRateLimited(clientIp)) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      );
+    }
+
     // Get and validate form data
     const { name, email } = await request.json();
 
@@ -22,12 +82,6 @@ export async function POST(request: Request) {
     if (!name || name.trim() === "") {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
-
-    // Get client IP with fallback for development
-    const clientIp =
-      request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
-      request.headers.get("x-real-ip") ||
-      (process.env.NODE_ENV === "development" ? "203.0.113.1" : "unknown");
 
     // Subscribe the user
     await emailProvider.subscribe({

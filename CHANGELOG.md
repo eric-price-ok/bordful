@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.61] - 2025-03-03
+
+### Added
+- Added API rate limiting to prevent abuse:
+  - Implemented in-memory rate limiting for subscription endpoint
+  - Limited to 5 requests per hour per IP address
+  - Added client-side handling of rate limit responses
+  - Created comprehensive documentation in `/docs/rate-limiting.md`
+
+### Changed
+- Enhanced documentation structure:
+  - Added documentation index in `/docs/README.md`
+  - Improved navigation between documentation files
+  - Added getting started instructions in documentation
+
+## [0.0.60] - 2025-03-03
+
+### Added
+- Added Encharge email provider integration:
+  - Implemented subscription handling via Encharge API
+  - Added detailed documentation in `/docs/encharge-integration.md`
+
+### Changed
+- Improved form validation for job alerts subscription:
+  - Enhanced server-side validation with comprehensive email regex
+  - Added required name field validation on server
+  - Implemented client-side validation with error messages
+  - Added visual indicators for required fields
+
 ## [0.0.59] - 2025-02-28
 
 ### Fixed

@@ -72,6 +72,13 @@ export function JobAlertsForm() {
 
         // Set success state
         setIsSuccess(true);
+      } else if (response.status === 429) {
+        // Rate limit error
+        toast({
+          title: "Rate limit exceeded",
+          description: "Too many requests. Please try again later.",
+          variant: "destructive",
+        });
       } else {
         throw new Error(result.error || "Subscription failed");
       }
@@ -79,13 +86,20 @@ export function JobAlertsForm() {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       error: unknown
     ) {
-      // Error handling for production
-
-      toast({
-        title: "Something went wrong",
-        description: "Failed to subscribe to job alerts. Please try again.",
-        variant: "destructive",
-      });
+      // Error handling - error variable is used for type safety but we don't need to use it directly in production
+      if (error instanceof Error && error.message) {
+        toast({
+          title: "Subscription failed",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Something went wrong",
+          description: "Failed to subscribe to job alerts. Please try again.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
