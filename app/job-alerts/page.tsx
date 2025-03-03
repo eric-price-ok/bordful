@@ -8,13 +8,13 @@ import { redirect } from "next/navigation";
 export const metadata: Metadata = {
   title: "Job Alerts | Get Notified of New Opportunities",
   description:
-    "Subscribe to job alerts and get notified when new opportunities matching your preferences are posted.",
+    "Subscribe to job alerts and get notified when new opportunities are posted.",
   keywords:
     "job alerts, job notifications, career alerts, employment updates, job subscription",
   openGraph: {
     title: "Job Alerts | Get Notified of New Opportunities",
     description:
-      "Subscribe to job alerts and get notified when new opportunities matching your preferences are posted.",
+      "Subscribe to job alerts and get notified when new opportunities are posted.",
     type: "website",
     url: `${config.url}/job-alerts`,
   },
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Job Alerts | Get Notified of New Opportunities",
     description:
-      "Subscribe to job alerts and get notified when new opportunities matching your preferences are posted.",
+      "Subscribe to job alerts and get notified when new opportunities are posted.",
   },
   alternates: {
     canonical: `${config.url}/job-alerts`,
@@ -40,7 +40,7 @@ export default function JobAlertsPage() {
       <HeroSection
         badge="Job Alerts"
         title="Get jobs right to your inbox"
-        description="Subscribe to job alerts and get notified when new opportunities matching your preferences are posted."
+        description="Subscribe to job alerts and get notified when new opportunities are posted."
       />
 
       <div className="container mx-auto px-4 py-12">
