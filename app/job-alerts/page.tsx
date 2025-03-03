@@ -2,6 +2,7 @@ import { HeroSection } from "@/components/ui/hero-section";
 import { JobAlertsForm } from "@/components/job-alerts/JobAlertsForm";
 import { Metadata } from "next";
 import config from "@/config";
+import { redirect } from "next/navigation";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -29,6 +30,11 @@ export const metadata: Metadata = {
 };
 
 export default function JobAlertsPage() {
+  // Redirect to home page if job alerts feature is disabled
+  if (!config.jobAlerts?.enabled) {
+    redirect("/");
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <HeroSection

@@ -36,6 +36,24 @@ export const config = {
       ? "http://localhost:3000"
       : "https://demo.bordful.com"),
 
+  // Job Alerts Configuration
+  jobAlerts: {
+    // Enable or disable the job alerts feature
+    enabled: true,
+
+    // Show job alerts link in navigation
+    showInNavigation: true,
+
+    // Show job alerts link in footer resources
+    showInFooter: true,
+
+    // Navigation label
+    navigationLabel: "Job Alerts",
+
+    // The email provider to use (must match a provider in the email section)
+    provider: "encharge",
+  },
+
   // Email Provider Configuration
   email: {
     // The email provider to use for subscriptions

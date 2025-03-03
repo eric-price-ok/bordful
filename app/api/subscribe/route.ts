@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { emailProvider } from "@/lib/email";
+import config from "@/config";
 
 // Prevent caching
 export const dynamic = "force-dynamic";
@@ -52,6 +53,14 @@ function isRateLimited(ip: string): boolean {
 
 export async function POST(request: Request) {
   try {
+    // Check if job alerts feature is enabled
+    if (!config.jobAlerts?.enabled) {
+      return NextResponse.json(
+        { error: "Job alerts feature is disabled" },
+        { status: 404 }
+      );
+    }
+
     // Get client IP with fallback for development
     const clientIp =
       request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||

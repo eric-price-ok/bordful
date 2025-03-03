@@ -22,6 +22,20 @@ export function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+  // Create a copy of the top menu items with a more flexible type
+  const topMenuItems = [...config.nav.topMenu] as Array<{
+    label: string;
+    link: string;
+  }>;
+
+  // Add Job Alerts link if enabled
+  if (config.jobAlerts?.enabled && config.jobAlerts?.showInNavigation) {
+    topMenuItems.push({
+      label: config.jobAlerts.navigationLabel || "Job Alerts",
+      link: "/job-alerts",
+    });
+  }
+
   return (
     <header className="border-b border-zinc-200 bg-white">
       <div className="container mx-auto px-4">
@@ -73,7 +87,7 @@ export function Nav() {
               className="flex items-center space-x-2 mr-4"
               aria-label="Primary"
             >
-              {config.nav.topMenu.map(({ link, label }) => (
+              {topMenuItems.map(({ link, label }) => (
                 <Link
                   key={link}
                   href={link}
@@ -230,7 +244,7 @@ export function Nav() {
               aria-label="Mobile navigation"
             >
               {/* Primary Navigation */}
-              {config.nav.topMenu.map(({ link, label }) => (
+              {topMenuItems.map(({ link, label }) => (
                 <Link
                   key={link}
                   href={link}

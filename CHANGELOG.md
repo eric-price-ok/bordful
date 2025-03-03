@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.62] - 2025-03-04
+
+### Added
+- Made job alerts feature optional:
+  - Added configuration options to enable/disable job alerts
+  - Added conditional rendering in navigation and footer
+  - Added redirect to home page when job alerts are disabled
+  - Added API endpoint protection when feature is disabled
+
 ## [0.0.61] - 2025-03-03
 
 ### Added

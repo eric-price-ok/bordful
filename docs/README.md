@@ -7,6 +7,7 @@ This directory contains documentation for various aspects of the Bordful applica
 1. [Email Providers](./email-providers.md) - Documentation for email provider integrations
 2. [Encharge Integration](./encharge-integration.md) - Detailed guide for the Encharge email service integration
 3. [Rate Limiting](./rate-limiting.md) - Documentation for the API rate limiting implementation
+4. [Job Alerts Configuration](./job-alerts-configuration.md) - Guide for configuring the job alerts feature
 
 ## Overview
 
