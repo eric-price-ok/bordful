@@ -12,11 +12,41 @@ export function JobAlertsForm() {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
   const { toast } = useToast();
+
+  const validateForm = () => {
+    const newErrors: { name?: string; email?: string } = {};
+    let isValid = true;
+
+    // Validate name
+    if (!name || name.trim() === "") {
+      newErrors.name = "Name is required";
+      isValid = false;
+    }
+
+    // Validate email with regex
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!email) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!emailRegex.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSuccess) return;
+
+    // Validate form before submission
+    if (!validateForm()) {
+      return;
+    }
 
     setIsSubmitting(true);
 
@@ -86,7 +116,7 @@ export function JobAlertsForm() {
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Name (optional)</Label>
+            <Label htmlFor="name">Name *</Label>
             <Input
               id="name"
               type="text"
@@ -94,7 +124,11 @@ export function JobAlertsForm() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={isSubmitting}
+              required
             />
+            {errors.name && (
+              <p className="text-sm text-red-500 mt-1">{errors.name}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -108,13 +142,12 @@ export function JobAlertsForm() {
               required
               disabled={isSubmitting}
             />
+            {errors.email && (
+              <p className="text-sm text-red-500 mt-1">{errors.email}</p>
+            )}
           </div>
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={isSubmitting || !email}
-          >
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
             {isSubmitting ? (
               <>
                 <RefreshCw className="mr-2 h-4 w-4 animate-spin" />

@@ -8,11 +8,19 @@ export async function POST(request: Request) {
   try {
     // Get and validate form data
     const { name, email } = await request.json();
-    if (!email?.includes("@")) {
+
+    // Validate email format with a more comprehensive check
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!email || !emailRegex.test(email)) {
       return NextResponse.json(
-        { error: "Valid email is required" },
+        { error: "Valid email address is required" },
         { status: 400 }
       );
+    }
+
+    // Validate name is provided and not empty
+    if (!name || name.trim() === "") {
+      return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
 
     // Get client IP with fallback for development
