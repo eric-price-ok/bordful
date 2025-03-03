@@ -12,27 +12,19 @@
 import { config as exampleConfig } from "./config.example";
 import type { Config } from "./config.example";
 
-// Use example config by default
+// Start with example config as the base
 const config: Config = { ...exampleConfig };
 
-// Always try to load custom config first, regardless of environment
+// Try to load custom config if it exists
 try {
-  // Use dynamic import with a specific path that won't be bundled
-  // This prevents build errors when config.ts doesn't exist
-  const userConfigModule = require("./config");
-  if (userConfigModule && userConfigModule.config) {
-    Object.assign(config, userConfigModule.config);
+  const customConfig = require("./config").config;
+  if (customConfig) {
+    Object.assign(config, customConfig);
     console.log("Using custom config.ts");
   }
 } catch (e) {
-  // If we're in development, show a more detailed message
-  if (process.env.NODE_ENV === "development") {
-    console.log("Using config.example.ts (no custom config.ts found)");
-  } else {
-    console.log(
-      "Production build: Using config.example.ts (no custom config.ts found)"
-    );
-  }
+  // If config.ts doesn't exist, we'll just use the example config
+  console.log("Using config.example.ts (no custom config.ts found)");
 }
 
 export type { Config };
