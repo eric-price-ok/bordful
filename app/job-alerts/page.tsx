@@ -39,7 +39,7 @@ export default function JobAlertsPage() {
     <main className="min-h-screen bg-background">
       <HeroSection
         badge="Job Alerts"
-        title="Get jobs right to your inbox"
+        title="Get Jobs Right to Your Inbox"
         description="Subscribe to job alerts and get notified when new opportunities are posted."
       />
 
