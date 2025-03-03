@@ -17,7 +17,7 @@ const rateLimitMap = new Map<string, RateLimitInfo>();
 
 // Rate limit configuration
 const RATE_LIMIT_MAX = 5; // Maximum requests per window
-const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute window
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour window
 
 // Rate limiting function
 function isRateLimited(ip: string): boolean {
