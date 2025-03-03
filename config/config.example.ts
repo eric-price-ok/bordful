@@ -36,6 +36,29 @@ export const config = {
       ? "http://localhost:3000"
       : "https://demo.bordful.com"),
 
+  // Email Provider Configuration
+  email: {
+    // The email provider to use for subscriptions
+    provider: process.env.EMAIL_PROVIDER || "encharge",
+
+    // Encharge configuration
+    encharge: {
+      // Your Encharge write key (from Encharge dashboard)
+      writeKey: process.env.ENCHARGE_WRITE_KEY,
+
+      // Default tags to apply to subscribers
+      defaultTags: "job-alerts-subscriber",
+
+      // Event name for subscriptions
+      eventName: "Job Alert Subscription",
+    },
+
+    // You can add other providers here in the future:
+    // mailchimp: { ... },
+    // convertkit: { ... },
+    // sendgrid: { ... },
+  },
+
   // Scripts Configuration (analytics, tracking, etc.)
   scripts: {
     head: [

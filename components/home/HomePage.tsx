@@ -287,28 +287,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
 
     // Apply remote filter
     if (filters.remote) {
-      console.log("Remote filter active");
-      console.log("Before remote filter:", filtered.length);
-      console.log(
-        "Workplace types:",
-        filtered.map((job) => ({
-          id: job.id,
-          title: job.title,
-          type: job.workplace_type,
-          region: job.remote_region,
-        }))
-      );
       filtered = filtered.filter((job) => job.workplace_type === "Remote");
-      console.log("After remote filter:", filtered.length);
-      console.log(
-        "Remaining workplace types:",
-        filtered.map((job) => ({
-          id: job.id,
-          title: job.title,
-          type: job.workplace_type,
-          region: job.remote_region,
-        }))
-      );
     }
 
     // Apply visa sponsorship filter
