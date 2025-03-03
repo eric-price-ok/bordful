@@ -3,11 +3,15 @@
  * ----------------------------
  * This is a template for your job board configuration.
  *
- * Quick Start:
+ * Quick Start for Users Who Fork This Repository:
  * 1. Copy this file: cp config/config.example.ts config/config.ts
  * 2. Make sure it's called config.ts
  * 3. Customize config.ts with your settings
  * 4. Commit config.ts to your repository
+ *
+ * IMPORTANT: The main repository does not include config.ts
+ * This allows you to maintain your own configuration while
+ * still being able to pull updates from the main repository.
  *
  * When updating from upstream (original bordful repo):
  * - Pull the latest changes

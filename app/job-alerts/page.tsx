@@ -60,8 +60,8 @@ export default async function JobAlertsPage() {
               Subscribe for Updates
             </h2>
             <p className="text-zinc-600 mb-6">
-              Get notified when new jobs are posted. We'll also subscribe you to
-              Bordful newsletter.
+              Get notified when new jobs are posted. We&apos;ll also subscribe
+              you to Bordful newsletter.
             </p>
             <JobAlertsForm />
           </div>
