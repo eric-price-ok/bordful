@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.64] - 2025-03-03
+
+### Fixed
+- Fixed deployment configuration issue:
+  - Modified `config/index.ts` to properly handle missing `config.ts` file
+  - Added environment-specific configuration loading
+  - Ensured production builds always use `config.example.ts`
+  - Prevented build errors when `config.ts` doesn't exist
+  - Improved configuration loading logic for development environments
+
 ## [0.0.63] - 2025-03-03
 
 ### Added

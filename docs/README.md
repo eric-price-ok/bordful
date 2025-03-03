@@ -1,25 +1,26 @@
 # Bordful Documentation
 
-This directory contains documentation for various aspects of the Bordful application.
+Welcome to the Bordful documentation. This guide will help you understand and use the various features of the Bordful job board platform.
 
 ## Table of Contents
 
-1. [Email Providers](./email-providers.md) - Documentation for email provider integrations
-2. [Encharge Integration](./encharge-integration.md) - Detailed guide for the Encharge email service integration
-3. [Rate Limiting](./rate-limiting.md) - Documentation for the API rate limiting implementation
-4. [Job Alerts Configuration](./job-alerts-configuration.md) - Guide for configuring the job alerts feature
+- [Email Providers](./email-providers.md) - Documentation for email provider integrations
+- [Encharge Integration](./encharge-integration.md) - Detailed guide for setting up Encharge
+- [Rate Limiting](./rate-limiting.md) - Information about the rate limiting implementation
+- [Deployment Guide](./deployment.md) - Instructions for deploying the job board to production
 
 ## Overview
 
-Bordful is a job board application built with Next.js. This documentation provides technical details about various components and features of the application to help developers understand and maintain the codebase.
+Bordful is an open-source job board platform built with Next.js, Tailwind CSS, and Airtable. It provides a modern, responsive interface for job seekers and a simple way for administrators to manage job listings.
 
 ## Getting Started
 
-To run the application locally:
+To get started with Bordful:
 
-```bash
-npm install
-npm run dev
-```
+1. Clone the repository
+2. Install dependencies with `npm install`
+3. Copy `.env.example` to `.env` and configure your environment variables
+4. Copy `config/config.example.ts` to `config/config.ts` and customize as needed
+5. Run the development server with `npm run dev`
 
-The application will be available at http://localhost:3000 (or another port if 3000 is already in use). 
+For more detailed instructions, please refer to the [README.md](../README.md) file in the root directory. 
