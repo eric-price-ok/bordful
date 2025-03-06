@@ -12,24 +12,34 @@
 import { config as exampleConfig } from "./config.example";
 import type { Config } from "./config.example";
 
-let customConfig: Partial<Config> = {};
-
-// Try to load custom config if it exists
-try {
-  // Using dynamic import with ES modules syntax
-  // This is compatible with Next.js and will be properly tree-shaken
-  customConfig = require("./config").config;
-  console.log("Using custom config.ts");
-} catch (e) {
-  // If config.ts doesn't exist, we'll just use the example config
-  console.log("Using config.example.ts (no custom config.ts found)");
-}
-
-// Merge the configs (custom config overrides example config)
+// Create the final config object with example config as base
 const config: Config = {
   ...exampleConfig,
-  ...customConfig,
 };
+
+// In development, we can override with custom config
+if (process.env.NODE_ENV === "development") {
+  // Using a type assertion to handle the dynamic import
+  const importConfig = () => import("./config" as string);
+
+  importConfig()
+    .then(
+      (module) => {
+        const customConfig = module.config as Partial<Config>;
+        if (customConfig) {
+          Object.assign(config, customConfig);
+          console.log("Using custom config.ts");
+        }
+      },
+      () => {
+        console.log("Using config.example.ts (no custom config.ts found)");
+      }
+    )
+    .catch(() => {
+      // Fallback to example config
+      console.log("Using config.example.ts (no custom config.ts found)");
+    });
+}
 
 export type { Config };
 export default config;
