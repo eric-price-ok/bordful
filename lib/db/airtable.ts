@@ -139,28 +139,21 @@ export function normalizeAnnualSalary(salary: Salary | null): number {
 
 // Ensure career level is always returned as an array
 function normalizeCareerLevel(value: unknown): CareerLevel[] {
-  console.log("Raw career level value:", value);
-
   if (!value) {
-    console.log("No value provided, returning NotSpecified");
     return ["NotSpecified"];
   }
 
   if (Array.isArray(value)) {
-    console.log("Value is array:", value);
     // Convert Airtable's display values to our enum values
     return value.map((level) => {
       // Handle Airtable's display format (e.g., "Entry Level" -> "EntryLevel")
       const normalized = level.replace(/\s+/g, "");
-      console.log(`Normalized "${level}" to "${normalized}"`);
       return normalized as CareerLevel;
     });
   }
 
   // Handle single value
-  console.log("Single value:", value);
   const normalized = (value as string).replace(/\s+/g, "");
-  console.log(`Normalized single value "${value}" to "${normalized}"`);
   return [normalized as CareerLevel];
 }
 
@@ -219,21 +212,17 @@ function cleanMarkdownFormatting(text: string): string {
 }
 
 function normalizeWorkplaceType(value: unknown): WorkplaceType {
-  console.log("Normalizing workplace type:", value);
   if (
     typeof value === "string" &&
     ["On-site", "Hybrid", "Remote"].includes(value)
   ) {
-    console.log("Normalized to:", value);
     return value as WorkplaceType;
   }
   // If the value is undefined or invalid, check if there's a remote_region
   // If there is, it's probably a remote job
   if (value === undefined || value === null) {
-    console.log("Value is undefined/null, checking remote_region");
     return "Not specified";
   }
-  console.log("Defaulting to Not specified");
   return "Not specified";
 }
 
@@ -258,11 +247,8 @@ function normalizeRemoteRegion(value: unknown): RemoteRegion {
 
 export async function getJobs(): Promise<Job[]> {
   try {
+    // Check for required environment variables
     if (!process.env.AIRTABLE_ACCESS_TOKEN || !process.env.AIRTABLE_BASE_ID) {
-      console.error("Missing env vars:", {
-        hasToken: !!process.env.AIRTABLE_ACCESS_TOKEN,
-        hasBaseId: !!process.env.AIRTABLE_BASE_ID,
-      });
       throw new Error("Airtable credentials are not configured");
     }
 
@@ -272,17 +258,6 @@ export async function getJobs(): Promise<Job[]> {
         sort: [{ field: "posted_date", direction: "desc" }],
       })
       .all();
-
-    console.log("Airtable records fetched:", {
-      count: records.length,
-      firstRecordFields: records[0]?.fields
-        ? Object.keys(records[0].fields)
-        : [],
-      hasDescription: records.some((r) => r.fields.description),
-      descriptionTypes: records
-        .map((r) => typeof r.fields.description)
-        .filter((v, i, a) => a.indexOf(v) === i),
-    });
 
     return records.map((record): Job => {
       const fields = record.fields;
@@ -322,6 +297,7 @@ export async function getJobs(): Promise<Job[]> {
 
 export async function getJob(id: string): Promise<Job | null> {
   try {
+    // Check for required environment variables
     if (!process.env.AIRTABLE_ACCESS_TOKEN || !process.env.AIRTABLE_BASE_ID) {
       throw new Error("Airtable credentials are not configured");
     }
@@ -351,9 +327,6 @@ export async function getJob(id: string): Promise<Job | null> {
       console.error(`Missing required fields: ${missingFields.join(", ")}`);
       return null;
     }
-
-    console.log(`Fetching single job ${id}:`, record.fields.title);
-    console.log("Career level from Airtable:", record.fields.career_level);
 
     const job = {
       id: record.id,
@@ -388,8 +361,6 @@ export async function getJob(id: string): Promise<Job | null> {
   } catch (error) {
     console.error("Error fetching job:", {
       message: (error as Error).message,
-      name: (error as Error).name,
-      stack: (error as Error).stack,
     });
     return null;
   }
@@ -397,7 +368,6 @@ export async function getJob(id: string): Promise<Job | null> {
 
 export async function testConnection() {
   try {
-    // Try to list records from the table
     const records = await base(TABLE_NAME)
       .select({
         maxRecords: 1, // Just get one record to test
@@ -412,8 +382,6 @@ export async function testConnection() {
   } catch (error) {
     console.error("Airtable connection test failed:", {
       message: (error as Error).message,
-      stack: (error as Error).stack,
-      error,
     });
     return false;
   }

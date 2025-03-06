@@ -26,8 +26,7 @@ export const metadata: Metadata = {
 // Revalidate every 5 minutes
 export const revalidate = 300;
 
-export default async function Page() {
+export default async function Home() {
   const jobs = await getJobs();
-  console.log("Server-side jobs fetched:", jobs.length);
   return <HomePage initialJobs={jobs} />;
 }

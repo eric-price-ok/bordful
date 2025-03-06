@@ -14,6 +14,14 @@ All notable changes to this project will be documented in this file.
   - Improved category card job count displays
   - Updated aria-labels with formatted numbers for accessibility
 
+### Fixed
+- Cleaned up console logs throughout the codebase:
+  - Removed excessive debugging logs while preserving important error messages
+  - Maintained API key and configuration error reporting for better troubleshooting
+  - Removed verbose data normalization logs from job detail pages
+  - Improved code cleanliness and reduced console noise
+  - Enhanced production readiness while keeping meaningful error context
+
 ## [0.0.64] - 2025-03-03
 
 ### Fixed

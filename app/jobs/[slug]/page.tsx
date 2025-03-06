@@ -18,6 +18,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { JobPost } from "@/components/jobs/JobPost";
+import config from "@/config";
 
 // Generate static params for all active jobs
 export async function generateStaticParams() {
@@ -33,17 +36,21 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const { slug } = params;
-  console.log("Generating metadata for slug:", slug);
+  const slug = params.slug;
 
+  // Get all jobs to find the one matching the slug
   const allJobs = await getJobs();
-  const job = allJobs.find((j) => generateJobSlug(j.title, j.company) === slug);
+
+  // Find the job with matching slug
+  const job = allJobs.find((j) => {
+    const jobSlug = generateJobSlug(j.title, j.company);
+    return jobSlug === slug;
+  });
 
   if (!job) {
     return {
-      title: "Job Not Found",
-      description:
-        "The job posting you're looking for doesn't exist or has been removed.",
+      title: "Job Not Found | " + config.title,
+      description: "The job you're looking for could not be found.",
     };
   }
 
@@ -75,43 +82,19 @@ export default async function JobPage({
 }: {
   params: { slug: string };
 }) {
-  console.log("Starting job page render for slug:", params.slug);
-
   try {
     // Get all jobs to find the one matching the slug
-    console.log("Fetching jobs from Airtable...");
     const allJobs = await getJobs();
-    console.log("Fetched jobs count:", allJobs.length);
 
     // Find the job with matching slug
     const job = allJobs.find((j) => {
       const jobSlug = generateJobSlug(j.title, j.company);
-      console.log(
-        `Comparing slugs - Generated: ${jobSlug}, Requested: ${params.slug}`
-      );
       return jobSlug === params.slug;
     });
 
     if (!job) {
-      console.log("No job found for slug:", params.slug);
-      console.log(
-        "Available slugs:",
-        allJobs.map((j) => generateJobSlug(j.title, j.company))
-      );
       return null; // This will trigger the not-found page
     }
-
-    console.log("Found job:", {
-      id: job.id,
-      title: job.title,
-      description: {
-        length: job.description?.length || 0,
-        type: typeof job.description,
-        content: job.description,
-        firstLine: job.description?.split("\n")[0] || "",
-        hasHtmlTags: job.description?.includes("<") || false,
-      },
-    });
 
     const { fullDate, relativeTime } = formatDate(job.posted_date);
     const showSalary =
