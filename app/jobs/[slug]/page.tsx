@@ -18,8 +18,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { JobPost } from "@/components/jobs/JobPost";
 import config from "@/config";
 
 // Generate static params for all active jobs
