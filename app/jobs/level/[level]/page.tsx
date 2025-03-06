@@ -67,9 +67,9 @@ export default async function CareerLevelPage({ params }: Props) {
       <HeroSection
         badge={displayName}
         title={`${displayName} Jobs`}
-        description={`Browse ${filteredJobs.length} ${
+        description={`Browse ${filteredJobs.length.toLocaleString()} ${
           filteredJobs.length === 1 ? "position" : "positions"
-        } for ${displayName.toLowerCase()} roles. Find the perfect opportunity that matches your experience level.`}
+        } for ${displayName.toLowerCase()} roles. Find opportunities that match your career stage.`}
       />
       <JobsLayout allJobs={jobs} filteredJobs={filteredJobs} />
     </>

@@ -27,14 +27,15 @@ function LevelCard({ href, title, count }: LevelCardProps) {
     <Link
       href={href}
       className="block p-4 sm:p-5 border rounded-lg transition-all hover:border-gray-400"
-      aria-label={`Browse ${count} ${title} ${
+      aria-label={`Browse ${count.toLocaleString()} ${title} ${
         count === 1 ? "position" : "positions"
       }`}
     >
       <div className="space-y-1.5 sm:space-y-2">
         <h2 className="text-sm sm:text-base font-medium">{title}</h2>
         <div className="text-xs sm:text-sm text-gray-500">
-          {count} {count === 1 ? "position" : "positions"} available
+          {count.toLocaleString()} {count === 1 ? "position" : "positions"}{" "}
+          available
         </div>
       </div>
     </Link>
@@ -93,7 +94,7 @@ export default async function CareerLevelsPage() {
       <HeroSection
         badge="Career Levels"
         title="Browse Jobs by Career Level"
-        description={`Explore ${jobs.length} open positions across different experience levels. Find the perfect role that matches your career stage.`}
+        description={`Explore ${jobs.length.toLocaleString()} open positions across different experience levels. Find the perfect role that matches your career stage.`}
       />
 
       <main className="container py-6 sm:py-8">

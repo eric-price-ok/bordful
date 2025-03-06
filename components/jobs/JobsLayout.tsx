@@ -127,7 +127,8 @@ export function JobsLayout({ filteredJobs }: JobsLayoutProps) {
                 )}
               </h2>
               <p className="text-sm text-muted-foreground">
-                Showing {paginatedJobs.length} of {sortedJobs.length} positions
+                Showing {paginatedJobs.length.toLocaleString()} of{" "}
+                {sortedJobs.length.toLocaleString()} positions
               </p>
             </div>
             <div className="flex items-center gap-3 pb-[1px] w-full sm:w-auto">

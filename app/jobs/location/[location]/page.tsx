@@ -59,9 +59,9 @@ export default async function JobLocationPage({ params }: Props) {
         <HeroSection
           badge="Remote"
           title="Remote Jobs"
-          description={`Browse ${filteredJobs.length} remote ${
+          description={`Browse ${filteredJobs.length.toLocaleString()} remote ${
             filteredJobs.length === 1 ? "position" : "positions"
-          }. Find the perfect remote role that matches your preferences.`}
+          }. Work from anywhere with these flexible opportunities.`}
         />
         <JobsLayout allJobs={jobs} filteredJobs={filteredJobs} />
       </>
@@ -83,7 +83,7 @@ export default async function JobLocationPage({ params }: Props) {
       <HeroSection
         badge={countryName}
         title={`${countryName} Jobs`}
-        description={`Browse ${filteredJobs.length} ${
+        description={`Browse ${filteredJobs.length.toLocaleString()} ${
           filteredJobs.length === 1 ? "position" : "positions"
         } in ${countryName}. Find the perfect role that matches your location preferences.`}
       />

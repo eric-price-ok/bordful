@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.65] - 2025-03-06
+
+### Added
+- Added thousands separators to all job count displays:
+  - Implemented `toLocaleString()` for consistent number formatting
+  - Applied formatting to main hero section job counts
+  - Added formatting to "added today" counts
+  - Updated all job listings and pagination counts
+  - Enhanced filter sidebar count displays
+  - Improved category card job count displays
+  - Updated aria-labels with formatted numbers for accessibility
+
 ## [0.0.64] - 2025-03-03
 
 ### Fixed

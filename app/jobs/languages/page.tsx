@@ -32,7 +32,8 @@ function LanguageCard({ href, title, count }: LanguageCardProps) {
       <div className="space-y-1.5 sm:space-y-2">
         <h2 className="text-sm sm:text-base font-medium">{title}</h2>
         <p className="text-xs sm:text-sm text-gray-500">
-          {count} {count === 1 ? "position" : "positions"} available
+          {count.toLocaleString()} {count === 1 ? "position" : "positions"}{" "}
+          available
         </p>
       </div>
     </Link>
@@ -66,7 +67,7 @@ export default async function LanguagesPage() {
       <HeroSection
         badge="Languages"
         title="Browse Jobs by Language"
-        description={`Explore ${jobs.length} open positions across different language requirements. Find the perfect role that matches your language skills.`}
+        description={`Explore ${jobs.length.toLocaleString()} open positions across different language requirements. Find the perfect role that matches your language skills.`}
       />
 
       <main className="container py-6 sm:py-8">

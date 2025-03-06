@@ -71,7 +71,7 @@ export default async function JobTypePage({ params }: Props) {
       <HeroSection
         badge={displayName}
         title={`${displayName} Jobs`}
-        description={`Browse ${filteredJobs.length} ${
+        description={`Browse ${filteredJobs.length.toLocaleString()} ${
           filteredJobs.length === 1 ? "position" : "positions"
         } for ${displayName.toLowerCase()} roles. ${description}`}
       />

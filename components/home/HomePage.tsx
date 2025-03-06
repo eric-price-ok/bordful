@@ -514,9 +514,11 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
               {jobsAddedToday > 0 && (
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 pulse-dot"></span>
               )}
-              {initialJobs.length}
+              {initialJobs.length.toLocaleString()}
               {jobsAddedToday > 0 && (
-                <span className="ml-1">({jobsAddedToday} added today)</span>
+                <span className="ml-1">
+                  ({jobsAddedToday.toLocaleString()} added today)
+                </span>
               )}
             </div>
           </div>
@@ -551,8 +553,8 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
                   )}
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Showing {paginatedJobs.length} of {sortedJobs.length}{" "}
-                  positions
+                  Showing {paginatedJobs.length.toLocaleString()} of{" "}
+                  {sortedJobs.length.toLocaleString()} positions
                 </p>
               </div>
               <div className="flex items-center gap-3 pb-[1px] w-full sm:w-auto">

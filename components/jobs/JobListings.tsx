@@ -11,7 +11,8 @@ export function JobListings({ jobs, showFiltered = true }: JobListingsProps) {
     <div className="space-y-4">
       {showFiltered && (
         <p className="text-sm text-gray-500">
-          Showing {jobs.length} {jobs.length === 1 ? "position" : "positions"}
+          Showing {jobs.length.toLocaleString()}{" "}
+          {jobs.length === 1 ? "position" : "positions"}
         </p>
       )}
       <div className="space-y-4">

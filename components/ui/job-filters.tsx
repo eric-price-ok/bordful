@@ -261,7 +261,7 @@ export function JobFilters({
                   : "bg-zinc-100 text-zinc-500"
               }`}
             >
-              {counts.types["Full-time"] || 0}
+              {(counts.types["Full-time"] || 0).toLocaleString()}
             </span>
           </div>
           <div className="flex items-center justify-between">
@@ -284,7 +284,7 @@ export function JobFilters({
                   : "bg-zinc-100 text-zinc-500"
               }`}
             >
-              {counts.types["Part-time"] || 0}
+              {(counts.types["Part-time"] || 0).toLocaleString()}
             </span>
           </div>
           <div className="flex items-center justify-between">
@@ -307,7 +307,7 @@ export function JobFilters({
                   : "bg-zinc-100 text-zinc-500"
               }`}
             >
-              {counts.types["Contract"] || 0}
+              {(counts.types["Contract"] || 0).toLocaleString()}
             </span>
           </div>
           <div className="flex items-center justify-between">
@@ -330,7 +330,7 @@ export function JobFilters({
                   : "bg-zinc-100 text-zinc-500"
               }`}
             >
-              {counts.types["Freelance"] || 0}
+              {(counts.types["Freelance"] || 0).toLocaleString()}
             </span>
           </div>
         </div>
@@ -364,7 +364,7 @@ export function JobFilters({
                     : "bg-zinc-100 text-zinc-500"
                 }`}
               >
-                {counts.roles[level] || 0}
+                {(counts.roles[level] || 0).toLocaleString()}
               </span>
             </div>
           ))}
@@ -401,7 +401,7 @@ export function JobFilters({
                 : "bg-zinc-100 text-zinc-500"
             }`}
           >
-            {counts.remote} of {jobs.length}
+            {counts.remote.toLocaleString()} of {jobs.length.toLocaleString()}
           </span>
         </div>
       </div>
@@ -436,7 +436,7 @@ export function JobFilters({
                     : "bg-zinc-100 text-zinc-500"
                 }`}
               >
-                {count}
+                {count.toLocaleString()}
               </span>
             </div>
           ))}
@@ -467,7 +467,7 @@ export function JobFilters({
                 : "bg-zinc-100 text-zinc-500"
             }`}
           >
-            {counts.visa || 0}
+            {(counts.visa || 0).toLocaleString()}
           </span>
         </div>
       </div>
@@ -500,7 +500,7 @@ export function JobFilters({
                     : "bg-zinc-100 text-zinc-500"
                 }`}
               >
-                {count}
+                {count.toLocaleString()}
               </span>
             </div>
           ))}

@@ -63,7 +63,7 @@ export default async function LanguagePage({ params }: Props) {
       <HeroSection
         badge={displayName}
         title={`${displayName} Jobs`}
-        description={`Browse ${filteredJobs.length} ${
+        description={`Browse ${filteredJobs.length.toLocaleString()} ${
           filteredJobs.length === 1 ? "position" : "positions"
         } requiring ${displayName} language skills. Find the perfect role that matches your language abilities.`}
       />

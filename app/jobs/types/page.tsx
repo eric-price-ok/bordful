@@ -32,7 +32,7 @@ function TypeCard({ href, title, description, count }: TypeCardProps) {
     <Link
       href={href}
       className="block p-4 sm:p-5 border rounded-lg transition-all hover:border-gray-400"
-      aria-label={`Browse ${count} ${title} ${
+      aria-label={`Browse ${count.toLocaleString()} ${title} ${
         count === 1 ? "position" : "positions"
       }`}
     >
@@ -42,7 +42,8 @@ function TypeCard({ href, title, description, count }: TypeCardProps) {
           {description}
         </p>
         <div className="text-xs sm:text-sm text-gray-500">
-          {count} {count === 1 ? "position" : "positions"} available
+          {count.toLocaleString()} {count === 1 ? "position" : "positions"}{" "}
+          available
         </div>
       </div>
     </Link>
@@ -78,7 +79,7 @@ export default async function JobTypesPage() {
       <HeroSection
         badge="Job Types"
         title="Browse Jobs by Type"
-        description={`Explore ${jobs.length} open positions across different employment types. Find the perfect role that matches your preferences.`}
+        description={`Explore ${jobs.length.toLocaleString()} open positions across different employment types. Find the perfect role that matches your preferences.`}
       />
 
       <main className="container py-6 sm:py-8">
