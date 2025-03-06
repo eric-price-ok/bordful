@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.66] - 2025-03-07
+
+### Fixed
+- Enhanced dynamic route parameter handling in job detail pages:
+  - Improved async parameter handling in `generateMetadata` function
+  - Optimized job data fetching with parallel Promise.all
+  - Updated `JobPage` component to use consistent async patterns
+  - Enhanced error handling for job not found cases
+  - Maintained proper TypeScript types for params object
+
 ## [0.0.65] - 2025-03-06
 
 ### Added
