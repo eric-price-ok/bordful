@@ -6,6 +6,10 @@ export const metadata = {
     "Our terms of service outline the rules and guidelines for using our job board platform.",
   alternates: {
     canonical: "/terms",
+    languages: {
+      en: `${config.url}/terms`,
+      "x-default": `${config.url}/terms`,
+    },
   },
 };
 

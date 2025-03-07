@@ -6,6 +6,10 @@ export const metadata = {
     "Our commitment to protecting your privacy and personal information.",
   alternates: {
     canonical: "/privacy",
+    languages: {
+      en: `${config.url}/privacy`,
+      "x-default": `${config.url}/privacy`,
+    },
   },
 };
 

@@ -33,6 +33,13 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  alternates: {
+    canonical: "/",
+    languages: {
+      en: `${siteConfig.url}`,
+      "x-default": `${siteConfig.url}`,
+    },
+  },
 };
 
 export default function RootLayout({

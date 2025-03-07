@@ -13,6 +13,10 @@ export const metadata: Metadata = {
     "Explore tech jobs by experience level. Find positions that match your career stage, from internships to executive roles.",
   alternates: {
     canonical: "/jobs/levels",
+    languages: {
+      en: `${config.url}/jobs/levels`,
+      "x-default": `${config.url}/jobs/levels`,
+    },
   },
 };
 

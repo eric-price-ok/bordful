@@ -18,6 +18,10 @@ export const metadata: Metadata = {
     "Explore tech jobs by location. Find remote opportunities or positions in your preferred country.",
   alternates: {
     canonical: "/jobs/locations",
+    languages: {
+      en: `${config.url}/jobs/locations`,
+      "x-default": `${config.url}/jobs/locations`,
+    },
   },
 };
 

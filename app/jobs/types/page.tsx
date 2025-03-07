@@ -17,6 +17,10 @@ export const metadata: Metadata = {
     "Explore tech jobs by employment type. Find full-time, part-time, or contract positions that match your preferences.",
   alternates: {
     canonical: "/jobs/types",
+    languages: {
+      en: `${config.url}/jobs/types`,
+      "x-default": `${config.url}/jobs/types`,
+    },
   },
 };
 

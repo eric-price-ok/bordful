@@ -63,6 +63,10 @@ export async function generateMetadata({
     }${job.salary ? `. Salary: ${formatSalary(job.salary)}` : ""}.`,
     alternates: {
       canonical: `/jobs/${slug}`,
+      languages: {
+        en: `${config.url}/jobs/${slug}`,
+        "x-default": `${config.url}/jobs/${slug}`,
+      },
     },
     openGraph: {
       title: `${job.title} at ${job.company}`,

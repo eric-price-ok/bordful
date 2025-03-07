@@ -14,6 +14,9 @@ All notable changes to this project will be documented in this file.
   - Implemented robots meta tag with comprehensive crawler directives
   - Added X-Robots-Tag HTTP headers for enhanced crawler control
   - Configured specific rules for different file types (images, PDFs)
+  - Added hreflang tags with fully-qualified URLs for proper language targeting
+  - Implemented simplified language links with generic English ('en') and fallback ('x-default')
+  - Followed Google's best practices for international SEO
 
 ### Fixed
 - Fixed TypeScript type errors in locations page:

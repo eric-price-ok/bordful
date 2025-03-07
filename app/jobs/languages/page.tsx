@@ -14,6 +14,10 @@ export const metadata: Metadata = {
     "Explore tech jobs by required languages. Find positions that match your language skills and preferences.",
   alternates: {
     canonical: "/jobs/languages",
+    languages: {
+      en: `${config.url}/jobs/languages`,
+      "x-default": `${config.url}/jobs/languages`,
+    },
   },
 };
 
