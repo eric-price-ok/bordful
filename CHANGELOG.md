@@ -9,7 +9,11 @@ All notable changes to this project will be documented in this file.
   - Added `metadataBase` URL in root layout for proper URL resolution
   - Standardized canonical URL format using relative paths
   - Updated dynamic page metadata to include proper canonical references
+  - Added missing canonical URLs to `/jobs/types`, `/jobs/locations`, `/jobs/levels`, `/jobs/languages`, `/privacy`, and `/terms` pages
   - Improved SEO by preventing duplicate content issues
+  - Implemented robots meta tag with comprehensive crawler directives
+  - Added X-Robots-Tag HTTP headers for enhanced crawler control
+  - Configured specific rules for different file types (images, PDFs)
 
 ### Fixed
 - Fixed TypeScript type errors in locations page:
