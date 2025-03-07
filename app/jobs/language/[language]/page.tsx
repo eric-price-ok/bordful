@@ -35,6 +35,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${displayName} Jobs | ${config.title}`,
     description: `Browse jobs requiring ${displayName} language skills. Find the perfect role that matches your language abilities.`,
+    alternates: {
+      canonical: `/jobs/language/${languageSlug.toLowerCase()}`,
+    },
   };
 }
 

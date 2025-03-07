@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.68] - 2025-03-07
+
+### Changed
+- Improved canonical URLs implementation for better SEO:
+  - Added `metadataBase` URL in root layout for proper URL resolution
+  - Standardized canonical URL format using relative paths
+  - Updated dynamic page metadata to include proper canonical references
+
 ## [0.0.67] - 2025-03-07
 
 ### Added

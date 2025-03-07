@@ -61,6 +61,9 @@ export async function generateMetadata({
     description: `${job.type} position at ${job.company}${
       metaLocation ? `. Location: ${metaLocation}` : ""
     }${job.salary ? `. Salary: ${formatSalary(job.salary)}` : ""}.`,
+    alternates: {
+      canonical: `/jobs/${slug}`,
+    },
     openGraph: {
       title: `${job.title} at ${job.company}`,
       description: `${job.type} position at ${job.company}${

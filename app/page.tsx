@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description: config.description,
   },
   alternates: {
-    canonical: config.url,
+    canonical: "/",
   },
 };
 

@@ -27,6 +27,9 @@ export const metadata: Metadata = {
   title: "Browse All Job Categories | " + config.title,
   description:
     "Explore tech jobs by category, location, experience level, and job type. Find the perfect role that matches your skills and preferences.",
+  alternates: {
+    canonical: "/jobs",
+  },
 };
 
 // Revalidate page every 5 minutes

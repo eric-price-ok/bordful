@@ -17,6 +17,7 @@ interface CustomScript {
 const siteConfig = config;
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: `${siteConfig.title} | ${siteConfig.nav.title}`,
   description: siteConfig.description,
 };
