@@ -4,6 +4,9 @@ export const metadata = {
   title: `Privacy & Cookies - ${config.nav.title}`,
   description:
     "Our commitment to protecting your privacy and personal information.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 // This page will be static

@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   title: "Browse Jobs by Language | " + config.title,
   description:
     "Explore tech jobs by required languages. Find positions that match your language skills and preferences.",
+  alternates: {
+    canonical: "/jobs/languages",
+  },
 };
 
 // Revalidate page every 5 minutes

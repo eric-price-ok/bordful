@@ -4,6 +4,9 @@ export const metadata = {
   title: `Terms of Service - ${config.nav.title}`,
   description:
     "Our terms of service outline the rules and guidelines for using our job board platform.",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 // This page will be static

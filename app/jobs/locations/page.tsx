@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   title: "Browse Jobs by Location | " + config.title,
   description:
     "Explore tech jobs by location. Find remote opportunities or positions in your preferred country.",
+  alternates: {
+    canonical: "/jobs/locations",
+  },
 };
 
 // Revalidate page every 5 minutes

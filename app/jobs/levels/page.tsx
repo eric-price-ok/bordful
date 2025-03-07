@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Browse Jobs by Career Level | " + config.title,
   description:
     "Explore tech jobs by experience level. Find positions that match your career stage, from internships to executive roles.",
+  alternates: {
+    canonical: "/jobs/levels",
+  },
 };
 
 // Revalidate page every 5 minutes

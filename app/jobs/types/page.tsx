@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   title: "Browse Jobs by Type | " + config.title,
   description:
     "Explore tech jobs by employment type. Find full-time, part-time, or contract positions that match your preferences.",
+  alternates: {
+    canonical: "/jobs/types",
+  },
 };
 
 // Revalidate page every 5 minutes
