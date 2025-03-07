@@ -58,6 +58,37 @@ export const config = {
     provider: "encharge",
   },
 
+  // RSS Feed Configuration
+  rssFeed: {
+    // Enable or disable RSS feeds
+    enabled: true,
+
+    // Show RSS feed links in navigation
+    showInNavigation: true,
+
+    // Show RSS feed links in footer
+    showInFooter: true,
+
+    // Navigation label (if showing in navigation)
+    navigationLabel: "RSS Feed",
+
+    // Footer label (if showing in footer)
+    footerLabel: "Job Feeds",
+
+    // Title for the RSS feed
+    title: "Latest Jobs Feed",
+
+    // Number of job description characters to include (preview length)
+    descriptionLength: 500,
+
+    // Available formats (enable/disable specific formats)
+    formats: {
+      rss: true, // RSS 2.0 format
+      atom: true, // Atom format
+      json: true, // JSON Feed format
+    },
+  },
+
   // Email Provider Configuration
   email: {
     // The email provider to use for subscriptions

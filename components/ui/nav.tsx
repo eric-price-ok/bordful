@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import config from "@/config";
 import dynamic from "next/dynamic";
-import { PlusCircle, Menu, X } from "lucide-react";
+import { PlusCircle, Menu, X, Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
@@ -33,6 +33,14 @@ export function Nav() {
     topMenuItems.push({
       label: config.jobAlerts.navigationLabel || "Job Alerts",
       link: "/job-alerts",
+    });
+  }
+
+  // Add RSS Feed link if enabled
+  if (config.rssFeed?.enabled && config.rssFeed?.showInNavigation) {
+    topMenuItems.push({
+      label: config.rssFeed.navigationLabel || "RSS Feed",
+      link: "/feed.xml",
     });
   }
 
@@ -105,6 +113,18 @@ export function Nav() {
             {/* Actions */}
             <div className="flex items-center space-x-6" aria-label="Actions">
               <div className="flex items-center space-x-3">
+                {/* RSS Feed Icon */}
+                {config.rssFeed?.enabled && (
+                  <Link
+                    href="/feed.xml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-zinc-600 hover:text-zinc-900 transition-colors"
+                    aria-label="Subscribe to RSS Feed"
+                  >
+                    <Rss className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                )}
                 {config.nav.github.show && (
                   <Link
                     href={config.nav.github.url}
@@ -261,6 +281,18 @@ export function Nav() {
 
               {/* Social Links */}
               <div className="flex items-center space-x-3 px-4 py-4 border-t border-zinc-200 mt-2">
+                {/* RSS Feed Icon */}
+                {config.rssFeed?.enabled && (
+                  <Link
+                    href="/feed.xml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-zinc-600 hover:text-zinc-900 transition-colors"
+                    aria-label="Subscribe to RSS Feed"
+                  >
+                    <Rss className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                )}
                 {config.nav.github.show && (
                   <Link
                     href={config.nav.github.url}

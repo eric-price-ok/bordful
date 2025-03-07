@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.69] - 2025-03-07
+
+### Added
+- Added comprehensive RSS feed system:
+  - Created route handlers for RSS 2.0, Atom, and JSON Feed formats
+  - Implemented client-side null checks for robust error handling
+  - Added RSS feed link tags in HTML head for better discoverability
+  - Added RSS icon in navigation and footer for easy access
+  - Included detailed job metadata in feeds (title, company, location, salary)
+  - Added support for featured job highlights in feed
+  - Added job categories including type, career level, and languages
+  - Implemented 5-minute feed revalidation to match site content
+  - Added configuration options for enabling/disabling feed features
+  - Enhanced feeds with content summaries and formatted descriptions
+  - Implemented proper MIME types for each feed format
+
 ## [0.0.68] - 2025-03-07
 
 ### Changed

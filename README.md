@@ -495,6 +495,90 @@ https://yourdomain.com/sitemap.xml
 - No manual rebuilds required
 - 5-minute revalidation period
 
+## RSS Feed System
+
+The job board includes a comprehensive RSS feed system that allows users to subscribe to job listings:
+
+### Available Feed Formats
+- **RSS 2.0**: Available at `/feed.xml` (most widely supported format)
+- **Atom**: Available at `/atom.xml` (more standardized format)
+- **JSON Feed**: Available at `/feed.json` (modern JSON-based format)
+
+### Feed Content
+Each feed includes:
+- Job titles with company names
+- Job descriptions (first 500 characters)
+- Job metadata (type, location, salary, posting date)
+- Direct links to apply
+- Author information (company with apply link)
+- Categories based on job type, career level, and languages
+- Featured job indicators
+
+### Discovery and Access
+- Auto-discovery links in HTML head for feed readers
+- RSS icon in the navigation for quick access
+- Feed links in the footer with format options
+- Each feed uses the proper MIME type for optimal compatibility:
+  - `application/rss+xml` for RSS
+  - `application/atom+xml` for Atom
+  - `application/feed+json` for JSON Feed
+
+### Implementation
+The feeds are implemented using Next.js route handlers with 5-minute revalidation:
+
+```typescript
+// app/feed.xml/route.ts (and similar for other formats)
+export const revalidate = 300; // 5 minutes
+
+export async function GET() {
+  // Fetch jobs and generate feed
+  const feed = new Feed({...});
+  
+  // Return with proper content type
+  return new Response(feed.rss2(), {
+    headers: {
+      'Content-Type': 'application/rss+xml; charset=utf-8',
+    },
+  });
+}
+```
+
+### Configuration
+
+The RSS feed system can be configured in `config/config.ts`:
+
+```typescript
+rssFeed: {
+  // Enable or disable RSS feeds
+  enabled: true,
+
+  // Show RSS feed links in navigation
+  showInNavigation: true,
+  
+  // Show RSS feed links in footer
+  showInFooter: true,
+
+  // Navigation label (if showing in navigation)
+  navigationLabel: "RSS Feed",
+  
+  // Footer label (if showing in footer)
+  footerLabel: "Job Feeds",
+
+  // Available formats (enable/disable specific formats)
+  formats: {
+    rss: true,    // RSS 2.0 format
+    atom: true,   // Atom format
+    json: true,   // JSON Feed format
+  },
+},
+```
+
+### Use Cases
+- Subscribe to job listings in your preferred feed reader
+- Integrate job listings with other applications
+- Get notified of new jobs automatically
+- Share feed URLs with interested candidates
+
 ## Robots.txt Generation
 
 The job board automatically generates a comprehensive robots.txt file at `/robots.txt` that helps search engines understand which parts of your site to crawl.

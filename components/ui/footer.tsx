@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import config from "@/config";
 
@@ -22,6 +22,9 @@ export function Footer() {
     }
   }, []);
 
+  // Check if RSS feeds are generally enabled
+  const rssEnabled = Boolean(config.rssFeed?.enabled);
+
   return (
     <footer className="border-t mt-24">
       <div className="container mx-auto py-8 px-4">
@@ -36,6 +39,17 @@ export function Footer() {
                   {config.footer.brand.description}
                 </p>
                 <div className="flex items-center space-x-3 pt-2">
+                  {rssEnabled && (
+                    <Link
+                      href="/feed.xml"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-zinc-600 hover:text-zinc-900 transition-colors"
+                      aria-label="Subscribe to RSS Feed"
+                    >
+                      <Rss className="h-4 w-4" aria-hidden="true" />
+                    </Link>
+                  )}
                   {config.nav.github.show && (
                     <Link
                       href={config.nav.github.url}
@@ -164,6 +178,59 @@ export function Footer() {
                   {config.footer.resources.title}
                 </h3>
                 <ul className="space-y-2">
+                  {rssEnabled && Boolean(config.rssFeed?.showInFooter) && (
+                    <li>
+                      <div className="space-y-2">
+                        <h4 className="text-sm font-medium text-zinc-800">
+                          {config.rssFeed?.footerLabel || "Job Feeds"}
+                        </h4>
+                        <ul className="space-y-1.5 ml-2">
+                          {/* Always show RSS format */}
+                          <li>
+                            <Link
+                              href="/feed.xml"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-zinc-600 hover:text-zinc-900 inline-flex items-center gap-1"
+                            >
+                              RSS{" "}
+                              <span className="text-[10px] text-zinc-400">
+                                XML
+                              </span>
+                            </Link>
+                          </li>
+                          {/* Always show Atom format */}
+                          <li>
+                            <Link
+                              href="/atom.xml"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-zinc-600 hover:text-zinc-900 inline-flex items-center gap-1"
+                            >
+                              Atom{" "}
+                              <span className="text-[10px] text-zinc-400">
+                                XML
+                              </span>
+                            </Link>
+                          </li>
+                          {/* Always show JSON format */}
+                          <li>
+                            <Link
+                              href="/feed.json"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-zinc-600 hover:text-zinc-900 inline-flex items-center gap-1"
+                            >
+                              JSON{" "}
+                              <span className="text-[10px] text-zinc-400">
+                                Feed
+                              </span>
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  )}
                   {config.footer.resources.links.map(({ link, label }) => (
                     <li key={link}>
                       <Link

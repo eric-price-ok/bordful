@@ -33,6 +33,13 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  alternates: {
+    types: {
+      "application/rss+xml": `${siteConfig.url}/feed.xml`,
+      "application/atom+xml": `${siteConfig.url}/atom.xml`,
+      "application/feed+json": `${siteConfig.url}/feed.json`,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -43,6 +50,25 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <head>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title={`${siteConfig.nav.title} - RSS Feed`}
+          href={`${siteConfig.url}/feed.xml`}
+        />
+        <link
+          rel="alternate"
+          type="application/atom+xml"
+          title={`${siteConfig.nav.title} - Atom Feed`}
+          href={`${siteConfig.url}/atom.xml`}
+        />
+        <link
+          rel="alternate"
+          type="application/feed+json"
+          title={`${siteConfig.nav.title} - JSON Feed`}
+          href={`${siteConfig.url}/feed.json`}
+        />
+
         {siteConfig.scripts.head.map((script: CustomScript, index: number) => (
           <Script
             key={`head-script-${index}`}
