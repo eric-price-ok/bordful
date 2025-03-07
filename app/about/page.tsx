@@ -7,6 +7,7 @@ import {
 import { Building2, Users2, Globe2 } from "lucide-react";
 import { Metadata } from "next";
 import { HeroSection } from "@/components/ui/hero-section";
+import config from "@/config";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     description:
       "Learn about our mission to connect talented professionals with exciting career opportunities. We provide a platform for job seekers and employers to find their perfect match.",
     type: "website",
+    url: `${config.url}/about`,
   },
   twitter: {
     card: "summary_large_image",
@@ -29,6 +31,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/about",
+    languages: {
+      en: `${config.url}/about`,
+      "x-default": `${config.url}/about`,
+    },
   },
 };
 

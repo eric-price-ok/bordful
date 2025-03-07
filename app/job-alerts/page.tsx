@@ -28,6 +28,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: `${config.url}/job-alerts`,
+    languages: {
+      en: `${config.url}/job-alerts`,
+      "x-default": `${config.url}/job-alerts`,
+    },
   },
 };
 

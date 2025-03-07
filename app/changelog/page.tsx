@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import ReactMarkdown from "react-markdown";
 import { Metadata } from "next";
+import config from "@/config";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
     description:
       "Stay up to date with the latest features, improvements, and bug fixes in our job board platform. Track our progress and see what's new.",
     type: "website",
+    url: `${config.url}/changelog`,
   },
   twitter: {
     card: "summary_large_image",
@@ -24,6 +26,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/changelog",
+    languages: {
+      en: `${config.url}/changelog`,
+      "x-default": `${config.url}/changelog`,
+    },
   },
 };
 
