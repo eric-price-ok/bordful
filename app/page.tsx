@@ -20,6 +20,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/",
+    languages: {
+      en: `${config.url}`,
+      "x-default": `${config.url}`,
+    },
   },
 };
 

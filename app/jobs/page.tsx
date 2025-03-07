@@ -29,6 +29,10 @@ export const metadata: Metadata = {
     "Explore tech jobs by category, location, experience level, and job type. Find the perfect role that matches your skills and preferences.",
   alternates: {
     canonical: "/jobs",
+    languages: {
+      en: `${config.url}/jobs`,
+      "x-default": `${config.url}/jobs`,
+    },
   },
 };
 
