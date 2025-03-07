@@ -13,9 +13,11 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - Fixed TypeScript type errors in locations page:
-  - Added proper type handling for country data
-  - Resolved type safety issues with dynamic country names
-  - Improved type assertions for better code maintainability
+  - Added proper type handling for country and city data
+  - Resolved type safety issues with dynamic location names
+  - Improved object update pattern for better type safety
+  - Eliminated ESLint warnings by removing explicit 'any' types
+  - Used consistent approach for both country and city data handling
 
 ## [0.0.67] - 2025-03-07
 

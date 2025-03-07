@@ -67,12 +67,16 @@ export default async function LocationsPage() {
         acc.countries = {
           ...acc.countries,
           [countryName as Country]:
-            ((acc.countries as any)[countryName] || 0) + 1,
+            (acc.countries[countryName as Country] || 0) + 1,
         };
       }
       if (job.workplace_city) {
-        acc.cities[job.workplace_city] =
-          (acc.cities[job.workplace_city] || 0) + 1;
+        // Use a similar approach for cities to be consistent
+        const cityName = job.workplace_city;
+        acc.cities = {
+          ...acc.cities,
+          [cityName]: (acc.cities[cityName] || 0) + 1,
+        };
       }
       return acc;
     },
