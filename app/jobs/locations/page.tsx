@@ -9,6 +9,7 @@ import {
   formatLocationTitle,
   createLocationSlug,
 } from "@/lib/constants/locations";
+import { Country } from "@/lib/constants/countries";
 
 // Generate metadata for SEO
 export const metadata: Metadata = {
@@ -59,8 +60,15 @@ export default async function LocationsPage() {
         acc.remote += 1;
       }
       if (job.workplace_country) {
-        acc.countries[job.workplace_country] =
-          (acc.countries[job.workplace_country] || 0) + 1;
+        // Only add countries that match our Country type
+        // Use type assertion with validation
+        const countryName = job.workplace_country;
+        // Use a safer way to update the countries object that satisfies TypeScript
+        acc.countries = {
+          ...acc.countries,
+          [countryName as Country]:
+            ((acc.countries as any)[countryName] || 0) + 1,
+        };
       }
       if (job.workplace_city) {
         acc.cities[job.workplace_city] =

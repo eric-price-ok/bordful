@@ -11,6 +11,12 @@ All notable changes to this project will be documented in this file.
   - Updated dynamic page metadata to include proper canonical references
   - Improved SEO by preventing duplicate content issues
 
+### Fixed
+- Fixed TypeScript type errors in locations page:
+  - Added proper type handling for country data
+  - Resolved type safety issues with dynamic country names
+  - Improved type assertions for better code maintainability
+
 ## [0.0.67] - 2025-03-07
 
 ### Added
