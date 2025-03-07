@@ -15,10 +15,12 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
 - Fully responsive
 - Comprehensive SEO features:
   - Automatic XML sitemap generation with ISR updates
+  - Programmatic robots.txt with fine-grained crawling control
   - SEO-friendly URLs with descriptive job slugs
   - Prioritized URLs (1.0 for homepage, 0.9 for featured jobs)
   - Dynamic sitemap updates every 5 minutes
   - Complete coverage of all job listings and category pages
+  - Protection of private routes from indexing
 - Modern UI with Geist font, Tailwind CSS, and Shadcn UI
 - Incremental Static Regeneration (ISR) for real-time updates
 - Rich text support for job descriptions
@@ -492,6 +494,44 @@ https://yourdomain.com/sitemap.xml
 - Uses Incremental Static Regeneration (ISR)
 - No manual rebuilds required
 - 5-minute revalidation period
+
+## Robots.txt Generation
+
+The job board automatically generates a comprehensive robots.txt file at `/robots.txt` that helps search engines understand which parts of your site to crawl.
+
+### Features
+- **Dynamic Generation**: Programmatically created using Next.js's Metadata API
+- **Customizable Rules**: Configure which user agents can access which parts of your site
+- **Protected Routes**: Automatically blocks crawlers from accessing admin and private routes
+- **Sitemap Integration**: Automatically links to your sitemap.xml for better indexing
+- **Canonical Host**: Defines the canonical hostname to prevent duplicate content issues
+
+### Implementation
+The robots.txt file is generated using Next.js's built-in Metadata API in `app/robots.ts`:
+
+```typescript
+// Example robots.ts
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: ['/admin/', '/private/', '/api/*'],
+    },
+    sitemap: 'https://yourdomain.com/sitemap.xml',
+    host: 'https://yourdomain.com',
+  }
+}
+```
+
+### Configuration
+The robots.txt file automatically uses your site URL from the config file, ensuring consistency across your entire site.
+
+### Benefits
+- **SEO Improvement**: Helps search engines crawl your site more efficiently
+- **Content Control**: Prevents indexing of private or admin sections
+- **No Maintenance**: Automatically updated when you deploy changes
+- **Type Safety**: Leverages TypeScript for error prevention
 
 ## Email Provider Integration
 

@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.67] - 2025-03-07
+
+### Added
+- Added robots.txt implementation:
+  - Created dynamic robots.ts following Next.js metadata conventions
+  - Added programmatic control over crawler rules
+  - Configured comprehensive crawler directives for search engines
+  - Linked sitemap.xml for improved search engine indexing
+  - Established canonical host definition
+  - Protected private routes from indexing
+
 ## [0.0.66] - 2025-03-07
 
 ### Fixed
