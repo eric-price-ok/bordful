@@ -1,17 +1,12 @@
 import config from "@/config";
+import { generateMetadata } from "@/lib/utils/metadata";
 
-export const metadata = {
+export const metadata = generateMetadata({
   title: `Privacy & Cookies - ${config.nav.title}`,
   description:
     "Our commitment to protecting your privacy and personal information.",
-  alternates: {
-    canonical: "/privacy",
-    languages: {
-      en: `${config.url}/privacy`,
-      "x-default": `${config.url}/privacy`,
-    },
-  },
-};
+  path: "/privacy",
+});
 
 // This page will be static
 export const dynamic = "force-static";

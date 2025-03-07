@@ -9,20 +9,15 @@ import {
   JOB_TYPE_DISPLAY_NAMES,
   JOB_TYPE_DESCRIPTIONS,
 } from "@/lib/constants/job-types";
+import { generateMetadata } from "@/lib/utils/metadata";
 
 // Generate metadata for SEO
-export const metadata: Metadata = {
+export const metadata: Metadata = generateMetadata({
   title: "Browse Jobs by Type | " + config.title,
   description:
     "Explore tech jobs by employment type. Find full-time, part-time, or contract positions that match your preferences.",
-  alternates: {
-    canonical: "/jobs/types",
-    languages: {
-      en: `${config.url}/jobs/types`,
-      "x-default": `${config.url}/jobs/types`,
-    },
-  },
-};
+  path: "/jobs/types",
+});
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;

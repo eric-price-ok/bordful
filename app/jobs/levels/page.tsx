@@ -5,20 +5,15 @@ import config from "@/config";
 import { HeroSection } from "@/components/ui/hero-section";
 import Link from "next/link";
 import { CAREER_LEVEL_DISPLAY_NAMES } from "@/lib/constants/career-levels";
+import { generateMetadata } from "@/lib/utils/metadata";
 
 // Generate metadata for SEO
-export const metadata: Metadata = {
+export const metadata: Metadata = generateMetadata({
   title: "Browse Jobs by Career Level | " + config.title,
   description:
     "Explore tech jobs by experience level. Find positions that match your career stage, from internships to executive roles.",
-  alternates: {
-    canonical: "/jobs/levels",
-    languages: {
-      en: `${config.url}/jobs/levels`,
-      "x-default": `${config.url}/jobs/levels`,
-    },
-  },
-};
+  path: "/jobs/levels",
+});
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;

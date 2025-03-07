@@ -6,20 +6,15 @@ import { HeroSection } from "@/components/ui/hero-section";
 import Link from "next/link";
 import type { Language } from "@/lib/constants/languages";
 import { LANGUAGE_DISPLAY_NAMES } from "@/lib/constants/languages";
+import { generateMetadata } from "@/lib/utils/metadata";
 
 // Generate metadata for SEO
-export const metadata: Metadata = {
+export const metadata: Metadata = generateMetadata({
   title: "Browse Jobs by Language | " + config.title,
   description:
     "Explore tech jobs by required languages. Find positions that match your language skills and preferences.",
-  alternates: {
-    canonical: "/jobs/languages",
-    languages: {
-      en: `${config.url}/jobs/languages`,
-      "x-default": `${config.url}/jobs/languages`,
-    },
-  },
-};
+  path: "/jobs/languages",
+});
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;

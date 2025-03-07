@@ -10,20 +10,15 @@ import {
   createLocationSlug,
 } from "@/lib/constants/locations";
 import { Country } from "@/lib/constants/countries";
+import { generateMetadata } from "@/lib/utils/metadata";
 
 // Generate metadata for SEO
-export const metadata: Metadata = {
+export const metadata: Metadata = generateMetadata({
   title: "Browse Jobs by Location | " + config.title,
   description:
     "Explore tech jobs by location. Find remote opportunities or positions in your preferred country.",
-  alternates: {
-    canonical: "/jobs/locations",
-    languages: {
-      en: `${config.url}/jobs/locations`,
-      "x-default": `${config.url}/jobs/locations`,
-    },
-  },
-};
+  path: "/jobs/locations",
+});
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;

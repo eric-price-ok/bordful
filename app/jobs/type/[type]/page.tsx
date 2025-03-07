@@ -9,6 +9,7 @@ import {
   JOB_TYPE_DISPLAY_NAMES,
   JOB_TYPE_DESCRIPTIONS,
 } from "@/lib/constants/job-types";
+import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;
@@ -41,13 +42,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const displayName = JOB_TYPE_DISPLAY_NAMES[jobType];
   const description = JOB_TYPE_DESCRIPTIONS[jobType];
 
-  return {
+  return createMetadata({
     title: `${displayName} Jobs | ${config.title}`,
-    description: `Browse ${displayName.toLowerCase()} positions. ${description}. Find the perfect role that matches your preferences.`,
-    alternates: {
-      canonical: `/jobs/type/${typeSlug}`,
-    },
-  };
+    description: `Browse ${displayName.toLowerCase()} jobs. ${description}`,
+    path: `/jobs/type/${params.type}`,
+  });
 }
 
 export default async function JobTypePage({ params }: Props) {

@@ -1,17 +1,12 @@
 import config from "@/config";
+import { generateMetadata } from "@/lib/utils/metadata";
 
-export const metadata = {
+export const metadata = generateMetadata({
   title: `Terms of Service - ${config.nav.title}`,
   description:
     "Our terms of service outline the rules and guidelines for using our job board platform.",
-  alternates: {
-    canonical: "/terms",
-    languages: {
-      en: `${config.url}/terms`,
-      "x-default": `${config.url}/terms`,
-    },
-  },
-};
+  path: "/terms",
+});
 
 // This page will be static
 export const dynamic = "force-static";

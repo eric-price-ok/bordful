@@ -21,20 +21,15 @@ import {
   formatLocationTitle,
   createLocationSlug,
 } from "@/lib/constants/locations";
+import { generateMetadata } from "@/lib/utils/metadata";
 
 // Generate metadata for SEO
-export const metadata: Metadata = {
+export const metadata: Metadata = generateMetadata({
   title: "Browse All Job Categories | " + config.title,
   description:
     "Explore tech jobs by category, location, experience level, and job type. Find the perfect role that matches your skills and preferences.",
-  alternates: {
-    canonical: "/jobs",
-    languages: {
-      en: `${config.url}/jobs`,
-      "x-default": `${config.url}/jobs`,
-    },
-  },
-};
+  path: "/jobs",
+});
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;

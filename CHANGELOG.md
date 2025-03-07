@@ -16,7 +16,8 @@ All notable changes to this project will be documented in this file.
   - Configured specific rules for different file types (images, PDFs)
   - Added hreflang tags with fully-qualified URLs for proper language targeting
   - Implemented simplified language links with generic English ('en') and fallback ('x-default')
-  - Enhanced hreflang implementation with explicit HTML link tags for improved crawler detection
+  - Enhanced hreflang implementation with proper page-specific tags
+  - Fixed duplicate hreflang tags to ensure clean HTML output
   - Followed Google's best practices for international SEO
 
 ### Fixed

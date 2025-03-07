@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Metadata } from "next";
 import config from "@/config";
+import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
 
 // Generate static params for all active jobs
 export async function generateStaticParams() {
@@ -56,25 +57,17 @@ export async function generateMetadata({
       ? job.remote_region || "Worldwide"
       : [job.workplace_city, job.workplace_country].filter(Boolean).join(", ");
 
-  return {
+  // Use our utility to generate consistent metadata
+  return createMetadata({
     title: `${job.title} at ${job.company}`,
     description: `${job.type} position at ${job.company}${
       metaLocation ? `. Location: ${metaLocation}` : ""
     }${job.salary ? `. Salary: ${formatSalary(job.salary)}` : ""}.`,
-    alternates: {
-      canonical: `/jobs/${slug}`,
-      languages: {
-        en: `${config.url}/jobs/${slug}`,
-        "x-default": `${config.url}/jobs/${slug}`,
-      },
-    },
+    path: `/jobs/${slug}`,
     openGraph: {
-      title: `${job.title} at ${job.company}`,
-      description: `${job.type} position at ${job.company}${
-        metaLocation ? `. Location: ${metaLocation}` : ""
-      }${job.salary ? `. Salary: ${formatSalary(job.salary)}` : ""}.`,
+      type: "article",
     },
-  };
+  });
 }
 
 // Revalidate page every 5 minutes (300 seconds) instead of forcing dynamic rendering
