@@ -50,6 +50,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <head>
+        {/* Explicit hreflang tags for better crawler visibility */}
+        <link rel="alternate" hrefLang="en" href={siteConfig.url} />
+        <link rel="alternate" hrefLang="x-default" href={siteConfig.url} />
         {siteConfig.scripts.head.map((script: CustomScript, index: number) => (
           <Script
             key={`head-script-${index}`}
