@@ -39,7 +39,7 @@ export async function GET() {
         const jobUrl = `${baseUrl}/jobs/${jobSlug}`;
 
         // Create a rich job description with markdown formatting
-        let jobDescription = `
+        const jobDescription = `
 ## ${job.title} at ${job.company}
 
 **Type:** ${job.type}
