@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.70] - 2025-03-08
+
+### Changed
+- Enhanced RSS feed implementation to better utilize configuration options:
+  - Added checks to disable feeds based on configuration settings
+  - Made feed title fully configurable via the config file
+  - Implemented configurable description length for job previews
+  - Applied proper MIME type for JSON Feed format (application/feed+json)
+  - Added conditional rendering for disabled feed formats
+  - Improved error handling when feeds are disabled
+  - Enhanced type safety with proper optional chaining
+
 ## [0.0.69] - 2025-03-07
 
 ### Added

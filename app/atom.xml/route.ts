@@ -8,11 +8,16 @@ export const revalidate = 300; // 5 minutes, matching other dynamic routes
 
 export async function GET() {
   try {
+    // Check if Atom feeds are enabled in the configuration
+    if (!config.rssFeed?.enabled || !config.rssFeed?.formats?.atom) {
+      return new Response("Atom feed not enabled", { status: 404 });
+    }
+
     const baseUrl = config.url;
 
     // Feed setup with configuration options
     const feed = new Feed({
-      title: `${config.title} | Job Feed`,
+      title: config.rssFeed?.title || `${config.title} | Job Feed`,
       description: config.description,
       id: baseUrl,
       link: baseUrl,
@@ -31,6 +36,9 @@ export async function GET() {
 
     // Get jobs and add them to the feed
     const jobs = await getJobs();
+
+    // Use the configured description length or default to 500
+    const descriptionLength = config.rssFeed?.descriptionLength || 500;
 
     jobs.forEach((job) => {
       // Only include active jobs
@@ -53,7 +61,7 @@ export async function GET() {
           day: "numeric",
         })}
 
-${job.description.substring(0, 500)}...
+${job.description.substring(0, descriptionLength)}...
 
 **Apply Now:** ${job.apply_url}
 `;

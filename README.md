@@ -507,7 +507,7 @@ The job board includes a comprehensive RSS feed system that allows users to subs
 ### Feed Content
 Each feed includes:
 - Job titles with company names
-- Job descriptions (first 500 characters)
+- Job descriptions (configurable preview length)
 - Job metadata (type, location, salary, posting date)
 - Direct links to apply
 - Author information (company with apply link)
@@ -524,15 +524,38 @@ Each feed includes:
   - `application/feed+json` for JSON Feed
 
 ### Implementation
-The feeds are implemented using Next.js route handlers with 5-minute revalidation:
+The feeds are implemented using Next.js route handlers with 5-minute revalidation and configuration-based settings:
 
 ```typescript
 // app/feed.xml/route.ts (and similar for other formats)
 export const revalidate = 300; // 5 minutes
 
 export async function GET() {
-  // Fetch jobs and generate feed
-  const feed = new Feed({...});
+  // Check if RSS feeds are enabled in the configuration
+  if (!config.rssFeed?.enabled || !config.rssFeed?.formats?.rss) {
+    return new Response("RSS feed not enabled", { status: 404 });
+  }
+
+  // Feed setup with configuration options
+  const feed = new Feed({
+    title: config.rssFeed?.title || `${config.title} | Job Feed`,
+    // ... other feed settings
+  });
+  
+  // Use the configured description length
+  const descriptionLength = config.rssFeed?.descriptionLength || 500;
+  
+  // Add job items with the configured description length
+  jobs.forEach(job => {
+    // ... job processing
+    const jobDescription = `
+      // ... job description formatting
+      ${job.description.substring(0, descriptionLength)}...
+    `;
+    
+    // Add to feed
+    // ...
+  });
   
   // Return with proper content type
   return new Response(feed.rss2(), {
@@ -545,7 +568,7 @@ export async function GET() {
 
 ### Configuration
 
-The RSS feed system can be configured in `config/config.ts`:
+The RSS feed system is fully configurable through the configuration file:
 
 ```typescript
 rssFeed: {
@@ -563,6 +586,12 @@ rssFeed: {
   
   // Footer label (if showing in footer)
   footerLabel: "Job Feeds",
+  
+  // Title for the RSS feed
+  title: "Latest Jobs Feed",
+  
+  // Number of job description characters to include (preview length)
+  descriptionLength: 500,
 
   // Available formats (enable/disable specific formats)
   formats: {
@@ -573,11 +602,22 @@ rssFeed: {
 },
 ```
 
+### Configuration Features
+
+- **Full Enable/Disable Control**: Turn on or off the entire feed system
+- **Per-Format Control**: Enable or disable specific formats (RSS, Atom, JSON)
+- **Custom Feed Title**: Set a custom title for all feed formats
+- **Configurable Description Length**: Control how much of the job description is included
+- **UI Integration Control**: Show/hide RSS icons in navigation and footer
+- **Custom Labels**: Change the text displayed for RSS links
+- **Graceful Degradation**: 404 responses for disabled feed formats
+
 ### Use Cases
 - Subscribe to job listings in your preferred feed reader
 - Integrate job listings with other applications
 - Get notified of new jobs automatically
 - Share feed URLs with interested candidates
+- Disable unused formats to reduce server load
 
 ## Robots.txt Generation
 
