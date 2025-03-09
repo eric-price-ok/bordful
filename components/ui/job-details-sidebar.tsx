@@ -1,6 +1,9 @@
 import { CareerLevel, Salary, formatSalary } from "@/lib/db/airtable";
 import { WorkplaceType, RemoteRegion } from "@/lib/constants/workplace";
-import { Language, LANGUAGE_DISPLAY_NAMES } from "@/lib/constants/languages";
+import {
+  LanguageCode,
+  getDisplayNameFromCode,
+} from "@/lib/constants/languages";
 import {
   Calendar,
   MapPin,
@@ -27,7 +30,7 @@ interface JobDetailsSidebarProps {
   career_level: CareerLevel[];
   apply_url: string;
   visa_sponsorship: string;
-  languages: Language[];
+  languages: LanguageCode[];
 }
 
 function formatCareerLevel(level: CareerLevel): string {
@@ -227,9 +230,9 @@ export function JobDetailsSidebar({
             <h2 className="text-sm font-medium">Languages</h2>
           </div>
           <div className="flex flex-wrap gap-1.5 ml-6">
-            {languages.map((lang) => (
-              <JobBadge key={lang} type="language">
-                {LANGUAGE_DISPLAY_NAMES[lang]}
+            {languages.map((langCode) => (
+              <JobBadge key={langCode} type="language">
+                {getDisplayNameFromCode(langCode)}
               </JobBadge>
             ))}
           </div>

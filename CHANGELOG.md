@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.71] - 2025-03-09
+
+### Added
+- Enhanced language system with comprehensive ISO 639-1 support:
+  - Added support for all 184 ISO 639-1 language codes
+  - Implemented "Language Name (code)" format in Airtable for human readability
+  - Created bidirectional mapping between codes and full language names
+  - Added utility functions for language code extraction and normalization
+  - Enhanced language filtering with alphabetical sorting
+  - Improved SEO with standard language codes in URLs
+  - Added robust internationalization foundation
+  - Implemented flexible language matching algorithm
+  - Enhanced developer experience with comprehensive language type definitions
+  - Optimized language data storage with two-letter codes
+
 ## [0.0.70] - 2025-03-08
 
 ### Changed

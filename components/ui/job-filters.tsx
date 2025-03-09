@@ -4,7 +4,10 @@ import { Switch } from "@/components/ui/switch";
 import { useState, useMemo, useCallback } from "react";
 import { CareerLevel, Job, normalizeAnnualSalary } from "@/lib/db/airtable";
 import { CAREER_LEVEL_DISPLAY_NAMES } from "@/lib/constants/career-levels";
-import { Language, LANGUAGE_DISPLAY_NAMES } from "@/lib/constants/languages";
+import {
+  LanguageCode,
+  getDisplayNameFromCode,
+} from "@/lib/constants/languages";
 
 type FilterType =
   | "type"
@@ -14,7 +17,7 @@ type FilterType =
   | "visa"
   | "language"
   | "clear";
-type FilterValue = string[] | boolean | CareerLevel[] | Language[] | true;
+type FilterValue = string[] | boolean | CareerLevel[] | LanguageCode[] | true;
 
 interface JobFiltersProps {
   onFilterChange: (filterType: FilterType, value: FilterValue) => void;
@@ -24,7 +27,7 @@ interface JobFiltersProps {
     remote: boolean;
     salaryRanges: string[];
     visa: boolean;
-    languages: Language[];
+    languages: LanguageCode[];
   };
   jobs: Job[];
 }
@@ -203,7 +206,7 @@ export function JobFilters({
           acc[lang] = (acc[lang] || 0) + 1;
         });
         return acc;
-      }, {} as Record<Language, number>),
+      }, {} as Record<LanguageCode, number>),
     }),
     [jobs]
   );
@@ -211,8 +214,14 @@ export function JobFilters({
   // Sort and filter languages
   const languageEntries = useMemo(() => {
     const entries = Object.entries(counts.languages)
-      .sort((a, b) => b[1] - a[1])
+      // Sort alphabetically by language name for better UX
+      .sort((a, b) => {
+        const nameA = getDisplayNameFromCode(a[0] as LanguageCode);
+        const nameB = getDisplayNameFromCode(b[0] as LanguageCode);
+        return nameA.localeCompare(nameB);
+      })
       .filter(([, count]) => count > 0);
+
     return {
       initial: entries.slice(0, 5),
       additional: entries.slice(5),
@@ -481,21 +490,21 @@ export function JobFilters({
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id={`lang-${lang.toLowerCase()}`}
-                  checked={selectedLanguages.includes(lang as Language)}
+                  checked={selectedLanguages.includes(lang as LanguageCode)}
                   onCheckedChange={(checked: boolean) =>
-                    handleLanguageChange(checked, lang as Language)
+                    handleLanguageChange(checked, lang as LanguageCode)
                   }
                 />
                 <Label
                   htmlFor={`lang-${lang.toLowerCase()}`}
                   className="text-sm font-normal"
                 >
-                  {LANGUAGE_DISPLAY_NAMES[lang as Language]}
+                  {getDisplayNameFromCode(lang as LanguageCode)}
                 </Label>
               </div>
               <span
                 className={`text-xs px-2 py-0.5 rounded-full ${
-                  selectedLanguages.includes(lang as Language)
+                  selectedLanguages.includes(lang as LanguageCode)
                     ? "bg-zinc-900 text-zinc-50"
                     : "bg-zinc-100 text-zinc-500"
                 }`}

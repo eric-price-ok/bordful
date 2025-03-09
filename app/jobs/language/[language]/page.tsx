@@ -4,60 +4,63 @@ import config from "@/config";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { JobsLayout } from "@/components/jobs/JobsLayout";
-import type { Language } from "@/lib/constants/languages";
-import { LANGUAGE_DISPLAY_NAMES } from "@/lib/constants/languages";
+import {
+  LanguageCode,
+  LANGUAGE_CODES,
+  getDisplayNameFromCode,
+} from "@/lib/constants/languages";
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;
 
 interface Props {
-  params: {
+  params: Promise<{
     language: string;
-  };
+  }>;
 }
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const languageSlug = decodeURIComponent(params.language).toUpperCase();
-  const language = Object.keys(LANGUAGE_DISPLAY_NAMES).find(
-    (key) => key.toLowerCase() === languageSlug.toLowerCase()
-  ) as Language | undefined;
+  // Await the entire params object first
+  const resolvedParams = await params;
+  const languageCode = resolvedParams.language.toLowerCase();
 
-  if (!language) {
+  // Check if valid language code
+  if (!LANGUAGE_CODES.includes(languageCode as LanguageCode)) {
     return {
       title: "Language Not Found | " + config.title,
       description: "The language you're looking for doesn't exist.",
     };
   }
 
-  const displayName = LANGUAGE_DISPLAY_NAMES[language];
+  const displayName = getDisplayNameFromCode(languageCode as LanguageCode);
 
   return {
     title: `${displayName} Jobs | ${config.title}`,
     description: `Browse jobs requiring ${displayName} language skills. Find the perfect role that matches your language abilities.`,
     alternates: {
-      canonical: `/jobs/language/${languageSlug.toLowerCase()}`,
+      canonical: `/jobs/language/${languageCode}`,
     },
   };
 }
 
 export default async function LanguagePage({ params }: Props) {
   const jobs = await getJobs();
-  const languageSlug = decodeURIComponent(params.language).toUpperCase();
+  // Await the entire params object first
+  const resolvedParams = await params;
+  const languageCode = resolvedParams.language.toLowerCase();
 
-  // Find the language from our constants
-  const language = Object.keys(LANGUAGE_DISPLAY_NAMES).find(
-    (key) => key.toLowerCase() === languageSlug.toLowerCase()
-  ) as Language | undefined;
-
-  if (!language) {
+  // Check if valid language code
+  if (!LANGUAGE_CODES.includes(languageCode as LanguageCode)) {
     return notFound();
   }
 
-  const displayName = LANGUAGE_DISPLAY_NAMES[language];
+  const displayName = getDisplayNameFromCode(languageCode as LanguageCode);
 
-  // Filter jobs by language
-  const filteredJobs = jobs.filter((job) => job.languages?.includes(language));
+  // Filter jobs by language code
+  const filteredJobs = jobs.filter((job) =>
+    job.languages?.includes(languageCode as LanguageCode)
+  );
 
   if (filteredJobs.length === 0) return notFound();
 

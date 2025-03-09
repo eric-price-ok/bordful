@@ -1,6 +1,11 @@
 import Airtable from "airtable";
 import { WorkplaceType, RemoteRegion } from "@/lib/constants/workplace";
-import { Language } from "@/lib/constants/languages";
+import {
+  LanguageCode,
+  getLanguageByCode,
+  getLanguageByName,
+  LANGUAGE_CODES,
+} from "@/lib/constants/languages";
 
 // Initialize Airtable with Personal Access Token
 const base = new Airtable({
@@ -60,7 +65,7 @@ export interface Job {
   timezone_requirements: string | null;
   workplace_city: string | null;
   workplace_country: string | null;
-  languages: Language[];
+  languages: LanguageCode[];
 }
 
 // Format salary for display
@@ -245,6 +250,52 @@ function normalizeRemoteRegion(value: unknown): RemoteRegion {
   return null;
 }
 
+// Function to normalize language data from Airtable
+// This can handle multiple formats:
+// - ISO codes directly: "en", "fr"
+// - "Language Name (code)" format: "English (en)", "French (fr)"
+// - Language names: "English", "French" (via lookup)
+function normalizeLanguages(value: unknown): LanguageCode[] {
+  if (!value) return [];
+
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => {
+      if (typeof item === "string") {
+        // Format 1: Extract code from "Language Name (code)" format
+        const languageCodeMatch = /.*?\(([a-z]{2})\)$/i.exec(item);
+        if (languageCodeMatch && languageCodeMatch[1]) {
+          const extractedCode = languageCodeMatch[1].toLowerCase();
+
+          // Verify the extracted code is valid
+          if (LANGUAGE_CODES.includes(extractedCode as LanguageCode)) {
+            return extractedCode as LanguageCode;
+          }
+        }
+
+        // Format 2: Check if the string itself is a valid 2-letter code
+        if (
+          item.length === 2 &&
+          LANGUAGE_CODES.includes(item.toLowerCase() as LanguageCode)
+        ) {
+          return item.toLowerCase() as LanguageCode;
+        }
+
+        // Format 3: Try to look up by language name
+        const language = getLanguageByName(item);
+        if (language) {
+          return language.code as LanguageCode;
+        }
+      }
+
+      return null;
+    })
+    .filter((code): code is LanguageCode => code !== null);
+}
+
 export async function getJobs(): Promise<Job[]> {
   try {
     // Check for required environment variables
@@ -286,7 +337,7 @@ export async function getJobs(): Promise<Job[]> {
         timezone_requirements: (fields.timezone_requirements as string) || null,
         workplace_city: (fields.workplace_city as string) || null,
         workplace_country: (fields.workplace_country as string) || null,
-        languages: fields.languages as Language[],
+        languages: normalizeLanguages(fields.languages),
       };
     });
   } catch (error) {
@@ -354,7 +405,7 @@ export async function getJob(id: string): Promise<Job | null> {
         (record.fields.timezone_requirements as string) || null,
       workplace_city: (record.fields.workplace_city as string) || null,
       workplace_country: (record.fields.workplace_country as string) || null,
-      languages: record.fields.languages as Language[],
+      languages: normalizeLanguages(record.fields.languages),
     };
 
     return job;

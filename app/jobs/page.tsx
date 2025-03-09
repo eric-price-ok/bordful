@@ -15,8 +15,10 @@ import { HeroSection } from "@/components/ui/hero-section";
 import Link from "next/link";
 import { CAREER_LEVEL_DISPLAY_NAMES } from "@/lib/constants/career-levels";
 import type { Country } from "@/lib/constants/countries";
-import type { Language } from "@/lib/constants/languages";
-import { LANGUAGE_DISPLAY_NAMES } from "@/lib/constants/languages";
+import {
+  LanguageCode,
+  getDisplayNameFromCode,
+} from "@/lib/constants/languages";
 import {
   formatLocationTitle,
   createLocationSlug,
@@ -42,7 +44,7 @@ interface JobCounts {
     cities: Record<string, number>;
     remote: number;
   };
-  languages: Record<Language, number>;
+  languages: Record<LanguageCode, number>;
 }
 
 interface CategoryCardProps {
@@ -134,7 +136,7 @@ export default async function JobsDirectoryPage() {
         cities: {},
         remote: 0,
       },
-      languages: {} as Record<Language, number>,
+      languages: {} as Record<LanguageCode, number>,
     }
   );
 
@@ -151,9 +153,15 @@ export default async function JobsDirectoryPage() {
     .sort((a, b) => b[1] - a[1]); // Sort by count
 
   // Sort languages by count
-  const sortedLanguages = Object.entries(jobCounts.languages)
-    .sort((a, b) => b[1] - a[1]) // Sort by count
-    .slice(0, 6); // Show top 6 languages
+  const topLanguages = Object.entries(jobCounts.languages)
+    .filter(([_, count]) => count > 0)
+    .sort((a, b) => {
+      // Sort alphabetically by language name
+      const nameA = getDisplayNameFromCode(a[0] as LanguageCode);
+      const nameB = getDisplayNameFromCode(b[0] as LanguageCode);
+      return nameA.localeCompare(nameB);
+    })
+    .slice(0, 12);
 
   return (
     <>
@@ -327,11 +335,11 @@ export default async function JobsDirectoryPage() {
                 </h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                {sortedLanguages.map(([lang, count]) => (
+                {topLanguages.map(([lang, count]) => (
                   <CategoryCard
                     key={lang}
                     href={`/jobs/language/${lang.toLowerCase()}`}
-                    title={LANGUAGE_DISPLAY_NAMES[lang as Language]}
+                    title={getDisplayNameFromCode(lang as LanguageCode)}
                     count={count}
                   />
                 ))}

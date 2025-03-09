@@ -38,7 +38,7 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
   - Remote work preference
   - Salary ranges
   - Visa sponsorship status
-  - Languages
+  - Languages (supports all 184 ISO 639-1 language codes)
 - Enhanced user experience
   - Keyboard navigation for search (Escape to clear)
   - Loading states with smooth transitions
@@ -52,6 +52,29 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
   - Bluesky
   - Reddit
   - Each social link can be individually enabled/disabled and configured with custom URLs
+
+### Enhanced Language System
+
+Bordful features a comprehensive internationalization-ready language system:
+
+- Full ISO 639-1 support with all 184 language codes
+- User-friendly Airtable format: "Language Name (code)" (e.g., "English (en)")
+- Flexible matching for both language names and codes
+- Language filtering with alphabetical sorting
+- SEO-optimized language URLs using standard codes
+- Automatic bidirectional mapping between codes and names
+- Foundational support for multilingual job boards
+
+**Airtable Setup:** In your Airtable base, set up the `languages` field as a Multiple Select with options formatted as `Language Name (code)`, for example:
+```
+English (en)
+Spanish (es)
+French (fr)
+German (de)
+Japanese (ja)
+```
+
+This approach combines human readability in Airtable with the benefits of standardized language codes in your application.
 
 ## Script Management & Analytics
 
@@ -140,7 +163,7 @@ npm install
   career_level: Multiple select (Internship, Entry Level, Associate, Junior, Mid Level, Senior, Staff, Principal, Lead, Manager, Senior Manager, Director, Senior Director, VP, SVP, EVP, C-Level, Founder, Not Specified)
   visa_sponsorship: Single select (Yes, No, Not specified)
   featured: Checkbox
-  languages: Multiple select (English, Spanish, French, German, Chinese, Japanese, Korean, Portuguese, Russian, Arabic, Hindi, Italian, Dutch, Polish, Turkish, Vietnamese, Thai, Indonesian)
+  languages: Multiple select (format: "Language Name (code)", e.g. "English (en)", "Spanish (es)", "French (fr)")
   ```
 
 For both options:

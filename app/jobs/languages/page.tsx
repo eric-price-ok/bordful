@@ -4,8 +4,10 @@ import type { Metadata } from "next";
 import config from "@/config";
 import { HeroSection } from "@/components/ui/hero-section";
 import Link from "next/link";
-import type { Language } from "@/lib/constants/languages";
-import { LANGUAGE_DISPLAY_NAMES } from "@/lib/constants/languages";
+import {
+  LanguageCode,
+  getDisplayNameFromCode,
+} from "@/lib/constants/languages";
 import { generateMetadata } from "@/lib/utils/metadata";
 
 // Generate metadata for SEO
@@ -45,22 +47,31 @@ function LanguageCard({ href, title, count }: LanguageCardProps) {
 export default async function LanguagesPage() {
   const jobs = await getJobs();
 
-  // Aggregate job counts by language
-  const languageCounts = jobs.reduce<Record<Language, number>>((acc, job) => {
-    if (job.languages) {
-      job.languages.forEach((lang) => {
-        acc[lang] = (acc[lang] || 0) + 1;
-      });
-    }
-    return acc;
-  }, {} as Record<Language, number>);
+  // Aggregate job counts by language code
+  const languageCounts = jobs.reduce<Record<LanguageCode, number>>(
+    (acc, job) => {
+      if (job.languages) {
+        job.languages.forEach((langCode) => {
+          acc[langCode] = (acc[langCode] || 0) + 1;
+        });
+      }
+      return acc;
+    },
+    {} as Record<LanguageCode, number>
+  );
 
-  // Sort languages by job count
+  // Sort languages by alphabetical order of name
   const sortedLanguages = Object.entries(languageCounts)
-    .sort((a, b) => b[1] - a[1])
-    .map(([lang, count]) => ({
-      lang: lang as Language,
-      title: LANGUAGE_DISPLAY_NAMES[lang as Language],
+    .filter(([_, count]) => count > 0)
+    .sort((a, b) => {
+      // Sort alphabetically by language name
+      const nameA = getDisplayNameFromCode(a[0] as LanguageCode);
+      const nameB = getDisplayNameFromCode(b[0] as LanguageCode);
+      return nameA.localeCompare(nameB);
+    })
+    .map(([code, count]) => ({
+      code: code as LanguageCode,
+      title: getDisplayNameFromCode(code as LanguageCode),
       count,
     }));
 
@@ -85,10 +96,10 @@ export default async function LanguagesPage() {
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-              {sortedLanguages.map(({ lang, title, count }) => (
+              {sortedLanguages.map(({ code, title, count }) => (
                 <LanguageCard
-                  key={lang}
-                  href={`/jobs/language/${lang.toLowerCase()}`}
+                  key={code}
+                  href={`/jobs/language/${code}`}
                   title={title}
                   count={count}
                 />

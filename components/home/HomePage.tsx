@@ -28,7 +28,7 @@ import { JobFilters } from "@/components/ui/job-filters";
 import { PostJobBanner } from "@/components/ui/post-job-banner";
 import { HeroSection } from "@/components/ui/hero-section";
 import config from "@/config";
-import { Language } from "@/lib/constants/languages";
+import { LanguageCode } from "@/lib/constants/languages";
 
 type SortOption = "newest" | "oldest" | "salary";
 
@@ -38,7 +38,7 @@ interface Filters {
   remote: boolean;
   salaryRanges: string[];
   visa: boolean;
-  languages: Language[];
+  languages: LanguageCode[];
 }
 
 type FilterType =
@@ -49,7 +49,7 @@ type FilterType =
   | "visa"
   | "language"
   | "clear";
-type FilterValue = string[] | boolean | CareerLevel[] | Language[] | true;
+type FilterValue = string[] | boolean | CareerLevel[] | LanguageCode[] | true;
 
 function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
   const router = useRouter();
@@ -67,10 +67,17 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
     salaryRanges: searchParams.get("salary")?.split(",").filter(Boolean) || [],
     visa: searchParams.get("visa") === "true",
     languages: (searchParams.get("languages")?.split(",").filter(Boolean) ||
-      []) as Language[],
+      []) as LanguageCode[],
   };
 
-  const [filters, setFilters] = useState<Filters>(initialFilters);
+  const [filters, setFilters] = useState<Filters>({
+    types: initialFilters?.types || [],
+    roles: initialFilters?.roles || [],
+    remote: initialFilters?.remote || false,
+    salaryRanges: initialFilters?.salaryRanges || [],
+    visa: initialFilters?.visa || false,
+    languages: initialFilters?.languages || ([] as LanguageCode[]),
+  });
   const [pendingUrlUpdate, setPendingUrlUpdate] = useState<Record<
     string,
     string | null
@@ -242,7 +249,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
               Array.isArray(value) &&
               JSON.stringify(value) !== JSON.stringify(prev.languages)
             ) {
-              newFilters.languages = value as Language[];
+              newFilters.languages = value as LanguageCode[];
             } else {
               return prev;
             }
