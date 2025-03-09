@@ -62,7 +62,7 @@ export default async function LanguagesPage() {
 
   // Sort languages by alphabetical order of name
   const sortedLanguages = Object.entries(languageCounts)
-    .filter(([_, count]) => count > 0)
+    .filter(([, count]) => count > 0)
     .sort((a, b) => {
       // Sort alphabetically by language name
       const nameA = getDisplayNameFromCode(a[0] as LanguageCode);

@@ -154,7 +154,7 @@ export default async function JobsDirectoryPage() {
 
   // Sort languages by count
   const topLanguages = Object.entries(jobCounts.languages)
-    .filter(([_, count]) => count > 0)
+    .filter(([, count]) => count > 0)
     .sort((a, b) => {
       // Sort alphabetically by language name
       const nameA = getDisplayNameFromCode(a[0] as LanguageCode);

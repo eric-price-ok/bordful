@@ -2,7 +2,6 @@ import Airtable from "airtable";
 import { WorkplaceType, RemoteRegion } from "@/lib/constants/workplace";
 import {
   LanguageCode,
-  getLanguageByCode,
   getLanguageByName,
   LANGUAGE_CODES,
 } from "@/lib/constants/languages";
