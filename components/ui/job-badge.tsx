@@ -1,5 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 type BadgeType =
   | "new"
@@ -20,9 +21,16 @@ interface JobBadgeProps {
   children: React.ReactNode;
   className?: string;
   icon?: React.ReactNode;
+  href?: string; // Optional URL for clickable badges
 }
 
-export function JobBadge({ type, children, className, icon }: JobBadgeProps) {
+export function JobBadge({
+  type,
+  children,
+  className,
+  icon,
+  href,
+}: JobBadgeProps) {
   const badgeStyles = {
     new: "bg-green-50 border-green-100 border text-green-700",
     remote: "bg-green-50 border-green-100 border text-green-700",
@@ -35,7 +43,8 @@ export function JobBadge({ type, children, className, icon }: JobBadgeProps) {
     "visa-no": "bg-red-50 border-red-100 border text-red-700",
     "visa-not-specified": "bg-white border text-gray-700",
     "career-level": "bg-white border text-gray-700",
-    language: "bg-white border text-gray-700",
+    language:
+      "bg-white border text-gray-700 hover:border-gray-400 transition-colors",
   };
 
   const baseStyles = "inline-block px-2 py-0.5 text-xs rounded-full";
@@ -46,8 +55,21 @@ export function JobBadge({ type, children, className, icon }: JobBadgeProps) {
       ? "inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full"
       : baseStyles;
 
+  const styles = cn(featuredStyles, badgeStyles[type], className);
+
+  // If href is provided, render as a link
+  if (href) {
+    return (
+      <Link href={href} className={cn(styles, "cursor-pointer")}>
+        {icon && <span className="mr-1">{icon}</span>}
+        {children}
+      </Link>
+    );
+  }
+
+  // Regular badge (non-clickable)
   return (
-    <span className={cn(featuredStyles, badgeStyles[type], className)}>
+    <span className={styles}>
       {icon && <span className="mr-1">{icon}</span>}
       {children}
     </span>

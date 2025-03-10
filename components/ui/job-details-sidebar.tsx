@@ -231,7 +231,11 @@ export function JobDetailsSidebar({
           </div>
           <div className="flex flex-wrap gap-1.5 ml-6">
             {languages.map((langCode) => (
-              <JobBadge key={langCode} type="language">
+              <JobBadge
+                key={langCode}
+                type="language"
+                href={`/jobs/language/${langCode}`}
+              >
                 {getDisplayNameFromCode(langCode)}
               </JobBadge>
             ))}

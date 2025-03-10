@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.72] - 2025-03-10
+
+### Added
+- Made language badges in job details sidebar clickable, linking to language-specific job listings
+  - Improved internal linking and user navigation with interactive language tags
+  - Enhanced discoverability of language-specific job pages through contextual linking
+
 ## [0.0.71] - 2025-03-09
 
 ### Added
