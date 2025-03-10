@@ -8,6 +8,14 @@ All notable changes to this project will be documented in this file.
 - Made language badges in job details sidebar clickable, linking to language-specific job listings
   - Improved internal linking and user navigation with interactive language tags
   - Enhanced discoverability of language-specific job pages through contextual linking
+- Made career level badges in job details sidebar clickable, linking to level-specific job listings
+  - Implemented smart linking that excludes "Not Specified" career levels
+  - Added visual hover effects only to interactive elements
+  - Improved UX by providing clear visual affordances for clickable elements
+- Fixed route parameter handling for Next.js 15.2.1
+  - Updated dynamic route pages to properly await params
+  - Enhanced error handling for invalid routes
+  - Ensured consistent behavior across language, level, and type pages
 
 ## [0.0.71] - 2025-03-09
 

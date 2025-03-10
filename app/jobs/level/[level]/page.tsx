@@ -10,9 +10,9 @@ import { CAREER_LEVEL_DISPLAY_NAMES } from "@/lib/constants/career-levels";
 export const revalidate = 300;
 
 interface Props {
-  params: {
+  params: Promise<{
     level: string;
-  };
+  }>;
 }
 
 /**
@@ -26,19 +26,25 @@ function getCareerLevelFromSlug(slug: string): CareerLevel | null {
   return match ? (match[0] as CareerLevel) : null;
 }
 
+// Generate metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const levelSlug = decodeURIComponent(params.level).toLowerCase();
+  // Await the entire params object first
+  const resolvedParams = await params;
+  const levelSlug = decodeURIComponent(resolvedParams.level).toLowerCase();
   const careerLevel = getCareerLevelFromSlug(levelSlug);
 
   if (!careerLevel || careerLevel === "NotSpecified") {
-    return notFound();
+    return {
+      title: "Career Level Not Found | " + config.title,
+      description: "The career level you're looking for doesn't exist.",
+    };
   }
 
   const displayName = CAREER_LEVEL_DISPLAY_NAMES[careerLevel];
 
   return {
     title: `${displayName} Jobs | ${config.title}`,
-    description: `Browse ${displayName.toLowerCase()} positions. Find the perfect role that matches your experience level.`,
+    description: `Browse jobs requiring ${displayName} experience. Find the perfect role that matches your career level.`,
     alternates: {
       canonical: `/jobs/level/${levelSlug}`,
     },
@@ -47,7 +53,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CareerLevelPage({ params }: Props) {
   const jobs = await getJobs();
-  const levelSlug = decodeURIComponent(params.level).toLowerCase();
+  // Await the entire params object first
+  const resolvedParams = await params;
+  const levelSlug = decodeURIComponent(resolvedParams.level).toLowerCase();
   const careerLevel = getCareerLevelFromSlug(levelSlug);
 
   if (!careerLevel || careerLevel === "NotSpecified") {

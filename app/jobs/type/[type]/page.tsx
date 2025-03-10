@@ -15,9 +15,9 @@ import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
 export const revalidate = 300;
 
 interface Props {
-  params: {
+  params: Promise<{
     type: string;
-  };
+  }>;
 }
 
 /**
@@ -31,27 +31,37 @@ function getJobTypeFromSlug(slug: string): JobType | null {
   return match ? (match[0] as JobType) : null;
 }
 
+// Generate metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const typeSlug = decodeURIComponent(params.type).toLowerCase();
+  // Await the entire params object first
+  const resolvedParams = await params;
+  const typeSlug = decodeURIComponent(resolvedParams.type).toLowerCase();
   const jobType = getJobTypeFromSlug(typeSlug);
 
   if (!jobType) {
-    return notFound();
+    return {
+      title: "Job Type Not Found | " + config.title,
+      description: "The job type you're looking for doesn't exist.",
+    };
   }
 
   const displayName = JOB_TYPE_DISPLAY_NAMES[jobType];
   const description = JOB_TYPE_DESCRIPTIONS[jobType];
 
-  return createMetadata({
+  return {
     title: `${displayName} Jobs | ${config.title}`,
     description: `Browse ${displayName.toLowerCase()} jobs. ${description}`,
-    path: `/jobs/type/${params.type}`,
-  });
+    alternates: {
+      canonical: `/jobs/type/${typeSlug}`,
+    },
+  };
 }
 
 export default async function JobTypePage({ params }: Props) {
   const jobs = await getJobs();
-  const typeSlug = decodeURIComponent(params.type).toLowerCase();
+  // Await the entire params object first
+  const resolvedParams = await params;
+  const typeSlug = decodeURIComponent(resolvedParams.type).toLowerCase();
   const jobType = getJobTypeFromSlug(typeSlug);
 
   if (!jobType) {

@@ -170,7 +170,15 @@ export function JobDetailsSidebar({
         </div>
         <div className="flex flex-wrap gap-1.5 ml-6">
           {careerLevels.map((level, index) => (
-            <JobBadge key={`${level}-${index}`} type="career-level">
+            <JobBadge
+              key={`${level}-${index}`}
+              type="career-level"
+              href={
+                level !== "NotSpecified"
+                  ? `/jobs/level/${level.toLowerCase()}`
+                  : undefined
+              }
+            >
               {formatCareerLevel(level)}
             </JobBadge>
           ))}

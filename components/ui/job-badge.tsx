@@ -31,6 +31,7 @@ export function JobBadge({
   icon,
   href,
 }: JobBadgeProps) {
+  // Base badge styles without hover effects
   const badgeStyles = {
     new: "bg-green-50 border-green-100 border text-green-700",
     remote: "bg-green-50 border-green-100 border text-green-700",
@@ -43,9 +44,11 @@ export function JobBadge({
     "visa-no": "bg-red-50 border-red-100 border text-red-700",
     "visa-not-specified": "bg-white border text-gray-700",
     "career-level": "bg-white border text-gray-700",
-    language:
-      "bg-white border text-gray-700 hover:border-gray-400 transition-colors",
+    language: "bg-white border text-gray-700",
   };
+
+  // Apply hover effects only when href is provided (badge is clickable)
+  const hoverStyles = href ? "hover:border-gray-400 transition-colors" : "";
 
   const baseStyles = "inline-block px-2 py-0.5 text-xs rounded-full";
 
@@ -55,7 +58,7 @@ export function JobBadge({
       ? "inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full"
       : baseStyles;
 
-  const styles = cn(featuredStyles, badgeStyles[type], className);
+  const styles = cn(featuredStyles, badgeStyles[type], hoverStyles, className);
 
   // If href is provided, render as a link
   if (href) {
