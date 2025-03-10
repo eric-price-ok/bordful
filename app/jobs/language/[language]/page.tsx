@@ -9,6 +9,7 @@ import {
   LANGUAGE_CODES,
   getDisplayNameFromCode,
 } from "@/lib/constants/languages";
+import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;
@@ -35,13 +36,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const displayName = getDisplayNameFromCode(languageCode as LanguageCode);
 
-  return {
+  return createMetadata({
     title: `${displayName} Jobs | ${config.title}`,
     description: `Browse jobs requiring ${displayName} language skills. Find the perfect role that matches your language abilities.`,
-    alternates: {
-      canonical: `/jobs/language/${languageCode}`,
-    },
-  };
+    path: `/jobs/language/${languageCode}`,
+  });
 }
 
 export default async function LanguagePage({ params }: Props) {

@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { JobsLayout } from "@/components/jobs/JobsLayout";
 import { CAREER_LEVEL_DISPLAY_NAMES } from "@/lib/constants/career-levels";
+import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;
@@ -42,13 +43,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const displayName = CAREER_LEVEL_DISPLAY_NAMES[careerLevel];
 
-  return {
+  return createMetadata({
     title: `${displayName} Jobs | ${config.title}`,
     description: `Browse jobs requiring ${displayName} experience. Find the perfect role that matches your career level.`,
-    alternates: {
-      canonical: `/jobs/level/${levelSlug}`,
-    },
-  };
+    path: `/jobs/level/${levelSlug}`,
+  });
 }
 
 export default async function CareerLevelPage({ params }: Props) {

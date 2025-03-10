@@ -48,13 +48,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const displayName = JOB_TYPE_DISPLAY_NAMES[jobType];
   const description = JOB_TYPE_DESCRIPTIONS[jobType];
 
-  return {
+  return createMetadata({
     title: `${displayName} Jobs | ${config.title}`,
     description: `Browse ${displayName.toLowerCase()} jobs. ${description}`,
-    alternates: {
-      canonical: `/jobs/type/${typeSlug}`,
-    },
-  };
+    path: `/jobs/type/${typeSlug}`,
+  });
 }
 
 export default async function JobTypePage({ params }: Props) {
