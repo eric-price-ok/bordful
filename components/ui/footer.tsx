@@ -27,18 +27,18 @@ export function Footer() {
 
   return (
     <footer className="border-t mt-24">
-      <div className="container mx-auto py-8 px-4">
-        <div className="flex flex-col gap-8">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 pb-8 border-b">
+      <div className="container mx-auto py-6 px-4">
+        <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-5 pb-6 border-b">
             {config.footer.brand.show && (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <h3 className="text-sm font-semibold text-zinc-900">
                   {config.nav.title}
                 </h3>
                 <p className="text-sm text-zinc-600 max-w-[280px]">
                   {config.footer.brand.description}
                 </p>
-                <div className="flex items-center space-x-3 pt-2">
+                <div className="flex items-center space-x-3 pt-1">
                   {rssEnabled && (
                     <Link
                       href="/feed.xml"
@@ -172,19 +172,66 @@ export function Footer() {
               </div>
             )}
 
+            {/* Jobs Section */}
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold text-zinc-900">Jobs</h3>
+              <ul className="space-y-1.5">
+                <li>
+                  <Link
+                    href="/jobs"
+                    className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                  >
+                    All Jobs
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/jobs/types"
+                    className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                  >
+                    Job Types
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/jobs/locations"
+                    className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                  >
+                    Job Locations
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/jobs/levels"
+                    className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                  >
+                    Career Levels
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/jobs/languages"
+                    className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                  >
+                    Job Languages
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
             {config.footer.resources.show && (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <h3 className="text-sm font-semibold text-zinc-900">
                   {config.footer.resources.title}
                 </h3>
-                <ul className="space-y-2">
+                <ul className="space-y-1.5">
                   {rssEnabled && Boolean(config.rssFeed?.showInFooter) && (
                     <li>
-                      <div className="space-y-2">
+                      <div className="space-y-1.5">
                         <h4 className="text-sm font-medium text-zinc-800">
                           {config.rssFeed?.footerLabel || "Job Feeds"}
                         </h4>
-                        <ul className="space-y-1.5 ml-2">
+                        <ul className="space-y-1 ml-2">
                           {/* Always show RSS format */}
                           <li>
                             <Link
@@ -259,11 +306,11 @@ export function Footer() {
             )}
 
             {config.footer.legal.show && (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <h3 className="text-sm font-semibold text-zinc-900">
                   {config.footer.legal.title}
                 </h3>
-                <ul className="space-y-2">
+                <ul className="space-y-1.5">
                   {config.footer.legal.links.map(
                     ({ link, label, external }) => (
                       <li key={link}>
@@ -284,7 +331,7 @@ export function Footer() {
             )}
 
             {config.footer.postJob.show && (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <h3 className="text-sm font-semibold text-zinc-900">
                   {config.footer.postJob.title}
                 </h3>
@@ -310,12 +357,18 @@ export function Footer() {
             )}
           </div>
 
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          {/* Copyright and Built With */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            {/* Copyright */}
             {config.footer.copyright.show && (
-              <div className="text-xs text-gray-500">
-                {copyrightYears} © {config.footer.copyright.text}
+              <div>
+                <p className="text-xs text-zinc-500 text-center md:text-left">
+                  &copy; {copyrightYears} {config.footer.copyright.text}
+                </p>
               </div>
             )}
+
+            {/* Built With */}
             {config.footer.builtWith.show && (
               <div className="flex items-center gap-2">
                 <span className="text-xs text-gray-500">

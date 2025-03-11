@@ -14,6 +14,19 @@ All notable changes to this project will be documented in this file.
   - Improved accessibility with proper ARIA attributes
   - Added keyboard and mouse interaction support
   - Implemented click-outside behavior to dismiss dropdown
+- Added Jobs section to footer:
+  - Created dedicated column for job-related links
+  - Added links to all jobs, job types, locations, levels, and languages
+  - Enhanced site navigation with consistent job category access
+  - Improved discoverability of job-related pages
+
+### Changed
+- Optimized footer layout for better space utilization:
+  - Reduced vertical and horizontal spacing between elements
+  - Adjusted grid to accommodate 5 columns instead of 4
+  - Decreased spacing between list items for more compact appearance
+  - Standardized spacing values throughout the footer component
+  - Improved mobile and desktop layout consistency
 
 ## [0.0.72] - 2025-03-10
 
