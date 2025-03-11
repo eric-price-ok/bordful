@@ -6,19 +6,28 @@ import { PlusCircle, Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import config from "@/config";
 
+// Job links for the footer
+const jobLinks = [
+  { label: "All Jobs", link: "/jobs" },
+  { label: "Job Types", link: "/jobs/types" },
+  { label: "Job Locations", link: "/jobs/locations" },
+  { label: "Career Levels", link: "/jobs/levels" },
+  { label: "Job Languages", link: "/jobs/languages" },
+];
+
 export function Footer() {
-  const [copyrightYears, setCopyrightYears] = useState(
-    config.footer.copyright.startYear.toString()
-  );
+  // Initialize with empty string to avoid hydration mismatch
+  const [copyrightYears, setCopyrightYears] = useState("");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const currentYear = new Date().getFullYear();
-      if (currentYear !== config.footer.copyright.startYear) {
-        setCopyrightYears(
-          `${config.footer.copyright.startYear}-${currentYear}`
-        );
-      }
+    // Set copyright years only on client-side
+    const startYear = config.footer.copyright.startYear;
+    const currentYear = new Date().getFullYear();
+
+    if (currentYear !== startYear) {
+      setCopyrightYears(`${startYear}-${currentYear}`);
+    } else {
+      setCopyrightYears(startYear.toString());
     }
   }, []);
 
@@ -172,52 +181,24 @@ export function Footer() {
               </div>
             )}
 
-            {/* Jobs Section */}
-            <div className="space-y-2">
-              <h3 className="text-sm font-semibold text-zinc-900">Jobs</h3>
-              <ul className="space-y-1.5">
-                <li>
-                  <Link
-                    href="/jobs"
-                    className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
-                  >
-                    All Jobs
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/jobs/types"
-                    className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
-                  >
-                    Job Types
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/jobs/locations"
-                    className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
-                  >
-                    Job Locations
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/jobs/levels"
-                    className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
-                  >
-                    Career Levels
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/jobs/languages"
-                    className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
-                  >
-                    Job Languages
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            {/* Jobs Section - Make it conditional like other sections */}
+            {true && (
+              <div className="space-y-2">
+                <h3 className="text-sm font-semibold text-zinc-900">Jobs</h3>
+                <ul className="space-y-1.5">
+                  {jobLinks.map((item) => (
+                    <li key={item.link}>
+                      <Link
+                        href={item.link}
+                        className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {config.footer.resources.show && (
               <div className="space-y-2">
@@ -363,7 +344,8 @@ export function Footer() {
             {config.footer.copyright.show && (
               <div>
                 <p className="text-xs text-zinc-500 text-center md:text-left">
-                  &copy; {copyrightYears} {config.footer.copyright.text}
+                  {copyrightYears && `© ${copyrightYears}`}{" "}
+                  {config.footer.copyright.text}
                 </p>
               </div>
             )}
