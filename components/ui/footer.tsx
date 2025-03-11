@@ -282,6 +282,18 @@ export function Footer() {
                         </Link>
                       </li>
                     )}
+
+                  {/* Add Pricing Link if enabled */}
+                  {config.pricing?.enabled && config.pricing?.showInFooter && (
+                    <li key="/pricing">
+                      <Link
+                        href="/pricing"
+                        className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                      >
+                        {config.pricing.navigationLabel}
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </div>
             )}

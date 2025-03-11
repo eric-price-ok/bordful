@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.75] - 2025-03-11
+
+### Added
+- Enhanced pricing page with improved UI and payment information:
+  - Added "Best Value" badge to Pro plan for better plan differentiation
+  - Added payment processing information text with configurable content
+  - Implemented payment method icons (Visa, Mastercard, Amex, Apple Pay, Google Pay, PayPal)
+  - Added hover effects on payment icons for better interactivity
+  - Made all payment-related elements configurable through config file
+
+### Changed
+- Improved pricing page layout and consistency:
+  - Standardized button sizes to match navigation buttons
+  - Made buttons full width within pricing cards for better visual balance
+  - Aligned badge positioning to match job cards for consistent design language
+  - Removed FAQ section for cleaner, more focused layout
+  - Enhanced spacing and alignment throughout pricing cards
+  - Optimized visual hierarchy with consistent styling patterns
+
+## [0.0.74] - 2025-03-11
+
+### Added
+- Added configurable pricing page:
+  - Created new `/pricing` route with responsive design
+  - Implemented pricing plans configuration in config file
+  - Added Free and Pro plan options with feature lists
+  - Integrated with existing UI components
+  - Added FAQ section with common pricing questions
+  - Enhanced navigation with conditional pricing links
+  - Added SEO metadata for pricing page
+  - Implemented popular plan highlighting
+
 ## [0.0.73] - 2025-03-11
 
 ### Added

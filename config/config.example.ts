@@ -170,6 +170,7 @@ export const config = {
       { label: "Jobs", link: "/jobs" },
       { label: "About", link: "/about" },
       { label: "Changelog", link: "/changelog" },
+      // Pricing link will be added dynamically in the nav component
     ],
   },
 
@@ -191,6 +192,7 @@ export const config = {
         { label: "Jobs", link: "/jobs" },
         { label: "About", link: "/about" },
         { label: "Changelog", link: "/changelog" },
+        // Pricing link will be added dynamically in the footer component if enabled
       ],
     },
 
@@ -245,6 +247,111 @@ export const config = {
       link: "https://bordful.com/",
       showLogo: true,
     },
+  },
+
+  // Pricing Configuration
+  pricing: {
+    // Enable or disable the pricing page
+    enabled: true,
+
+    // Show pricing link in navigation
+    showInNavigation: true,
+
+    // Show pricing link in footer resources
+    showInFooter: true,
+
+    // Navigation label
+    navigationLabel: "Pricing",
+
+    // Page title and description
+    title: "Simple, Transparent Pricing",
+    description: "Choose the plan that's right for your job board needs.",
+
+    // Currency symbol
+    currencySymbol: "$",
+
+    // Payment processing information (displayed below pricing cards)
+    paymentProcessingText:
+      "Payments are processed & secured by Stripe. Price in USD. VAT may apply.",
+
+    // Payment method icons to display
+    paymentMethods: {
+      enabled: true,
+      icons: [
+        { name: "visa", alt: "Visa" },
+        { name: "mastercard", alt: "Mastercard" },
+        { name: "amex", alt: "American Express" },
+        { name: "applepay", alt: "Apple Pay" },
+        { name: "googlepay", alt: "Google Pay" },
+        { name: "paypal", alt: "PayPal" },
+      ],
+    },
+
+    // Plans configuration
+    plans: [
+      {
+        name: "Free",
+        price: 0,
+        duration: "forever",
+        description:
+          "Perfect for getting started with basic job posting features.",
+        features: [
+          "1 active job posting",
+          "Basic job listing",
+          "30-day visibility",
+          "Standard support",
+          "Basic analytics",
+        ],
+        cta: {
+          label: "Get Started",
+          link: "/post",
+          variant: "outline", // Using button variants
+        },
+        popular: false,
+      },
+      {
+        name: "Basic",
+        price: 49,
+        duration: "30 days",
+        description: "Great for small teams with regular hiring needs.",
+        features: [
+          "3 active job postings",
+          "Standard job listings",
+          "30-day visibility",
+          "Email support",
+          "Standard analytics",
+          "Company profile",
+        ],
+        cta: {
+          label: "Choose Basic",
+          link: "https://stripe.com",
+          variant: "outline", // Using button variants
+        },
+        popular: true,
+      },
+      {
+        name: "Pro",
+        price: 99,
+        duration: "30 days",
+        description:
+          "Enhanced visibility and premium features for serious recruiters.",
+        features: [
+          "5 active job postings",
+          "Featured job listings",
+          "30-day visibility",
+          "Priority support",
+          "Advanced analytics",
+          "Company profile",
+          "Applicant tracking",
+        ],
+        cta: {
+          label: "Upgrade Now",
+          link: "https://stripe.com",
+          variant: "default", // Using button variants
+        },
+        popular: false,
+      },
+    ],
   },
 } as const;
 

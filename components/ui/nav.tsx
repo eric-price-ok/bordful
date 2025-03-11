@@ -8,6 +8,7 @@ import { PlusCircle, Menu, X, Rss, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 // Preload the icon for better performance
 const DynamicIcon = dynamic(
@@ -52,6 +53,14 @@ export function Nav() {
     topMenuItems.push({
       label: config.rssFeed.navigationLabel || "RSS Feed",
       link: "/feed.xml",
+    });
+  }
+
+  // Add Pricing link if enabled
+  if (config.pricing?.enabled && config.pricing?.showInNavigation) {
+    topMenuItems.push({
+      label: config.pricing.navigationLabel || "Pricing",
+      link: "/pricing",
     });
   }
 
