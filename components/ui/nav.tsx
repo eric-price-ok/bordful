@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import config from "@/config";
 import dynamic from "next/dynamic";
-import { PlusCircle, Menu, X, Rss } from "lucide-react";
+import { PlusCircle, Menu, X, Rss, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 // Preload the icon for better performance
@@ -18,8 +18,19 @@ const DynamicIcon = dynamic(
   }
 );
 
+// Job dropdown menu items
+const jobDropdownItems = [
+  { label: "All Jobs", link: "/jobs" },
+  { label: "Job Types", link: "/jobs/types" },
+  { label: "Job Locations", link: "/jobs/locations" },
+  { label: "Job Levels", link: "/jobs/levels" },
+  { label: "Job Languages", link: "/jobs/languages" },
+];
+
 export function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+  const [jobsDropdownOpen, setJobsDropdownOpen] = useState(false);
+  const jobsDropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   // Create a copy of the top menu items with a more flexible type
@@ -43,6 +54,23 @@ export function Nav() {
       link: "/feed.xml",
     });
   }
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        jobsDropdownRef.current &&
+        !jobsDropdownRef.current.contains(event.target as Node)
+      ) {
+        setJobsDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <header className="border-b border-zinc-200 bg-white">
@@ -95,19 +123,77 @@ export function Nav() {
               className="flex items-center space-x-2 mr-4"
               aria-label="Primary"
             >
-              {topMenuItems.map(({ link, label }) => (
-                <Link
-                  key={link}
-                  href={link}
-                  className={`text-sm px-2.5 py-1 rounded-lg ${
-                    pathname === link
-                      ? "text-zinc-900 bg-zinc-100"
-                      : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
-                  } transition-colors`}
-                >
-                  {label}
-                </Link>
-              ))}
+              {topMenuItems.map(({ link, label }) => {
+                // Special handling for Jobs menu item
+                if (label === "Jobs") {
+                  return (
+                    <div
+                      key={link}
+                      className="relative"
+                      ref={jobsDropdownRef}
+                      onMouseEnter={() => setJobsDropdownOpen(true)}
+                      onMouseLeave={() => setJobsDropdownOpen(false)}
+                    >
+                      <button
+                        className={`text-sm px-2.5 py-1 rounded-lg flex items-center ${
+                          pathname.startsWith("/jobs")
+                            ? "text-zinc-900 bg-zinc-100"
+                            : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
+                        } transition-colors`}
+                        aria-expanded={jobsDropdownOpen}
+                        onClick={() => setJobsDropdownOpen(!jobsDropdownOpen)}
+                      >
+                        {label}
+                        <ChevronDown
+                          className="ml-1 h-3 w-3"
+                          aria-hidden="true"
+                        />
+                      </button>
+
+                      {jobsDropdownOpen && (
+                        <div className="absolute left-0 mt-1 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                          <div
+                            className="py-1"
+                            role="menu"
+                            aria-orientation="vertical"
+                          >
+                            {jobDropdownItems.map((item) => (
+                              <Link
+                                key={item.link}
+                                href={item.link}
+                                className={`block px-4 py-2 text-sm ${
+                                  pathname === item.link
+                                    ? "bg-zinc-100 text-zinc-900"
+                                    : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900"
+                                }`}
+                                onClick={() => setJobsDropdownOpen(false)}
+                                role="menuitem"
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
+                // Regular menu items
+                return (
+                  <Link
+                    key={link}
+                    href={link}
+                    className={`text-sm px-2.5 py-1 rounded-lg ${
+                      pathname === link
+                        ? "text-zinc-900 bg-zinc-100"
+                        : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
+                    } transition-colors`}
+                  >
+                    {label}
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Actions */}
@@ -264,20 +350,58 @@ export function Nav() {
               aria-label="Mobile navigation"
             >
               {/* Primary Navigation */}
-              {topMenuItems.map(({ link, label }) => (
-                <Link
-                  key={link}
-                  href={link}
-                  className={`text-sm px-2.5 py-1 rounded-lg mb-1 ${
-                    pathname === link
-                      ? "text-zinc-900 bg-zinc-100"
-                      : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
-                  } transition-colors`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {label}
-                </Link>
-              ))}
+              {topMenuItems.map(({ link, label }) => {
+                // Special handling for Jobs menu item in mobile view
+                if (label === "Jobs") {
+                  return (
+                    <div key={link} className="mb-1">
+                      <Link
+                        href={link}
+                        className={`text-sm px-2.5 py-1 rounded-lg mb-1 block ${
+                          pathname === link
+                            ? "text-zinc-900 bg-zinc-100"
+                            : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
+                        } transition-colors`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {label}
+                      </Link>
+                      <div className="pl-4 mt-1 border-l border-zinc-200">
+                        {jobDropdownItems.map((item) => (
+                          <Link
+                            key={item.link}
+                            href={item.link}
+                            className={`text-sm px-2.5 py-1 rounded-lg mb-1 block ${
+                              pathname === item.link
+                                ? "text-zinc-900 bg-zinc-100"
+                                : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
+                            } transition-colors`}
+                            onClick={() => setIsOpen(false)}
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
+
+                // Regular menu items
+                return (
+                  <Link
+                    key={link}
+                    href={link}
+                    className={`text-sm px-2.5 py-1 rounded-lg mb-1 ${
+                      pathname === link
+                        ? "text-zinc-900 bg-zinc-100"
+                        : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
+                    } transition-colors`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {label}
+                  </Link>
+                );
+              })}
 
               {/* Social Links */}
               <div className="flex items-center space-x-3 px-4 py-4 border-t border-zinc-200 mt-2">

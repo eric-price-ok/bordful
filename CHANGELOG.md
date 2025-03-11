@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.73] - 2025-03-11
+
+### Added
+- Added dropdown menu for Jobs navigation item:
+  - Implemented hover-activated dropdown in desktop view
+  - Created nested navigation in mobile view with indented sub-items
+  - Added links to job-related pages (types, locations, levels, languages)
+  - Enhanced navigation UX with visual hierarchy for job categories
+  - Optimized dropdown width for better visual balance
+  - Improved accessibility with proper ARIA attributes
+  - Added keyboard and mouse interaction support
+  - Implemented click-outside behavior to dismiss dropdown
+
 ## [0.0.72] - 2025-03-10
 
 ### Added
