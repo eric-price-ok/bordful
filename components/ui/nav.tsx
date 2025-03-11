@@ -8,7 +8,6 @@ import { PlusCircle, Menu, X, Rss, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
 
 // Preload the icon for better performance
 const DynamicIcon = dynamic(
