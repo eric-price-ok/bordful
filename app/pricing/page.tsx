@@ -7,6 +7,11 @@ import { Button } from "@/components/ui/button";
 import { JobBadge } from "@/components/ui/job-badge";
 import config from "@/config";
 
+// Format a billing term for display
+const formatPricingBillingTerm = (billingTerm: string): string => {
+  return `/${billingTerm}`;
+};
+
 // Add metadata for SEO
 export const metadata: Metadata = {
   title: `${config.pricing?.title || "Pricing"} | ${config.title}`,
@@ -73,7 +78,7 @@ export default function PricingPage() {
             <div key={index} className="group relative">
               <div
                 className={`block px-5 py-6 border rounded-lg transition-all h-full ${
-                  plan.popular
+                  plan.highlighted
                     ? "border-zinc-400 shadow-sm"
                     : "hover:border-gray-400"
                 }`}
@@ -81,20 +86,12 @@ export default function PricingPage() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between gap-2">
                     <h2 className="text-lg font-medium">{plan.name}</h2>
-                    {plan.popular && (
+                    {plan.badge && (
                       <JobBadge
-                        type="featured"
+                        type={plan.badge.type || "featured"}
                         icon={<Sparkles className="w-3 h-3" />}
                       >
-                        Popular
-                      </JobBadge>
-                    )}
-                    {plan.name === "Pro" && (
-                      <JobBadge
-                        type="featured"
-                        icon={<Sparkles className="w-3 h-3" />}
-                      >
-                        Best Value
+                        {plan.badge.text}
                       </JobBadge>
                     )}
                   </div>
@@ -107,7 +104,7 @@ export default function PricingPage() {
                     </span>
                     {plan.price > 0 && (
                       <span className="ml-1 text-sm text-gray-500">
-                        /{plan.duration}
+                        {formatPricingBillingTerm(plan.billingTerm)}
                       </span>
                     )}
                   </div>

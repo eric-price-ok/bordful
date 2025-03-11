@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-type BadgeType =
+export type BadgeType =
   | "new"
   | "remote"
   | "onsite"

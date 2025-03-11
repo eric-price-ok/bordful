@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.76] - 2025-03-11
+
+### Added
+- Enhanced pricing page configuration with more flexibility:
+  - Simplified billing term structure with customizable text (e.g., "month", "year", "job posting")
+  - Added customizable badge system with support for different badge types
+  - Decoupled border highlighting from badges with new `highlighted` property
+  - Improved type safety by importing badge types from components
+  - Added comprehensive documentation for pricing page customization
+
+### Changed
+- Improved pricing page component:
+  - Enhanced code organization with better separation of concerns
+  - Optimized formatting logic with dedicated helper functions
+  - Improved responsive design for better mobile experience
+  - Reduced code duplication for better maintainability
+
 ## [0.0.75] - 2025-03-11
 
 ### Added

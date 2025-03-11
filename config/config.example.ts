@@ -21,11 +21,31 @@
  */
 
 import type { ScriptProps } from "next/script";
+import type { BadgeType } from "@/components/ui/job-badge";
 
 interface CustomScript {
   src: string;
   strategy: ScriptProps["strategy"];
   attributes?: Record<string, string>;
+}
+
+// Plan type for pricing configuration
+interface PricingPlan {
+  name: string;
+  price: number;
+  billingTerm: string;
+  description: string;
+  features: string[];
+  cta: {
+    label: string;
+    link: string;
+    variant: string;
+  };
+  badge: {
+    text: string;
+    type?: BadgeType;
+  } | null;
+  highlighted: boolean;
 }
 
 export const config = {
@@ -292,9 +312,8 @@ export const config = {
       {
         name: "Free",
         price: 0,
-        duration: "forever",
-        description:
-          "Perfect for getting started with basic job posting features.",
+        billingTerm: "forever",
+        description: "Perfect for getting started with basic hiring needs.",
         features: [
           "1 active job posting",
           "Basic job listing",
@@ -307,13 +326,15 @@ export const config = {
           link: "/post",
           variant: "outline", // Using button variants
         },
-        popular: false,
+        badge: null,
+        highlighted: false,
       },
       {
-        name: "Basic",
-        price: 49,
-        duration: "30 days",
-        description: "Great for small teams with regular hiring needs.",
+        name: "Pro",
+        price: 99,
+        billingTerm: "job posting",
+        description:
+          "Great for occasional hiring needs with better visibility.",
         features: [
           "3 active job postings",
           "Standard job listings",
@@ -327,14 +348,18 @@ export const config = {
           link: "https://stripe.com",
           variant: "outline", // Using button variants
         },
-        popular: true,
+        badge: {
+          text: "Popular",
+          type: "featured",
+        },
+        highlighted: true,
       },
       {
-        name: "Pro",
-        price: 99,
-        duration: "30 days",
+        name: "Business",
+        price: 999,
+        billingTerm: "year",
         description:
-          "Enhanced visibility and premium features for serious recruiters.",
+          "Unlimited jobs postings for one year for serious recruiters.",
         features: [
           "5 active job postings",
           "Featured job listings",
@@ -349,7 +374,11 @@ export const config = {
           link: "https://stripe.com",
           variant: "default", // Using button variants
         },
-        popular: false,
+        badge: {
+          text: "Best Value",
+          type: "featured",
+        },
+        highlighted: false,
       },
     ],
   },

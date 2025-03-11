@@ -308,6 +308,111 @@ export const config = {
       { label: "Changelog", link: "/changelog" },
     ],
   },
+  
+  // Pricing Configuration
+  pricing: {
+    // Enable or disable the pricing page
+    enabled: true,
+    
+    // Show pricing link in navigation
+    showInNavigation: true,
+    
+    // Show pricing link in footer resources
+    showInFooter: true,
+    
+    // Navigation label
+    navigationLabel: "Pricing",
+    
+    // Page title and description
+    title: "Simple, Transparent Pricing",
+    description: "Choose the plan that's right for your job board needs.",
+    
+    // Currency symbol
+    currencySymbol: "$",
+    
+    // Payment processing information (displayed below pricing cards)
+    paymentProcessingText: "Payments are processed & secured by Stripe. Price in USD. VAT may apply.",
+    
+    // Payment method icons to display
+    paymentMethods: {
+      enabled: true,
+      icons: [
+        { name: "visa", alt: "Visa" },
+        { name: "mastercard", alt: "Mastercard" },
+        { name: "amex", alt: "American Express" },
+        { name: "applepay", alt: "Apple Pay" },
+        { name: "googlepay", alt: "Google Pay" },
+        { name: "paypal", alt: "PayPal" },
+      ],
+    },
+    
+    // Plans configuration
+    plans: [
+      {
+        name: "Free",
+        price: 0,
+        billingTerm: "forever",
+        description: "Perfect for getting started with basic hiring needs.",
+        features: [
+          "1 active job posting",
+          "Basic job listing",
+          "30-day visibility",
+          "Standard support",
+        ],
+        cta: {
+          label: "Get Started",
+          link: "/post",
+          variant: "outline", // Using button variants
+        },
+        badge: null, // No badge
+        highlighted: false, // No highlighted border
+      },
+      {
+        name: "Pro",
+        price: 99,
+        billingTerm: "job posting",
+        description: "Great for occasional hiring needs with better visibility.",
+        features: [
+          "3 active job postings",
+          "Standard job listings",
+          "30-day visibility",
+          "Email support",
+        ],
+        cta: {
+          label: "Choose Pro",
+          link: "https://stripe.com",
+          variant: "outline",
+        },
+        badge: {
+          text: "Popular",
+          type: "featured", // Using badge types from JobBadge component
+        },
+        highlighted: true, // Highlighted with prominent border
+      },
+      {
+        name: "Business",
+        price: 999,
+        billingTerm: "year",
+        description: "Unlimited jobs postings for one year for serious recruiters.",
+        features: [
+          "5 active job postings",
+          "Featured job listings",
+          "30-day visibility",
+          "Priority support",
+        ],
+        cta: {
+          label: "Upgrade Now",
+          link: "https://stripe.com",
+          variant: "default",
+        },
+        badge: {
+          text: "Best Value",
+          type: "featured",
+        },
+        highlighted: false,
+      },
+    ],
+  },
 };
 ```
 
@@ -338,6 +443,98 @@ The site URL automatically adjusts based on the environment:
   - Each item has a label and link
   - Order items as needed
   - Add or remove menu items easily
+
+### Pricing Page Customization
+
+The pricing page is fully configurable through the `pricing` section in the configuration file:
+
+#### Basic Configuration
+
+- **Enable/Disable**: Turn the entire pricing page on or off with `pricing.enabled`
+- **Navigation**: Control whether the pricing link appears in navigation with `pricing.showInNavigation`
+- **Footer**: Control whether the pricing link appears in footer with `pricing.showInFooter`
+- **Navigation Label**: Customize the label in the navigation with `pricing.navigationLabel`
+- **Page Title**: Set the page title with `pricing.title`
+- **Page Description**: Set the page description with `pricing.description`
+- **Currency Symbol**: Set the currency symbol with `pricing.currencySymbol`
+
+#### Payment Information
+
+- **Payment Processing Text**: Add a customizable message about payment processing with `pricing.paymentProcessingText`
+- **Payment Method Icons**: Enable/disable and customize payment method icons with `pricing.paymentMethods.enabled` and `pricing.paymentMethods.icons`
+
+#### Pricing Plans
+
+Each plan in the `pricing.plans` array can be customized with:
+
+1. **Basic Information**:
+   - `name`: The name of the plan (e.g., "Free", "Pro", "Business")
+   - `price`: The price of the plan (0 for free plans)
+   - `billingTerm`: A string describing the billing term (e.g., "forever", "job posting", "year", "month")
+   - `description`: A description of the plan
+
+2. **Features**:
+   - `features`: An array of strings describing the features included in the plan
+
+3. **Call to Action**:
+   - `cta.label`: The text for the CTA button
+   - `cta.link`: The URL the button links to
+   - `cta.variant`: The visual style of the button ("outline" or "default")
+
+4. **Visual Styling**:
+   - `badge`: Can be `null` (no badge) or an object with:
+     - `text`: Custom text for the badge (e.g., "Popular", "Best Value")
+     - `type`: The visual style of the badge (using predefined types from the JobBadge component)
+   - `highlighted`: Boolean that controls whether the plan gets a prominent border and shadow
+
+#### Example Customizations
+
+```typescript
+// Free plan with no badge or highlighting
+{
+  name: "Free",
+  price: 0,
+  billingTerm: "forever",
+  // ... other properties
+  badge: null,
+  highlighted: false,
+}
+
+// Popular plan with badge and highlighting
+{
+  name: "Pro",
+  price: 99,
+  billingTerm: "job posting",
+  // ... other properties
+  badge: {
+    text: "Popular",
+    type: "featured",
+  },
+  highlighted: true,
+}
+
+// Best value plan with badge but no highlighting
+{
+  name: "Business",
+  price: 999,
+  billingTerm: "year",
+  // ... other properties
+  badge: {
+    text: "Best Value",
+    type: "featured",
+  },
+  highlighted: false,
+}
+```
+
+#### Available Badge Types
+
+The `badge.type` property accepts any of the following values from the JobBadge component:
+
+- `"featured"`: Dark background with light text (good for "Popular" or "Best Value")
+- `"new"`: Green background (good for "New" or "Limited Time")
+- `"default"`: Simple border with dark text (subtle option)
+- Other types: `"remote"`, `"onsite"`, `"hybrid"`, etc. (see JobBadge component for all options)
 
 ## Environment Variables
 
