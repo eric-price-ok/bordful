@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.77] - 2025-03-12
+
+### Added
+- Enhanced FAQ page with comprehensive features:
+  - Implemented client-side search functionality with URL persistence
+  - Added anchor links for direct navigation to specific FAQ categories
+  - Integrated rich text support with markdown rendering
+  - Added FAQ schema markup for improved SEO
+  - Implemented stable accordion item IDs for reliable expand/collapse functionality
+  - Added copy-to-clipboard feature for section links
+  - Enhanced styling with consistent design language
+
+### Changed
+- Improved FAQ component organization and styling:
+  - Optimized search field width to match answer boxes
+  - Enhanced Contact Us section with consistent button styling
+  - Added table support in markdown content with responsive design
+  - Improved accessibility with proper ARIA labels and keyboard navigation
+  - Enhanced mobile responsiveness with optimized layout
+
 ## [0.0.76] - 2025-03-11
 
 ### Added

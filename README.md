@@ -45,6 +45,13 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
   - Smart pagination with dynamic range
   - No page jumps during filtering
   - Accessible UI with ARIA labels
+- Comprehensive FAQ system
+  - Client-side search with URL persistence
+  - Anchor links for direct navigation to specific categories
+  - Rich text support with markdown rendering
+  - FAQ schema markup for improved SEO
+  - Copy-to-clipboard feature for section links
+  - Responsive design with consistent styling
 - Social Links
   - GitHub
   - LinkedIn
@@ -75,6 +82,68 @@ Japanese (ja)
 ```
 
 This approach combines human readability in Airtable with the benefits of standardized language codes in your application.
+
+### Comprehensive FAQ System
+
+Bordful includes a feature-rich FAQ page with advanced functionality:
+
+#### Client-Side Search
+- Real-time filtering of FAQ items as users type
+- URL persistence for sharing search results (e.g., `/faq?q=search+term`)
+- Keyboard navigation with Escape key to clear search
+- Visual indicators for search state with clear button
+
+#### Rich Text Support
+- Markdown rendering for FAQ answers using ReactMarkdown
+- Support for headings, lists, tables, code blocks, and blockquotes
+- Consistent styling with the rest of the application
+- Configurable per FAQ item with `isRichText` property
+
+#### Navigation and Accessibility
+- Anchor links for direct navigation to specific categories (e.g., `/faq#general-questions`)
+- Copy-to-clipboard feature for sharing specific FAQ sections
+- Accordion interface for compact presentation
+- Proper ARIA labels and keyboard navigation
+- Stable IDs for reliable expand/collapse functionality
+
+#### SEO Optimization
+- Automatic generation of FAQ schema markup (schema.org/FAQPage)
+- Improved search engine visibility with structured data
+- SEO-friendly URLs and metadata
+
+#### Configuration
+In your `config.ts` file, you can customize the FAQ page:
+
+```typescript
+faq: {
+  // Enable or disable the FAQ page
+  enabled: true,
+  
+  // Show FAQ link in navigation and footer
+  showInNavigation: true,
+  showInFooter: true,
+  
+  // Page title and description
+  title: "Frequently Asked Questions",
+  description: "Find answers to common questions about our job board and services.",
+  
+  // Categories of FAQs
+  categories: [
+    {
+      title: "General Questions",
+      items: [
+        {
+          question: "What is Bordful?",
+          answer: "Bordful is a modern, minimal job board...",
+          isRichText: false, // Set to true for markdown support
+        },
+        // More FAQ items...
+      ],
+    },
+    // More categories...
+  ],
+},
+```
 
 ## Script Management & Analytics
 

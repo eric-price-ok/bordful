@@ -48,6 +48,20 @@ interface PricingPlan {
   highlighted: boolean;
 }
 
+// FAQ item type for FAQ configuration
+interface FAQItem {
+  question: string;
+  answer: string;
+  // Whether the answer contains markdown/rich text
+  isRichText?: boolean;
+}
+
+// FAQ category type for FAQ configuration
+interface FAQCategory {
+  title: string;
+  items: FAQItem[];
+}
+
 export const config = {
   // Marketing & SEO
   badge: "Open Source Next.js Job Board Starter Kit",
@@ -107,6 +121,119 @@ export const config = {
       atom: true, // Atom format
       json: true, // JSON Feed format
     },
+  },
+
+  // FAQ Configuration
+  faq: {
+    // Enable or disable the FAQ page
+    enabled: true,
+
+    // Show FAQ link in navigation
+    showInNavigation: true,
+
+    // Show FAQ link in footer resources
+    showInFooter: true,
+
+    // Navigation label
+    navigationLabel: "FAQ",
+
+    // Page title and description
+    title: "Frequently Asked Questions",
+    description:
+      "Find answers to common questions about our job board and services.",
+
+    // Categories of FAQs
+    categories: [
+      {
+        title: "General Questions",
+        items: [
+          {
+            question: "What is Bordful?",
+            answer:
+              "Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Airtable. It features static generation, client-side search, and a clean UI with Geist font.",
+          },
+          {
+            question: "Is Bordful free to use?",
+            answer:
+              "Yes, Bordful is an open-source project available under the MIT license. You can use it for free for both personal and commercial projects.",
+          },
+          {
+            question: "How often are job listings updated?",
+            answer:
+              "Job listings are updated in real-time using Incremental Static Regeneration (ISR) with a 5-minute revalidation period. This means new jobs appear without manual rebuilds.",
+          },
+        ],
+      },
+      {
+        title: "For Job Seekers",
+        items: [
+          {
+            question: "How do I search for jobs?",
+            answer:
+              "You can search for jobs using the search bar on the homepage. You can also filter jobs by type, career level, remote work preference, salary range, visa sponsorship status, and languages.",
+          },
+          {
+            question: "Can I set up job alerts?",
+            answer:
+              "Yes, you can subscribe to job alerts to receive notifications when new jobs matching your criteria are posted. Visit the Job Alerts page to set up your preferences.",
+          },
+          {
+            question: "How do I apply for a job?",
+            answer:
+              "Each job listing has an 'Apply' button that will direct you to the application page specified by the employer. The application process may vary depending on the employer.",
+          },
+        ],
+      },
+      {
+        title: "For Employers",
+        items: [
+          {
+            question: "How do I post a job?",
+            answer:
+              "You can post a job by clicking the 'Post a Job' button in the navigation bar. You'll need to create an account and select a pricing plan before posting your job.",
+          },
+          {
+            question: "What information should I include in my job posting?",
+            answer:
+              "A good job posting should include a clear title, company name, job type, salary range, job description, requirements, benefits, and application instructions. The more details you provide, the more qualified candidates you'll attract.",
+          },
+          {
+            question: "How long will my job posting be visible?",
+            answer:
+              "Job postings are typically visible for 30 days, depending on your selected plan. You can always extend the visibility period by upgrading your plan or renewing your posting.",
+          },
+        ],
+      },
+      {
+        title: "Technical Questions",
+        items: [
+          {
+            question: "What technologies does Bordful use?",
+            answer:
+              "Bordful is built with Next.js, Tailwind CSS, and uses Airtable as the backend.\n\n## Core Technologies\n\n* **Next.js**: For server-side rendering and static site generation\n* **Tailwind CSS**: For utility-first styling\n* **Airtable**: As a flexible backend database\n* **TypeScript**: For type safety and better developer experience\n\nIt also features Incremental Static Regeneration (ISR) for real-time updates and client-side search with memoization.",
+            isRichText: true,
+          },
+          {
+            question: "Can I customize Bordful for my own job board?",
+            answer:
+              'Yes, Bordful is designed to be easily customizable. You can modify the configuration file to change the branding, navigation, and other aspects of the job board.\n\n### Key customization options:\n\n- **Branding**: Change the logo, colors, and text\n- **Navigation**: Add or remove menu items\n- **Features**: Enable or disable features like job alerts and RSS feeds\n- **Layout**: Modify the layout and styling\n\nFor more advanced customization, you can extend the codebase to add new features.\n\n```typescript\n// Example config customization\nconst config = {\n  title: "My Custom Job Board",\n  description: "Find your dream job here",\n  // ... more configuration\n};\n```',
+            isRichText: true,
+          },
+          {
+            question: "Is Bordful SEO-friendly?",
+            answer:
+              'Yes, Bordful includes comprehensive SEO features such as:\n\n1. Automatic XML sitemap generation\n2. Programmatic robots.txt\n3. SEO-friendly URLs with descriptive job slugs\n4. Dynamic sitemap updates every 5 minutes\n5. Structured data for job postings\n\n> "SEO is not just about being search engine-friendly, but also about creating a better user experience."',
+            isRichText: true,
+          },
+          {
+            question: "How do I deploy my Bordful job board?",
+            answer:
+              "Bordful can be deployed to various platforms, with Vercel being the recommended option.\n\n## Deployment Steps\n\n1. Fork the Bordful repository\n2. Create your `config.ts` file\n3. Connect your repository to Vercel\n4. Configure environment variables\n5. Deploy!\n\n### Environment Variables\n\n| Variable | Description | Required |\n|----------|-------------|----------|\n| `AIRTABLE_API_KEY` | Your Airtable API key | Yes |\n| `AIRTABLE_BASE_ID` | Your Airtable base ID | Yes |\n| `NEXT_PUBLIC_SITE_URL` | Your site URL | Yes |\n\nFor more detailed instructions, please refer to the [deployment documentation](https://github.com/yourusername/bordful).",
+            isRichText: true,
+          },
+        ],
+      },
+    ],
   },
 
   // Email Provider Configuration
@@ -191,6 +318,7 @@ export const config = {
       { label: "About", link: "/about" },
       { label: "Changelog", link: "/changelog" },
       // Pricing link will be added dynamically in the nav component
+      // FAQ link will be added dynamically in the nav component
     ],
   },
 
@@ -213,6 +341,7 @@ export const config = {
         { label: "About", link: "/about" },
         { label: "Changelog", link: "/changelog" },
         // Pricing link will be added dynamically in the footer component if enabled
+        // FAQ link will be added dynamically in the footer component if enabled
       ],
     },
 

@@ -52,5 +52,26 @@
     ul ul, ol ol, ul ol, ol ul {
       @apply mt-1 mb-1;
     }
+    
+    /* Tables */
+    table {
+      @apply w-full border-collapse mb-4 text-sm;
+    }
+    
+    thead {
+      @apply bg-gray-50;
+    }
+    
+    th {
+      @apply border border-gray-200 px-3 py-2 text-left font-medium text-gray-700;
+    }
+    
+    td {
+      @apply border border-gray-200 px-3 py-2 text-gray-700;
+    }
+    
+    tr:nth-child(even) {
+      @apply bg-gray-50;
+    }
   }
 }

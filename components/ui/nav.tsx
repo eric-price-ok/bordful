@@ -63,6 +63,14 @@ export function Nav() {
     });
   }
 
+  // Add FAQ link if enabled
+  if (config.faq?.enabled && config.faq?.showInNavigation) {
+    topMenuItems.push({
+      label: config.faq.navigationLabel || "FAQ",
+      link: "/faq",
+    });
+  }
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
