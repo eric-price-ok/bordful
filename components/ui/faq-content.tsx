@@ -249,7 +249,7 @@ export function FAQContent({ categories }: FAQContentProps) {
                 }}
               >
                 <div className="flex items-center gap-2">
-                  <h2 className="text-xl font-semibold text-zinc-900">
+                  <h2 className="text-lg font-semibold text-zinc-900">
                     {category.title}
                   </h2>
                   <button
@@ -280,7 +280,7 @@ export function FAQContent({ categories }: FAQContentProps) {
                         value={itemId}
                         className="border border-zinc-200 rounded-lg px-4 overflow-hidden"
                       >
-                        <AccordionTrigger className="text-base font-medium text-zinc-800 py-4 hover:no-underline">
+                        <AccordionTrigger className="text-sm font-medium text-zinc-800 py-4 hover:no-underline">
                           {item.question}
                         </AccordionTrigger>
                         <AccordionContent className="text-sm text-zinc-600 pb-4 pt-1">
@@ -319,7 +319,7 @@ export function FAQContent({ categories }: FAQContentProps) {
             size="xs"
             className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs"
           >
-            <Link href="/about">Contact Us</Link>
+            <Link href="/about">Contact</Link>
           </Button>
         </div>
       </div>
