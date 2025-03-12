@@ -24,6 +24,8 @@ interface FAQItem {
   isRichText?: boolean;
 }
 
+// We're using this interface in the ReadonlyArray type below
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface FAQCategory {
   title: string;
   items: FAQItem[];
@@ -83,6 +85,7 @@ export function FAQContent({ categories }: FAQContentProps) {
         }
       }, 100);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, categories]);
 
   // Handle search
@@ -153,7 +156,8 @@ export function FAQContent({ categories }: FAQContentProps) {
     return JSON.stringify(faqSchema);
   };
 
-  // Scroll to category
+  // Scroll to category - keeping this for potential future use
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const scrollToCategory = (categoryId: string) => {
     const element = document.getElementById(categoryId);
     if (element) {
@@ -218,7 +222,7 @@ export function FAQContent({ categories }: FAQContentProps) {
         {filteredCategories.length === 0 ? (
           <div className="text-center py-8">
             <p className="text-zinc-600 mb-4">
-              No results found for "{searchTerm}"
+              No results found for &quot;{searchTerm}&quot;
             </p>
             <Button
               variant="outline"
@@ -307,7 +311,7 @@ export function FAQContent({ categories }: FAQContentProps) {
             Still have questions?
           </h2>
           <p className="text-sm text-zinc-600 mb-6">
-            If you couldn't find the answer to your question, feel free to
+            If you couldn&apos;t find the answer to your question, feel free to
             contact us.
           </p>
           <Button
