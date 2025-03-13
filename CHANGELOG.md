@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.78] - 2025-03-13
+
+### Added
+- Added configurable contact page with comprehensive features:
+  - Support channels section with customizable cards for different contact methods
+  - Detailed contact information section with company details
+  - Fully customizable via config file with enable/disable options
+  - Consistent styling with the rest of the application
+  - SEO optimization with proper metadata
+  - Responsive design for all screen sizes
+
 ## [0.0.77] - 2025-03-12
 
 ### Added

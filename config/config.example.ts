@@ -511,6 +511,69 @@ export const config = {
       },
     ],
   },
+
+  // Contact Page Configuration
+  contact: {
+    // Enable or disable the contact page
+    enabled: true,
+
+    // Show contact link in navigation
+    showInNavigation: true,
+
+    // Show contact link in footer resources
+    showInFooter: true,
+
+    // Navigation label
+    navigationLabel: "Contact",
+
+    // Page title and description
+    title: "Get in Touch",
+    description: "Have questions or feedback? We'd love to hear from you.",
+
+    // Support channels section
+    supportChannels: {
+      title: "Support Channels",
+      channels: [
+        {
+          type: "email",
+          title: "Email Support",
+          description:
+            "Our support team is available to help you with any questions or issues you might have.",
+          buttonText: "Contact via Email",
+          buttonLink: "mailto:hello@bordful.com",
+          icon: "Mail", // Lucide icon name
+        },
+        {
+          type: "twitter",
+          title: "Twitter/X Support",
+          description:
+            "Get quick responses and stay updated with our latest announcements on Twitter/X.",
+          buttonText: "Follow on Twitter/X",
+          buttonLink: "https://twitter.com/bordful",
+          icon: "Twitter", // Lucide icon name
+        },
+        {
+          type: "faq",
+          title: "FAQ",
+          description:
+            "Browse our comprehensive FAQ section to find answers to the most common questions.",
+          buttonText: "View FAQ",
+          buttonLink: "/faq",
+          icon: "HelpCircle", // Lucide icon name
+        },
+      ],
+    },
+
+    // Contact information section
+    contactInfo: {
+      title: "Contact Information",
+      description: "Here's how you can reach us directly.",
+      companyName: "Bordful Inc.",
+      email: "hello@bordful.com",
+      phone: "+1 (555) 123-4567",
+      address: "123 Main Street, San Francisco, CA 94105",
+    },
+  },
 } as const;
 
 export type Config = typeof config;

@@ -71,6 +71,14 @@ export function Nav() {
     });
   }
 
+  // Add Contact link if enabled
+  if (config.contact?.enabled && config.contact?.showInNavigation) {
+    topMenuItems.push({
+      label: config.contact.navigationLabel || "Contact",
+      link: "/contact",
+    });
+  }
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

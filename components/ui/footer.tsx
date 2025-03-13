@@ -302,7 +302,19 @@ export function Footer() {
                         href="/faq"
                         className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
                       >
-                        {config.faq.navigationLabel || "FAQ"}
+                        {config.faq.navigationLabel}
+                      </Link>
+                    </li>
+                  )}
+
+                  {/* Add Contact Link if enabled */}
+                  {config.contact?.enabled && config.contact?.showInFooter && (
+                    <li key="/contact">
+                      <Link
+                        href="/contact"
+                        className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                      >
+                        {config.contact.navigationLabel}
                       </Link>
                     </li>
                   )}

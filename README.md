@@ -52,6 +52,11 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
   - FAQ schema markup for improved SEO
   - Copy-to-clipboard feature for section links
   - Responsive design with consistent styling
+- Configurable contact page
+  - Support channels section with customizable cards
+  - Detailed contact information section
+  - Fully customizable via config file
+  - Consistent styling with the rest of the application
 - Social Links
   - GitHub
   - LinkedIn
@@ -482,6 +487,66 @@ export const config = {
       },
     ],
   },
+
+  // Contact Page Customization
+  contact: {
+    // Enable or disable the contact page
+    enabled: true,
+
+    // Show contact link in navigation
+    showInNavigation: true,
+
+    // Show contact link in footer
+    showInFooter: true,
+
+    // Navigation label
+    navigationLabel: "Contact",
+
+    // Page title and description
+    title: "Get in Touch",
+    description: "Have questions or feedback? We'd love to hear from you.",
+    
+    // Support channels section
+    supportChannels: {
+      title: "Support Channels",
+      channels: [
+        {
+          type: "email",
+          title: "Email Support",
+          description: "Our support team is available to help you with any questions or issues you might have.",
+          buttonText: "Contact via Email",
+          buttonLink: "mailto:hello@bordful.com",
+          icon: "Mail"
+        },
+        {
+          type: "twitter",
+          title: "Twitter/X Support",
+          description: "Get quick responses and stay updated with our latest announcements on Twitter/X.",
+          buttonText: "Follow on Twitter/X",
+          buttonLink: "https://twitter.com/bordful",
+          icon: "Twitter"
+        },
+        {
+          type: "faq",
+          title: "FAQ",
+          description: "Browse our comprehensive FAQ section to find answers to the most common questions.",
+          buttonText: "View FAQ",
+          buttonLink: "/faq",
+          icon: "HelpCircle"
+        }
+      ]
+    },
+    
+    // Contact information section
+    contactInfo: {
+      title: "Contact Information",
+      description: "Here's how you can reach us directly.",
+      companyName: "Bordful Inc.",
+      email: "hello@bordful.com",
+      phone: "+1 (555) 123-4567",
+      address: "123 Main Street, San Francisco, CA 94105"
+    }
+  },
 };
 ```
 
@@ -604,6 +669,119 @@ The `badge.type` property accepts any of the following values from the JobBadge 
 - `"new"`: Green background (good for "New" or "Limited Time")
 - `"default"`: Simple border with dark text (subtle option)
 - Other types: `"remote"`, `"onsite"`, `"hybrid"`, etc. (see JobBadge component for all options)
+
+### Contact Page Customization
+
+The contact page is fully configurable through the `contact` section in the configuration file:
+
+#### Basic Configuration
+
+- **Enable/Disable**: Turn the entire contact page on or off with `contact.enabled`
+- **Navigation**: Control whether the contact link appears in navigation with `contact.showInNavigation`
+- **Footer**: Control whether the contact link appears in footer with `contact.showInFooter`
+- **Navigation Label**: Customize the label in the navigation with `contact.navigationLabel`
+- **Page Title**: Set the page title with `contact.title`
+- **Page Description**: Set the page description with `contact.description`
+
+#### Support Channels
+
+The `contact.supportChannels` section allows you to configure multiple support channels:
+
+- **Section Title**: Set the title for the support channels section with `contact.supportChannels.title`
+- **Channels**: Configure an array of support channels with `contact.supportChannels.channels`, each with:
+  - `type`: The type of channel (e.g., "email", "twitter", "faq")
+  - `title`: The title of the channel card
+  - `description`: A description of the support channel
+  - `buttonText`: The text for the channel's button
+  - `buttonLink`: The URL the button links to (can be external links or internal pages)
+  - `icon`: The Lucide icon name to display (e.g., "Mail", "Twitter", "HelpCircle")
+
+#### Contact Information
+
+The `contact.contactInfo` section allows you to display your company's contact details:
+
+- **Section Title**: Set the title for the contact information section with `contact.contactInfo.title`
+- **Section Description**: Set the description with `contact.contactInfo.description`
+- **Company Name**: Set your company name with `contact.contactInfo.companyName`
+- **Email**: Set your contact email with `contact.contactInfo.email`
+- **Phone**: Set your contact phone number with `contact.contactInfo.phone`
+- **Address**: Set your physical address with `contact.contactInfo.address`
+
+#### Example Configuration
+
+```typescript
+// Contact Page Configuration
+contact: {
+  // Enable or disable the contact page
+  enabled: true,
+
+  // Show contact link in navigation
+  showInNavigation: true,
+
+  // Show contact link in footer
+  showInFooter: true,
+
+  // Navigation label
+  navigationLabel: "Contact",
+
+  // Page title and description
+  title: "Get in Touch",
+  description: "Have questions or feedback? We'd love to hear from you.",
+  
+  // Support channels section
+  supportChannels: {
+    title: "Support Channels",
+    channels: [
+      {
+        type: "email",
+        title: "Email Support",
+        description: "Our support team is available to help you with any questions or issues you might have.",
+        buttonText: "Contact via Email",
+        buttonLink: "mailto:hello@bordful.com",
+        icon: "Mail"
+      },
+      {
+        type: "twitter",
+        title: "Twitter/X Support",
+        description: "Get quick responses and stay updated with our latest announcements on Twitter/X.",
+        buttonText: "Follow on Twitter/X",
+        buttonLink: "https://twitter.com/bordful",
+        icon: "Twitter"
+      },
+      {
+        type: "faq",
+        title: "FAQ",
+        description: "Browse our comprehensive FAQ section to find answers to the most common questions.",
+        buttonText: "View FAQ",
+        buttonLink: "/faq",
+        icon: "HelpCircle"
+      }
+    ]
+  },
+  
+  // Contact information section
+  contactInfo: {
+    title: "Contact Information",
+    description: "Here's how you can reach us directly.",
+    companyName: "Bordful Inc.",
+    email: "hello@bordful.com",
+    phone: "+1 (555) 123-4567",
+    address: "123 Main Street, San Francisco, CA 94105"
+  }
+}
+```
+
+#### Supported Icons
+
+The contact page supports all [Lucide icons](https://lucide.dev/icons), with the following pre-configured for convenience:
+- `Mail` - For email support
+- `Twitter` - For Twitter/X support
+- `HelpCircle` - For FAQ or help center
+- `Phone` - For phone support
+- `MessageSquare` - For chat support
+- `Github` - For GitHub support
+- `Linkedin` - For LinkedIn support
+- `Rss` - For RSS feeds
 
 ## Environment Variables
 
