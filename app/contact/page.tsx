@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import config from "@/config";
 import { SupportChannelCard } from "@/components/contact/SupportChannelCard";
 import { ContactInfoSection } from "@/components/contact/ContactInfoSection";
-import { redirect } from "next/navigation";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
