@@ -869,9 +869,17 @@ components/
 The job board supports a comprehensive salary structure:
 
 - Minimum and maximum salary ranges
-- Multiple currencies (USD, EUR, GBP)
+- Support for 50+ global currencies with proper symbols and formatting
+- Smart currency display with intelligent spacing:
+  - No spaces for common symbols ($, £, €, ¥, ₩, etc.)
+  - Appropriate spacing for multi-character symbols (CHF, Rp, etc.)
+  - Proper spacing for non-Latin script symbols (Arabic, etc.)
+- Consistent scale formatting in salary ranges (both values shown in k or M)
+- Compact number formatting with appropriate scale:
+  - Values over 10,000 use "k" format (e.g., "$50k")
+  - Values over 1,000,000 use "M" format (e.g., "₩50M")
 - Various time units (hour, day, week, month, year, project)
-- Smart formatting (e.g., "$80k/year" or "$80k - $100k/year")
+- Optional display of currency codes (e.g., "$50k/year (USD)")
 - Salary-based sorting with normalization to annual USD
 
 ## Pagination and Sorting

@@ -157,9 +157,9 @@ export function JobDetailsSidebar({
             <Wallet className="h-4 w-4 text-gray-500 shrink-0" />
             <h2 className="text-sm font-medium">Salary</h2>
           </div>
-          <span className="text-sm text-gray-600 ml-6">
-            {formatSalary(salary)}
-          </span>
+          <p className="text-sm text-gray-600 ml-6">
+            {formatSalary(salary, true)}
+          </p>
         </div>
       )}
 

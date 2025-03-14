@@ -14,7 +14,8 @@ export type BadgeType =
   | "visa-no"
   | "visa-not-specified"
   | "career-level"
-  | "language";
+  | "language"
+  | "currency";
 
 interface JobBadgeProps {
   type: BadgeType;
@@ -45,6 +46,7 @@ export function JobBadge({
     "visa-not-specified": "bg-white border text-gray-700",
     "career-level": "bg-white border text-gray-700",
     language: "bg-white border text-gray-700",
+    currency: "bg-amber-50 border-amber-100 border text-amber-700",
   };
 
   // Apply hover effects only when href is provided (badge is clickable)

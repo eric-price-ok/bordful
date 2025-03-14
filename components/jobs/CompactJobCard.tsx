@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Job } from "@/lib/db/airtable";
+import { Job, formatSalary } from "@/lib/db/airtable";
 import { formatDate } from "@/lib/utils/formatDate";
 import { generateJobSlug } from "@/lib/utils/slugify";
 import { JobBadge } from "@/components/ui/job-badge";
 
 export function CompactJobCard({ job }: { job: Job }) {
   const { relativeTime } = formatDate(job.posted_date);
+  const showSalary =
+    job.salary && (job.salary.min !== null || job.salary.max !== null);
 
   // Check if job was posted within the last 48 hours
   const isNew = () => {
@@ -69,6 +71,14 @@ export function CompactJobCard({ job }: { job: Job }) {
         {/* Essential info */}
         <div className="flex items-center gap-2 text-xs text-gray-500 shrink-0">
           <span className="whitespace-nowrap">{job.type}</span>
+          {showSalary && (
+            <>
+              <span className="text-gray-300">•</span>
+              <span className="whitespace-nowrap">
+                {formatSalary(job.salary, true)}
+              </span>
+            </>
+          )}
           {workplaceType && (
             <>
               <span className="text-gray-300">•</span>

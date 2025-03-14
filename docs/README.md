@@ -8,6 +8,7 @@ Welcome to the Bordful documentation. This guide will help you understand and us
 - [Encharge Integration](./encharge-integration.md) - Detailed guide for setting up Encharge
 - [Rate Limiting](./rate-limiting.md) - Information about the rate limiting implementation
 - [Deployment Guide](./deployment.md) - Instructions for deploying the job board to production
+- [Currencies](./currencies.md) - Guide to using and configuring the 50+ supported currencies
 
 ## Overview
 

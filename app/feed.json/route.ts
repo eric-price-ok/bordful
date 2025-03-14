@@ -54,7 +54,7 @@ export async function GET() {
 **Location:** ${job.workplace_type}${
           job.workplace_city ? ` - ${job.workplace_city}` : ""
         }${job.workplace_country ? `, ${job.workplace_country}` : ""}
-**Salary:** ${job.salary ? formatSalary(job.salary) : "Not specified"}
+**Salary:** ${job.salary ? formatSalary(job.salary, true) : "Not specified"}
 **Posted:** ${new Date(job.posted_date).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",

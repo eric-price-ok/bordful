@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.79] - 2025-03-14
+
+### Added
+- Enhanced currency support with 50 common global currencies:
+  - Created centralized currency constants system with complete ISO currency data
+  - Added support for all major global currencies with proper symbols and formatting
+  - Implemented currency conversion system for salary normalization and comparison
+  - Enhanced salary display with proper currency symbols for all supported currencies
+  - Added configuration options for default currency and allowed currencies
+  - Updated pricing page to use the expanded currency system
+  - Created comprehensive documentation for currency management
+  - Added utility functions for currency lookup and conversion
+
 ## [0.0.78] - 2025-03-13
 
 ### Added

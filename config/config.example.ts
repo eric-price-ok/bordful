@@ -22,6 +22,7 @@
 
 import type { ScriptProps } from "next/script";
 import type { BadgeType } from "@/components/ui/job-badge";
+import type { CurrencyCode } from "@/lib/constants/currencies";
 
 interface CustomScript {
   src: string;
@@ -121,6 +122,18 @@ export const config = {
       atom: true, // Atom format
       json: true, // JSON Feed format
     },
+  },
+
+  // Currency Configuration
+  // This affects currency display across the job board, including job listings and pricing
+  currency: {
+    // Default currency code used when no currency is specified
+    defaultCurrency: "USD" as CurrencyCode,
+
+    // Allowed currencies for job listings
+    // This list can include any valid CurrencyCode from lib/constants/currencies.ts
+    // Users can specify a subset of supported currencies or allow all by setting to null
+    allowedCurrencies: null as CurrencyCode[] | null, // null means all currencies are allowed
   },
 
   // FAQ Configuration
@@ -416,8 +429,11 @@ export const config = {
     title: "Simple, Transparent Pricing",
     description: "Choose the plan that's right for your job board needs.",
 
-    // Currency symbol
-    currencySymbol: "$",
+    // Currency for pricing display
+    currency: "USD" as CurrencyCode,
+
+    // Currency symbol is now derived from the currency selected above
+    // No need to manually specify the symbol anymore
 
     // Payment processing information (displayed below pricing cards)
     paymentProcessingText:

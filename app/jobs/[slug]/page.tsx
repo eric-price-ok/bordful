@@ -62,7 +62,7 @@ export async function generateMetadata({
     title: `${job.title} at ${job.company}`,
     description: `${job.type} position at ${job.company}${
       metaLocation ? `. Location: ${metaLocation}` : ""
-    }${job.salary ? `. Salary: ${formatSalary(job.salary)}` : ""}.`,
+    }${job.salary ? `. Salary: ${formatSalary(job.salary, true)}` : ""}.`,
     path: `/jobs/${slug}`,
     openGraph: {
       type: "article",
@@ -158,7 +158,7 @@ export default async function JobPage({
                     {showSalary && (
                       <>
                         <span>•</span>
-                        <span>{formatSalary(job.salary)}</span>
+                        <span>{formatSalary(job.salary, true)}</span>
                       </>
                     )}
                     {location && (

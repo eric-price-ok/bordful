@@ -5,6 +5,13 @@ import {
   getLanguageByName,
   LANGUAGE_CODES,
 } from "@/lib/constants/languages";
+import {
+  CurrencyCode,
+  getCurrencySymbol,
+  CURRENCY_RATES,
+  CURRENCY_CODES,
+  getCurrencyByName,
+} from "@/lib/constants/currencies";
 
 // Initialize Airtable with Personal Access Token
 const base = new Airtable({
@@ -37,12 +44,11 @@ export type CareerLevel =
   | "NotSpecified";
 
 export type SalaryUnit = "hour" | "day" | "week" | "month" | "year" | "project";
-export type SalaryCurrency = "USD" | "EUR" | "GBP";
 
 export interface Salary {
   min: number | null;
   max: number | null;
-  currency: SalaryCurrency;
+  currency: CurrencyCode;
   unit: SalaryUnit;
 }
 
@@ -68,36 +74,66 @@ export interface Job {
 }
 
 // Format salary for display
-export function formatSalary(salary: Salary | null): string {
+export function formatSalary(
+  salary: Salary | null,
+  showCurrencyCode: boolean = false
+): string {
   if (!salary || (!salary.min && !salary.max)) return "Not specified";
 
-  const currencySymbols: Record<SalaryCurrency, string> = {
-    USD: "$",
-    EUR: "€",
-    GBP: "£",
-  };
+  const symbol = getCurrencySymbol(salary.currency);
 
-  const formatNumber = (num: number | null): string => {
+  const formatNumber = (
+    num: number | null,
+    currency: CurrencyCode,
+    forceScale?: "k" | "M"
+  ): string => {
     if (!num) return "";
-    // Only use k format for numbers >= 10000
-    if (num >= 10000) {
+
+    // Define consistent thresholds for all currencies
+    const kThreshold = 10000;
+    const mThreshold = 1000000;
+
+    // Apply forced scale if provided (for consistent range formatting)
+    if (forceScale === "M") {
+      return `${(num / 1000000).toFixed(1).replace(/\.0$/, "")}M`;
+    } else if (forceScale === "k") {
       return `${(num / 1000).toFixed(0)}k`;
     }
+
+    // Format with appropriate scale based on magnitude
+    if (num >= mThreshold) {
+      return `${(num / 1000000).toFixed(1).replace(/\.0$/, "")}M`;
+    } else if (num >= kThreshold) {
+      return `${(num / 1000).toFixed(0)}k`;
+    }
+
     // For smaller numbers, show the full value with thousands separator
     return num.toLocaleString();
   };
 
-  const symbol = currencySymbols[salary.currency];
-
   // Handle single value cases (only min or only max)
   let range;
   if (salary.min && salary.max) {
+    // Determine the appropriate scale for both values based on the larger number
+    let forceScale: "k" | "M" | undefined = undefined;
+
+    // Use consistent thresholds for all currencies
+    if (Math.max(salary.min, salary.max) >= 1000000) {
+      forceScale = "M"; // Force both values to use millions
+    } else if (Math.max(salary.min, salary.max) >= 10000) {
+      forceScale = "k"; // Force both values to use thousands
+    }
+
     range =
       salary.min === salary.max
-        ? formatNumber(salary.min)
-        : `${formatNumber(salary.min)}-${formatNumber(salary.max)}`;
+        ? formatNumber(salary.min, salary.currency)
+        : `${formatNumber(
+            salary.min,
+            salary.currency,
+            forceScale
+          )}-${formatNumber(salary.max, salary.currency, forceScale)}`;
   } else {
-    range = formatNumber(salary.min || salary.max);
+    range = formatNumber(salary.min || salary.max, salary.currency);
   }
 
   // Use full words with slash
@@ -110,19 +146,44 @@ export function formatSalary(salary: Salary | null): string {
     project: "/project",
   }[salary.unit];
 
-  return `${symbol}${range}${unitDisplay}`;
+  // Add currency code in parentheses if requested
+  const currencyCode = showCurrencyCode ? ` (${salary.currency})` : "";
+
+  // Add a space after the currency symbol for better readability, but only for certain symbols
+  // Common currency symbols like $, £, €, ¥, ₩, etc. don't need spaces
+  const noSpaceSymbols = [
+    "$",
+    "£",
+    "€",
+    "¥",
+    "₩",
+    "₹",
+    "R",
+    "₱",
+    "฿",
+    "₺",
+    "₽",
+    "kr",
+    "zł",
+  ];
+
+  // Add space only for symbols that are not in the noSpaceSymbols list
+  // and are either multi-character or non-Latin
+  const needsSpace =
+    !noSpaceSymbols.includes(symbol) &&
+    (symbol.length > 1 || /[^\u0000-\u007F]/.test(symbol));
+
+  const formattedSymbol = needsSpace ? `${symbol} ` : symbol;
+
+  return `${formattedSymbol}${range}${unitDisplay}${currencyCode}`;
 }
 
 // Normalize salary for comparison (convert to annual USD)
 export function normalizeAnnualSalary(salary: Salary | null): number {
   if (!salary || (!salary.min && !salary.max)) return -1;
 
-  // Currency conversion rates (simplified - in production, use real-time rates)
-  const currencyRates: Record<SalaryCurrency, number> = {
-    USD: 1,
-    EUR: 1.1,
-    GBP: 1.27,
-  };
+  // Use the conversion rates from the currency constants
+  const exchangeRate = CURRENCY_RATES[salary.currency] || 1;
 
   // Annualization multipliers
   const annualMultiplier: Record<SalaryUnit, number> = {
@@ -138,7 +199,7 @@ export function normalizeAnnualSalary(salary: Salary | null): number {
   const value = salary.max || salary.min || 0;
 
   // Convert to USD and annualize
-  return value * currencyRates[salary.currency] * annualMultiplier[salary.unit];
+  return value * exchangeRate * annualMultiplier[salary.unit];
 }
 
 // Ensure career level is always returned as an array
@@ -295,6 +356,45 @@ function normalizeLanguages(value: unknown): LanguageCode[] {
     .filter((code): code is LanguageCode => code !== null);
 }
 
+// Function to normalize currency data from Airtable
+// This can handle multiple formats:
+// - ISO codes directly: "USD", "EUR"
+// - "Currency Code (Name)" format: "USD (United States Dollar)", "EUR (Euro)"
+// - Currency names: "United States Dollar", "Euro" (via lookup)
+function normalizeCurrency(value: unknown): CurrencyCode {
+  if (!value) return "USD"; // Default to USD if no currency specified
+
+  if (typeof value === "string") {
+    // Format 1: Extract code from "USD (United States Dollar)" format
+    const currencyCodeMatch = /^([A-Z]{3})\s*\(.*?\)$/i.exec(value);
+    if (currencyCodeMatch && currencyCodeMatch[1]) {
+      const extractedCode = currencyCodeMatch[1].toUpperCase();
+
+      // Verify the extracted code is valid
+      if (CURRENCY_CODES.includes(extractedCode as CurrencyCode)) {
+        return extractedCode as CurrencyCode;
+      }
+    }
+
+    // Format 2: Check if the string itself is a valid 3-letter code
+    if (
+      value.length === 3 &&
+      CURRENCY_CODES.includes(value.toUpperCase() as CurrencyCode)
+    ) {
+      return value.toUpperCase() as CurrencyCode;
+    }
+
+    // Format 3: Try to look up by currency name
+    const currency = getCurrencyByName(value);
+    if (currency) {
+      return currency.code;
+    }
+  }
+
+  // Default to USD if we can't determine the currency
+  return "USD";
+}
+
 export async function getJobs(): Promise<Job[]> {
   try {
     // Check for required environment variables
@@ -319,7 +419,7 @@ export async function getJobs(): Promise<Job[]> {
         salary: {
           min: (fields.salary_min as number) || null,
           max: (fields.salary_max as number) || null,
-          currency: (fields.salary_currency as SalaryCurrency) || "USD",
+          currency: normalizeCurrency(fields.salary_currency),
           unit: (fields.salary_unit as SalaryUnit) || "year",
         },
         description: cleanMarkdownFormatting(fields.description as string),
@@ -386,7 +486,7 @@ export async function getJob(id: string): Promise<Job | null> {
       salary: {
         min: (record.fields.salary_min as number) || null,
         max: (record.fields.salary_max as number) || null,
-        currency: (record.fields.salary_currency as SalaryCurrency) || "USD",
+        currency: normalizeCurrency(record.fields.salary_currency),
         unit: (record.fields.salary_unit as SalaryUnit) || "year",
       },
       description: record.fields.description as string,

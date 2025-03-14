@@ -67,7 +67,7 @@ export function JobCard({ job }: { job: Job }) {
             {showSalary && (
               <>
                 <span>•</span>
-                <span>{formatSalary(job.salary)}</span>
+                <span>{formatSalary(job.salary, true)}</span>
               </>
             )}
             {location && (
