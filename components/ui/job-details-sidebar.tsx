@@ -1,4 +1,9 @@
-import { CareerLevel, Salary, formatSalary } from "@/lib/db/airtable";
+import {
+  CareerLevel,
+  Salary,
+  formatSalary,
+  formatUSDApproximation,
+} from "@/lib/db/airtable";
 import { WorkplaceType, RemoteRegion } from "@/lib/constants/workplace";
 import {
   LanguageCode,
@@ -74,6 +79,7 @@ export function JobDetailsSidebar({
   languages,
 }: JobDetailsSidebarProps) {
   const showSalary = salary && (salary.min !== null || salary.max !== null);
+  const usdApprox = showSalary ? formatUSDApproximation(salary) : null;
   const careerLevels = Array.from(
     new Set(Array.isArray(career_level) ? career_level : [career_level])
   );
@@ -157,9 +163,14 @@ export function JobDetailsSidebar({
             <Wallet className="h-4 w-4 text-gray-500 shrink-0" />
             <h2 className="text-sm font-medium">Salary</h2>
           </div>
-          <p className="text-sm text-gray-600 ml-6">
-            {formatSalary(salary, true)}
-          </p>
+          <div className="ml-6">
+            <p className="text-sm text-gray-600">
+              {formatSalary(salary, true)}
+            </p>
+            {usdApprox && (
+              <p className="text-xs text-gray-500 mt-0.5">{usdApprox}</p>
+            )}
+          </div>
         </div>
       )}
 

@@ -178,6 +178,25 @@ export function formatSalary(
   return `${formattedSymbol}${range}${unitDisplay}${currencyCode}`;
 }
 
+// Format USD approximation for non-USD salaries
+export function formatUSDApproximation(salary: Salary | null): string | null {
+  if (!salary || (!salary.min && !salary.max) || salary.currency === "USD") {
+    return null;
+  }
+
+  // Create a USD equivalent salary object
+  const usdSalary: Salary = {
+    min: salary.min ? salary.min * CURRENCY_RATES[salary.currency] : null,
+    max: salary.max ? salary.max * CURRENCY_RATES[salary.currency] : null,
+    currency: "USD",
+    unit: salary.unit,
+  };
+
+  // Format without currency code
+  const formatted = formatSalary(usdSalary, false);
+  return `≈ ${formatted}`;
+}
+
 // Normalize salary for comparison (convert to annual USD)
 export function normalizeAnnualSalary(salary: Salary | null): number {
   if (!salary || (!salary.min && !salary.max)) return -1;

@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.80] - 2025-03-14
+
+### Added
+- Enhanced salary display features:
+  - Added consistent scale formatting for salary ranges (k/M)
+  - Implemented intelligent spacing for currency symbols
+  - Added USD approximation display for non-USD salaries
+  - Improved readability of salary displays across all currencies
+  - Enhanced salary formatting for high-value currencies
+  - Added proper spacing rules for currency symbols based on script type
+
 ## [0.0.79] - 2025-03-14
 
 ### Added
