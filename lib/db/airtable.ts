@@ -11,6 +11,8 @@ import {
   CURRENCY_RATES,
   CURRENCY_CODES,
   getCurrencyByName,
+  CURRENCY_MAP,
+  formatCurrencySymbol,
 } from "@/lib/constants/currencies";
 
 // Initialize Airtable with Personal Access Token
@@ -80,7 +82,7 @@ export function formatSalary(
 ): string {
   if (!salary || (!salary.min && !salary.max)) return "Not specified";
 
-  const symbol = getCurrencySymbol(salary.currency);
+  const formattedSymbol = formatCurrencySymbol(salary.currency);
 
   const formatNumber = (
     num: number | null,
@@ -148,32 +150,6 @@ export function formatSalary(
 
   // Add currency code in parentheses if requested
   const currencyCode = showCurrencyCode ? ` (${salary.currency})` : "";
-
-  // Add a space after the currency symbol for better readability, but only for certain symbols
-  // Common currency symbols like $, £, €, ¥, ₩, etc. don't need spaces
-  const noSpaceSymbols = [
-    "$",
-    "£",
-    "€",
-    "¥",
-    "₩",
-    "₹",
-    "R",
-    "₱",
-    "฿",
-    "₺",
-    "₽",
-    "kr",
-    "zł",
-  ];
-
-  // Add space only for symbols that are not in the noSpaceSymbols list
-  // and are either multi-character or non-Latin
-  const needsSpace =
-    !noSpaceSymbols.includes(symbol) &&
-    (symbol.length > 1 || /[^\u0000-\u007F]/.test(symbol));
-
-  const formattedSymbol = needsSpace ? `${symbol} ` : symbol;
 
   return `${formattedSymbol}${range}${unitDisplay}${currencyCode}`;
 }

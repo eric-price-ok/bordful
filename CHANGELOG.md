@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.81] - 2025-03-15
+
+### Fixed
+- Fixed currency symbol spacing issues:
+  - Implemented centralized currency formatting system with `needsSpace` property
+  - Created new `formatCurrencySymbol` helper function for consistent formatting
+  - Improved currency symbol display logic for all 50 supported currencies
+  - Enhanced code maintainability with single source of truth for symbol formatting
+
 ## [0.0.80] - 2025-03-14
 
 ### Added
