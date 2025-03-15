@@ -7,11 +7,9 @@ import {
 } from "@/lib/constants/languages";
 import {
   CurrencyCode,
-  getCurrencySymbol,
   CURRENCY_RATES,
   CURRENCY_CODES,
   getCurrencyByName,
-  CURRENCY_MAP,
   formatCurrencySymbol,
 } from "@/lib/constants/currencies";
 

@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
   - Created new `formatCurrencySymbol` helper function for consistent formatting
   - Improved currency symbol display logic for all 50 supported currencies
   - Enhanced code maintainability with single source of truth for symbol formatting
+  - Fixed ESLint errors by removing unused currency-related imports
 
 ## [0.0.80] - 2025-03-14
 
