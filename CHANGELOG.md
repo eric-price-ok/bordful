@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.82] - 2025-03-16
+
+### Added
+- Added job benefits and perks feature:
+  - New benefits field in Airtable for capturing perks and benefits
+  - Benefits display in job detail sidebar with dedicated section
+  - Collapsible text interface for longer benefit lists
+  - Character limits (1,000 max) for consistent display
+  - Icon-based visual indicator for benefits section
+  - UI consistency with existing show more/less patterns
+
 ## [0.0.81] - 2025-03-16
 
 ### Added

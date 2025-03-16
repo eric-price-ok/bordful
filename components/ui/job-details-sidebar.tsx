@@ -20,8 +20,10 @@ import {
   Clock,
   Flag,
   Languages,
+  Gift,
 } from "lucide-react";
 import { JobBadge } from "@/components/ui/job-badge";
+import { CollapsibleText } from "@/components/ui/collapsible-text";
 
 interface JobDetailsSidebarProps {
   fullDate: string;
@@ -36,6 +38,7 @@ interface JobDetailsSidebarProps {
   apply_url: string;
   visa_sponsorship: string;
   languages: LanguageCode[];
+  benefits: string | null;
 }
 
 function formatCareerLevel(level: CareerLevel): string {
@@ -77,6 +80,7 @@ export function JobDetailsSidebar({
   apply_url,
   visa_sponsorship,
   languages,
+  benefits,
 }: JobDetailsSidebarProps) {
   const showSalary = salary && (salary.min !== null || salary.max !== null);
   const usdApprox = showSalary ? formatUSDApproximation(salary) : null;
@@ -258,6 +262,19 @@ export function JobDetailsSidebar({
                 {getDisplayNameFromCode(langCode)}
               </JobBadge>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Benefits */}
+      {benefits && (
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <Gift className="h-4 w-4 text-gray-500 shrink-0" />
+            <h2 className="text-sm font-medium">Benefits & Perks</h2>
+          </div>
+          <div className="ml-6">
+            <CollapsibleText text={benefits} maxLength={150} />
           </div>
         </div>
       )}

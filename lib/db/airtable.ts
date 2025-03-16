@@ -59,6 +59,7 @@ export interface Job {
   type: "Full-time" | "Part-time" | "Contract" | "Freelance";
   salary: Salary | null;
   description: string;
+  benefits: string | null;
   apply_url: string;
   posted_date: string;
   status: "active" | "inactive";
@@ -386,6 +387,25 @@ function normalizeCurrency(value: unknown): CurrencyCode {
   return "USD";
 }
 
+// Function to normalize benefits text with a maximum length
+function normalizeBenefits(value: unknown): string | null {
+  if (!value) return null;
+
+  // Convert to string if it's not already
+  const benefitsText = String(value).trim();
+
+  // If empty after trimming, return null
+  if (!benefitsText) return null;
+
+  // Trim to maximum 1000 characters for safety
+  const MAX_BENEFITS_LENGTH = 1000;
+  if (benefitsText.length > MAX_BENEFITS_LENGTH) {
+    return benefitsText.substring(0, MAX_BENEFITS_LENGTH).trim();
+  }
+
+  return benefitsText;
+}
+
 export async function getJobs(): Promise<Job[]> {
   try {
     // Check for required environment variables
@@ -414,6 +434,7 @@ export async function getJobs(): Promise<Job[]> {
           unit: (fields.salary_unit as SalaryUnit) || "year",
         },
         description: cleanMarkdownFormatting(fields.description as string),
+        benefits: normalizeBenefits(fields.benefits),
         apply_url: fields.apply_url as string,
         posted_date: fields.posted_date as string,
         status: fields.status as Job["status"],
@@ -481,6 +502,7 @@ export async function getJob(id: string): Promise<Job | null> {
         unit: (record.fields.salary_unit as SalaryUnit) || "year",
       },
       description: record.fields.description as string,
+      benefits: normalizeBenefits(record.fields.benefits),
       apply_url: record.fields.apply_url as string,
       posted_date: record.fields.posted_date as string,
       status: record.fields.status as Job["status"],

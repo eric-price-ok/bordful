@@ -268,6 +268,7 @@ export default async function JobPage({
               apply_url={job.apply_url}
               visa_sponsorship={job.visa_sponsorship}
               languages={job.languages}
+              benefits={job.benefits}
             />
 
             {/* On mobile, Similar Jobs appear before Post Job Banner */}
