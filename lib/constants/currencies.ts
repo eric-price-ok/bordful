@@ -49,7 +49,27 @@ export type CurrencyCode =
   | "QAR"
   | "BHD"
   | "OMR"
-  | "JOD";
+  | "JOD"
+  | "USDT"
+  | "USDC"
+  | "USDS"
+  | "PYUSD"
+  | "TUSD"
+  | "BTC"
+  | "ETH"
+  | "XRP"
+  | "BNB"
+  | "SOL"
+  | "ADA"
+  | "DOGE"
+  | "TRX"
+  | "XLM"
+  | "AVAX"
+  | "SHIB"
+  | "LTC"
+  | "BCH"
+  | "DOT"
+  | "XMR";
 
 // Export a list of all currency codes for programmatic use
 export const CURRENCY_CODES: CurrencyCode[] = [
@@ -101,6 +121,26 @@ export const CURRENCY_CODES: CurrencyCode[] = [
   "BHD",
   "OMR",
   "JOD",
+  "USDT",
+  "USDC",
+  "USDS",
+  "PYUSD",
+  "TUSD",
+  "BTC",
+  "ETH",
+  "XRP",
+  "BNB",
+  "SOL",
+  "ADA",
+  "DOGE",
+  "TRX",
+  "XLM",
+  "AVAX",
+  "SHIB",
+  "LTC",
+  "BCH",
+  "DOT",
+  "XMR",
 ];
 
 // Currency information structure
@@ -171,6 +211,26 @@ export const CURRENCIES: Currency[] = [
   { name: "Bahraini Dinar", symbol: ".د.ب", code: "BHD", needsSpace: true },
   { name: "Omani Rial", symbol: "ر.ع.", code: "OMR", needsSpace: true },
   { name: "Jordanian Dinar", symbol: "JD", code: "JOD", needsSpace: false },
+  { name: "Tether USD", symbol: "$", code: "USDT", needsSpace: false },
+  { name: "USD Coin", symbol: "$", code: "USDC", needsSpace: false },
+  { name: "USDS Stablecoin", symbol: "$", code: "USDS", needsSpace: false },
+  { name: "PayPal USD", symbol: "$", code: "PYUSD", needsSpace: false },
+  { name: "True USD", symbol: "$", code: "TUSD", needsSpace: false },
+  { name: "Bitcoin", symbol: "₿", code: "BTC", needsSpace: false },
+  { name: "Ethereum", symbol: "Ξ", code: "ETH", needsSpace: false },
+  { name: "Ripple", symbol: "$", code: "XRP", needsSpace: false },
+  { name: "BNB", symbol: "$", code: "BNB", needsSpace: false },
+  { name: "Solana", symbol: "$", code: "SOL", needsSpace: false },
+  { name: "Cardano", symbol: "$", code: "ADA", needsSpace: false },
+  { name: "Dogecoin", symbol: "$", code: "DOGE", needsSpace: false },
+  { name: "Tron", symbol: "$", code: "TRX", needsSpace: false },
+  { name: "Stellar", symbol: "$", code: "XLM", needsSpace: false },
+  { name: "Avalanche", symbol: "$", code: "AVAX", needsSpace: false },
+  { name: "Shiba Inu", symbol: "$", code: "SHIB", needsSpace: false },
+  { name: "Litecoin", symbol: "$", code: "LTC", needsSpace: false },
+  { name: "Bitcoin Cash", symbol: "$", code: "BCH", needsSpace: false },
+  { name: "Polkadot", symbol: "$", code: "DOT", needsSpace: false },
+  { name: "Monero", symbol: "$", code: "XMR", needsSpace: false },
 ];
 
 // Currency lookup map for quick access
@@ -265,4 +325,24 @@ export const CURRENCY_RATES: Record<CurrencyCode, number> = {
   BHD: 2.65,
   OMR: 2.6,
   JOD: 1.41,
+  USDT: 1.0, // Tether is pegged to USD
+  USDC: 1.0, // USD Coin is pegged to USD
+  USDS: 1.0, // USDS is pegged to USD
+  PYUSD: 1.0, // PayPal USD is pegged to USD
+  TUSD: 1.0, // True USD is pegged to USD
+  BTC: 83000,
+  ETH: 1900,
+  XRP: 2.36,
+  BNB: 604,
+  SOL: 134,
+  ADA: 0.73,
+  DOGE: 0.17,
+  TRX: 0.21,
+  XLM: 0.27,
+  AVAX: 19.22,
+  SHIB: 0.00001301,
+  LTC: 91.88,
+  BCH: 336,
+  DOT: 4.29,
+  XMR: 213,
 };

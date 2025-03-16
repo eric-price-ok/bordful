@@ -1,10 +1,12 @@
 # Currency Support
 
-Bordful supports 50 of the most common currencies worldwide for job postings. This document explains how to use and configure currencies in your job board.
+Bordful supports a wide range of currencies worldwide for job postings, including traditional fiat currencies and cryptocurrencies. This document explains how to use and configure currencies in your job board.
 
 ## Supported Currencies
 
-The system supports 50 currencies, including:
+### Fiat Currencies
+
+The system supports traditional fiat currencies, including:
 
 - USD (United States Dollar)
 - EUR (Euro)
@@ -55,6 +57,34 @@ The system supports 50 currencies, including:
 - OMR (Omani Rial)
 - JOD (Jordanian Dinar)
 
+### Cryptocurrencies
+
+The system also supports cryptocurrencies, including:
+
+#### Stablecoins (USD-pegged)
+- USDT (Tether USD)
+- USDC (USD Coin)
+- USDS (USDS Stablecoin)
+- PYUSD (PayPal USD)
+- TUSD (True USD)
+
+#### Major Cryptocurrencies
+- BTC (Bitcoin)
+- ETH (Ethereum)
+- XRP (Ripple)
+- BNB (BNB)
+- SOL (Solana)
+- ADA (Cardano)
+- DOGE (Dogecoin)
+- TRX (Tron)
+- XLM (Stellar)
+- AVAX (Avalanche)
+- SHIB (Shiba Inu)
+- LTC (Litecoin)
+- BCH (Bitcoin Cash)
+- DOT (Polkadot)
+- XMR (Monero)
+
 For a complete list, see the `lib/constants/currencies.ts` file.
 
 ## How Currencies Work
@@ -67,6 +97,12 @@ Job listings can specify salaries in any of the supported currencies. The system
 2. Format the numbers appropriately
 3. Convert to a normalized value (in USD) for sorting and filtering
 
+### Cryptocurrency Display
+
+Stablecoins (like USDT, USDC) use the dollar symbol ($) but display their currency code (e.g., $50,000/year (USDT)) to differentiate them from USD.
+
+Major cryptocurrencies display with their own symbols (₿ for Bitcoin, Ξ for Ethereum) or with the dollar symbol and their currency code for others.
+
 ### Configuration Options
 
 In your `config.ts` file, you can configure currency-related settings:
@@ -78,7 +114,7 @@ currency: {
   
   // Allowed currencies for job listings
   // Set to null to allow all currencies, or specify a subset
-  allowedCurrencies: ["USD", "EUR", "GBP"],
+  allowedCurrencies: ["USD", "EUR", "GBP", "USDT", "USDC", "BTC", "ETH"],
 },
 ```
 
@@ -110,6 +146,10 @@ USD (United States Dollar)
 EUR (Euro)
 JPY (Japanese Yen)
 GBP (British Pound Sterling)
+USDT (Tether USD)
+USDC (USD Coin)
+BTC (Bitcoin)
+ETH (Ethereum)
 ```
 
 This format:
@@ -124,7 +164,7 @@ For the `salary_currency` field:
 - **Default Value**: USD (recommended)
 - **Options**: Add options in the format shown above for all currencies you want to support
 
-The system can also handle plain currency codes ("USD") or currency names ("United States Dollar"), but the combined format is recommended for clarity.
+The system can handle plain currency codes ("USD", "USDT", "BTC") or currency names ("United States Dollar", "Tether USD", "Bitcoin"), but the combined format is recommended for clarity.
 
 ## Extending Currency Support
 
@@ -137,15 +177,18 @@ If you need to add new currencies:
 
 The system includes approximate exchange rates for normalizing salaries for comparison and sorting. These rates are fixed and intended for relative comparison only, not for financial calculations.
 
+For cryptocurrencies, the rates are particularly simplified and should be updated periodically to reflect current market values.
+
 For accurate, real-time currency conversion, you may want to integrate with a currency exchange rate API.
 
 ```typescript
-// Example of adding a new currency
+// Example of adding a new cryptocurrency
 const CURRENCY_RATES: Record<CurrencyCode, number> = {
   // Existing currencies...
   USD: 1.00,
-  EUR: 1.10,
-  // Your new currency
-  XYZ: 0.75, // Exchange rate relative to USD
+  USDT: 1.00, // Stablecoins pegged to USD
+  BTC: 83000, // Approximate BTC/USD rate
+  // Your new cryptocurrency
+  XYZ: 123.45, // Exchange rate relative to USD
 };
 ``` 

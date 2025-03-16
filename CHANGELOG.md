@@ -2,15 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.0.81] - 2025-03-15
+## [0.0.81] - 2025-03-16
 
-### Fixed
-- Fixed currency symbol spacing issues:
-  - Implemented centralized currency formatting system with `needsSpace` property
-  - Created new `formatCurrencySymbol` helper function for consistent formatting
-  - Improved currency symbol display logic for all 50 supported currencies
-  - Enhanced code maintainability with single source of truth for symbol formatting
-  - Fixed ESLint errors by removing unused currency-related imports
+### Added
+- Added cryptocurrency and stablecoin support:
+  - Added support for major cryptocurrencies (BTC, ETH, XRP, etc.)
+  - Added USD-pegged stablecoins (USDT, USDC, USDS, PYUSD, TUSD)
+  - Implemented proper cryptocurrency symbol display (₿ for Bitcoin, Ξ for Ethereum)
+  - Set exchange rates for cryptocurrency price normalization
+  - Updated documentation with comprehensive cryptocurrency information
 
 ## [0.0.80] - 2025-03-14
 

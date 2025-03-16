@@ -26,6 +26,11 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
 - Rich text support for job descriptions
 - Comprehensive job metadata with multi-select career levels
 - Advanced salary structure with currency and time unit support
+  - Supports 50+ global fiat currencies
+  - Cryptocurrency support (Bitcoin, Ethereum, etc.)
+  - Stablecoin support (USDT, USDC, etc.)
+  - Intelligent symbol formatting
+  - USD conversion for comparison
 - Smart pagination with URL-based navigation
 - Sorting options (newest, oldest, highest salary)
 - Dynamic jobs per page selection
@@ -223,7 +228,7 @@ npm install
   type: Single select (Full-time, Part-time, Contract, Freelance)
   salary_min: Number
   salary_max: Number
-  salary_currency: Single select (USD, EUR, GBP)
+  salary_currency: Single select (USD, EUR, GBP, USDT, USDC, BTC, ETH, etc.)
   salary_unit: Single select (hour, day, week, month, year, project)
   description: Long text (with rich text enabled)
   apply_url: URL
@@ -239,6 +244,8 @@ npm install
   featured: Checkbox
   languages: Multiple select (format: "Language Name (code)", e.g. "English (en)", "Spanish (es)", "French (fr)")
   ```
+
+  **Note on Currency**: For `salary_currency`, it's recommended to use the format "CODE (Name)" such as "USD (United States Dollar)" or "BTC (Bitcoin)" for clarity. The system supports both traditional fiat currencies and cryptocurrencies.
 
 For both options:
 
@@ -546,6 +553,17 @@ export const config = {
       phone: "+1 (555) 123-4567",
       address: "123 Main Street, San Francisco, CA 94105"
     }
+  },
+
+  // Currency Configuration
+  currency: {
+    // Default currency code used when no currency is specified
+    defaultCurrency: "USD" as CurrencyCode,
+
+    // Allowed currencies for job listings
+    // This list can include any valid CurrencyCode from lib/constants/currencies.ts
+    // Set to null to allow all currencies, or specify a subset
+    allowedCurrencies: ["USD", "EUR", "GBP", "BTC", "ETH", "USDT", "USDC"] as CurrencyCode[] | null, // null means all currencies are allowed
   },
 };
 ```
@@ -870,6 +888,10 @@ The job board supports a comprehensive salary structure:
 
 - Minimum and maximum salary ranges
 - Support for 50+ global currencies with proper symbols and formatting
+- Support for cryptocurrencies and stablecoins:
+  - Major cryptocurrencies (BTC, ETH, XRP, etc.) with proper symbols (₿, Ξ)
+  - USD-pegged stablecoins (USDT, USDC, USDS, PYUSD, TUSD)
+  - Properly normalized exchange rates for sorting and filtering
 - Smart currency display with intelligent spacing:
   - No spaces for common symbols ($, £, €, ¥, ₩, etc.)
   - Appropriate spacing for multi-character symbols (CHF, Rp, etc.)
@@ -879,7 +901,7 @@ The job board supports a comprehensive salary structure:
   - Values over 10,000 use "k" format (e.g., "$50k")
   - Values over 1,000,000 use "M" format (e.g., "₩50M")
 - Various time units (hour, day, week, month, year, project)
-- Optional display of currency codes (e.g., "$50k/year (USD)")
+- Optional display of currency codes (e.g., "$50k/year (USD)" or "₿0.5/year (BTC)")
 - Salary-based sorting with normalization to annual USD
 
 ## Pagination and Sorting

@@ -351,15 +351,15 @@ function normalizeLanguages(value: unknown): LanguageCode[] {
 
 // Function to normalize currency data from Airtable
 // This can handle multiple formats:
-// - ISO codes directly: "USD", "EUR"
-// - "Currency Code (Name)" format: "USD (United States Dollar)", "EUR (Euro)"
-// - Currency names: "United States Dollar", "Euro" (via lookup)
+// - ISO codes directly: "USD", "EUR" or crypto codes: "USDT", "DOGE"
+// - "Currency Code (Name)" format: "USD (United States Dollar)", "USDT (Tether USD)"
+// - Currency names: "United States Dollar", "Tether USD" (via lookup)
 function normalizeCurrency(value: unknown): CurrencyCode {
   if (!value) return "USD"; // Default to USD if no currency specified
 
   if (typeof value === "string") {
-    // Format 1: Extract code from "USD (United States Dollar)" format
-    const currencyCodeMatch = /^([A-Z]{3})\s*\(.*?\)$/i.exec(value);
+    // Format 1: Extract code from "USD (United States Dollar)" or "USDT (Tether USD)" format
+    const currencyCodeMatch = /^([A-Z]{2,5})\s*\(.*?\)$/i.exec(value);
     if (currencyCodeMatch && currencyCodeMatch[1]) {
       const extractedCode = currencyCodeMatch[1].toUpperCase();
 
@@ -369,12 +369,10 @@ function normalizeCurrency(value: unknown): CurrencyCode {
       }
     }
 
-    // Format 2: Check if the string itself is a valid 3-letter code
-    if (
-      value.length === 3 &&
-      CURRENCY_CODES.includes(value.toUpperCase() as CurrencyCode)
-    ) {
-      return value.toUpperCase() as CurrencyCode;
+    // Format 2: Check if the string itself is a valid currency code (2-5 letters for crypto)
+    const upperCaseValue = value.toUpperCase();
+    if (CURRENCY_CODES.includes(upperCaseValue as CurrencyCode)) {
+      return upperCaseValue as CurrencyCode;
     }
 
     // Format 3: Try to look up by currency name
