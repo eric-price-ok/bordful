@@ -24,7 +24,7 @@ import {
   createLocationSlug,
 } from "@/lib/constants/locations";
 import { generateMetadata } from "@/lib/utils/metadata";
-import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
+import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
 
 // Generate metadata for SEO
 export const metadata: Metadata = generateMetadata({
@@ -178,7 +178,7 @@ export default async function JobsDirectoryPage() {
           <div className="flex-[3]">
             {/* Breadcrumbs */}
             <div className="mb-6">
-              <SimpleBreadcrumb />
+              <MetadataBreadcrumb metadata={metadata} pathname="/jobs" />
             </div>
 
             <div className="space-y-8 sm:space-y-12">

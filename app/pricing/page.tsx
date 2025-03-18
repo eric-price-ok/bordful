@@ -6,7 +6,13 @@ import { HeroSection } from "@/components/ui/hero-section";
 import { Button } from "@/components/ui/button";
 import { JobBadge } from "@/components/ui/job-badge";
 import config from "@/config";
-import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
+import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
+
+// Payment method icon type
+interface PaymentMethodIcon {
+  name: string;
+  alt?: string;
+}
 
 // Format a billing term for display
 const formatPricingBillingTerm = (billingTerm: string): string => {
@@ -75,7 +81,7 @@ export default function PricingPage() {
       {/* Pricing Cards */}
       <div className="container mx-auto px-4 py-10">
         <div className="mb-6">
-          <SimpleBreadcrumb />
+          <MetadataBreadcrumb metadata={metadata} pathname="/pricing" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
@@ -177,14 +183,19 @@ export default function PricingPage() {
             {/* Payment Method Icons */}
             {config.pricing.paymentMethods?.enabled && (
               <div className="flex justify-center items-center gap-2 mt-4">
-                {config.pricing.paymentMethods.icons.map((icon) => (
+                {(
+                  config.pricing.paymentMethods.icons as unknown as Array<{
+                    name: string;
+                    alt?: string;
+                  }>
+                ).map((icon) => (
                   <div
                     key={icon.name}
                     className="relative w-10 h-8 hover:grayscale-0 hover:opacity-100 transition-all"
                   >
                     <Image
                       src={`/assets/${icon.name}.svg`}
-                      alt={icon.alt}
+                      alt={icon.alt || `${icon.name} payment method`}
                       fill
                       style={{ objectFit: "contain" }}
                     />

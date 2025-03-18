@@ -125,6 +125,68 @@ const BreadcrumbEllipsis = ({
 );
 BreadcrumbEllipsis.displayName = "BreadcrumbEllipsis";
 
+// New server component for generating breadcrumbs from metadata
+function ServerBreadcrumb({
+  items,
+  className,
+}: {
+  items: BreadcrumbItem[];
+  className?: string;
+}) {
+  const schemaMarkup = generateBreadcrumbSchema(items);
+
+  return (
+    <>
+      {/* Schema.org markup for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: schemaMarkup }}
+      />
+      <nav aria-label="breadcrumb" className={className}>
+        <ol className="flex flex-wrap items-center gap-1.5 break-words text-xs text-muted-foreground sm:gap-2.5">
+          {items.map((item, index) => {
+            const isLastItem = index === items.length - 1;
+
+            return (
+              <React.Fragment key={item.url}>
+                <li className="inline-flex items-center gap-1.5">
+                  {isLastItem ? (
+                    <span
+                      role="link"
+                      aria-disabled="true"
+                      aria-current="page"
+                      className="font-normal text-gray-900"
+                    >
+                      {item.name}
+                    </span>
+                  ) : (
+                    <a
+                      href={item.url}
+                      className="transition-colors hover:text-foreground text-gray-500"
+                    >
+                      {item.name}
+                    </a>
+                  )}
+                </li>
+
+                {!isLastItem && (
+                  <li
+                    role="presentation"
+                    aria-hidden="true"
+                    className="text-gray-300 mx-[-0.25rem] [&>svg]:w-3.5 [&>svg]:h-3.5"
+                  >
+                    <ChevronRight />
+                  </li>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </ol>
+      </nav>
+    </>
+  );
+}
+
 export {
   Breadcrumb,
   BreadcrumbList,
@@ -133,4 +195,5 @@ export {
   BreadcrumbPage,
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
+  ServerBreadcrumb,
 };

@@ -21,7 +21,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
+import { ClientBreadcrumb } from "@/components/ui/client-breadcrumb";
+import { JobFilters } from "@/components/ui/job-filters";
+import { Badge } from "@/components/ui/badge";
+import { useDebounce } from "@/hooks/useDebounce";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search, SlidersHorizontal, X } from "lucide-react";
 
 interface JobsLayoutProps {
   allJobs: Job[];
@@ -118,7 +124,7 @@ export function JobsLayout({ filteredJobs }: JobsLayoutProps) {
         <div className="flex-[3] space-y-6">
           {/* Breadcrumbs */}
           <div className="mb-2">
-            <SimpleBreadcrumb />
+            <ClientBreadcrumb />
           </div>
 
           {/* Controls */}

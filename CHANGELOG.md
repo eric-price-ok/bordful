@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.86] - 2025-03-19
+
+### Changed
+- Optimized breadcrumb implementation with server components:
+  - Migrated client-side breadcrumbs to Next.js server components
+  - Reduced client-side JavaScript bundle size
+  - Eliminated hydration costs and content layout shifts
+  - Fixed inconsistent breadcrumb hierarchy in category pages
+  - Maintained color styling distinction between active/inactive items
+  - Enhanced performance by moving breadcrumb generation to the server
+  - Improved accessibility and SEO with proper semantic markup
+
 ## [0.0.85] - 2025-03-18
 
 ### Changed

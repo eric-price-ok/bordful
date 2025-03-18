@@ -5,7 +5,8 @@ import config from "@/config";
 import { redirect } from "next/navigation";
 import { getJobs } from "@/lib/db/airtable";
 import { CompactJobCardList } from "@/components/jobs/CompactJobCardList";
-import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
+import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
+import { generateMetadata } from "@/lib/utils/metadata";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -59,7 +60,7 @@ export default async function JobAlertsPage() {
 
       <div className="container mx-auto px-4 py-12">
         <div className="mb-6">
-          <SimpleBreadcrumb />
+          <MetadataBreadcrumb metadata={metadata} pathname="/job-alerts" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

@@ -4,7 +4,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import config from "@/config";
 import { FAQContent } from "@/components/ui/faq-content";
-import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
+import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
+import { generateMetadata } from "@/lib/utils/metadata";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -69,7 +70,7 @@ export default function FAQPage() {
       <div className="container mx-auto px-4 py-10">
         <div className="max-w-3xl mx-auto">
           <div className="mb-6">
-            <SimpleBreadcrumb />
+            <MetadataBreadcrumb metadata={metadata} pathname="/faq" />
           </div>
 
           <FAQContent categories={config.faq.categories} />

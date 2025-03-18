@@ -6,7 +6,7 @@ import { HeroSection } from "@/components/ui/hero-section";
 import Link from "next/link";
 import { CAREER_LEVEL_DISPLAY_NAMES } from "@/lib/constants/career-levels";
 import { generateMetadata } from "@/lib/utils/metadata";
-import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
+import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
 
 // Generate metadata for SEO
 export const metadata: Metadata = generateMetadata({
@@ -103,8 +103,16 @@ export default async function CareerLevelsPage() {
       <main className="container py-6 sm:py-8">
         <div className="max-w-5xl">
           {/* Breadcrumbs */}
-          <div className="mb-4">
-            <SimpleBreadcrumb />
+          <div className="mb-6">
+            <MetadataBreadcrumb
+              metadata={metadata}
+              pathname="/jobs/levels"
+              items={[
+                { name: "Home", url: "/" },
+                { name: "Jobs", url: "/jobs" },
+                { name: "Career Levels", url: "/jobs/levels" },
+              ]}
+            />
           </div>
 
           <section>

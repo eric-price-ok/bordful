@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import config from "@/config";
 import { SupportChannelCard } from "@/components/contact/SupportChannelCard";
 import { ContactInfoSection } from "@/components/contact/ContactInfoSection";
-import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
+import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
+import { generateMetadata } from "@/lib/utils/metadata";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -72,7 +73,7 @@ export default function ContactPage() {
         <div className="container px-4 mx-auto">
           <div className="max-w-5xl mx-auto">
             <div className="mb-6">
-              <SimpleBreadcrumb />
+              <MetadataBreadcrumb metadata={metadata} pathname="/contact" />
             </div>
 
             <h2 className="text-2xl font-semibold text-zinc-900 text-center mb-8">

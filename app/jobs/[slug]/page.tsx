@@ -13,7 +13,7 @@ import { Metadata } from "next";
 import config from "@/config";
 import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
 import { notFound } from "next/navigation";
-import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
+import { ClientBreadcrumb } from "@/components/ui/client-breadcrumb";
 
 // Generate static params for all active jobs
 export async function generateStaticParams() {
@@ -108,9 +108,12 @@ export default async function JobPostPage({
       <div className="flex flex-col md:flex-row gap-4 lg:gap-8">
         {/* Main content */}
         <article className="flex-[3] order-1">
-          <div className="mb-4">
-            <SimpleBreadcrumb
-              dynamicData={{ name: job.title, url: `/jobs/${params.slug}` }}
+          <div className="mb-6">
+            <ClientBreadcrumb
+              dynamicData={{
+                name: job.title,
+                url: `/jobs/${params.slug}`,
+              }}
             />
           </div>
           <div className="mb-8">
