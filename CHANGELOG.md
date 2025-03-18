@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.84] - 2025-03-18
+
+### Added
+- Enhanced breadcrumb navigation system for improved user experience and SEO:
+  - Implemented schema.org breadcrumb markup for search engine optimization
+  - Created reusable breadcrumb components with proper semantic structure
+  - Added client-side automatic breadcrumb generation based on current routes
+  - Implemented server-side caching for breadcrumb data
+  - Added performance optimizations with React.memo and useMemo
+  - Implemented comprehensive error handling for all breadcrumb generation steps
+  - Added consistent styling with the rest of the application
+  - Ensured mobile responsiveness with appropriate text sizing
+  - Provided graceful fallbacks for loading and error states
+  - Maintained consistent data flow with efficient prop passing
+  - Added proper accessibility with ARIA attributes
+
 ## [0.0.83] - 2025-03-18
 
 ### Added

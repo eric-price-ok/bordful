@@ -26,6 +26,11 @@ interface MetadataParams {
   };
 }
 
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
 /**
  * Generates consistent metadata with proper hreflang tags for any page
  * @param params Metadata parameters including title, description, and path
@@ -65,4 +70,24 @@ export function generateMetadata({
       description,
     },
   };
+}
+
+/**
+ * Generates schema.org breadcrumb markup for SEO
+ * @param items Array of breadcrumb items with name and URL
+ * @returns JSON string of schema.org breadcrumb markup
+ */
+export function generateBreadcrumbSchema(items: BreadcrumbItem[]): string {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+
+  return JSON.stringify(breadcrumbSchema);
 }
