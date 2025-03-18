@@ -10,7 +10,6 @@ import {
   JOB_TYPE_DESCRIPTIONS,
 } from "@/lib/constants/job-types";
 import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
-import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;

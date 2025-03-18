@@ -1,8 +1,3 @@
-import { formatLocationTitle } from "@/lib/constants/locations";
-import { JOB_TYPE_DISPLAY_NAMES } from "@/lib/constants/job-types";
-import { CAREER_LEVEL_DISPLAY_NAMES } from "@/lib/constants/career-levels";
-import { getDisplayNameFromCode } from "@/lib/constants/languages";
-
 export interface RouteParams {
   [key: string]: string;
 }

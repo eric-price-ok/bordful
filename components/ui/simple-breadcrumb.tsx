@@ -123,7 +123,7 @@ const formatSegment = (
       // getDisplayNameFromCode expects a valid language code
       // We'll try to use it but fall back to default formatting
       try {
-        return getDisplayNameFromCode(segment as any);
+        return getDisplayNameFromCode(segment as string);
       } catch {
         // Fall back to default formatting below
       }
