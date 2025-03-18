@@ -26,6 +26,7 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
 - Rich text support for job descriptions
 - Comprehensive job metadata with multi-select career levels
 - Job benefits and perks displaying in the sidebar
+- Application requirements for clear candidate expectations
 - Advanced salary structure with currency and time unit support
   - Supports 50+ global fiat currencies
   - Cryptocurrency support (Bitcoin, Ethereum, etc.)
@@ -232,7 +233,8 @@ npm install
   salary_currency: Single select (USD, EUR, GBP, USDT, USDC, BTC, ETH, etc.)
   salary_unit: Single select (hour, day, week, month, year, project)
   description: Long text (with rich text enabled)
-  benefits: Long text (plain text, recommended format: "Unlimited vacation, Health insurance, 401(k) retirement plan", max 1,000 characters)
+  benefits: Long text (plain text, recommended format: "• Benefit 1\n• Benefit 2\n• Benefit 3", max 500 characters)
+  application_requirements: Long text (plain text, comma-separated format, max 500 characters)
   apply_url: URL
   posted_date: Date
   status: Single select (active, inactive)

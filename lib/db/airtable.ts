@@ -60,6 +60,7 @@ export interface Job {
   salary: Salary | null;
   description: string;
   benefits: string | null;
+  application_requirements: string | null;
   apply_url: string;
   posted_date: string;
   status: "active" | "inactive";
@@ -406,6 +407,25 @@ function normalizeBenefits(value: unknown): string | null {
   return benefitsText;
 }
 
+// Function to normalize application requirements with a maximum length
+function normalizeApplicationRequirements(value: unknown): string | null {
+  if (!value) return null;
+
+  // Convert to string if it's not already
+  const requirementsText = String(value).trim();
+
+  // If empty after trimming, return null
+  if (!requirementsText) return null;
+
+  // Trim to maximum 1000 characters for safety
+  const MAX_REQUIREMENTS_LENGTH = 1000;
+  if (requirementsText.length > MAX_REQUIREMENTS_LENGTH) {
+    return requirementsText.substring(0, MAX_REQUIREMENTS_LENGTH).trim();
+  }
+
+  return requirementsText;
+}
+
 export async function getJobs(): Promise<Job[]> {
   try {
     // Check for required environment variables
@@ -435,6 +455,9 @@ export async function getJobs(): Promise<Job[]> {
         },
         description: cleanMarkdownFormatting(fields.description as string),
         benefits: normalizeBenefits(fields.benefits),
+        application_requirements: normalizeApplicationRequirements(
+          fields.application_requirements
+        ),
         apply_url: fields.apply_url as string,
         posted_date: fields.posted_date as string,
         status: fields.status as Job["status"],
@@ -503,6 +526,9 @@ export async function getJob(id: string): Promise<Job | null> {
       },
       description: record.fields.description as string,
       benefits: normalizeBenefits(record.fields.benefits),
+      application_requirements: normalizeApplicationRequirements(
+        record.fields.application_requirements
+      ),
       apply_url: record.fields.apply_url as string,
       posted_date: record.fields.posted_date as string,
       status: record.fields.status as Job["status"],

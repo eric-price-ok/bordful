@@ -8,7 +8,7 @@ import { PostJobBanner } from "@/components/ui/post-job-banner";
 import { JobDetailsSidebar } from "@/components/ui/job-details-sidebar";
 import { SimilarJobs } from "@/components/ui/similar-jobs";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ClipboardList } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -233,6 +233,19 @@ export default async function JobPage({
                 </ReactMarkdown>
               </div>
             </div>
+
+            {/* Application Requirements - Prominently displayed before apply button */}
+            {job.application_requirements && (
+              <div className="mt-6 mb-4 p-2 bg-amber-50 border border-amber-200 rounded-md">
+                <h3 className="text-xs font-semibold flex items-center gap-1 mb-1.5">
+                  <ClipboardList className="h-3.5 w-3.5 text-amber-600" />
+                  Application Requirements
+                </h3>
+                <p className="text-xs text-gray-700">
+                  {job.application_requirements}
+                </p>
+              </div>
+            )}
 
             <div className="mt-8">
               <Button

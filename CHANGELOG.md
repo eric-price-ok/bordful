@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.83] - 2025-03-18
+
+### Added
+- Added application requirements feature:
+  - New `application_requirements` field in Airtable for listing job prerequisites
+  - Compact, focused placement before Apply button to ensure visibility
+  - Lightweight UI with subtle amber highlighting for attention without distraction
+  - Character limits (1,000 max) for consistent display
+  - Recommended comma-separated format for standardization
+
 ## [0.0.82] - 2025-03-16
 
 ### Added
