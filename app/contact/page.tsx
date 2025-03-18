@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import config from "@/config";
 import { SupportChannelCard } from "@/components/contact/SupportChannelCard";
 import { ContactInfoSection } from "@/components/contact/ContactInfoSection";
+import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -70,6 +71,10 @@ export default function ContactPage() {
       <section className="py-12 md:py-16">
         <div className="container px-4 mx-auto">
           <div className="max-w-5xl mx-auto">
+            <div className="mb-6">
+              <SimpleBreadcrumb />
+            </div>
+
             <h2 className="text-2xl font-semibold text-zinc-900 text-center mb-8">
               {config.contact.supportChannels.title}
             </h2>

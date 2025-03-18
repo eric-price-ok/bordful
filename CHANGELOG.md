@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.85] - 2025-03-18
+
+### Changed
+- Improved breadcrumb implementation with loading optimization:
+  - Enhanced layout stability by adding skeleton placeholders matching breadcrumb dimensions
+  - Implemented fade-in transitions for smooth visual updates
+  - Added proper hydration safety with client-side mount detection
+  - Prevented layout shifts with path-aware placeholder structure
+  - Optimized loading states with delayed transitions to prevent flashing
+  - Improved error handling for dynamic route data fetching
+  - Enhanced responsiveness across all device sizes
+
 ## [0.0.84] - 2025-03-18
 
 ### Added

@@ -9,11 +9,11 @@ import { JobDetailsSidebar } from "@/components/ui/job-details-sidebar";
 import { SimilarJobs } from "@/components/ui/similar-jobs";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, ClipboardList } from "lucide-react";
-import { AutoBreadcrumb } from "@/components/ui/auto-breadcrumb";
 import { Metadata } from "next";
 import config from "@/config";
 import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
 import { notFound } from "next/navigation";
+import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
 
 // Generate static params for all active jobs
 export async function generateStaticParams() {
@@ -109,7 +109,9 @@ export default async function JobPostPage({
         {/* Main content */}
         <article className="flex-[3] order-1">
           <div className="mb-4">
-            <AutoBreadcrumb jobTitle={job.title} />
+            <SimpleBreadcrumb
+              dynamicData={{ name: job.title, url: `/jobs/${params.slug}` }}
+            />
           </div>
           <div className="mb-8">
             <div className="space-y-2">

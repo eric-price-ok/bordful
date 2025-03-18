@@ -3,6 +3,7 @@ import path from "path";
 import ReactMarkdown from "react-markdown";
 import { Metadata } from "next";
 import config from "@/config";
+import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -48,6 +49,10 @@ export default async function ChangelogPage() {
   return (
     <main className="container py-8">
       <div className="max-w-[700px]">
+        <div className="mb-6">
+          <SimpleBreadcrumb />
+        </div>
+
         <div className="prose prose-sm prose-gray max-w-none">
           <ReactMarkdown>{content}</ReactMarkdown>
         </div>

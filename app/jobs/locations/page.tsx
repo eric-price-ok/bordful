@@ -11,6 +11,7 @@ import {
 } from "@/lib/constants/locations";
 import { Country } from "@/lib/constants/countries";
 import { generateMetadata } from "@/lib/utils/metadata";
+import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
 
 // Generate metadata for SEO
 export const metadata: Metadata = generateMetadata({
@@ -104,7 +105,12 @@ export default async function LocationsPage() {
       />
 
       <main className="container py-6 sm:py-8">
-        <div className="max-w-5xl">
+        <div className="max-w-5xl space-y-8 sm:space-y-12">
+          {/* Breadcrumbs */}
+          <div className="mb-4">
+            <SimpleBreadcrumb />
+          </div>
+
           {/* Remote Section */}
           {locationCounts.remote > 0 && (
             <section className="mb-8 sm:mb-12">

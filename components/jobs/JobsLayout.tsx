@@ -21,6 +21,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
 
 interface JobsLayoutProps {
   allJobs: Job[];
@@ -115,6 +116,11 @@ export function JobsLayout({ filteredJobs }: JobsLayoutProps) {
       <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
         {/* Main Content */}
         <div className="flex-[3] space-y-6">
+          {/* Breadcrumbs */}
+          <div className="mb-2">
+            <SimpleBreadcrumb />
+          </div>
+
           {/* Controls */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-4 sm:gap-0">
             <div className="space-y-1 w-full sm:w-auto">

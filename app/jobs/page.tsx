@@ -24,6 +24,7 @@ import {
   createLocationSlug,
 } from "@/lib/constants/locations";
 import { generateMetadata } from "@/lib/utils/metadata";
+import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
 
 // Generate metadata for SEO
 export const metadata: Metadata = generateMetadata({
@@ -174,190 +175,197 @@ export default async function JobsDirectoryPage() {
       <main className="container py-6 sm:py-8">
         <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
           {/* Main Content */}
-          <div className="flex-[3] space-y-8 sm:space-y-12">
-            {/* Job Types Section */}
-            <section
-              className="space-y-4 sm:space-y-6"
-              aria-labelledby="job-types-heading"
-            >
-              <div className="flex items-center gap-2">
-                <Briefcase
-                  className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"
-                  aria-hidden="true"
-                />
-                <h2
-                  id="job-types-heading"
-                  className="text-lg sm:text-xl font-semibold"
-                >
-                  Job Types
-                </h2>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                {sortedJobTypes.map(([type, count]) => (
-                  <CategoryCard
-                    key={type}
-                    href={`/jobs/type/${type.toLowerCase()}`}
-                    title={type}
-                    count={count}
-                  />
-                ))}
-              </div>
-              <Button
-                variant="outline"
-                className="w-full text-xs sm:text-sm py-2 sm:py-2.5 mt-4"
-                asChild
+          <div className="flex-[3]">
+            {/* Breadcrumbs */}
+            <div className="mb-6">
+              <SimpleBreadcrumb />
+            </div>
+
+            <div className="space-y-8 sm:space-y-12">
+              {/* Job Types Section */}
+              <section
+                className="space-y-4 sm:space-y-6"
+                aria-labelledby="job-types-heading"
               >
-                <Link href="/jobs/types" aria-label="View all job types">
-                  View All Job Types
-                  <ArrowUpRight
-                    className="w-3.5 sm:w-4 h-3.5 sm:h-4 ml-1.5 sm:ml-2"
+                <div className="flex items-center gap-2">
+                  <Briefcase
+                    className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"
                     aria-hidden="true"
                   />
-                </Link>
-              </Button>
-            </section>
-
-            {/* Locations Section */}
-            <section
-              className="space-y-4 sm:space-y-6"
-              aria-labelledby="locations-heading"
-            >
-              <div className="flex items-center gap-2">
-                <Globe2
-                  className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"
-                  aria-hidden="true"
-                />
-                <h2
-                  id="locations-heading"
-                  className="text-lg sm:text-xl font-semibold"
-                >
-                  Locations
-                </h2>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                {/* Remote Category */}
-                {jobCounts.locations.remote > 0 && (
-                  <CategoryCard
-                    href="/jobs/location/remote"
-                    title="Remote"
-                    count={jobCounts.locations.remote}
-                  />
-                )}
-
-                {/* Top Countries */}
-                {Object.entries(jobCounts.locations.countries)
-                  .sort((a, b) => b[1] - a[1])
-                  .slice(0, 5)
-                  .map(([country, count]) => (
+                  <h2
+                    id="job-types-heading"
+                    className="text-lg sm:text-xl font-semibold"
+                  >
+                    Job Types
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  {sortedJobTypes.map(([type, count]) => (
                     <CategoryCard
-                      key={country}
-                      href={`/jobs/location/${createLocationSlug(country)}`}
-                      title={formatLocationTitle(country)}
+                      key={type}
+                      href={`/jobs/type/${type.toLowerCase()}`}
+                      title={type}
                       count={count}
                     />
                   ))}
-              </div>
-              <Button
-                variant="outline"
-                className="w-full text-xs sm:text-sm py-2 sm:py-2.5 mt-4"
-                asChild
-              >
-                <Link
-                  href="/jobs/locations"
-                  aria-label="View all available locations"
+                </div>
+                <Button
+                  variant="outline"
+                  className="w-full text-xs sm:text-sm py-2 sm:py-2.5 mt-4"
+                  asChild
                 >
-                  View All Locations
-                  <ArrowUpRight
-                    className="w-3.5 sm:w-4 h-3.5 sm:h-4 ml-1.5 sm:ml-2"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </Button>
-            </section>
+                  <Link href="/jobs/types" aria-label="View all job types">
+                    View All Job Types
+                    <ArrowUpRight
+                      className="w-3.5 sm:w-4 h-3.5 sm:h-4 ml-1.5 sm:ml-2"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </Button>
+              </section>
 
-            {/* Career Levels Section */}
-            <section
-              className="space-y-4 sm:space-y-6"
-              aria-labelledby="career-levels-heading"
-            >
-              <div className="flex items-center gap-2">
-                <GraduationCap
-                  className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"
-                  aria-hidden="true"
-                />
-                <h2
-                  id="career-levels-heading"
-                  className="text-lg sm:text-xl font-semibold"
-                >
-                  Career Levels
-                </h2>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                {sortedCareerLevels.slice(0, 6).map(([level, count]) => (
-                  <CategoryCard
-                    key={level}
-                    href={`/jobs/level/${level.toLowerCase()}`}
-                    title={CAREER_LEVEL_DISPLAY_NAMES[level as CareerLevel]}
-                    count={count}
-                  />
-                ))}
-              </div>
-              <Button
-                variant="outline"
-                className="w-full text-xs sm:text-sm py-2 sm:py-2.5 mt-4"
-                asChild
+              {/* Locations Section */}
+              <section
+                className="space-y-4 sm:space-y-6"
+                aria-labelledby="locations-heading"
               >
-                <Link href="/jobs/levels" aria-label="View all career levels">
-                  View All Career Levels
-                  <ArrowUpRight
-                    className="w-3.5 sm:w-4 h-3.5 sm:h-4 ml-1.5 sm:ml-2"
+                <div className="flex items-center gap-2">
+                  <Globe2
+                    className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"
                     aria-hidden="true"
                   />
-                </Link>
-              </Button>
-            </section>
+                  <h2
+                    id="locations-heading"
+                    className="text-lg sm:text-xl font-semibold"
+                  >
+                    Locations
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  {/* Remote Category */}
+                  {jobCounts.locations.remote > 0 && (
+                    <CategoryCard
+                      href="/jobs/location/remote"
+                      title="Remote"
+                      count={jobCounts.locations.remote}
+                    />
+                  )}
 
-            {/* Languages Section */}
-            <section
-              className="space-y-4 sm:space-y-6"
-              aria-labelledby="languages-heading"
-            >
-              <div className="flex items-center gap-2">
-                <Languages
-                  className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"
-                  aria-hidden="true"
-                />
-                <h2
-                  id="languages-heading"
-                  className="text-lg sm:text-xl font-semibold"
+                  {/* Top Countries */}
+                  {Object.entries(jobCounts.locations.countries)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 5)
+                    .map(([country, count]) => (
+                      <CategoryCard
+                        key={country}
+                        href={`/jobs/location/${createLocationSlug(country)}`}
+                        title={formatLocationTitle(country)}
+                        count={count}
+                      />
+                    ))}
+                </div>
+                <Button
+                  variant="outline"
+                  className="w-full text-xs sm:text-sm py-2 sm:py-2.5 mt-4"
+                  asChild
                 >
-                  Languages
-                </h2>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                {topLanguages.map(([lang, count]) => (
-                  <CategoryCard
-                    key={lang}
-                    href={`/jobs/language/${lang.toLowerCase()}`}
-                    title={getDisplayNameFromCode(lang as LanguageCode)}
-                    count={count}
-                  />
-                ))}
-              </div>
-              <Button
-                variant="outline"
-                className="w-full text-xs sm:text-sm py-2 sm:py-2.5 mt-4"
-                asChild
+                  <Link
+                    href="/jobs/locations"
+                    aria-label="View all available locations"
+                  >
+                    View All Locations
+                    <ArrowUpRight
+                      className="w-3.5 sm:w-4 h-3.5 sm:h-4 ml-1.5 sm:ml-2"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </Button>
+              </section>
+
+              {/* Career Levels Section */}
+              <section
+                className="space-y-4 sm:space-y-6"
+                aria-labelledby="career-levels-heading"
               >
-                <Link href="/jobs/languages" aria-label="View all languages">
-                  View All Languages
-                  <ArrowUpRight
-                    className="w-3.5 sm:w-4 h-3.5 sm:h-4 ml-1.5 sm:ml-2"
+                <div className="flex items-center gap-2">
+                  <GraduationCap
+                    className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"
                     aria-hidden="true"
                   />
-                </Link>
-              </Button>
-            </section>
+                  <h2
+                    id="career-levels-heading"
+                    className="text-lg sm:text-xl font-semibold"
+                  >
+                    Career Levels
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  {sortedCareerLevels.slice(0, 6).map(([level, count]) => (
+                    <CategoryCard
+                      key={level}
+                      href={`/jobs/level/${level.toLowerCase()}`}
+                      title={CAREER_LEVEL_DISPLAY_NAMES[level as CareerLevel]}
+                      count={count}
+                    />
+                  ))}
+                </div>
+                <Button
+                  variant="outline"
+                  className="w-full text-xs sm:text-sm py-2 sm:py-2.5 mt-4"
+                  asChild
+                >
+                  <Link href="/jobs/levels" aria-label="View all career levels">
+                    View All Career Levels
+                    <ArrowUpRight
+                      className="w-3.5 sm:w-4 h-3.5 sm:h-4 ml-1.5 sm:ml-2"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </Button>
+              </section>
+
+              {/* Languages Section */}
+              <section
+                className="space-y-4 sm:space-y-6"
+                aria-labelledby="languages-heading"
+              >
+                <div className="flex items-center gap-2">
+                  <Languages
+                    className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                  <h2
+                    id="languages-heading"
+                    className="text-lg sm:text-xl font-semibold"
+                  >
+                    Languages
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  {topLanguages.map(([lang, count]) => (
+                    <CategoryCard
+                      key={lang}
+                      href={`/jobs/language/${lang.toLowerCase()}`}
+                      title={getDisplayNameFromCode(lang as LanguageCode)}
+                      count={count}
+                    />
+                  ))}
+                </div>
+                <Button
+                  variant="outline"
+                  className="w-full text-xs sm:text-sm py-2 sm:py-2.5 mt-4"
+                  asChild
+                >
+                  <Link href="/jobs/languages" aria-label="View all languages">
+                    View All Languages
+                    <ArrowUpRight
+                      className="w-3.5 sm:w-4 h-3.5 sm:h-4 ml-1.5 sm:ml-2"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </Button>
+              </section>
+            </div>
           </div>
 
           {/* Sidebar */}

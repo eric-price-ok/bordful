@@ -9,6 +9,7 @@ import {
   getDisplayNameFromCode,
 } from "@/lib/constants/languages";
 import { generateMetadata } from "@/lib/utils/metadata";
+import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
 
 // Generate metadata for SEO
 export const metadata: Metadata = generateMetadata({
@@ -85,6 +86,11 @@ export default async function LanguagesPage() {
 
       <main className="container py-6 sm:py-8">
         <div className="max-w-5xl">
+          {/* Breadcrumbs */}
+          <div className="mb-4">
+            <SimpleBreadcrumb />
+          </div>
+
           <section>
             <div className="flex items-center gap-2 mb-4">
               <Languages

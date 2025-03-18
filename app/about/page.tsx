@@ -8,6 +8,7 @@ import { Building2, Users2, Globe2 } from "lucide-react";
 import { Metadata } from "next";
 import { HeroSection } from "@/components/ui/hero-section";
 import config from "@/config";
+import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -52,6 +53,10 @@ export default function AboutPage() {
 
       {/* Content Section */}
       <div className="container mx-auto px-4 py-12">
+        <div className="mb-6">
+          <SimpleBreadcrumb />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <Card className="p-6 border shadow-none rounded-lg">
             <CardHeader className="p-0 space-y-2">

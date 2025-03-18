@@ -6,6 +6,7 @@ import { HeroSection } from "@/components/ui/hero-section";
 import Link from "next/link";
 import { CAREER_LEVEL_DISPLAY_NAMES } from "@/lib/constants/career-levels";
 import { generateMetadata } from "@/lib/utils/metadata";
+import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
 
 // Generate metadata for SEO
 export const metadata: Metadata = generateMetadata({
@@ -100,31 +101,33 @@ export default async function CareerLevelsPage() {
       />
 
       <main className="container py-6 sm:py-8">
-        <div className="max-w-5xl space-y-8 sm:space-y-12">
-          {/* Entry Level Section */}
-          {entryLevels.length > 0 && (
-            <section>
-              <div className="flex items-center gap-2 mb-4">
-                <GraduationCap
-                  className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"
-                  aria-hidden="true"
+        <div className="max-w-5xl">
+          {/* Breadcrumbs */}
+          <div className="mb-4">
+            <SimpleBreadcrumb />
+          </div>
+
+          <section>
+            <div className="flex items-center gap-2 mb-4">
+              <GraduationCap
+                className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"
+                aria-hidden="true"
+              />
+              <h2 className="text-lg sm:text-xl font-semibold">
+                Entry Level Positions
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+              {entryLevels.map(({ level, title, count }) => (
+                <LevelCard
+                  key={level}
+                  href={`/jobs/level/${level.toLowerCase()}`}
+                  title={title}
+                  count={count}
                 />
-                <h2 className="text-lg sm:text-xl font-semibold">
-                  Entry Level Positions
-                </h2>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                {entryLevels.map(({ level, title, count }) => (
-                  <LevelCard
-                    key={level}
-                    href={`/jobs/level/${level.toLowerCase()}`}
-                    title={title}
-                    count={count}
-                  />
-                ))}
-              </div>
-            </section>
-          )}
+              ))}
+            </div>
+          </section>
 
           {/* Mid Level Section */}
           {midLevels.length > 0 && (

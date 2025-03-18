@@ -6,6 +6,7 @@ import { HeroSection } from "@/components/ui/hero-section";
 import { Button } from "@/components/ui/button";
 import { JobBadge } from "@/components/ui/job-badge";
 import config from "@/config";
+import { SimpleBreadcrumb } from "@/components/ui/simple-breadcrumb";
 
 // Format a billing term for display
 const formatPricingBillingTerm = (billingTerm: string): string => {
@@ -73,6 +74,10 @@ export default function PricingPage() {
 
       {/* Pricing Cards */}
       <div className="container mx-auto px-4 py-10">
+        <div className="mb-6">
+          <SimpleBreadcrumb />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
           {config.pricing.plans.map((plan, index) => (
             <div key={index} className="group relative">
@@ -98,9 +103,7 @@ export default function PricingPage() {
 
                   <div className="flex items-baseline">
                     <span className="text-2xl font-bold">
-                      {plan.price === 0
-                        ? "Free"
-                        : `${config.pricing.currencySymbol}${plan.price}`}
+                      {plan.price === 0 ? "Free" : `$${plan.price}`}
                     </span>
                     {plan.price > 0 && (
                       <span className="ml-1 text-sm text-gray-500">
