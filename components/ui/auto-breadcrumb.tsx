@@ -12,7 +12,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { ChevronRight } from "lucide-react";
 
 interface AutoBreadcrumbProps {
   jobTitle?: string;

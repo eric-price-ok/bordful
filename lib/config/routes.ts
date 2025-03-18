@@ -55,7 +55,7 @@ export const routes: RouteConfig[] = [
           name: displayName,
           url: `/jobs/type/${type}`,
         };
-      } catch (_) {
+      } catch {
         // Fallback to basic type name
         return {
           name: params.type.charAt(0).toUpperCase() + params.type.slice(1),
@@ -79,7 +79,7 @@ export const routes: RouteConfig[] = [
           name: displayName,
           url: `/jobs/level/${level}`,
         };
-      } catch (_) {
+      } catch {
         // Fallback to basic level name
         return {
           name: params.level.charAt(0).toUpperCase() + params.level.slice(1),
@@ -100,7 +100,7 @@ export const routes: RouteConfig[] = [
           name: displayName,
           url: `/jobs/language/${language}`,
         };
-      } catch (_) {
+      } catch {
         // Fallback to basic language name
         return {
           name:
@@ -122,7 +122,7 @@ export const routes: RouteConfig[] = [
           name: displayName,
           url: `/jobs/location/${location}`,
         };
-      } catch (_) {
+      } catch {
         // Fallback to basic location name
         return {
           name:

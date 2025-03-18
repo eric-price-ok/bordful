@@ -8,19 +8,11 @@ import { PostJobBanner } from "@/components/ui/post-job-banner";
 import { JobDetailsSidebar } from "@/components/ui/job-details-sidebar";
 import { SimilarJobs } from "@/components/ui/similar-jobs";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, ClipboardList, ChevronRight } from "lucide-react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { ArrowUpRight, ClipboardList } from "lucide-react";
+import { AutoBreadcrumb } from "@/components/ui/auto-breadcrumb";
 import { Metadata } from "next";
 import config from "@/config";
 import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
-import { AutoBreadcrumb } from "@/components/ui/auto-breadcrumb";
 import { notFound } from "next/navigation";
 
 // Generate static params for all active jobs
