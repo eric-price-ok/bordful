@@ -29,7 +29,7 @@ export async function generateBreadcrumbs(
           const params = extractParams(currentPath, route);
           const data = await route.getBreadcrumbData(params);
           breadcrumbs.push(data);
-        } catch (error) {
+        } catch (_) {
           // If we can't get dynamic data, fall back to the route name
           breadcrumbs.push({
             name: route.name,

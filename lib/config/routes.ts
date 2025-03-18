@@ -1,20 +1,22 @@
-import { generateJobSlug } from "@/lib/utils/slugify";
-import { getJobs } from "@/lib/db/airtable";
+import { formatLocationTitle } from "@/lib/constants/locations";
 import { JOB_TYPE_DISPLAY_NAMES } from "@/lib/constants/job-types";
 import { CAREER_LEVEL_DISPLAY_NAMES } from "@/lib/constants/career-levels";
 import { getDisplayNameFromCode } from "@/lib/constants/languages";
-import { formatLocationTitle } from "@/lib/constants/locations";
 
 export interface BreadcrumbItem {
   name: string;
   url: string;
 }
 
+export interface RouteParams {
+  [key: string]: string;
+}
+
 export interface RouteConfig {
   path: string;
   name: string;
   dynamic?: boolean;
-  getBreadcrumbData?: (params: any) => Promise<BreadcrumbItem>;
+  getBreadcrumbData?: (params: RouteParams) => Promise<BreadcrumbItem>;
 }
 
 // Route configuration for breadcrumb generation
@@ -53,7 +55,7 @@ export const routes: RouteConfig[] = [
           name: displayName,
           url: `/jobs/type/${type}`,
         };
-      } catch (error) {
+      } catch (_) {
         // Fallback to basic type name
         return {
           name: params.type.charAt(0).toUpperCase() + params.type.slice(1),
@@ -77,7 +79,7 @@ export const routes: RouteConfig[] = [
           name: displayName,
           url: `/jobs/level/${level}`,
         };
-      } catch (error) {
+      } catch (_) {
         // Fallback to basic level name
         return {
           name: params.level.charAt(0).toUpperCase() + params.level.slice(1),
@@ -98,7 +100,7 @@ export const routes: RouteConfig[] = [
           name: displayName,
           url: `/jobs/language/${language}`,
         };
-      } catch (error) {
+      } catch (_) {
         // Fallback to basic language name
         return {
           name:
@@ -120,7 +122,7 @@ export const routes: RouteConfig[] = [
           name: displayName,
           url: `/jobs/location/${location}`,
         };
-      } catch (error) {
+      } catch (_) {
         // Fallback to basic location name
         return {
           name:

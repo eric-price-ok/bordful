@@ -3,7 +3,6 @@ import { Slot } from "@radix-ui/react-slot";
 import { ChevronRight, MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { generateBreadcrumbSchema } from "@/lib/utils/metadata";
-import config from "@/config";
 
 interface BreadcrumbItem {
   name: string;
@@ -16,7 +15,7 @@ interface BreadcrumbProps extends React.ComponentPropsWithoutRef<"nav"> {
 }
 
 const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
-  ({ items, separator, ...props }, ref) => {
+  ({ items, ...props }, ref) => {
     // Generate schema.org markup
     const schemaMarkup = generateBreadcrumbSchema(items);
 
