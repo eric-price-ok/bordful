@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
   - Improved error handling for dynamic route data fetching
   - Enhanced responsiveness across all device sizes
 
+### Fixed
+- Fixed schema.org breadcrumb markup to use absolute URLs with proper @id property:
+  - Updated breadcrumb schema generation to comply with Google's Rich Results Test
+  - Fixed "Invalid URL" warnings in schema validation
+  - Ensured proper structured data format for improved SEO
+
 ## [0.0.84] - 2025-03-18
 
 ### Added

@@ -85,7 +85,10 @@ export function generateBreadcrumbSchema(items: BreadcrumbItem[]): string {
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: item.url,
+      item: {
+        "@id": `${config.url}${item.url}`,
+        name: item.name,
+      },
     })),
   };
 
