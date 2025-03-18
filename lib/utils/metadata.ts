@@ -78,18 +78,32 @@ export function generateMetadata({
  * @returns JSON string of schema.org breadcrumb markup
  */
 export function generateBreadcrumbSchema(items: BreadcrumbItem[]): string {
+  interface ListItem {
+    "@type": string;
+    position: number;
+    name: string;
+    item?: string;
+  }
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: items.map((item, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: item.name,
-      item: {
-        "@id": `${config.url}${item.url}`,
+    itemListElement: items.map((item, index) => {
+      const isLastItem = index === items.length - 1;
+      const listItem: ListItem = {
+        "@type": "ListItem",
+        position: index + 1,
         name: item.name,
-      },
-    })),
+      };
+
+      // For the last item, omit the item property entirely
+      // For other items, use a simple URL string with the full URL
+      if (!isLastItem) {
+        listItem.item = `${config.url}${item.url}`;
+      }
+
+      return listItem;
+    }),
   };
 
   return JSON.stringify(breadcrumbSchema);

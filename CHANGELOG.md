@@ -15,10 +15,12 @@ All notable changes to this project will be documented in this file.
   - Enhanced responsiveness across all device sizes
 
 ### Fixed
-- Fixed schema.org breadcrumb markup to use absolute URLs with proper @id property:
-  - Updated breadcrumb schema generation to comply with Google's Rich Results Test
-  - Fixed "Invalid URL" warnings in schema validation
-  - Ensured proper structured data format for improved SEO
+- Fixed schema.org breadcrumb markup to use proper format for Google's Rich Results Test:
+  - Updated breadcrumb schema generation to exactly match Google's recommended JSON-LD structure
+  - Used simple URL strings for non-final items and omitted the item property for final breadcrumb
+  - Fixed "Invalid URL" warnings by using proper absolute URLs
+  - Added proper TypeScript definitions for ListItem schema objects
+  - Ensured full compliance with Google's structured data guidelines
 
 ## [0.0.84] - 2025-03-18
 
