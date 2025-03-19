@@ -72,10 +72,11 @@ export default async function JobPostPage({
 }: {
   params: { slug: string };
 }) {
+  // Await the params to resolve before using
+  const { slug } = await params;
+
   const jobs = await getJobs();
-  const job = jobs.find(
-    (j) => generateJobSlug(j.title, j.company) === params.slug
-  );
+  const job = jobs.find((j) => generateJobSlug(j.title, j.company) === slug);
 
   if (!job) {
     notFound();
@@ -112,7 +113,7 @@ export default async function JobPostPage({
             <ClientBreadcrumb
               dynamicData={{
                 name: job.title,
-                url: `/jobs/${params.slug}`,
+                url: `/jobs/${slug}`,
               }}
             />
           </div>

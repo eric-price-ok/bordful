@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.87] - 2025-03-19
+
+### Fixed
+- Fixed build issues with unused imports and params handling:
+  - Removed unused imports in JobsLayout.tsx (JobFilters, Badge, useDebounce, Button, Input, Search icons)
+  - Fixed dynamic route parameter handling in job detail pages by properly awaiting params object
+  - Resolved ESLint errors related to no-unused-vars TypeScript rule
+  - Enhanced stability of breadcrumb implementation with proper async patterns
+
 ## [0.0.86] - 2025-03-19
 
 ### Changed
