@@ -1,15 +1,14 @@
+import { Metadata } from "next";
+import { Building2, Users2, Globe2 } from "lucide-react";
 import {
   Card,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
-import { Building2, Users2, Globe2 } from "lucide-react";
-import { Metadata } from "next";
 import { HeroSection } from "@/components/ui/hero-section";
 import config from "@/config";
 import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
-import { generateMetadata } from "@/lib/utils/metadata";
 
 // Add metadata for SEO
 export const metadata: Metadata = {

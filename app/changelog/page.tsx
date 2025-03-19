@@ -1,10 +1,10 @@
+import { Metadata } from "next";
+import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
+import config from "@/config";
+
 import fs from "fs";
 import path from "path";
 import ReactMarkdown from "react-markdown";
-import { Metadata } from "next";
-import config from "@/config";
-import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
-import { generateMetadata } from "@/lib/utils/metadata";
 
 // Add metadata for SEO
 export const metadata: Metadata = {

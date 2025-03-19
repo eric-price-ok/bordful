@@ -8,12 +8,6 @@ import { JobBadge } from "@/components/ui/job-badge";
 import config from "@/config";
 import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
 
-// Payment method icon type
-interface PaymentMethodIcon {
-  name: string;
-  alt?: string;
-}
-
 // Format a billing term for display
 const formatPricingBillingTerm = (billingTerm: string): string => {
   return `/${billingTerm}`;

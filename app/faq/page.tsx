@@ -1,11 +1,10 @@
 import { Metadata } from "next";
+import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
+import config from "@/config";
 import { HeroSection } from "@/components/ui/hero-section";
+import { FAQContent } from "@/components/ui/faq-content";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import config from "@/config";
-import { FAQContent } from "@/components/ui/faq-content";
-import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
-import { generateMetadata } from "@/lib/utils/metadata";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
