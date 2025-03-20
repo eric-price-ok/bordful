@@ -7,6 +7,7 @@ import remarkBreaks from "remark-breaks";
 import { PostJobBanner } from "@/components/ui/post-job-banner";
 import { JobDetailsSidebar } from "@/components/ui/job-details-sidebar";
 import { SimilarJobs } from "@/components/ui/similar-jobs";
+import { JobSchema } from "@/components/ui/job-schema";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, ClipboardList } from "lucide-react";
 import { Metadata } from "next";
@@ -106,6 +107,8 @@ export default async function JobPostPage({
 
   return (
     <main className="container py-6">
+      <JobSchema job={job} slug={slug} />
+
       <div className="flex flex-col md:flex-row gap-4 lg:gap-8">
         {/* Main content */}
         <article className="flex-[3] order-1">
@@ -214,16 +217,32 @@ export default async function JobPostPage({
           )}
 
           <div className="mt-8">
-            <Button
-              asChild
-              size="xs"
-              className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs w-full sm:w-auto"
-            >
-              <a href={job.apply_url} target="_blank" rel="noopener noreferrer">
-                Apply Now
-                <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-              </a>
-            </Button>
+            <div className="flex items-center gap-3 flex-wrap">
+              <Button
+                asChild
+                size="xs"
+                className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs w-full sm:w-auto"
+              >
+                <a
+                  href={job.apply_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Apply Now
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              </Button>
+              {job.valid_through && (
+                <span className="text-xs text-gray-500">
+                  Apply before:{" "}
+                  {new Date(job.valid_through).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+              )}
+            </div>
           </div>
         </article>
 
@@ -244,6 +263,8 @@ export default async function JobPostPage({
             visa_sponsorship={job.visa_sponsorship}
             languages={job.languages}
             benefits={job.benefits}
+            valid_through={job.valid_through || null}
+            job_identifier={job.job_identifier || null}
           />
 
           {/* On mobile, Similar Jobs appear before Post Job Banner */}

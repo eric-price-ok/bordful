@@ -63,6 +63,8 @@ export interface Job {
   application_requirements: string | null;
   apply_url: string;
   posted_date: string;
+  valid_through?: string | null;
+  job_identifier?: string | null;
   status: "active" | "inactive";
   career_level: CareerLevel[];
   visa_sponsorship: "Yes" | "No" | "Not specified";
@@ -426,13 +428,34 @@ function normalizeApplicationRequirements(value: unknown): string | null {
   return requirementsText;
 }
 
-export async function getJobs(): Promise<Job[]> {
-  try {
-    // Check for required environment variables
-    if (!process.env.AIRTABLE_ACCESS_TOKEN || !process.env.AIRTABLE_BASE_ID) {
-      throw new Error("Airtable credentials are not configured");
+// Function to normalize visa sponsorship field
+function normalizeVisaSponsorship(
+  value: unknown
+): "Yes" | "No" | "Not specified" {
+  if (!value) return "Not specified";
+
+  if (typeof value === "string") {
+    const normalizedValue = value.trim();
+
+    // Case-insensitive check for yes
+    if (/^yes$/i.test(normalizedValue)) {
+      return "Yes";
     }
 
+    // Case-insensitive check for no
+    if (/^no$/i.test(normalizedValue)) {
+      return "No";
+    }
+  }
+
+  return "Not specified";
+}
+
+export async function getJobs(): Promise<Job[]> {
+  try {
+    console.log("Fetching jobs from Airtable...");
+
+    // Fetch all active jobs
     const records = await base(TABLE_NAME)
       .select({
         filterByFormula: "{status} = 'active'",
@@ -440,19 +463,24 @@ export async function getJobs(): Promise<Job[]> {
       })
       .all();
 
-    return records.map((record): Job => {
+    // Transform Airtable records to our Job type
+    const jobs = records.map((record) => {
       const fields = record.fields;
+
       return {
         id: record.id,
         title: fields.title as string,
         company: fields.company as string,
         type: fields.type as Job["type"],
-        salary: {
-          min: (fields.salary_min as number) || null,
-          max: (fields.salary_max as number) || null,
-          currency: normalizeCurrency(fields.salary_currency),
-          unit: (fields.salary_unit as SalaryUnit) || "year",
-        },
+        salary:
+          fields.salary_min || fields.salary_max
+            ? {
+                min: fields.salary_min ? Number(fields.salary_min) : null,
+                max: fields.salary_max ? Number(fields.salary_max) : null,
+                currency: normalizeCurrency(fields.salary_currency),
+                unit: fields.salary_unit as SalaryUnit,
+              }
+            : null,
         description: cleanMarkdownFormatting(fields.description as string),
         benefits: normalizeBenefits(fields.benefits),
         application_requirements: normalizeApplicationRequirements(
@@ -460,12 +488,13 @@ export async function getJobs(): Promise<Job[]> {
         ),
         apply_url: fields.apply_url as string,
         posted_date: fields.posted_date as string,
+        // New fields
+        valid_through: (fields.valid_through as string) || null,
+        job_identifier: (fields.job_identifier as string) || null,
         status: fields.status as Job["status"],
         career_level: normalizeCareerLevel(fields.career_level),
-        visa_sponsorship:
-          (fields.visa_sponsorship as Job["visa_sponsorship"]) ||
-          "Not specified",
-        featured: fields.featured === true,
+        visa_sponsorship: normalizeVisaSponsorship(fields.visa_sponsorship),
+        featured: fields.featured ? true : false,
         workplace_type: normalizeWorkplaceType(fields.workplace_type),
         remote_region: normalizeRemoteRegion(fields.remote_region),
         timezone_requirements: (fields.timezone_requirements as string) || null,
@@ -474,83 +503,56 @@ export async function getJobs(): Promise<Job[]> {
         languages: normalizeLanguages(fields.languages),
       };
     });
+
+    return jobs;
   } catch (error) {
-    console.error("Error fetching jobs:", error);
+    console.error("Error fetching jobs from Airtable:", error);
     return [];
   }
 }
 
 export async function getJob(id: string): Promise<Job | null> {
   try {
-    // Check for required environment variables
-    if (!process.env.AIRTABLE_ACCESS_TOKEN || !process.env.AIRTABLE_BASE_ID) {
-      throw new Error("Airtable credentials are not configured");
-    }
-
     const record = await base(TABLE_NAME).find(id);
+    const fields = record.fields;
 
-    if (!record || !record.fields) {
-      return null;
-    }
-
-    // Validate required fields
-    const requiredFields = [
-      "title",
-      "company",
-      "type",
-      "description",
-      "apply_url",
-      "posted_date",
-      "status",
-    ];
-
-    const missingFields = requiredFields.filter(
-      (field) => !record.fields[field]
-    );
-
-    if (missingFields.length > 0) {
-      console.error(`Missing required fields: ${missingFields.join(", ")}`);
-      return null;
-    }
-
-    const job = {
+    return {
       id: record.id,
-      title: record.fields.title as string,
-      company: record.fields.company as string,
-      type: record.fields.type as Job["type"],
-      salary: {
-        min: (record.fields.salary_min as number) || null,
-        max: (record.fields.salary_max as number) || null,
-        currency: normalizeCurrency(record.fields.salary_currency),
-        unit: (record.fields.salary_unit as SalaryUnit) || "year",
-      },
-      description: record.fields.description as string,
-      benefits: normalizeBenefits(record.fields.benefits),
+      title: fields.title as string,
+      company: fields.company as string,
+      type: fields.type as Job["type"],
+      salary:
+        fields.salary_min || fields.salary_max
+          ? {
+              min: fields.salary_min ? Number(fields.salary_min) : null,
+              max: fields.salary_max ? Number(fields.salary_max) : null,
+              currency: normalizeCurrency(fields.salary_currency),
+              unit: fields.salary_unit as SalaryUnit,
+            }
+          : null,
+      description: cleanMarkdownFormatting(fields.description as string),
+      benefits: normalizeBenefits(fields.benefits),
       application_requirements: normalizeApplicationRequirements(
-        record.fields.application_requirements
+        fields.application_requirements
       ),
-      apply_url: record.fields.apply_url as string,
-      posted_date: record.fields.posted_date as string,
-      status: record.fields.status as Job["status"],
-      career_level: normalizeCareerLevel(record.fields.career_level),
-      visa_sponsorship:
-        (record.fields.visa_sponsorship as Job["visa_sponsorship"]) ||
-        "Not specified",
-      featured: record.fields.featured === true,
-      workplace_type: normalizeWorkplaceType(record.fields.workplace_type),
-      remote_region: normalizeRemoteRegion(record.fields.remote_region),
-      timezone_requirements:
-        (record.fields.timezone_requirements as string) || null,
-      workplace_city: (record.fields.workplace_city as string) || null,
-      workplace_country: (record.fields.workplace_country as string) || null,
-      languages: normalizeLanguages(record.fields.languages),
+      apply_url: fields.apply_url as string,
+      posted_date: fields.posted_date as string,
+      // New fields
+      valid_through: (fields.valid_through as string) || null,
+      job_identifier: (fields.job_identifier as string) || null,
+      status: fields.status as Job["status"],
+      career_level: normalizeCareerLevel(fields.career_level),
+      visa_sponsorship: normalizeVisaSponsorship(fields.visa_sponsorship),
+      featured: fields.featured ? true : false,
+      workplace_type: normalizeWorkplaceType(fields.workplace_type),
+      remote_region: normalizeRemoteRegion(fields.remote_region),
+      timezone_requirements: (fields.timezone_requirements as string) || null,
+      workplace_city: (fields.workplace_city as string) || null,
+      workplace_country: (fields.workplace_country as string) || null,
+      languages: normalizeLanguages(fields.languages),
     };
-
-    return job;
   } catch (error) {
-    console.error("Error fetching job:", {
-      message: (error as Error).message,
-    });
+    console.error(`Error fetching job with ID ${id}:`, error);
     return null;
   }
 }

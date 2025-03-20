@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.88] - 2025-03-20
+
+### Added
+- Enhanced job details page with additional application information:
+  - Added application deadline display in sidebar with relative time indicator (e.g., "in 6 days")
+  - Added job identifier display in sidebar for better reference
+  - Added "Apply before" reminder text next to the Apply Now button
+  - Added amber notice for past deadlines indicating jobs might still accept applications
+- Improved job schema markup implementation:
+  - Updated JobSchema component to set directApply property to false
+  - Enhanced SEO for external application links to properly indicate third-party application process
+  - Made schema.org job posting markup more accurately reflect application flow
+
+### Fixed
+- Fixed visa sponsorship badge display issues:
+  - Added `normalizeVisaSponsorship` function for consistent badge display
+  - Implemented case-insensitive matching for "Yes" and "No" values
+  - Added fallback to "Not specified" for invalid or missing values
+  - Ensured consistent badge styling across all job displays
+
 ## [0.0.87] - 2025-03-19
 
 ### Fixed
