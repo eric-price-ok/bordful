@@ -1,4 +1,4 @@
-import { Job, formatSalary, Salary } from "@/lib/db/airtable";
+import { Job, Salary } from "@/lib/db/airtable";
 import Script from "next/script";
 import config from "@/config";
 
@@ -19,7 +19,7 @@ function formatEmploymentType(type: string): string {
 
 function formatSalaryForSchema(
   salary: Salary | null
-): Record<string, any> | null {
+): Record<string, string | number | object> | null {
   if (!salary || (!salary.min && !salary.max)) return null;
 
   // Convert salary unit to schema.org unitText format
@@ -60,7 +60,7 @@ function formatSalaryForSchema(
   };
 }
 
-function formatLocation(job: Job): Record<string, any> | null {
+function formatLocation(job: Job): Record<string, string | object> | null {
   // For remote jobs with no physical location
   if (
     job.workplace_type === "Remote" &&
@@ -83,7 +83,7 @@ function formatLocation(job: Job): Record<string, any> | null {
 
 function formatApplicantLocationRequirements(
   job: Job
-): Record<string, any> | null {
+): Record<string, string> | Array<Record<string, string>> | null {
   // Only needed for remote jobs
   if (job.workplace_type !== "Remote" || !job.remote_region) {
     return null;
@@ -154,7 +154,6 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
   // Format base URL for absolute links
   const baseUrl =
     config.url || process.env.NEXT_PUBLIC_APP_URL || "https://bordful.com";
-  const jobUrl = `${baseUrl}/jobs/${slug}`;
 
   // Calculate valid through date if not provided (default to 30 days from posted date)
   const postDate = new Date(job.posted_date);
