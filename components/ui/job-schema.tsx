@@ -155,6 +155,9 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
   const baseUrl =
     config.url || process.env.NEXT_PUBLIC_APP_URL || "https://bordful.com";
 
+  // Use slug to create the job URL
+  const jobUrl = `${baseUrl}/jobs/${slug}`;
+
   // Calculate valid through date if not provided (default to 30 days from posted date)
   const postDate = new Date(job.posted_date);
   const defaultValidThrough = new Date(postDate);
@@ -178,6 +181,8 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
       name: job.company,
       sameAs: baseUrl, // Ideally, this would be the company's website
     },
+    // Add job URL to the schema
+    url: jobUrl,
 
     // Optional but recommended properties
     ...(job.job_identifier && {
