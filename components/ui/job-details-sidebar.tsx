@@ -205,9 +205,10 @@ export function JobDetailsSidebar({
             type={
               workplace_type === "Not specified"
                 ? "not specified"
+                : workplace_type === "On-site"
+                ? "onsite"
                 : (workplace_type.toLowerCase() as
                     | "remote"
-                    | "onsite"
                     | "hybrid"
                     | "default")
             }

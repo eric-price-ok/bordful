@@ -21,6 +21,10 @@ All notable changes to this project will be documented in this file.
   - Implemented case-insensitive matching for "Yes" and "No" values
   - Added fallback to "Not specified" for invalid or missing values
   - Ensured consistent badge styling across all job displays
+- Fixed "On-site" workplace type badge styling:
+  - Added specific mapping from "On-site" to "onsite" badge type
+  - Resolved issue with hyphenated workplace type not matching badge style definitions
+  - Ensured consistent styling for all workplace type badges
 
 ## [0.0.87] - 2025-03-19
 
