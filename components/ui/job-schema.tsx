@@ -84,15 +84,21 @@ function formatLocation(job: Job): Record<string, string | object> | null {
 function formatApplicantLocationRequirements(
   job: Job
 ): Record<string, string> | Array<Record<string, string>> | null {
-  // Only needed for remote jobs
-  if (job.workplace_type !== "Remote" || !job.remote_region) {
+  // Only needed for remote jobs, but always return something for remote jobs
+  if (job.workplace_type !== "Remote") {
     return null;
+  }
+
+  // If no remote region specified or it's Worldwide, return a worldwide requirement
+  if (!job.remote_region || job.remote_region === "Worldwide") {
+    return {
+      "@type": "Country",
+      name: "WORLDWIDE",
+    };
   }
 
   // Format based on remote region
   switch (job.remote_region) {
-    case "Worldwide":
-      return null; // No restrictions
     case "US Only":
       return {
         "@type": "Country",
@@ -176,12 +182,12 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
     description: job.description,
     datePosted: new Date(job.posted_date).toISOString(),
     validThrough: validThrough,
+    // Job URL at the root level (correct placement)
+    url: jobUrl,
     hiringOrganization: {
       "@type": "Organization",
       name: job.company,
     },
-    // Add job URL to the schema
-    url: jobUrl,
 
     // Optional but recommended properties
     ...(job.job_identifier && {
@@ -216,7 +222,8 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
     }),
 
     // Always set directApply to false since we always link to external application forms
-    directApply: false,
+    // Ensure this is a boolean false, not a string
+    directApply: false as const,
   };
 
   return (
