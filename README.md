@@ -14,6 +14,10 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
 - Content-specific loading states
 - Fully responsive
 - Comprehensive SEO features:
+  - Complete schema.org JobPosting structured data implementation
+  - Google Jobs integration with rich search results
+  - Comprehensive schema markup with 20+ job properties
+  - Support for remote job schema requirements
   - Automatic XML sitemap generation with ISR updates
   - Programmatic robots.txt with fine-grained crawling control
   - SEO-friendly URLs with descriptive job slugs
@@ -251,9 +255,19 @@ npm install
   visa_sponsorship: Single select (Yes, No, Not specified)
   featured: Checkbox
   languages: Multiple select (format: "Language Name (code)", e.g. "English (en)", "Spanish (es)", "French (fr)")
+  # Schema.org enhanced fields (optional but recommended for better SEO)
+  skills: Long text (skills required for the position)
+  qualifications: Long text (specific qualifications needed)
+  education_requirements: Long text (educational background needed)
+  experience_requirements: Long text (experience needed for the position)
+  responsibilities: Long text (key responsibilities of the role)
+  industry: Single line text (industry associated with the job)
+  occupational_category: Single line text (preferably using O*NET-SOC codes, e.g. "15-1252.00 Software Developers")
   ```
 
   **Note on Currency**: For `salary_currency`, it's recommended to use the format "CODE (Name)" such as "USD (United States Dollar)" or "BTC (Bitcoin)" for clarity. The system supports both traditional fiat currencies and cryptocurrencies.
+  
+  **Note on Schema.org Fields**: The additional schema.org fields are optional but highly recommended for improved SEO and Google Jobs integration. See [Schema.org Implementation](./docs/schema-implementation.md) for more details.
 
 For both options:
 

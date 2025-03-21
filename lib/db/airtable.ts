@@ -75,6 +75,15 @@ export interface Job {
   workplace_city: string | null;
   workplace_country: string | null;
   languages: LanguageCode[];
+
+  // Schema.org fields for structured data
+  skills?: string | null;
+  qualifications?: string | null;
+  education_requirements?: string | null;
+  experience_requirements?: string | null;
+  industry?: string | null;
+  occupational_category?: string | null;
+  responsibilities?: string | null;
 }
 
 // Format salary for display
@@ -501,6 +510,17 @@ export async function getJobs(): Promise<Job[]> {
         workplace_city: (fields.workplace_city as string) || null,
         workplace_country: (fields.workplace_country as string) || null,
         languages: normalizeLanguages(fields.languages),
+
+        // Schema.org structured data fields
+        skills: (fields.skills as string) || null,
+        qualifications: (fields.qualifications as string) || null,
+        education_requirements:
+          (fields.education_requirements as string) || null,
+        experience_requirements:
+          (fields.experience_requirements as string) || null,
+        industry: (fields.industry as string) || null,
+        occupational_category: (fields.occupational_category as string) || null,
+        responsibilities: (fields.responsibilities as string) || null,
       };
     });
 
@@ -550,6 +570,16 @@ export async function getJob(id: string): Promise<Job | null> {
       workplace_city: (fields.workplace_city as string) || null,
       workplace_country: (fields.workplace_country as string) || null,
       languages: normalizeLanguages(fields.languages),
+
+      // Schema.org structured data fields
+      skills: (fields.skills as string) || null,
+      qualifications: (fields.qualifications as string) || null,
+      education_requirements: (fields.education_requirements as string) || null,
+      experience_requirements:
+        (fields.experience_requirements as string) || null,
+      industry: (fields.industry as string) || null,
+      occupational_category: (fields.occupational_category as string) || null,
+      responsibilities: (fields.responsibilities as string) || null,
     };
   } catch (error) {
     console.error(`Error fetching job with ID ${id}:`, error);

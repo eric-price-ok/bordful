@@ -156,6 +156,11 @@ interface JobSchemaProps {
   slug: string;
 }
 
+// Helper to check if a string field exists and has content
+function hasContent(field: string | null | undefined): boolean {
+  return !!field && field.trim().length > 0;
+}
+
 export function JobSchema({ job, slug }: JobSchemaProps) {
   // Format base URL for absolute links
   const baseUrl =
@@ -224,6 +229,46 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
     // Always set directApply to false since we always link to external application forms
     // Ensure this is a boolean false, not a string
     directApply: false as const,
+
+    // Add skills and requirements when available
+    ...(hasContent(job.skills) && {
+      skills: job.skills,
+    }),
+    ...(hasContent(job.qualifications) && {
+      qualifications: job.qualifications,
+    }),
+    ...(hasContent(job.education_requirements) && {
+      educationRequirements: job.education_requirements,
+    }),
+    ...(hasContent(job.experience_requirements) && {
+      experienceRequirements: job.experience_requirements,
+    }),
+
+    // Add industry classification when available
+    ...(hasContent(job.industry) && {
+      industry: job.industry,
+    }),
+    ...(hasContent(job.occupational_category) && {
+      occupationalCategory: job.occupational_category,
+    }),
+
+    // Add job benefits when available
+    ...(hasContent(job.benefits) && {
+      jobBenefits: job.benefits,
+    }),
+
+    // Add responsibilities if available (might be extracted from description in the future)
+    ...(hasContent(job.responsibilities) && {
+      responsibilities: job.responsibilities,
+    }),
+
+    // Add visa sponsorship information
+    ...(job.visa_sponsorship !== "Not specified" && {
+      eligibilityToWorkRequirement:
+        job.visa_sponsorship === "Yes"
+          ? "Visa sponsorship is available for this position."
+          : "Visa sponsorship is not available for this position.",
+    }),
   };
 
   return (
