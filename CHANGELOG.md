@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.89] - 2025-03-21
+
+### Fixed
+- Enhanced schema.org JobPosting markup for better SEO and rich result validation:
+  - Removed misleading `sameAs` property from hiringOrganization object
+  - Fixed URL property placement to proper root level for correct structured data
+  - Improved handling of `applicantLocationRequirements` for remote jobs to pass Google's Rich Results Test
+  - Added worldwide location support for remote jobs without region specification
+  - Ensured `directApply` property is correctly formatted as a boolean value
+  - Fixed critical validation errors reported by Google's structured data testing tool
+
 ## [0.0.88] - 2025-03-20
 
 ### Added
