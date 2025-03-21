@@ -179,7 +179,6 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
     hiringOrganization: {
       "@type": "Organization",
       name: job.company,
-      sameAs: baseUrl, // Ideally, this would be the company's website
     },
     // Add job URL to the schema
     url: jobUrl,
