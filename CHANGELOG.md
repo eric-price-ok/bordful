@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.91] - 2025-03-22
+
+### Fixed
+- Fixed schema.org validation issues for Rich Results Test:
+  - Updated educationRequirements to use EducationalOccupationalCredential type
+  - Enhanced experienceRequirements with OccupationalExperienceRequirements type
+  - Added intelligent experience duration parser to extract months from text descriptions
+  - Improved schema.org compliance for Google Jobs integration
+
 ## [0.0.90] - 2025-03-22
 
 ### Added

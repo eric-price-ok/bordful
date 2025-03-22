@@ -32,11 +32,18 @@ The schema implementation maps directly to fields in your Airtable base. The fol
 ### Enhanced Schema Fields
 - `skills` - Required skills for the position
 - `qualifications` - Specific qualifications needed
-- `education_requirements` - Educational background needed
-- `experience_requirements` - Experience needed for the position
+- `education_requirements` - Educational background needed (formatted as EducationalOccupationalCredential)
+- `experience_requirements` - Experience needed for the position (formatted as OccupationalExperienceRequirements)
 - `responsibilities` - Key responsibilities of the role
 - `industry` - Industry associated with the job position
 - `occupational_category` - Job category (preferably using O*NET-SOC codes)
+
+#### Schema Formatting Notes
+- For `education_requirements`, text is wrapped in the EducationalOccupationalCredential schema type
+- For `experience_requirements`, text is intelligently parsed to extract months of experience
+  - Example: "3+ years experience" is converted to 36 months internally
+  - Experience is formatted using the OccupationalExperienceRequirements schema type
+- These schema enhancements ensure compliance with Google's Rich Results Test
 
 ## Technical Implementation
 

@@ -171,6 +171,31 @@ function hasContent(field: string | null | undefined): boolean {
   return !!field && field.trim().length > 0;
 }
 
+// Helper to parse experience months from text
+function parseExperienceMonths(
+  experienceText: string | null | undefined
+): number | null {
+  if (!experienceText) return null;
+
+  // Look for years pattern (e.g., "2+ years", "2-3 years", "minimum 2 years")
+  const yearsMatch = experienceText
+    .toLowerCase()
+    .match(/(\d+)(?:\s*\+|\s*-\s*\d+)?\s*years?/);
+  if (yearsMatch && yearsMatch[1]) {
+    return parseInt(yearsMatch[1], 10) * 12; // Convert years to months
+  }
+
+  // Look for months pattern (e.g., "6 months", "6+ months")
+  const monthsMatch = experienceText
+    .toLowerCase()
+    .match(/(\d+)(?:\s*\+|\s*-\s*\d+)?\s*months?/);
+  if (monthsMatch && monthsMatch[1]) {
+    return parseInt(monthsMatch[1], 10);
+  }
+
+  return null;
+}
+
 export function JobSchema({ job, slug }: JobSchemaProps) {
   // Format base URL for absolute links
   const baseUrl =
@@ -247,10 +272,17 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
       qualifications: job.qualifications,
     }),
     ...(hasContent(job.education_requirements) && {
-      educationRequirements: job.education_requirements,
+      educationRequirements: {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: job.education_requirements,
+      },
     }),
     ...(hasContent(job.experience_requirements) && {
-      experienceRequirements: job.experience_requirements,
+      experienceRequirements: {
+        "@type": "OccupationalExperienceRequirements",
+        monthsOfExperience:
+          parseExperienceMonths(job.experience_requirements) || 12,
+      },
     }),
 
     // Add industry classification when available
