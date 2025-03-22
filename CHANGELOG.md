@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.90] - 2025-03-22
+
+### Added
+- Integrated schema-dts package for enhanced schema.org typing:
+  - Added TypeScript type definitions for Schema.org JSON-LD structured data
+  - Implemented proper type safety for all JobPosting structured data
+  - Added discriminated type unions for schema.org entities
+  - Enhanced developer experience with auto-completion for schema properties
+  - Improved error detection during development with compile-time type checking
+  - Refactored job-schema.tsx component with proper schema-dts types
+  - Updated documentation to reflect schema-dts usage and benefits
+  - Added conditional property rendering for proper schema validation
+
+### Changed
+- Enhanced schema.org implementation with better type safety:
+  - Improved handling of optional properties with conditional rendering
+  - Updated salary formatting function with proper QuantitativeValue typing
+  - Enhanced location and country formatting with schema-dts types
+  - Removed type assertions where proper typing could be implemented
+  - Improved maintainability with standardized schema.org type patterns
+
 ## [0.0.89] - 2025-03-21
 
 ### Added

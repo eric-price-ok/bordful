@@ -14,7 +14,7 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
 - Content-specific loading states
 - Fully responsive
 - Comprehensive SEO features:
-  - Complete schema.org JobPosting structured data implementation
+  - Complete schema.org JobPosting structured data implementation with schema-dts typing
   - Google Jobs integration with rich search results
   - Comprehensive schema markup with 20+ job properties
   - Support for remote job schema requirements

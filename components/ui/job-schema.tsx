@@ -1,6 +1,15 @@
 import { Job, Salary } from "@/lib/db/airtable";
 import Script from "next/script";
 import config from "@/config";
+import type {
+  JobPosting,
+  WithContext,
+  MonetaryAmount,
+  QuantitativeValue,
+  Organization,
+  Place,
+  Country,
+} from "schema-dts";
 
 // Utility functions for schema formatting
 function formatJobLocationType(job: Job): string | null {
@@ -17,9 +26,7 @@ function formatEmploymentType(type: string): string {
   return mappings[type] || "OTHER";
 }
 
-function formatSalaryForSchema(
-  salary: Salary | null
-): Record<string, string | number | object> | null {
+function formatSalaryForSchema(salary: Salary | null): MonetaryAmount | null {
   if (!salary || (!salary.min && !salary.max)) return null;
 
   // Convert salary unit to schema.org unitText format
@@ -44,23 +51,26 @@ function formatSalaryForSchema(
         minValue: salary.min,
         maxValue: salary.max,
         unitText: unitText,
-      },
+      } as QuantitativeValue,
     };
   }
 
   // For a single value (either min or max)
+  // Make sure we always have a non-null value
+  const singleValue = (salary.min || salary.max) as number;
+
   return {
     "@type": "MonetaryAmount",
     currency: salary.currency,
     value: {
       "@type": "QuantitativeValue",
-      value: salary.min || salary.max,
+      value: singleValue,
       unitText: unitText,
-    },
+    } as QuantitativeValue,
   };
 }
 
-function formatLocation(job: Job): Record<string, string | object> | null {
+function formatLocation(job: Job): Place | null {
   // For remote jobs with no physical location
   if (
     job.workplace_type === "Remote" &&
@@ -83,7 +93,7 @@ function formatLocation(job: Job): Record<string, string | object> | null {
 
 function formatApplicantLocationRequirements(
   job: Job
-): Record<string, string> | Array<Record<string, string>> | null {
+): Country | Country[] | null {
   // Only needed for remote jobs, but always return something for remote jobs
   if (job.workplace_type !== "Remote") {
     return null;
@@ -180,21 +190,24 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
     : defaultValidThrough.toISOString();
 
   // Create schema data object
-  const schemaData = {
-    "@context": "https://schema.org/",
+  // Use a record approach first to collect all properties
+  const jobPostingData: Record<string, unknown> = {
+    "@context": "https://schema.org",
     "@type": "JobPosting",
     title: job.title,
     description: job.description,
     datePosted: new Date(job.posted_date).toISOString(),
     validThrough: validThrough,
-    // Job URL at the root level (correct placement)
     url: jobUrl,
     hiringOrganization: {
       "@type": "Organization",
       name: job.company,
-    },
+    } as Organization,
 
-    // Optional but recommended properties
+    // Employment type
+    employmentType: formatEmploymentType(job.type),
+
+    // Optional properties with conditional rendering to avoid null values
     ...(job.job_identifier && {
       identifier: {
         "@type": "PropertyValue",
@@ -203,32 +216,28 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
       },
     }),
 
-    // Employment type
-    employmentType: formatEmploymentType(job.type),
-
     // For remote jobs
     ...(formatJobLocationType(job) && {
       jobLocationType: formatJobLocationType(job),
     }),
 
-    // Location handling
+    // Location handling - only add if not null
     ...(formatLocation(job) && {
       jobLocation: formatLocation(job),
     }),
 
-    // Applicant location requirements for remote jobs
+    // Applicant location requirements - only add if not null
     ...(formatApplicantLocationRequirements(job) && {
       applicantLocationRequirements: formatApplicantLocationRequirements(job),
     }),
 
-    // Salary information
+    // Salary information - only add if not null
     ...(formatSalaryForSchema(job.salary) && {
       baseSalary: formatSalaryForSchema(job.salary),
     }),
 
     // Always set directApply to false since we always link to external application forms
-    // Ensure this is a boolean false, not a string
-    directApply: false as const,
+    directApply: false,
 
     // Add skills and requirements when available
     ...(hasContent(job.skills) && {
@@ -270,6 +279,10 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
           : "Visa sponsorship is not available for this position.",
     }),
   };
+
+  // Cast the complete data object to the schema-dts type for type safety at compile time
+  // We need to cast to unknown first to avoid TypeScript's strict type checking on direct conversion
+  const schemaData = jobPostingData as unknown as WithContext<JobPosting>;
 
   return (
     <Script

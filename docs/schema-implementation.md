@@ -47,6 +47,31 @@ The schema is implemented using Next.js Script component to inject JSON-LD struc
 3. Conditionally includes properties based on available data
 4. Provides fallbacks for missing but important information
 5. Validates against Google's Rich Results Test requirements
+6. Uses TypeScript type definitions from schema-dts for type safety
+
+### schema-dts Integration
+
+Bordful uses the [schema-dts](https://github.com/google/schema-dts) package to provide TypeScript type definitions for Schema.org structured data. This offers several advantages:
+
+- **Type Safety**: Early detection of schema errors during development
+- **Auto-completion**: IDE support for all schema.org properties and types
+- **Validation**: Ensures the schema follows the correct structure
+- **Maintainability**: Easier to update and extend with proper type checking
+
+The job schema component imports the necessary types:
+
+```typescript
+import type {
+  JobPosting,
+  WithContext,
+  MonetaryAmount,
+  QuantitativeValue,
+  Organization,
+  Place,
+  PostalAddress,
+  Country,
+} from "schema-dts";
+```
 
 ## SEO Benefits
 
