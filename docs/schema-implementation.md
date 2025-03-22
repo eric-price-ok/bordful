@@ -39,11 +39,21 @@ The schema implementation maps directly to fields in your Airtable base. The fol
 - `occupational_category` - Job category (preferably using O*NET-SOC codes)
 
 #### Schema Formatting Notes
-- For `education_requirements`, text is wrapped in the EducationalOccupationalCredential schema type
-- For `experience_requirements`, text is intelligently parsed to extract months of experience
+- For `education_requirements`, text is intelligently parsed using a configurable mapping system:
+  - Maps free-text input to standardized schema.org credential categories
+  - Uses a keyword-based detection system for common degree types:
+    - "Bachelor's degree..." → "BachelorDegree"
+    - "Master's degree..." → "MasterDegree"
+    - "PhD..." → "DoctoralDegree"
+    - "Associate degree..." → "AssociateDegree"
+    - "High School..." → "HighSchool"
+    - "Certificate..." → "Certificate"
+  - The mapping is easily extensible through the `EDUCATION_CREDENTIAL_MAP` (see [Configurable Education Credential Mapping](#configurable-education-credential-mapping))
+  - Fully compliant with schema.org standards using the EducationalOccupationalCredential type
+- For `experience_requirements`, text is intelligently parsed to extract months of experience:
   - Example: "3+ years experience" is converted to 36 months internally
   - Experience is formatted using the OccupationalExperienceRequirements schema type
-- These schema enhancements ensure compliance with Google's Rich Results Test
+- These schema enhancements ensure compliance with Google's Rich Results Test standards
 
 ## Technical Implementation
 
@@ -79,6 +89,53 @@ import type {
   Country,
 } from "schema-dts";
 ```
+
+### Configurable Education Credential Mapping
+
+The implementation uses a flexible, configuration-based approach to map free-text education requirements to standardized schema.org credential categories. This design improves maintainability and makes future extensions easier:
+
+```typescript
+// Configuration map for education credential types and their keywords
+const EDUCATION_CREDENTIAL_MAP: Record<string, string[]> = {
+  "BachelorDegree": ["bachelor", "bs", "ba", "b.s.", "b.a."],
+  "MasterDegree": ["master", "ms", "ma", "m.s.", "m.a.", "mba"],
+  "DoctoralDegree": ["phd", "doctorate", "doctoral"],
+  "AssociateDegree": ["associate", "aa", "a.a."],
+  "HighSchool": ["high school", "secondary"],
+  "Certificate": ["certificate", "certification"],
+  "ProfessionalDegree": ["professional"],
+};
+```
+
+This configuration-driven approach offers several advantages:
+
+1. **Maintainability**: Adding new credential types or keywords is as simple as updating the map
+2. **Separation of Concerns**: Credential mapping logic is separated from the parsing function
+3. **Extensibility**: Easy to extend for international education systems or specialized credentials
+4. **Readability**: The mapping between keywords and credential types is clearly visible
+5. **Performance**: Efficient keyword matching using JavaScript's Array.some() method
+
+The mapping is used by the `parseEducationCredential` function which scans the free-text education field for matching keywords and returns the appropriate schema.org credential type:
+
+```typescript
+function parseEducationCredential(education: string | null | undefined): string {
+  if (!education) return "EducationalOccupationalCredential";
+  
+  const lowerEd = education.toLowerCase();
+  
+  // Check each credential type for matching keywords
+  for (const [credentialType, keywords] of Object.entries(EDUCATION_CREDENTIAL_MAP)) {
+    if (keywords.some(keyword => lowerEd.includes(keyword))) {
+      return credentialType;
+    }
+  }
+  
+  // Default fallback value
+  return "EducationalOccupationalCredential";
+}
+```
+
+To extend this mapping for your specific needs, simply modify the `EDUCATION_CREDENTIAL_MAP` constant in `components/ui/job-schema.tsx`.
 
 ## SEO Benefits
 

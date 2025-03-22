@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.92] - 2025-03-22
+
+### Fixed
+- Enhanced education credential formatting for schema.org compliance:
+  - Added intelligent mapping from free-text education fields to standard schema.org credential categories
+  - Implemented credential category detection for Bachelor, Master, Doctoral, and other degree types
+  - Fixed "Invalid enum value" warning in Google's Rich Results Test
+  - Added comprehensive documentation for educational credential formatting
+
+### Changed
+- Improved maintainability of schema.org credential mapping:
+  - Refactored education credential parsing to use a configurable mapping system
+  - Replaced hardcoded conditionals with a flexible keyword-based mapping approach
+  - Added extensible configuration map for education credential types
+  - Improved code maintainability and readability with the new approach
+
 ## [0.0.91] - 2025-03-22
 
 ### Fixed

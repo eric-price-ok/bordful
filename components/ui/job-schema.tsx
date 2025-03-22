@@ -196,6 +196,38 @@ function parseExperienceMonths(
   return null;
 }
 
+// Configuration map for education credential types and their keywords
+const EDUCATION_CREDENTIAL_MAP: Record<string, string[]> = {
+  BachelorDegree: ["bachelor", "bs", "ba", "b.s.", "b.a."],
+  MasterDegree: ["master", "ms", "ma", "m.s.", "m.a.", "mba"],
+  DoctoralDegree: ["phd", "doctorate", "doctoral"],
+  AssociateDegree: ["associate", "aa", "a.a."],
+  HighSchool: ["high school", "secondary"],
+  Certificate: ["certificate", "certification"],
+  ProfessionalDegree: ["professional"],
+};
+
+// Helper function to parse education credential into standard schema.org categories
+function parseEducationCredential(
+  education: string | null | undefined
+): string {
+  if (!education) return "EducationalOccupationalCredential";
+
+  const lowerEd = education.toLowerCase();
+
+  // Check each credential type for matching keywords
+  for (const [credentialType, keywords] of Object.entries(
+    EDUCATION_CREDENTIAL_MAP
+  )) {
+    if (keywords.some((keyword) => lowerEd.includes(keyword))) {
+      return credentialType;
+    }
+  }
+
+  // Default fallback value
+  return "EducationalOccupationalCredential";
+}
+
 export function JobSchema({ job, slug }: JobSchemaProps) {
   // Format base URL for absolute links
   const baseUrl =
@@ -274,7 +306,9 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
     ...(hasContent(job.education_requirements) && {
       educationRequirements: {
         "@type": "EducationalOccupationalCredential",
-        credentialCategory: job.education_requirements,
+        credentialCategory: parseEducationCredential(
+          job.education_requirements
+        ),
       },
     }),
     ...(hasContent(job.experience_requirements) && {
