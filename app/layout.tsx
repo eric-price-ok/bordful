@@ -7,6 +7,7 @@ import { Footer } from "@/components/ui/footer";
 import { Toaster } from "@/components/ui/toaster";
 import Script, { ScriptProps } from "next/script";
 import config from "@/config";
+import { WebsiteSchema } from "@/components/ui/website-schema";
 
 interface CustomScript {
   src: string;
@@ -93,6 +94,8 @@ export default function RootLayout({
             {...script.attributes}
           />
         ))}
+
+        <WebsiteSchema />
       </body>
     </html>
   );

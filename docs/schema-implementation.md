@@ -6,6 +6,8 @@ Bordful implements comprehensive schema.org structured data for job listings, en
 
 The schema.org implementation follows the [JobPosting](https://schema.org/JobPosting) specification, providing detailed structured data for each job listing. This improves search engine visibility and enables features like Google Jobs rich results.
 
+Additionally, Bordful implements the [WebSite](https://schema.org/WebSite) schema at the global level, providing search engines with structured information about the job board itself. This implementation enables features like the Google Sitelinks Searchbox and enhances the overall site visibility.
+
 ## Key Features
 
 - **Complete Required Properties**: All essential properties (title, description, datePosted, hiringOrganization)
@@ -13,6 +15,7 @@ The schema.org implementation follows the [JobPosting](https://schema.org/JobPos
 - **Comprehensive Salary Information**: Structured salary ranges with currency and time unit support
 - **Visa & Eligibility Requirements**: Clear indication of visa sponsorship availability
 - **Detailed Job Classifications**: Industry and occupational category support
+- **Global Website Schema**: Proper WebSite structured data with search action capabilities
 
 ## Airtable Integration
 
@@ -193,5 +196,59 @@ You can validate your job schema implementation using:
   "occupationalCategory": "15-1252.00 Software Developers",
   "jobBenefits": "Medical, dental, vision insurance, 401(k) matching, unlimited PTO",
   "directApply": false
+}
+```
+
+## WebSite Schema Implementation
+
+Bordful includes a comprehensive WebSite schema implementation that provides search engines with structured information about your job board. This implementation offers several SEO benefits:
+
+- **Enhanced Site Representation**: Clear identification of your site name, URL, and publisher
+- **Search Box Integration**: Potential integration with Google's search box feature in search results
+- **Brand Connection**: Linking your site with social profiles and related entities
+- **Publisher Information**: Clear identification of the site's publishing organization
+
+### How It Works
+
+The WebSite schema is automatically generated based on your existing configuration values. There's no need for additional configuration - the schema uses values you've already set in your config file:
+
+- **Website Name**: Uses your navigation title (`config.nav.title`)
+- **Website URL**: Uses your site URL (`config.url`)
+- **Description**: Uses your main site description (`config.description`)
+- **Social Links**: Automatically derived from your navigation social media settings
+- **Logo**: Uses your navigation logo configuration if enabled
+- **Search Box**: Automatically included with a standard search URL template
+
+This approach reduces configuration duplication and ensures your structured data stays in sync with your site's branding and content.
+
+### Example WebSite Schema
+
+The WebSite schema is automatically generated and injected into every page. Here's an example of the generated JSON-LD:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Bordful",
+  "url": "https://bordful.com",
+  "description": "Browse curated opportunities from leading companies. Updated daily with the latest positions.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Bordful",
+    "logo": "https://bordful.com/logo.png"
+  },
+  "sameAs": [
+    "https://twitter.com/bordful",
+    "https://github.com/craftled/bordful",
+    "https://linkedin.com/company/bordful"
+  ],
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://bordful.com/jobs?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
 }
 ``` 

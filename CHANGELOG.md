@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.94] - 2025-03-22
+
+### Changed
+- Simplified WebSite schema implementation for easier configuration:
+  - Removed dedicated schema configuration section from config file
+  - Now derives schema data from existing configuration values
+  - Uses navigation title for WebSite name
+  - Automatically includes search action functionality
+  - Derives social links from navigation social media settings
+  - Uses logo configuration for publisher logo
+  - Improves maintainability by reducing configuration duplication
+  - Enhanced type safety with schema-dts
+
+## [0.0.93] - 2025-03-22
+
+### Added
+- Implemented configurable WebSite schema using schema-dts type definitions:
+  - Added global structured data for improved search engine visibility
+  - Implemented SearchAction schema for potential Google Sitelinks Searchbox integration
+  - Created flexible publisher configuration with Organization and Person support
+  - Added social profile linking with sameAs property
+  - Integrated with config system for easy site-wide schema customization
+  - Added comprehensive documentation in schema-implementation.md
+  - Enhanced SEO optimization across the entire website
+  - Used schema-dts for type safety and validation
+
 ## [0.0.92] - 2025-03-22
 
 ### Fixed

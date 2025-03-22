@@ -75,6 +75,13 @@ export const config = {
       ? "http://localhost:3000"
       : "https://demo.bordful.com"),
 
+  // Note: Schema.org structured data now uses values from other config sections
+  // - Website name uses nav.title
+  // - Description uses the main description
+  // - Social links are derived from navigation settings
+  // - Search functionality is automatically included
+  // - Publisher is derived from site branding
+
   // Job Alerts Configuration
   jobAlerts: {
     // Enable or disable the job alerts feature
@@ -293,7 +300,7 @@ export const config = {
     title: "Bordful", // The text shown in the navigation bar
     icon: "BriefcaseBusiness", // Lucide icon name (see https://lucide.dev/icons)
     logo: {
-      enabled: false, // Set to true to use a custom logo instead of icon + text
+      enabled: true, // Set to true to use a custom logo instead of icon + text
       src: "/bordful.svg", // Path to your logo image (place it in the public directory)
       width: 67, // Width of the logo in pixels
       height: 20, // Height of the logo in pixels
