@@ -63,7 +63,12 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-background">
       {/* Add ContactPage Schema */}
-      <ContactSchema />
+      <ContactSchema
+        companyName={config.contact.contactInfo.companyName}
+        email={config.contact.contactInfo.email}
+        phone={config.contact.contactInfo.phone}
+        address={config.contact.contactInfo.address}
+      />
 
       <HeroSection
         badge="Contact Us"

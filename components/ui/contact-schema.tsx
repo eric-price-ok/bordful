@@ -13,7 +13,7 @@ interface ContactSchemaProps {
 }
 
 export const ContactSchema: FC<ContactSchemaProps> = ({
-  companyName = config.title,
+  companyName = config.contact?.contactInfo?.companyName || config.title,
   email = config.contact?.contactInfo?.email || "contact@example.com",
   phone = config.contact?.contactInfo?.phone || "+1-555-123-4567",
   address = config.contact?.contactInfo?.address ||
