@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.0.94] - 2025-03-22
+## [0.0.94] - 2025-03-23
 
 ### Changed
 - Simplified WebSite schema implementation for easier configuration:
@@ -14,6 +14,11 @@ All notable changes to this project will be documented in this file.
   - Uses logo configuration for publisher logo
   - Improves maintainability by reducing configuration duplication
   - Enhanced type safety with schema-dts
+- Refactored FAQPage schema implementation to use schema-dts:
+  - Added proper TypeScript typing for structured data
+  - Improved type safety with Question and Answer types
+  - Maintains the same functionality with better code quality
+  - Consistent with the WebSite schema implementation approach
 
 ## [0.0.93] - 2025-03-22
 

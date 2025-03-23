@@ -16,6 +16,7 @@ import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import { useRouter, useSearchParams } from "next/navigation";
 import { slugify } from "@/lib/utils/slugify";
+import type { FAQPage, WithContext, Question, Answer } from "schema-dts";
 
 // Define the types based on the config
 interface FAQItem {
@@ -138,18 +139,22 @@ export function FAQContent({ categories }: FAQContentProps) {
 
   // Generate FAQ schema for SEO
   const generateFAQSchema = () => {
-    const faqSchema = {
+    // Create type-safe schema using schema-dts
+    const faqSchema: WithContext<FAQPage> = {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: categories.flatMap((category) =>
-        category.items.map((item) => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: item.answer,
-          },
-        }))
+        category.items.map(
+          (item) =>
+            ({
+              "@type": "Question",
+              name: item.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.answer,
+              } as Answer,
+            } as Question)
+        )
       ),
     };
 
