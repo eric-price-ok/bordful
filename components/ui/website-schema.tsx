@@ -39,9 +39,6 @@ export function WebsiteSchema() {
   // Always include search - it's a standard feature
   const includeSearch = true;
 
-  // Use standard search URL template
-  const searchUrlTemplate = `${baseUrl}/jobs?q={search_term_string}`;
-
   // Create publisher entity based on site info
   const publisher: Organization = {
     "@type": "Organization",
@@ -78,25 +75,59 @@ export function WebsiteSchema() {
     }),
   };
 
-  // Add search action
+  // Add search actions
   if (includeSearch) {
-    // Create a basic search action with standard fields
-    const searchAction: SearchAction = {
+    // Create search actions array
+    const searchActions = [];
+
+    // Standard search URL template for general site search
+    const generalSearchUrlTemplate = `${baseUrl}/search?q={search_term_string}`;
+
+    // Job-specific search URL template
+    const jobSearchUrlTemplate = `${baseUrl}/jobs?q={search_term_string}`;
+
+    // Always include general site search
+    const generalSearchAction: SearchAction = {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: searchUrlTemplate,
+        urlTemplate: generalSearchUrlTemplate,
       } as EntryPoint,
+      description: "Search across the entire site",
     };
 
-    // Create a combined object with both standard and non-standard properties
-    const fullSearchAction = {
-      ...searchAction,
+    // Add non-standard query-input property required by Google
+    const generalSearchWithQueryInput = {
+      ...generalSearchAction,
       "query-input": "required name=search_term_string",
     };
 
-    // Assign the full search action to the schema
-    schemaData.potentialAction = fullSearchAction as SearchAction;
+    searchActions.push(generalSearchWithQueryInput);
+
+    // Job-specific search - always include as this is a job board
+    const jobSearchAction: SearchAction = {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: jobSearchUrlTemplate,
+      } as EntryPoint,
+      description: "Search for jobs by title, skills, or keywords",
+    };
+
+    // Add non-standard query-input property required by Google
+    const jobSearchWithQueryInput = {
+      ...jobSearchAction,
+      "query-input": "required name=search_term_string",
+    };
+
+    searchActions.push(jobSearchWithQueryInput);
+
+    // Assign the search actions to the schema
+    // Cast to SearchAction to satisfy TypeScript
+    schemaData.potentialAction =
+      searchActions.length === 1
+        ? (searchActions[0] as SearchAction)
+        : (searchActions as SearchAction[]);
   }
 
   return (

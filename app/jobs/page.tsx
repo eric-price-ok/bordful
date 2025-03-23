@@ -25,13 +25,18 @@ import {
 } from "@/lib/constants/locations";
 import { generateMetadata } from "@/lib/utils/metadata";
 import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
+import Script from "next/script";
+import type { ItemList, WithContext, ListItem } from "schema-dts";
 
 // Generate metadata for SEO
 export const metadata: Metadata = generateMetadata({
   title: "Browse All Job Categories | " + config.title,
   description:
-    "Explore tech jobs by category, location, experience level, and job type. Find the perfect role that matches your skills and preferences.",
+    "Explore job categories including types, career levels, locations, and languages. Find your perfect position with our comprehensive job filters.",
   path: "/jobs",
+  openGraph: {
+    type: "website",
+  },
 });
 
 // Revalidate page every 5 minutes
@@ -164,8 +169,59 @@ export default async function JobsDirectoryPage() {
     })
     .slice(0, 12);
 
+  // Generate ItemList schema for job categories
+  const generateItemListSchema = () => {
+    // Create type-safe schema using schema-dts
+    const itemListSchema: WithContext<ItemList> = {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Job Types",
+          url: `${config.url}/jobs/types`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Career Levels",
+          url: `${config.url}/jobs/levels`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Job Locations",
+          url: `${config.url}/jobs/locations`,
+        },
+        {
+          "@type": "ListItem",
+          position: 4,
+          name: "Job Languages",
+          url: `${config.url}/jobs/languages`,
+        },
+      ] as ListItem[],
+    };
+
+    return JSON.stringify(itemListSchema);
+  };
+
   return (
-    <>
+    <div className="container mx-auto px-4 py-8">
+      {/* Add schema markup */}
+      <Script
+        id="item-list-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: generateItemListSchema() }}
+      />
+
+      {/* Breadcrumb navigation */}
+      <MetadataBreadcrumb
+        metadata={metadata}
+        pathname="/jobs"
+        className="mb-8"
+      />
+
       <HeroSection
         badge="Job Categories"
         title="Browse All Job Categories"
@@ -176,11 +232,6 @@ export default async function JobsDirectoryPage() {
         <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
           {/* Main Content */}
           <div className="flex-[3]">
-            {/* Breadcrumbs */}
-            <div className="mb-6">
-              <MetadataBreadcrumb metadata={metadata} pathname="/jobs" />
-            </div>
-
             <div className="space-y-8 sm:space-y-12">
               {/* Job Types Section */}
               <section
@@ -376,6 +427,6 @@ export default async function JobsDirectoryPage() {
           </aside>
         </div>
       </main>
-    </>
+    </div>
   );
 }

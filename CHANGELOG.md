@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.95] - 2025-03-24
+
+### Added
+- Added ItemList schema to jobs directory page:
+  - Improves structured data representation of job categories
+  - Implements proper ListItem elements with positions and URLs
+  - Uses schema-dts for type safety
+  - Enhances SEO for job category pages
+- Added AboutPage schema with rich structured data:
+  - Implements Organization information with proper context
+  - Uses schema-dts for type safety and validation
+  - Enhances SEO for the About page
+  - Integrates with configuration system
+- Added ContactPage schema with comprehensive contact information:
+  - Includes contact details in structured format
+  - Uses schema-dts types for validation
+  - Enhances discoverability of company contact information
+  - Improves SEO for Contact page
+
+### Changed
+- Enhanced SearchAction schema with multiple search targets:
+  - Added dedicated job search action for improved job discovery
+  - Implemented both general site search and job-specific search actions
+  - Added clear descriptions for each search type
+  - Improved Google search integration with proper query-input formatting
+  - Maintained schema-dts type safety with careful casting
+- Refactored BreadcrumbList schema to use schema-dts types:
+  - Enhanced type safety for breadcrumb implementation
+  - Maintains backward compatibility with existing usage
+  - Aligned with the project's schema-dts implementation pattern
+  - Improved code maintainability
+- Updated job directory page metadata and structure:
+  - Improved description
+  - Added OpenGraph type
+  - Simplified container layout 
+- Improved About and Contact pages:
+  - Enhanced integration with configuration system
+  - Added proper metadata for SEO
+  - Implemented consistent layout and styling
+  - Added fallback content when configuration is missing
+
 ## [0.0.94] - 2025-03-23
 
 ### Changed

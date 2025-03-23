@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SupportChannelCard } from "@/components/contact/SupportChannelCard";
 import { ContactInfoSection } from "@/components/contact/ContactInfoSection";
+import { ContactSchema } from "@/components/ui/contact-schema";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -61,6 +62,9 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-background">
+      {/* Add ContactPage Schema */}
+      <ContactSchema />
+
       <HeroSection
         badge="Contact Us"
         title={config.contact.title}
@@ -79,7 +83,7 @@ export default function ContactPage() {
               {config.contact.supportChannels.title}
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {config.contact.supportChannels.channels.map((channel, index) => (
                 <SupportChannelCard
                   key={index}
@@ -91,21 +95,23 @@ export default function ContactPage() {
                 />
               ))}
             </div>
-
-            {/* Contact Information */}
-            <div className="max-w-2xl mx-auto">
-              <ContactInfoSection
-                title={config.contact.contactInfo.title}
-                description={config.contact.contactInfo.description}
-                companyName={config.contact.contactInfo.companyName}
-                email={config.contact.contactInfo.email}
-                phone={config.contact.contactInfo.phone}
-                address={config.contact.contactInfo.address}
-              />
-            </div>
           </div>
         </div>
       </section>
+
+      {/* Contact Information */}
+      <div className="container px-4 mx-auto mb-16">
+        <div className="max-w-2xl mx-auto">
+          <ContactInfoSection
+            title={config.contact.contactInfo.title}
+            description={config.contact.contactInfo.description}
+            companyName={config.contact.contactInfo.companyName}
+            email={config.contact.contactInfo.email}
+            phone={config.contact.contactInfo.phone}
+            address={config.contact.contactInfo.address}
+          />
+        </div>
+      </div>
     </main>
   );
 }

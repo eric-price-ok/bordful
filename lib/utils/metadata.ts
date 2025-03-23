@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import config from "@/config";
+import type { BreadcrumbList, WithContext, ListItem } from "schema-dts";
 
 type OpenGraphType =
   | "website"
@@ -78,19 +79,20 @@ export function generateMetadata({
  * @returns JSON string of schema.org breadcrumb markup
  */
 export function generateBreadcrumbSchema(items: BreadcrumbItem[]): string {
-  interface ListItem {
+  interface SchemaListItem {
     "@type": string;
     position: number;
     name: string;
     item?: string;
   }
 
-  const breadcrumbSchema = {
+  // Create type-safe schema using schema-dts
+  const breadcrumbSchema: WithContext<BreadcrumbList> = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: items.map((item, index) => {
       const isLastItem = index === items.length - 1;
-      const listItem: ListItem = {
+      const listItem: SchemaListItem = {
         "@type": "ListItem",
         position: index + 1,
         name: item.name,
@@ -102,7 +104,7 @@ export function generateBreadcrumbSchema(items: BreadcrumbItem[]): string {
         listItem.item = `${config.url}${item.url}`;
       }
 
-      return listItem;
+      return listItem as ListItem;
     }),
   };
 

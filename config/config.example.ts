@@ -597,6 +597,33 @@ export const config = {
       address: "123 Main Street, San Francisco, CA 94105",
     },
   },
+
+  // About Page Configuration
+  about: {
+    // Enable or disable the about page
+    enabled: true,
+
+    // Show about link in navigation
+    showInNavigation: true,
+
+    // Show about link in footer resources
+    showInFooter: true,
+
+    // Navigation label
+    navigationLabel: "About",
+
+    // Page title and description
+    title: "About Our Job Board",
+    description:
+      "Learn more about our mission to connect talent with opportunity.",
+
+    // Company information
+    mission:
+      "We're on a mission to connect talented professionals with meaningful opportunities and help organizations find the perfect candidates to drive their success.",
+    story:
+      "Founded with a passion for revolutionizing the job search experience, our platform was built to address the challenges faced by both job seekers and employers in today's competitive market.",
+    team: "Our diverse team brings together expertise from recruitment, technology, and design to create an innovative job board solution that puts user experience first.",
+  },
 } as const;
 
 export type Config = typeof config;
