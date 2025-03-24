@@ -15,10 +15,6 @@ import config from "@/config";
 import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
 import { notFound } from "next/navigation";
 import { ClientBreadcrumb } from "@/components/ui/client-breadcrumb";
-import {
-  getDisplayNameFromCode,
-  LanguageCode,
-} from "@/lib/constants/languages";
 
 // Generate static params for all active jobs
 export async function generateStaticParams() {
