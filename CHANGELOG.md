@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.96] - 2025-03-24
+
+### Changed
+- Enhanced job-specific meta descriptions for better SEO and UX:
+  - Improved format to "[Company] is hiring [job type] [job title]"
+  - Intelligently formatted workplace information by type:
+    - Remote: "Remote position in [Region]" or "Remote position (Worldwide)"
+    - Hybrid: "Hybrid position in [City, Country]"
+    - On-site: "in [City, Country]"
+  - Added salary information and application deadlines when available
+  - Removed redundant information to create concise, impactful descriptions
+  - Enhanced text parsing to clean job titles and improve readability
+  - Implemented dynamic description building with proper sentence structure
+  - Fixed grammar and punctuation issues for cleaner, more natural descriptions
+  - Optimized character length for better visibility in search results
+
 ## [0.0.95] - 2025-03-24
 
 ### Added

@@ -15,6 +15,10 @@ import config from "@/config";
 import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
 import { notFound } from "next/navigation";
 import { ClientBreadcrumb } from "@/components/ui/client-breadcrumb";
+import {
+  getDisplayNameFromCode,
+  LanguageCode,
+} from "@/lib/constants/languages";
 
 // Generate static params for all active jobs
 export async function generateStaticParams() {
@@ -46,18 +50,121 @@ export async function generateMetadata({
     };
   }
 
-  // Format location for metadata
-  const metaLocation =
-    job.workplace_type === "Remote"
-      ? job.remote_region || "Worldwide"
-      : [job.workplace_city, job.workplace_country].filter(Boolean).join(", ");
+  // Format location for metadata based on workplace type
+  const metaLocation = (() => {
+    // For Remote jobs, show the region if available
+    if (job.workplace_type === "Remote") {
+      if (!job.remote_region) {
+        return "Remote position (Worldwide)";
+      }
+
+      // For Worldwide specifically, don't use "in"
+      if (job.remote_region === "Worldwide") {
+        return "Remote position (Worldwide)";
+      }
+
+      // For other regions, use "in"
+      return `Remote position in ${job.remote_region}`;
+    }
+
+    // For Hybrid jobs, show the location with Hybrid prefix
+    if (job.workplace_type === "Hybrid") {
+      const location = [job.workplace_city, job.workplace_country]
+        .filter(Boolean)
+        .join(", ");
+      return location ? `Hybrid position in ${location}` : "Hybrid position";
+    }
+
+    // For On-site jobs, show the location directly
+    if (job.workplace_type === "On-site") {
+      const location = [job.workplace_city, job.workplace_country]
+        .filter(Boolean)
+        .join(", ");
+      return location ? `in ${location}` : "";
+    }
+
+    // Default case (Not specified)
+    return "";
+  })();
+
+  // Format career levels for readability
+  const careerLevelText =
+    job.career_level && job.career_level.length > 0
+      ? job.career_level.slice(0, 2).join("/")
+      : "";
+
+  // Format languages for readability
+  const languagesText =
+    job.languages && job.languages.length > 0
+      ? job.languages
+          .slice(0, 2)
+          .map((code) => getDisplayNameFromCode(code as LanguageCode))
+          .join(", ")
+      : "";
+
+  // Create skills text if available
+  const skillsText = job.skills
+    ? job.skills.split(",").slice(0, 3).join(", ")
+    : "";
+
+  // Format deadline if available
+  const deadlineText = job.valid_through
+    ? `Apply before ${new Date(job.valid_through).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })}`
+    : "Apply now";
+
+  // Build description parts dynamically
+  const parts = [];
+
+  // First part - company, job type and title (removing parentheses if present in the title)
+  const cleanTitle = job.title.replace(/\s*\([^)]*\)\s*/g, " ").trim();
+
+  // Base description
+  let baseDescription = `${
+    job.company
+  } is hiring ${job.type.toLowerCase()} ${cleanTitle}`;
+  let baseDescriptionAdded = false;
+
+  // Add location only if it exists
+  if (metaLocation) {
+    // For "in X" format, append directly; for other formats, add as new sentence
+    if (metaLocation.startsWith("in ")) {
+      baseDescription += ` ${metaLocation}`;
+    } else {
+      parts.push(baseDescription);
+      parts.push(metaLocation);
+      baseDescriptionAdded = true;
+    }
+  }
+
+  // Add the base description if it wasn't added already
+  if (!baseDescriptionAdded) {
+    parts.push(baseDescription);
+  }
+
+  // Salary
+  if (job.salary) {
+    parts.push(`Salary: ${formatSalary(job.salary, true)}`);
+  }
+
+  // Deadline
+  parts.push(deadlineText);
 
   // Use our utility to generate consistent metadata
+  // Join with periods and ensure proper formatting
+  const description = parts
+    .join(". ")
+    // Fix any double periods
+    .replace(/\.\./g, ".")
+    // Ensure there's a period at the end
+    .replace(/(\w)$/, "$1.");
+
   return createMetadata({
     title: `${job.title} at ${job.company}`,
-    description: `${job.type} position at ${job.company}${
-      metaLocation ? `. Location: ${metaLocation}` : ""
-    }${job.salary ? `. Salary: ${formatSalary(job.salary, true)}` : ""}.`,
+    description,
     path: `/jobs/${slug}`,
     openGraph: {
       type: "article",
