@@ -87,26 +87,6 @@ export async function generateMetadata({
     return "";
   })();
 
-  // Format career levels for readability
-  const careerLevelText =
-    job.career_level && job.career_level.length > 0
-      ? job.career_level.slice(0, 2).join("/")
-      : "";
-
-  // Format languages for readability
-  const languagesText =
-    job.languages && job.languages.length > 0
-      ? job.languages
-          .slice(0, 2)
-          .map((code) => getDisplayNameFromCode(code as LanguageCode))
-          .join(", ")
-      : "";
-
-  // Create skills text if available
-  const skillsText = job.skills
-    ? job.skills.split(",").slice(0, 3).join(", ")
-    : "";
-
   // Format deadline if available
   const deadlineText = job.valid_through
     ? `Apply before ${new Date(job.valid_through).toLocaleDateString("en-US", {
