@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
   - Enhanced type safety with TypeScript interfaces
   - Optimized performance with efficient URL updates
   - Maintained accessibility with proper ARIA attributes
+  - Fixed ESLint error by removing unused handleJobsPerPageChange function
 - Bumped Next.js to 15.2.4
 
 ## [0.0.97] - 2025-03-25

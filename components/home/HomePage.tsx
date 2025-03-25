@@ -133,17 +133,6 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
     [updateParams]
   );
 
-  // Handle jobs per page change
-  const handleJobsPerPageChange = useCallback(
-    (value: string) => {
-      updateParams({
-        per_page: value === "10" ? null : value,
-        page: "1", // Reset to first page when changing items per page
-      });
-    },
-    [updateParams]
-  );
-
   // Handle sort change
   const handleSortChange = useCallback(
     (value: SortOption) => {
