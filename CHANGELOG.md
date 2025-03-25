@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.98] - 2025-03-25
+
+### Changed
+- Enhanced jobs per page selector with nuqs integration:
+  - Created reusable `JobsPerPageSelect` component for consistent UI
+  - Implemented type-safe `useJobsPerPage` hook using nuqs
+  - Added NuqsAdapter to root layout for URL state management
+  - Removed duplicate code from HomePage and JobsLayout
+  - Improved URL parameter handling with proper defaults
+  - Enhanced type safety with TypeScript interfaces
+  - Optimized performance with efficient URL updates
+  - Maintained accessibility with proper ARIA attributes
+- Bumped Next.js to 15.2.4
+
 ## [0.0.97] - 2025-03-25
 
 ### Added

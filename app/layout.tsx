@@ -8,6 +8,8 @@ import { Toaster } from "@/components/ui/toaster";
 import Script, { ScriptProps } from "next/script";
 import config from "@/config";
 import { WebsiteSchema } from "@/components/ui/website-schema";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { type ReactNode } from "react";
 
 interface CustomScript {
   src: string;
@@ -43,11 +45,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <head>
@@ -82,7 +80,9 @@ export default function RootLayout({
       <body>
         <div className="flex min-h-screen flex-col">
           <Nav />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1">
+            <NuqsAdapter>{children}</NuqsAdapter>
+          </main>
           <Footer />
         </div>
         <Toaster />

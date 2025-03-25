@@ -22,6 +22,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { ClientBreadcrumb } from "@/components/ui/client-breadcrumb";
+import { JobsPerPageSelect } from "@/components/ui/jobs-per-page-select";
 
 interface JobsLayoutProps {
   allJobs: Job[];
@@ -138,38 +139,7 @@ export function JobsLayout({ filteredJobs }: JobsLayoutProps) {
               </p>
             </div>
             <div className="flex items-center gap-3 pb-[1px] w-full sm:w-auto">
-              <Select
-                value={jobsPerPage.toString()}
-                onValueChange={(value) => {
-                  setIsFiltering(true);
-                  updateParams({
-                    per_page: value === "10" ? null : value,
-                    page: "1",
-                  });
-                  setTimeout(() => setIsFiltering(false), 300);
-                }}
-              >
-                <SelectTrigger className="w-full sm:w-[130px] h-7 text-xs">
-                  <SelectValue placeholder="Show" />
-                </SelectTrigger>
-                <SelectContent
-                  className="bg-white min-w-[130px]"
-                  position="popper"
-                >
-                  <SelectItem value="10" className="text-xs">
-                    10 per page
-                  </SelectItem>
-                  <SelectItem value="25" className="text-xs">
-                    25 per page
-                  </SelectItem>
-                  <SelectItem value="50" className="text-xs">
-                    50 per page
-                  </SelectItem>
-                  <SelectItem value="100" className="text-xs">
-                    100 per page
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+              <JobsPerPageSelect />
 
               <Select
                 value={sortBy}
