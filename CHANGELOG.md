@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.97] - 2025-03-25
+
+### Added
+- Added configurable post job banner:
+  - New `postJobBanner` section in config file
+  - Trust indicators with company avatars
+  - Customizable CTA with pricing
+  - Trust message support
+  - Fully responsive design
+  - Added comprehensive documentation in `/docs/post-job-banner.md`
+
 ## [0.0.96] - 2025-03-24
 
 ### Changed

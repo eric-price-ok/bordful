@@ -1,50 +1,55 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import config from "@/config";
 
 export function PostJobBanner() {
+  // Early return if banner is disabled
+  if (!config.postJobBanner.enabled) {
+    return null;
+  }
+
+  const {
+    title,
+    description,
+    showTrustedBy,
+    trustedByText,
+    companyAvatars,
+    cta,
+    trustMessage,
+  } = config.postJobBanner;
+
   return (
     <Card className="p-6 border shadow-none rounded-lg">
-      <h3 className="text-lg font-semibold mb-3">
-        Hiring? Post Your Job Ad Here
-      </h3>
-      <p className="text-sm mb-4 text-muted-foreground">
-        Reach talented professionals. Get quality applications fast.
-      </p>
-      <div className="flex items-center gap-2 mb-4">
-        <div className="flex -space-x-3">
-          <Avatar className="h-8 w-8 border border-background">
-            <AvatarImage src="/avatars/bestwriting.png" alt="Best Writing" />
-            <AvatarFallback>BW</AvatarFallback>
-          </Avatar>
-          <Avatar className="h-8 w-8 border border-background">
-            <AvatarImage src="/avatars/marketful.png" alt="Marketful" />
-            <AvatarFallback>MF</AvatarFallback>
-          </Avatar>
-          <Avatar className="h-8 w-8 border border-background">
-            <AvatarImage src="/avatars/uithings.png" alt="UI Things" />
-            <AvatarFallback>UI</AvatarFallback>
-          </Avatar>
-          <Avatar className="h-8 w-8 border border-background">
-            <AvatarImage src="/avatars/bestwriting.png" alt="Best Writing" />
-            <AvatarFallback>BW</AvatarFallback>
-          </Avatar>
+      <h3 className="text-lg font-semibold mb-3">{title}</h3>
+      <p className="text-sm mb-4 text-muted-foreground">{description}</p>
+
+      {showTrustedBy && (
+        <div className="flex items-center gap-2 mb-4">
+          <div className="flex -space-x-3">
+            {companyAvatars.map((avatar, index) => (
+              <Avatar key={index} className="h-8 w-8 border border-background">
+                <AvatarImage src={avatar.src} alt={avatar.alt} />
+                <AvatarFallback>{avatar.fallback}</AvatarFallback>
+              </Avatar>
+            ))}
+          </div>
+          <span className="text-xs text-muted-foreground">{trustedByText}</span>
         </div>
-        <span className="text-xs text-muted-foreground">
-          Trusted by top companies
-        </span>
-      </div>
+      )}
+
       <a
-        href="https://buy.stripe.com/fZeg1n8eg07m0lGfZn"
-        target="_blank"
-        rel="noopener noreferrer"
+        href={cta.link}
+        target={cta.external ? "_blank" : undefined}
+        rel={cta.external ? "noopener noreferrer" : undefined}
       >
         <Button className="w-full bg-zinc-900 text-white hover:bg-zinc-800">
-          Post a Job ($59)
+          {cta.text}
         </Button>
       </a>
+
       <p className="text-xs text-center mt-4 text-muted-foreground">
-        30-day money-back guarantee
+        {trustMessage}
       </p>
     </Card>
   );

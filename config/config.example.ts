@@ -535,6 +535,52 @@ export const config = {
     ],
   },
 
+  // Post Job Banner Configuration
+  postJobBanner: {
+    // Enable or disable the post job banner
+    enabled: true,
+
+    // Banner content
+    title: "Hiring? Post Your Job Ad Here",
+    description: "Reach talented professionals. Get quality applications fast.",
+
+    // Trust indicators
+    showTrustedBy: true,
+    trustedByText: "Trusted by top companies",
+    companyAvatars: [
+      {
+        src: "/avatars/bestwriting.png",
+        alt: "Best Writing",
+        fallback: "BW",
+      },
+      {
+        src: "/avatars/marketful.png",
+        alt: "Marketful",
+        fallback: "MF",
+      },
+      {
+        src: "/avatars/uithings.png",
+        alt: "UI Things",
+        fallback: "UI",
+      },
+      {
+        src: "/avatars/bestwriting.png",
+        alt: "Best Writing",
+        fallback: "BW",
+      },
+    ],
+
+    // Call to action
+    cta: {
+      text: "Post a Job ($59)",
+      link: "https://buy.stripe.com/fZeg1n8eg07m0lGfZn",
+      external: true,
+    },
+
+    // Trust message
+    trustMessage: "30-day money-back guarantee",
+  },
+
   // Contact Page Configuration
   contact: {
     // Enable or disable the contact page
