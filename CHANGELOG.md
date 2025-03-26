@@ -15,6 +15,9 @@ All notable changes to this project will be documented in this file.
   - Optimized performance with efficient URL updates
   - Maintained accessibility with proper ARIA attributes
   - Fixed ESLint error by removing unused handleJobsPerPageChange function
+  - Added loading state to prevent multiple rapid selections
+  - Added error handling for invalid values
+  - Enhanced accessibility with descriptive ARIA labels
 - Bumped Next.js to 15.2.4
 
 ## [0.0.97] - 2025-03-25

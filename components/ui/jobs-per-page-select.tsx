@@ -8,19 +8,40 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useJobsPerPage } from "@/lib/hooks/useJobsPerPage";
+import { useState } from "react";
 
 export function JobsPerPageSelect() {
   const { jobsPerPage, setJobsPerPage } = useJobsPerPage();
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleValueChange = (value: string) => {
+    setIsUpdating(true);
+    try {
+      setJobsPerPage(parseInt(value, 10));
+    } catch (error) {
+      console.error("Invalid jobs per page value:", error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   return (
     <Select
       value={jobsPerPage.toString()}
-      onValueChange={(value) => setJobsPerPage(parseInt(value, 10))}
+      onValueChange={handleValueChange}
+      disabled={isUpdating}
     >
-      <SelectTrigger className="w-full sm:w-[130px] h-7 text-xs">
+      <SelectTrigger
+        className="w-full sm:w-[130px] h-7 text-xs"
+        aria-label="Select number of jobs to display per page"
+      >
         <SelectValue placeholder="Show" />
       </SelectTrigger>
-      <SelectContent className="bg-white min-w-[130px]" position="popper">
+      <SelectContent
+        className="bg-white min-w-[130px]"
+        position="popper"
+        aria-label="Jobs per page options"
+      >
         <SelectItem value="10" className="text-xs">
           10 per page
         </SelectItem>
