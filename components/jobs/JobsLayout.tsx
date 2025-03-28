@@ -23,22 +23,22 @@ import {
 } from "@/components/ui/pagination";
 import { ClientBreadcrumb } from "@/components/ui/client-breadcrumb";
 import { JobsPerPageSelect } from "@/components/ui/jobs-per-page-select";
+import { SortOrderSelect } from "@/components/ui/sort-order-select";
+import { useSortOrder } from "@/lib/hooks/useSortOrder";
 
 interface JobsLayoutProps {
   allJobs: Job[];
   filteredJobs: Job[];
 }
 
-type SortOption = "newest" | "oldest" | "salary";
-
 export function JobsLayout({ filteredJobs }: JobsLayoutProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isFiltering, setIsFiltering] = useState(false);
+  const { sortOrder } = useSortOrder();
 
   // Get URL params or defaults
   const currentPage = Number(searchParams.get("page")) || 1;
-  const sortBy = (searchParams.get("sort") as SortOption) || "newest";
   const jobsPerPage = Number(searchParams.get("per_page")) || 10;
 
   // Update URL params
@@ -59,7 +59,7 @@ export function JobsLayout({ filteredJobs }: JobsLayoutProps) {
 
   // Sort jobs
   const sortedJobs = [...filteredJobs].sort((a, b) => {
-    switch (sortBy) {
+    switch (sortOrder) {
       case "oldest":
         return (
           new Date(a.posted_date).getTime() - new Date(b.posted_date).getTime()
@@ -140,33 +140,7 @@ export function JobsLayout({ filteredJobs }: JobsLayoutProps) {
             </div>
             <div className="flex items-center gap-3 pb-[1px] w-full sm:w-auto">
               <JobsPerPageSelect />
-
-              <Select
-                value={sortBy}
-                onValueChange={(value: SortOption) => {
-                  setIsFiltering(true);
-                  updateParams({
-                    sort: value === "newest" ? null : value,
-                    page: "1",
-                  });
-                  setTimeout(() => setIsFiltering(false), 300);
-                }}
-              >
-                <SelectTrigger className="w-full sm:w-[140px] h-7 text-xs">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent className="bg-white" position="popper">
-                  <SelectItem value="newest" className="text-xs">
-                    Newest first
-                  </SelectItem>
-                  <SelectItem value="oldest" className="text-xs">
-                    Oldest first
-                  </SelectItem>
-                  <SelectItem value="salary" className="text-xs">
-                    Highest salary
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+              <SortOrderSelect />
             </div>
           </div>
 

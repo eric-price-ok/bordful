@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.99] - 2025-03-28
+
+### Changed
+- Refactored sort order dropdown with nuqs integration:
+  - Created reusable `SortOrderSelect` component for consistent UI
+  - Implemented type-safe `useSortOrder` hook using nuqs
+  - Removed duplicate code from HomePage and JobsLayout
+  - Improved URL parameter handling with proper defaults
+  - Enhanced type safety with TypeScript interfaces
+  - Optimized performance with efficient URL updates
+  - Maintained accessibility with proper ARIA attributes
+  - Added loading state to prevent multiple rapid selections
+  - Added error handling for invalid values
+
 ## [0.0.98] - 2025-03-25
 
 ### Changed
@@ -406,15 +420,6 @@ All notable changes to this project will be documented in this file.
 ## [0.0.73] - 2025-03-11
 
 ### Added
-- Added dropdown menu for Jobs navigation item:
-  - Implemented hover-activated dropdown in desktop view
-  - Created nested navigation in mobile view with indented sub-items
-  - Added links to job-related pages (types, locations, levels, languages)
-  - Enhanced navigation UX with visual hierarchy for job categories
-  - Optimized dropdown width for better visual balance
-  - Improved accessibility with proper ARIA attributes
-  - Added keyboard and mouse interaction support
-  - Implemented click-outside behavior to dismiss dropdown
 - Added Jobs section to footer:
   - Created dedicated column for job-related links
   - Added links to all jobs, job types, locations, levels, and languages
@@ -714,7 +719,7 @@ All notable changes to this project will be documented in this file.
 ## [0.0.51] - 2025-02-11
 
 ### Added
-- Reddit social icon in navigation and footer
+- Added Reddit social icon in navigation and footer
 - Support for Reddit social link in configuration
 
 ## [0.0.50] - 2025-02-11

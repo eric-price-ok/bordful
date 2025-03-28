@@ -30,17 +30,17 @@ import { HeroSection } from "@/components/ui/hero-section";
 import config from "@/config";
 import { LanguageCode } from "@/lib/constants/languages";
 import { JobsPerPageSelect } from "@/components/ui/jobs-per-page-select";
+import { SortOrderSelect } from "@/components/ui/sort-order-select";
+import { useSortOrder, SortOption } from "@/lib/hooks/useSortOrder";
 
-type SortOption = "newest" | "oldest" | "salary";
-
-interface Filters {
+type Filters = {
   types: string[];
   roles: CareerLevel[];
   remote: boolean;
   salaryRanges: string[];
   visa: boolean;
   languages: LanguageCode[];
-}
+};
 
 type FilterType =
   | "type"
@@ -56,7 +56,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState<SortOption>("newest");
+  const { sortOrder } = useSortOrder();
   const [isFiltering, setIsFiltering] = useState(false);
 
   // Parse initial filters from URL
@@ -136,7 +136,6 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
   // Handle sort change
   const handleSortChange = useCallback(
     (value: SortOption) => {
-      setSortBy(value);
       updateParams({
         sort: value === "newest" ? null : value,
         page: "1", // Reset to first page when changing sort
@@ -324,7 +323,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
     }
 
     // Apply sorting
-    switch (sortBy) {
+    switch (sortOrder) {
       case "oldest":
         filtered.sort(
           (a, b) =>
@@ -352,7 +351,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
     }
 
     return filtered;
-  }, [initialJobs, searchTerm, sortBy, filters]);
+  }, [initialJobs, searchTerm, sortOrder, filters]);
 
   // Sort jobs based on selected option and featured status
   const sortedJobs = useMemo(() => {
@@ -364,7 +363,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
       }
 
       // Then apply the selected sort for jobs with the same featured status
-      switch (sortBy) {
+      switch (sortOrder) {
         case "newest":
           return (
             new Date(b.posted_date).getTime() -
@@ -383,7 +382,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
           return 0;
       }
     });
-  }, [filteredJobs, sortBy]);
+  }, [filteredJobs, sortOrder]);
 
   // Calculate pagination
   const totalPages = Math.ceil(sortedJobs.length / jobsPerPage);
@@ -556,23 +555,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
               </div>
               <div className="flex items-center gap-3 pb-[1px] w-full sm:w-auto">
                 <JobsPerPageSelect />
-
-                <Select value={sortBy} onValueChange={handleSortChange}>
-                  <SelectTrigger className="w-full sm:w-[140px] h-7 text-xs">
-                    <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white" position="popper">
-                    <SelectItem value="newest" className="text-xs">
-                      Newest first
-                    </SelectItem>
-                    <SelectItem value="oldest" className="text-xs">
-                      Oldest first
-                    </SelectItem>
-                    <SelectItem value="salary" className="text-xs">
-                      Highest salary
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                <SortOrderSelect />
               </div>
             </div>
 
