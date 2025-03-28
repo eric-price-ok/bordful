@@ -1,6 +1,7 @@
 "use client";
 
-import type { Job } from "@/lib/db/airtable";
+import { useState, useCallback } from "react";
+import type { Job, CareerLevel } from "@/lib/db/airtable";
 import { JobListings } from "@/components/jobs/JobListings";
 import { PostJobBanner } from "@/components/ui/post-job-banner";
 import { useSearchParams } from "next/navigation";
@@ -10,22 +11,115 @@ import { SortOrderSelect } from "@/components/ui/sort-order-select";
 import { useSortOrder } from "@/lib/hooks/useSortOrder";
 import { usePagination } from "@/lib/hooks/usePagination";
 import { PaginationControl } from "@/components/ui/pagination-control";
+import { JobFilters } from "@/components/ui/job-filters";
+import { LanguageCode } from "@/lib/constants/languages";
+import { JobType } from "@/lib/constants/job-types";
 
 interface JobsLayoutProps {
   allJobs: Job[];
   filteredJobs: Job[];
 }
 
-export function JobsLayout({ filteredJobs }: JobsLayoutProps) {
+export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
   const searchParams = useSearchParams();
   const { sortOrder } = useSortOrder();
   const { page } = usePagination();
 
+  // Filter state
+  const [selectedJobs, setSelectedJobs] = useState<Job[]>(filteredJobs);
+  
   // Get URL params or defaults
   const jobsPerPage = Number(searchParams.get("per_page")) || 10;
 
+  // Handle filter changes
+  const handleFilterChange = useCallback(
+    (
+      filterType: "type" | "role" | "remote" | "salary" | "visa" | "language" | "clear",
+      value: string[] | boolean | CareerLevel[] | LanguageCode[] | JobType[] | true
+    ) => {
+      if (filterType === "clear") {
+        setSelectedJobs(filteredJobs);
+        return;
+      }
+
+      let newFilteredJobs = [...filteredJobs];
+
+      // Apply type filter
+      if (filterType === "type" && Array.isArray(value) && value.length > 0) {
+        // Type assertion to tell TypeScript this is a JobType array
+        const jobTypes = value as JobType[];
+        newFilteredJobs = newFilteredJobs.filter((job) =>
+          jobTypes.includes(job.type as JobType)
+        );
+      }
+
+      // Apply role/career level filter
+      if (filterType === "role" && Array.isArray(value) && value.length > 0) {
+        // Type assertion to tell TypeScript this is a CareerLevel array
+        const careerLevels = value as CareerLevel[];
+        newFilteredJobs = newFilteredJobs.filter((job) =>
+          careerLevels.some((level) => job.career_level.includes(level))
+        );
+      }
+
+      // Apply remote filter
+      if (filterType === "remote" && value === true) {
+        newFilteredJobs = newFilteredJobs.filter(
+          (job) => job.workplace_type === "Remote"
+        );
+      }
+
+      // Apply salary filter
+      if (filterType === "salary" && Array.isArray(value) && value.length > 0) {
+        // Type assertion to tell TypeScript this is a string array
+        const salaryRanges = value as string[];
+        // Handle salary filtering logic here
+        newFilteredJobs = newFilteredJobs.filter((job) => {
+          if (!job.salary) return false;
+          
+          // Calculate annual salary based on available data
+          let annualSalary = 0;
+          if (job.salary.max) {
+            annualSalary = job.salary.max;
+          } else if (job.salary.min) {
+            // If hourly, convert to annual (assuming 2080 hours per year)
+            annualSalary = job.salary.min * 2080;
+          }
+          
+          if (annualSalary === 0) return false;
+            
+          if (salaryRanges.includes("< $50K") && annualSalary < 50000) return true;
+          if (salaryRanges.includes("$50K - $100K") && annualSalary >= 50000 && annualSalary <= 100000) return true;
+          if (salaryRanges.includes("$100K - $200K") && annualSalary > 100000 && annualSalary <= 200000) return true;
+          if (salaryRanges.includes("> $200K") && annualSalary > 200000) return true;
+          
+          return false;
+        });
+      }
+
+      // Apply visa filter
+      if (filterType === "visa" && value === true) {
+        newFilteredJobs = newFilteredJobs.filter(
+          (job) => job.visa_sponsorship === "Yes"
+        );
+      }
+
+      // Apply language filter
+      if (filterType === "language" && Array.isArray(value) && value.length > 0) {
+        // Type assertion to tell TypeScript this is a LanguageCode array
+        const languageCodes = value as LanguageCode[];
+        newFilteredJobs = newFilteredJobs.filter((job) =>
+          job.languages?.some((lang) => languageCodes.includes(lang as LanguageCode))
+        );
+      }
+
+      setSelectedJobs(newFilteredJobs);
+    },
+    [filteredJobs]
+  );
+
   // Sort jobs
-  const sortedJobs = [...filteredJobs].sort((a, b) => {
+  const sortedJobs = [...selectedJobs].sort((a, b) => {
     switch (sortOrder) {
       case "oldest":
         return (
@@ -102,6 +196,18 @@ export function JobsLayout({ filteredJobs }: JobsLayoutProps) {
         {/* Sidebar */}
         <aside className="w-full lg:w-[240px] xl:w-[260px] order-first lg:order-last">
           <div className="space-y-6">
+            <JobFilters
+              onFilterChange={handleFilterChange}
+              initialFilters={{
+                types: [],
+                roles: [],
+                remote: false,
+                salaryRanges: [],
+                visa: false,
+                languages: [],
+              }}
+              jobs={allJobs}
+            />
             <PostJobBanner />
           </div>
         </aside>

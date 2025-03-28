@@ -35,6 +35,14 @@ All notable changes to this project will be documented in this file.
   - Improved user experience with persistent filter selections across page reloads
   - Added browser history support for back/forward navigation with filters
   - Aligned filter state management with existing pagination and sorting patterns
+- Extended filter system to job subpages for unified filtering experience:
+  - Integrated optimized filter components in JobsLayout used by all job subpages 
+  - Added consistent filtering capabilities across all pages (home, job types, career levels, etc.)
+  - Implemented smart filter handling to properly filter already-filtered job listings
+  - Maintained proper type safety with TypeScript for all filter operations
+  - Enhanced user experience by allowing additional filtering on category-specific pages
+  - Reduced code duplication by reusing the same components across the entire application
+  - Ensured URL parameters work consistently between main job page and subpages
 
 ## [0.0.98] - 2025-03-25
 
