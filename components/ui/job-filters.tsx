@@ -9,7 +9,7 @@ import {
   getDisplayNameFromCode,
 } from "@/lib/constants/languages";
 import { JOB_TYPE_DISPLAY_NAMES, JobType } from "@/lib/constants/job-types";
-import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
+import { parseAsArrayOf, parseAsString, parseAsBoolean, useQueryState } from "nuqs";
 
 type FilterType =
   | "type"
@@ -120,6 +120,44 @@ function FilterItem({ id, label, count, checked, onCheckedChange }: FilterItemPr
   );
 }
 
+// Switch Item component for boolean filters
+interface SwitchItemProps {
+  id: string;
+  checked: boolean;
+  onCheckedChange: (checked: boolean) => void;
+  count: number;
+  total?: number;
+}
+
+function SwitchItem({ id, checked, onCheckedChange, count, total }: SwitchItemProps) {
+  return (
+    <div className="flex items-center justify-between">
+      <div className="flex items-center space-x-2">
+        <Switch
+          id={id}
+          checked={checked}
+          onCheckedChange={onCheckedChange}
+        />
+        <Label
+          htmlFor={id}
+          className="text-sm font-normal text-gray-500"
+        >
+          {checked ? "Yes" : "No"}
+        </Label>
+      </div>
+      <span
+        className={`text-xs px-2 py-0.5 rounded-full ${
+          checked
+            ? "bg-zinc-900 text-zinc-50"
+            : "bg-zinc-100 text-zinc-500"
+        }`}
+      >
+        {count.toLocaleString()}{total ? ` of ${total.toLocaleString()}` : ''}
+      </span>
+    </div>
+  );
+}
+
 export function JobFilters({
   onFilterChange,
   initialFilters,
@@ -131,7 +169,36 @@ export function JobFilters({
     parseAsArrayOf(parseAsString).withDefault([])
   );
   
-  // Sync URL state with component state
+  // URL state for career levels filter using nuqs
+  const [rolesParam, setRolesParam] = useQueryState(
+    "roles",
+    parseAsArrayOf(parseAsString).withDefault([])
+  );
+  
+  // URL state for salary ranges filter using nuqs
+  const [salaryRangesParam, setSalaryRangesParam] = useQueryState(
+    "salary",
+    parseAsArrayOf(parseAsString).withDefault([])
+  );
+  
+  // URL state for languages filter using nuqs
+  const [languagesParam, setLanguagesParam] = useQueryState(
+    "languages",
+    parseAsArrayOf(parseAsString).withDefault([])
+  );
+  
+  // URL state for boolean filters using nuqs
+  const [remoteParam, setRemoteParam] = useQueryState(
+    "remote",
+    parseAsBoolean.withDefault(false)
+  );
+  
+  const [visaParam, setVisaParam] = useQueryState(
+    "visa",
+    parseAsBoolean.withDefault(false)
+  );
+  
+  // Sync URL state with component state for job types
   const handleTypeChange = useCallback(
     (checked: boolean, value: string) => {
       const newTypes = checked
@@ -145,34 +212,96 @@ export function JobFilters({
     [typesParam, setTypesParam, onFilterChange]
   );
   
+  // Sync URL state with component state for career levels
+  const handleLevelChange = useCallback(
+    (checked: boolean, value: CareerLevel) => {
+      const newRoles = checked
+        ? [...rolesParam, value]
+        : rolesParam.filter((role) => role !== value);
+      
+      // Remove parameter from URL if empty
+      setRolesParam(newRoles.length ? newRoles : null);
+      onFilterChange("role", newRoles);
+    },
+    [rolesParam, setRolesParam, onFilterChange]
+  );
+  
+  // Sync URL state with component state for salary ranges
+  const handleSalaryChange = useCallback(
+    (checked: boolean, value: string) => {
+      const newRanges = checked
+        ? [...salaryRangesParam, value]
+        : salaryRangesParam.filter((range) => range !== value);
+      
+      // Remove parameter from URL if empty
+      setSalaryRangesParam(newRanges.length ? newRanges : null);
+      onFilterChange("salary", newRanges);
+    },
+    [salaryRangesParam, setSalaryRangesParam, onFilterChange]
+  );
+  
+  // Sync URL state with component state for languages
+  const handleLanguageChange = useCallback(
+    (checked: boolean, value: LanguageCode) => {
+      const newLanguages = checked
+        ? [...languagesParam, value]
+        : languagesParam.filter((lang) => lang !== value);
+      
+      // Remove parameter from URL if empty
+      setLanguagesParam(newLanguages.length ? newLanguages : null);
+      onFilterChange("language", newLanguages);
+    },
+    [languagesParam, setLanguagesParam, onFilterChange]
+  );
+  
+  // Sync URL state with component state for boolean filters
+  const handleRemoteChange = useCallback(
+    (checked: boolean) => {
+      setRemoteParam(checked || null);
+      onFilterChange("remote", checked);
+    },
+    [setRemoteParam, onFilterChange]
+  );
+  
+  const handleVisaChange = useCallback(
+    (checked: boolean) => {
+      setVisaParam(checked || null);
+      onFilterChange("visa", checked);
+    },
+    [setVisaParam, onFilterChange]
+  );
+  
+  // Reset functions for all filters
   const resetTypes = useCallback(() => {
     setTypesParam(null);
     onFilterChange("type", []);
   }, [setTypesParam, onFilterChange]);
   
-  // Use generic array filter hooks for other filters
-  const [selectedLevels, handleLevelChange, resetLevels] = useArrayFilter(
-    initialFilters.roles,
-    "role",
-    onFilterChange
-  );
-  const [selectedSalaryRanges, handleSalaryChange, resetSalary] =
-    useArrayFilter(initialFilters.salaryRanges, "salary", onFilterChange);
-  const [selectedLanguages, handleLanguageChange, resetLanguages] =
-    useArrayFilter(initialFilters.languages, "language", onFilterChange);
-
-  // Use generic boolean filter hooks
-  const [isRemoteOnly, handleRemoteChange, resetRemote] = useBooleanFilter(
-    initialFilters.remote,
-    "remote",
-    onFilterChange
-  );
-  const [isVisaSponsorship, handleVisaChange, resetVisa] = useBooleanFilter(
-    initialFilters.visa,
-    "visa",
-    onFilterChange
-  );
-
+  const resetLevels = useCallback(() => {
+    setRolesParam(null);
+    onFilterChange("role", []);
+  }, [setRolesParam, onFilterChange]);
+  
+  const resetSalary = useCallback(() => {
+    setSalaryRangesParam(null);
+    onFilterChange("salary", []);
+  }, [setSalaryRangesParam, onFilterChange]);
+  
+  const resetLanguages = useCallback(() => {
+    setLanguagesParam(null);
+    onFilterChange("language", []);
+  }, [setLanguagesParam, onFilterChange]);
+  
+  const resetRemote = useCallback(() => {
+    setRemoteParam(null);
+    onFilterChange("remote", false);
+  }, [setRemoteParam, onFilterChange]);
+  
+  const resetVisa = useCallback(() => {
+    setVisaParam(null);
+    onFilterChange("visa", false);
+  }, [setVisaParam, onFilterChange]);
+  
   // Toggle states for expandable sections
   const [showAllLevels, setShowAllLevels] = useState(false);
   const [showAllLanguages, setShowAllLanguages] = useState(false);
@@ -328,32 +457,16 @@ export function JobFilters({
         <h2 className="text-md font-semibold">Career Level</h2>
         <div className="space-y-3">
           {visibleLevels.map((level) => (
-            <div key={level} className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id={level.toLowerCase().replace(" ", "-")}
-                  checked={selectedLevels.includes(level)}
-                  onCheckedChange={(checked: boolean) =>
-                    handleLevelChange(checked, level)
-                  }
-                />
-                <Label
-                  htmlFor={level.toLowerCase().replace(" ", "-")}
-                  className="text-sm font-normal"
-                >
-                  {CAREER_LEVEL_DISPLAY_NAMES[level]}
-                </Label>
-              </div>
-              <span
-                className={`text-xs px-2 py-0.5 rounded-full ${
-                  selectedLevels.includes(level)
-                    ? "bg-zinc-900 text-zinc-50"
-                    : "bg-zinc-100 text-zinc-500"
-                }`}
-              >
-                {(counts.roles[level] || 0).toLocaleString()}
-              </span>
-            </div>
+            <FilterItem
+              key={level}
+              id={level.toLowerCase().replace(" ", "-")}
+              label={CAREER_LEVEL_DISPLAY_NAMES[level]}
+              count={counts.roles[level] || 0}
+              checked={rolesParam.includes(level)}
+              onCheckedChange={(checked) =>
+                handleLevelChange(checked, level)
+              }
+            />
           ))}
         </div>
         <button
@@ -367,30 +480,13 @@ export function JobFilters({
       {/* Remote Only */}
       <div className="space-y-4">
         <h2 className="text-md font-semibold">Remote Only</h2>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="remote-only"
-              checked={isRemoteOnly}
-              onCheckedChange={handleRemoteChange}
-            />
-            <Label
-              htmlFor="remote-only"
-              className="text-sm font-normal text-gray-500"
-            >
-              {isRemoteOnly ? "Yes" : "No"}
-            </Label>
-          </div>
-          <span
-            className={`text-xs px-2 py-0.5 rounded-full ${
-              isRemoteOnly
-                ? "bg-zinc-900 text-zinc-50"
-                : "bg-zinc-100 text-zinc-500"
-            }`}
-          >
-            {counts.remote.toLocaleString()} of {jobs.length.toLocaleString()}
-          </span>
-        </div>
+        <SwitchItem
+          id="remote-only"
+          checked={remoteParam}
+          onCheckedChange={handleRemoteChange}
+          count={counts.remote}
+          total={jobs.length}
+        />
       </div>
 
       {/* Salary Range */}
@@ -398,34 +494,16 @@ export function JobFilters({
         <h2 className="text-md font-semibold">Salary Range</h2>
         <div className="space-y-3">
           {Object.entries(counts.salary).map(([range, count]) => (
-            <div key={range} className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id={`salary-${range.toLowerCase().replace(/[\s\$>]/g, "-")}`}
-                  checked={selectedSalaryRanges.includes(range)}
-                  onCheckedChange={(checked: boolean) =>
-                    handleSalaryChange(checked, range)
-                  }
-                />
-                <Label
-                  htmlFor={`salary-${range
-                    .toLowerCase()
-                    .replace(/[\s\$>]/g, "-")}`}
-                  className="text-sm font-normal"
-                >
-                  {range}/year
-                </Label>
-              </div>
-              <span
-                className={`text-xs px-2 py-0.5 rounded-full ${
-                  selectedSalaryRanges.includes(range)
-                    ? "bg-zinc-900 text-zinc-50"
-                    : "bg-zinc-100 text-zinc-500"
-                }`}
-              >
-                {count.toLocaleString()}
-              </span>
-            </div>
+            <FilterItem
+              key={range}
+              id={`salary-${range.toLowerCase().replace(/[\s\$>]/g, "-")}`}
+              label={`${range}/year`}
+              count={count}
+              checked={salaryRangesParam.includes(range)}
+              onCheckedChange={(checked) =>
+                handleSalaryChange(checked, range)
+              }
+            />
           ))}
         </div>
       </div>
@@ -433,30 +511,12 @@ export function JobFilters({
       {/* Visa Sponsorship */}
       <div className="space-y-4">
         <h2 className="text-md font-semibold">Visa Sponsorship</h2>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="visa-sponsorship"
-              checked={isVisaSponsorship}
-              onCheckedChange={handleVisaChange}
-            />
-            <Label
-              htmlFor="visa-sponsorship"
-              className="text-sm font-normal text-gray-500"
-            >
-              {isVisaSponsorship ? "Yes" : "No"}
-            </Label>
-          </div>
-          <span
-            className={`text-xs px-2 py-0.5 rounded-full ${
-              isVisaSponsorship
-                ? "bg-zinc-900 text-zinc-50"
-                : "bg-zinc-100 text-zinc-500"
-            }`}
-          >
-            {(counts.visa || 0).toLocaleString()}
-          </span>
-        </div>
+        <SwitchItem
+          id="visa-sponsorship"
+          checked={visaParam}
+          onCheckedChange={handleVisaChange}
+          count={counts.visa || 0}
+        />
       </div>
 
       {/* Languages */}
@@ -464,32 +524,16 @@ export function JobFilters({
         <h2 className="text-md font-semibold">Languages</h2>
         <div className="space-y-3">
           {languageEntries.visible.map(([lang, count]) => (
-            <div key={lang} className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id={`lang-${lang.toLowerCase()}`}
-                  checked={selectedLanguages.includes(lang as LanguageCode)}
-                  onCheckedChange={(checked: boolean) =>
-                    handleLanguageChange(checked, lang as LanguageCode)
-                  }
-                />
-                <Label
-                  htmlFor={`lang-${lang.toLowerCase()}`}
-                  className="text-sm font-normal"
-                >
-                  {getDisplayNameFromCode(lang as LanguageCode)}
-                </Label>
-              </div>
-              <span
-                className={`text-xs px-2 py-0.5 rounded-full ${
-                  selectedLanguages.includes(lang as LanguageCode)
-                    ? "bg-zinc-900 text-zinc-50"
-                    : "bg-zinc-100 text-zinc-500"
-                }`}
-              >
-                {count.toLocaleString()}
-              </span>
-            </div>
+            <FilterItem
+              key={lang}
+              id={`lang-${lang.toLowerCase()}`}
+              label={getDisplayNameFromCode(lang as LanguageCode)}
+              count={count}
+              checked={languagesParam.includes(lang)}
+              onCheckedChange={(checked) =>
+                handleLanguageChange(checked, lang as LanguageCode)
+              }
+            />
           ))}
         </div>
         {languageEntries.additional.length > 0 && (
@@ -497,12 +541,16 @@ export function JobFilters({
             onClick={() => setShowAllLanguages(!showAllLanguages)}
             className="text-sm underline underline-offset-4 text-zinc-900 hover:text-zinc-700 transition-colors"
           >
-            {showAllLanguages ? "Show fewer languages" : "Show more languages"}
+            {showAllLanguages
+              ? "Show fewer languages"
+              : `Show ${
+                  languageEntries.additional.length
+                } more language${
+                  languageEntries.additional.length > 1 ? "s" : ""
+                }`}
           </button>
         )}
       </div>
     </div>
   );
 }
-
-// Test
