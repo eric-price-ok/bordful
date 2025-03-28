@@ -8,6 +8,8 @@ import {
   LanguageCode,
   getDisplayNameFromCode,
 } from "@/lib/constants/languages";
+import { JOB_TYPE_DISPLAY_NAMES, JobType } from "@/lib/constants/job-types";
+import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 
 type FilterType =
   | "type"
@@ -83,17 +85,72 @@ function useBooleanFilter(
   return [value, handleChange, reset] as const;
 }
 
+// Filter Item component to make UI more DRY
+interface FilterItemProps {
+  id: string;
+  label: string;
+  count: number;
+  checked: boolean;
+  onCheckedChange: (checked: boolean) => void;
+}
+
+function FilterItem({ id, label, count, checked, onCheckedChange }: FilterItemProps) {
+  return (
+    <div className="flex items-center justify-between">
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={id}
+          checked={checked}
+          onCheckedChange={onCheckedChange}
+        />
+        <Label htmlFor={id} className="text-sm font-normal">
+          {label}
+        </Label>
+      </div>
+      <span
+        className={`text-xs px-2 py-0.5 rounded-full ${
+          checked
+            ? "bg-zinc-900 text-zinc-50"
+            : "bg-zinc-100 text-zinc-500"
+        }`}
+      >
+        {count.toLocaleString()}
+      </span>
+    </div>
+  );
+}
+
 export function JobFilters({
   onFilterChange,
   initialFilters,
   jobs,
 }: JobFiltersProps) {
-  // Use generic array filter hooks
-  const [selectedTypes, handleTypeChange, resetTypes] = useArrayFilter(
-    initialFilters.types,
-    "type",
-    onFilterChange
+  // URL state for job types filter using nuqs
+  const [typesParam, setTypesParam] = useQueryState(
+    "types",
+    parseAsArrayOf(parseAsString).withDefault([])
   );
+  
+  // Sync URL state with component state
+  const handleTypeChange = useCallback(
+    (checked: boolean, value: string) => {
+      const newTypes = checked
+        ? [...typesParam, value]
+        : typesParam.filter((type) => type !== value);
+      
+      // Remove parameter from URL if empty
+      setTypesParam(newTypes.length ? newTypes : null);
+      onFilterChange("type", newTypes);
+    },
+    [typesParam, setTypesParam, onFilterChange]
+  );
+  
+  const resetTypes = useCallback(() => {
+    setTypesParam(null);
+    onFilterChange("type", []);
+  }, [setTypesParam, onFilterChange]);
+  
+  // Use generic array filter hooks for other filters
   const [selectedLevels, handleLevelChange, resetLevels] = useArrayFilter(
     initialFilters.roles,
     "role",
@@ -250,98 +307,19 @@ export function JobFilters({
       <div className="space-y-4">
         <h2 className="text-md font-semibold">Job Type</h2>
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="full-time"
-                checked={selectedTypes.includes("Full-time")}
-                onCheckedChange={(checked: boolean) =>
-                  handleTypeChange(checked, "Full-time")
-                }
-              />
-              <Label htmlFor="full-time" className="text-sm font-normal">
-                Full-time
-              </Label>
-            </div>
-            <span
-              className={`text-xs px-2 py-0.5 rounded-full ${
-                selectedTypes.includes("Full-time")
-                  ? "bg-zinc-900 text-zinc-50"
-                  : "bg-zinc-100 text-zinc-500"
-              }`}
-            >
-              {(counts.types["Full-time"] || 0).toLocaleString()}
-            </span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="part-time"
-                checked={selectedTypes.includes("Part-time")}
-                onCheckedChange={(checked: boolean) =>
-                  handleTypeChange(checked, "Part-time")
-                }
-              />
-              <Label htmlFor="part-time" className="text-sm font-normal">
-                Part-time
-              </Label>
-            </div>
-            <span
-              className={`text-xs px-2 py-0.5 rounded-full ${
-                selectedTypes.includes("Part-time")
-                  ? "bg-zinc-900 text-zinc-50"
-                  : "bg-zinc-100 text-zinc-500"
-              }`}
-            >
-              {(counts.types["Part-time"] || 0).toLocaleString()}
-            </span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="contract"
-                checked={selectedTypes.includes("Contract")}
-                onCheckedChange={(checked: boolean) =>
-                  handleTypeChange(checked, "Contract")
-                }
-              />
-              <Label htmlFor="contract" className="text-sm font-normal">
-                Contract
-              </Label>
-            </div>
-            <span
-              className={`text-xs px-2 py-0.5 rounded-full ${
-                selectedTypes.includes("Contract")
-                  ? "bg-zinc-900 text-zinc-50"
-                  : "bg-zinc-100 text-zinc-500"
-              }`}
-            >
-              {(counts.types["Contract"] || 0).toLocaleString()}
-            </span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="freelance"
-                checked={selectedTypes.includes("Freelance")}
-                onCheckedChange={(checked: boolean) =>
-                  handleTypeChange(checked, "Freelance")
-                }
-              />
-              <Label htmlFor="freelance" className="text-sm font-normal">
-                Freelance
-              </Label>
-            </div>
-            <span
-              className={`text-xs px-2 py-0.5 rounded-full ${
-                selectedTypes.includes("Freelance")
-                  ? "bg-zinc-900 text-zinc-50"
-                  : "bg-zinc-100 text-zinc-500"
-              }`}
-            >
-              {(counts.types["Freelance"] || 0).toLocaleString()}
-            </span>
-          </div>
+          {/* Map over job types from constants instead of hardcoding */}
+          {Object.entries(JOB_TYPE_DISPLAY_NAMES).map(([type, displayName]) => (
+            <FilterItem
+              key={type}
+              id={`job-type-${type}`}
+              label={displayName}
+              count={counts.types[type as JobType] || 0}
+              checked={typesParam.includes(type)}
+              onCheckedChange={(checked) =>
+                handleTypeChange(checked, type)
+              }
+            />
+          ))}
         </div>
       </div>
 

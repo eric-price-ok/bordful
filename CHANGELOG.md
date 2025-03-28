@@ -27,6 +27,14 @@ All notable changes to this project will be documented in this file.
   - Maintained accessibility with proper ARIA attributes
   - Added loading state for better user experience
   - Reduced code duplication and improved maintainability
+- Refactored Job Type filters with improved DRY principles:
+  - Created reusable `FilterItem` component to eliminate duplicate markup
+  - Implemented URL-based state management with nuqs for shareable filters
+  - Utilized constants from lib/constants instead of hardcoded values
+  - Enhanced code maintainability with Object.entries() pattern
+  - Improved user experience with persistent filter selections across page reloads
+  - Added browser history support for back/forward navigation with filters
+  - Aligned filter state management with existing pagination and sorting patterns
 
 ## [0.0.98] - 2025-03-25
 
