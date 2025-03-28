@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { CareerLevel, Job, normalizeAnnualSalary } from "@/lib/db/airtable";
 import { CAREER_LEVEL_DISPLAY_NAMES } from "@/lib/constants/career-levels";
 import {
@@ -32,57 +32,6 @@ interface JobFiltersProps {
     languages: LanguageCode[];
   };
   jobs: Job[];
-}
-
-// Generic handler for array-based filters
-function useArrayFilter<T>(
-  initialValue: T[],
-  filterType: FilterType,
-  onFilterChange: (type: FilterType, value: T[]) => void
-) {
-  const [selected, setSelected] = useState<T[]>(initialValue);
-
-  const handleChange = useCallback(
-    (checked: boolean, value: T) => {
-      const newArray = checked
-        ? [...selected, value]
-        : selected.filter((item) => item !== value);
-      setSelected(newArray);
-      onFilterChange(filterType, newArray);
-    },
-    [filterType, onFilterChange, selected]
-  );
-
-  // Reset function
-  const reset = useCallback(() => {
-    setSelected([]);
-  }, []);
-
-  return [selected, handleChange, reset] as const;
-}
-
-// Generic handler for boolean filters
-function useBooleanFilter(
-  initialValue: boolean,
-  filterType: FilterType,
-  onFilterChange: (type: FilterType, value: boolean) => void
-) {
-  const [value, setValue] = useState(initialValue);
-
-  const handleChange = useCallback(
-    (checked: boolean) => {
-      setValue(checked);
-      onFilterChange(filterType, checked);
-    },
-    [filterType, onFilterChange]
-  );
-
-  // Reset function
-  const reset = useCallback(() => {
-    setValue(false);
-  }, []);
-
-  return [value, handleChange, reset] as const;
 }
 
 // Filter Item component to make UI more DRY
@@ -197,6 +146,48 @@ export function JobFilters({
     "visa",
     parseAsBoolean.withDefault(false)
   );
+  
+  // Initialize URL state with initialFilters when there are no URL params
+  useEffect(() => {
+    // Only set initial values if URL params are empty
+    if (typesParam.length === 0 && initialFilters.types.length > 0) {
+      setTypesParam(initialFilters.types);
+    }
+    
+    if (rolesParam.length === 0 && initialFilters.roles.length > 0) {
+      setRolesParam(initialFilters.roles);
+    }
+    
+    if (salaryRangesParam.length === 0 && initialFilters.salaryRanges.length > 0) {
+      setSalaryRangesParam(initialFilters.salaryRanges);
+    }
+    
+    if (languagesParam.length === 0 && initialFilters.languages.length > 0) {
+      setLanguagesParam(initialFilters.languages);
+    }
+    
+    if (!remoteParam && initialFilters.remote) {
+      setRemoteParam(initialFilters.remote);
+    }
+    
+    if (!visaParam && initialFilters.visa) {
+      setVisaParam(initialFilters.visa);
+    }
+  }, [
+    initialFilters,
+    typesParam.length,
+    rolesParam.length,
+    salaryRangesParam.length,
+    languagesParam.length,
+    remoteParam,
+    visaParam,
+    setTypesParam,
+    setRolesParam,
+    setSalaryRangesParam,
+    setLanguagesParam,
+    setRemoteParam,
+    setVisaParam,
+  ]);
   
   // Sync URL state with component state for job types
   const handleTypeChange = useCallback(
