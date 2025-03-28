@@ -15,6 +15,16 @@ All notable changes to this project will be documented in this file.
   - Maintained accessibility with proper ARIA attributes
   - Added loading state to prevent multiple rapid selections
   - Added error handling for invalid values
+- Refactored pagination with nuqs integration:
+  - Created reusable `PaginationControl` component for consistent UI
+  - Implemented type-safe `usePagination` hook using nuqs
+  - Removed duplicate pagination logic from HomePage and JobsLayout
+  - Improved URL parameter handling with proper defaults
+  - Enhanced type safety with TypeScript interfaces
+  - Optimized performance with efficient URL updates
+  - Maintained accessibility with proper ARIA attributes
+  - Added loading state for better user experience
+  - Reduced code duplication and improved maintainability
 
 ## [0.0.98] - 2025-03-25
 

@@ -7,15 +7,6 @@ import { normalizeAnnualSalary } from "@/lib/db/airtable";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { formatDistanceToNow, isToday } from "date-fns";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 import { JobFilters } from "@/components/ui/job-filters";
 import { PostJobBanner } from "@/components/ui/post-job-banner";
@@ -25,6 +16,8 @@ import { LanguageCode } from "@/lib/constants/languages";
 import { JobsPerPageSelect } from "@/components/ui/jobs-per-page-select";
 import { SortOrderSelect } from "@/components/ui/sort-order-select";
 import { useSortOrder } from "@/lib/hooks/useSortOrder";
+import { usePagination } from "@/lib/hooks/usePagination";
+import { PaginationControl } from "@/components/ui/pagination-control";
 
 type Filters = {
   types: string[];
@@ -50,6 +43,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
   const searchParams = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const { sortOrder } = useSortOrder();
+  const { page } = usePagination();
   const [isFiltering, setIsFiltering] = useState(false);
 
   // Parse initial filters from URL
@@ -77,8 +71,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
     string | null
   > | null>(null);
 
-  // Get current page and jobs per page from URL or defaults
-  const currentPage = parseInt(searchParams.get("page") || "1", 10);
+  // Get jobs per page from URL or default
   const jobsPerPage = parseInt(searchParams.get("per_page") || "10", 10);
 
   // Update URL with new parameters
@@ -367,8 +360,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
   }, [filteredJobs, sortOrder]);
 
   // Calculate pagination
-  const totalPages = Math.ceil(sortedJobs.length / jobsPerPage);
-  const startIndex = (currentPage - 1) * jobsPerPage;
+  const startIndex = (page - 1) * jobsPerPage;
   const paginatedJobs = sortedJobs.slice(startIndex, startIndex + jobsPerPage);
 
   // Get the most recent job's posted date
@@ -387,47 +379,6 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
     return initialJobs.filter((job) => isToday(new Date(job.posted_date)))
       .length;
   }, [initialJobs]);
-
-  // Ensure current page is valid
-  useEffect(() => {
-    if (currentPage < 1) {
-      updateParams({ page: null });
-    } else if (totalPages > 0 && currentPage > totalPages) {
-      updateParams({ page: totalPages.toString() });
-    }
-  }, [currentPage, totalPages, updateParams]);
-
-  // Optimize pagination range calculation
-  const getPaginationRange = useCallback((current: number, total: number) => {
-    const delta = 2;
-    const range = [];
-    const rangeWithDots = [];
-    let l;
-
-    for (let i = 1; i <= total; i++) {
-      if (
-        i === 1 ||
-        i === total ||
-        (i >= current - delta && i <= current + delta)
-      ) {
-        range.push(i);
-      }
-    }
-
-    for (const i of range) {
-      if (l) {
-        if (i - l === 2) {
-          rangeWithDots.push(l + 1);
-        } else if (i - l !== 1) {
-          rangeWithDots.push("...");
-        }
-      }
-      rangeWithDots.push(i);
-      l = i;
-    }
-
-    return rangeWithDots;
-  }, []);
 
   return (
     <main className="min-h-screen bg-background">
@@ -524,9 +475,9 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
               <div className="space-y-1 w-full sm:w-auto">
                 <h2 className="text-xl font-semibold tracking-tight flex items-center gap-2 flex-wrap">
                   Latest Opportunities
-                  {currentPage > 1 && (
+                  {page > 1 && (
                     <span className="text-gray-500 font-normal">
-                      Page {currentPage}
+                      Page {page}
                     </span>
                   )}
                 </h2>
@@ -563,84 +514,10 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
 
             {/* Pagination with optimized range */}
             {sortedJobs.length > jobsPerPage && (
-              <div className="mt-8 flex justify-center sm:justify-start">
-                <Pagination>
-                  <PaginationContent className="flex gap-2">
-                    <PaginationItem>
-                      <PaginationPrevious
-                        href={
-                          currentPage > 1 ? `/?page=${currentPage - 1}` : "#"
-                        }
-                        onClick={(e) => {
-                          e.preventDefault();
-                          if (currentPage > 1) {
-                            setIsFiltering(true);
-                            updateParams({
-                              page: (currentPage - 1).toString(),
-                            });
-                            setTimeout(() => setIsFiltering(false), 300);
-                          }
-                        }}
-                        className={`hover:bg-gray-100 transition-colors ${
-                          currentPage === 1
-                            ? "pointer-events-none opacity-50"
-                            : ""
-                        }`}
-                      />
-                    </PaginationItem>
-
-                    {getPaginationRange(currentPage, totalPages).map(
-                      (pageNum, idx) =>
-                        pageNum === "..." ? (
-                          <PaginationItem key={`ellipsis-${idx}`}>
-                            <PaginationEllipsis />
-                          </PaginationItem>
-                        ) : (
-                          <PaginationItem key={pageNum}>
-                            <PaginationLink
-                              href={`/?page=${pageNum}`}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setIsFiltering(true);
-                                updateParams({ page: pageNum.toString() });
-                                setTimeout(() => setIsFiltering(false), 300);
-                              }}
-                              isActive={currentPage === pageNum}
-                              className="hover:bg-gray-100 transition-colors"
-                            >
-                              {pageNum}
-                            </PaginationLink>
-                          </PaginationItem>
-                        )
-                    )}
-
-                    <PaginationItem>
-                      <PaginationNext
-                        href={
-                          currentPage < totalPages
-                            ? `/?page=${currentPage + 1}`
-                            : "#"
-                        }
-                        onClick={(e) => {
-                          e.preventDefault();
-                          if (currentPage < totalPages) {
-                            setIsFiltering(true);
-                            updateParams({
-                              page: (currentPage + 1).toString(),
-                            });
-                            setTimeout(() => setIsFiltering(false), 300);
-                          }
-                        }}
-                        className={`hover:bg-gray-100 transition-colors ${
-                          currentPage === totalPages
-                            ? "pointer-events-none opacity-50"
-                            : ""
-                        }`}
-                      />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
-              </div>
+              <PaginationControl
+                totalItems={sortedJobs.length}
+                itemsPerPage={jobsPerPage}
+              />
             )}
           </div>
 
