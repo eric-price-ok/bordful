@@ -6,13 +6,6 @@ import { PostJobBanner } from "@/components/ui/post-job-banner";
 import { useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Pagination,
   PaginationContent,
   PaginationEllipsis,

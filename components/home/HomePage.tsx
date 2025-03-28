@@ -17,13 +17,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { JobFilters } from "@/components/ui/job-filters";
 import { PostJobBanner } from "@/components/ui/post-job-banner";
 import { HeroSection } from "@/components/ui/hero-section";
@@ -31,7 +24,7 @@ import config from "@/config";
 import { LanguageCode } from "@/lib/constants/languages";
 import { JobsPerPageSelect } from "@/components/ui/jobs-per-page-select";
 import { SortOrderSelect } from "@/components/ui/sort-order-select";
-import { useSortOrder, SortOption } from "@/lib/hooks/useSortOrder";
+import { useSortOrder } from "@/lib/hooks/useSortOrder";
 
 type Filters = {
   types: string[];
@@ -129,17 +122,6 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
       };
 
       updateParams(updates);
-    },
-    [updateParams]
-  );
-
-  // Handle sort change
-  const handleSortChange = useCallback(
-    (value: SortOption) => {
-      updateParams({
-        sort: value === "newest" ? null : value,
-        page: "1", // Reset to first page when changing sort
-      });
     },
     [updateParams]
   );
