@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+<!-- Version format: [MAJOR.MINOR.PATCH] - MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes -->
+
 ## [0.0.99] - 2025-03-28
 
 ### Changed
