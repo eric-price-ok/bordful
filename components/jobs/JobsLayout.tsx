@@ -206,7 +206,7 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
                 visa: false,
                 languages: [],
               }}
-              jobs={allJobs}
+              jobs={filteredJobs}
             />
             <PostJobBanner />
           </div>
