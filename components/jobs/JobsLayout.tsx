@@ -16,10 +16,11 @@ import { LanguageCode } from "@/lib/constants/languages";
 import { JobType } from "@/lib/constants/job-types";
 
 interface JobsLayoutProps {
-  allJobs: Job[];
+  allJobs: Job[]; // Keep for backward compatibility with existing page components
   filteredJobs: Job[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
   const searchParams = useSearchParams();
   const { sortOrder } = useSortOrder();
