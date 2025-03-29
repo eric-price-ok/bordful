@@ -139,7 +139,7 @@ export default async function CareerLevelsPage() {
 
           {/* Mid Level Section */}
           {midLevels.length > 0 && (
-            <section>
+            <section className="mt-10">
               <div className="flex items-center gap-2 mb-4">
                 <GraduationCap
                   className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"
@@ -164,7 +164,7 @@ export default async function CareerLevelsPage() {
 
           {/* Leadership Section */}
           {leadershipLevels.length > 0 && (
-            <section>
+            <section className="mt-10">
               <div className="flex items-center gap-2 mb-4">
                 <GraduationCap
                   className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"
