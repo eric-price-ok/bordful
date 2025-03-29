@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 <!-- Version format: [MAJOR.MINOR.PATCH] - MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes -->
 
+## [0.1.0] - 2025-03-29
+
+### Changed
+- Improved contextual filtering on job subpages:
+  - Fixed filter counts to accurately reflect the current filtered context
+  - Ensured subpage filters (location, type, etc.) show correct counts for the specific subset of jobs
+  - Modified JobsLayout to pass the already-filtered jobs to filter components
+  - Enhanced user experience with more accurate filter representation
+- Refactored navigation component with DRY principles:
+  - Created reusable NavLink, SocialLink, and DropdownItem components
+  - Improved dropdown menu hover behavior with 300ms close delay
+  - Fixed "Jobs" dropdown disappearing issue with better hover detection
+  - Enhanced TypeScript support with proper interfaces and types
+  - Reduced code duplication with centralized rendering functions
+  - Improved maintenance by centralizing styling and active link detection
+  - Maintained full compatibility with configuration system
+
 ## [0.0.99] - 2025-03-28
 
 ### Changed
