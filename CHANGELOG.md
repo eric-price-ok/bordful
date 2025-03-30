@@ -2,42 +2,40 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- Version format: [MAJOR.MINOR.PATCH] - MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes -->
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.4] - 2025-03-30
-
-### Added
-- Made dropdown labels fully configurable:
-  - Added configuration options for "Jobs per page" and "Sort by" labels
-  - Implemented show/hide toggles for each label
-  - Added customizable label text for internationalization
-  - Optimized dropdown widths based on label visibility
-  - Enhanced dropdown appearance when labels are hidden
-  - Made homepage 100% configurable via config file
 
 ## [0.1.3] - 2025-03-30
 
+### Added
+- Enhanced About page configurability:
+  - Added configurable badge text for the About page hero section
+  - Introduced structured data schema customization options
+  - Added configurable Contact Us section with show/hide toggle
+  - Full customization of About page content sections
+
 ### Changed
-- Enhanced dropdown components for better user experience:
-  - Added descriptive labels for JobsPerPageSelect and SortOrderSelect components
-  - Maintained original styling of select elements for visual consistency
-  - Improved accessibility with proper label associations
-  - Optimized dropdown widths for better space utilization
-  - Preserved configuration capabilities with enhanced UI patterns
+- Improved white-label compatibility:
+  - Removed hardcoded "Bordful" references from schema components
+  - Enhanced schema implementation for better customization
+  - Updated logo references to use navigation configuration
+  - Improved DRY principles in schema implementation
+  - Made logo property optional in schema with conditional rendering
+  - Eliminated hardcoded logo paths for better customization
 
 ## [0.1.2] - 2025-03-30
-
-### Added
-- Enhanced configuration options with centralized controls:
-  - Added search configuration with customizable placeholder, debounce time, and accessibility labels
-  - Added job listings configuration with customizable page titles, items per page, and sort options
-  - Added quick stats configuration with customizable sections for open jobs, last updated, and trending
-  - Made search functionality optional on job subpages
-  - Improved sort and pagination with config-driven defaults
-  - Enhanced components to use configuration values with proper fallbacks
-  - Made all homepage elements fully configurable via config file
+### Fixed
+- Fixed schema.org implementation to properly handle missing configuration
+- Enhanced About page rendering with dynamic fallbacks
 
 ## [0.1.1] - 2025-03-30
+### Added
+- Enhanced About page configurability:
+  - Added configurable badge text for the About page hero section
+  - Introduced structured data schema customization options
+  - Added configurable Contact Us section with show/hide toggle
+  - Full customization of About page content sections
 
 ### Changed
 - Refactored search functionality with DRY principles:

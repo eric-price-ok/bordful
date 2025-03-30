@@ -8,12 +8,16 @@ interface AboutSchemaProps {
   companyName?: string;
   description?: string;
   url?: string;
+  logo?: string;
 }
 
 export const AboutSchema: FC<AboutSchemaProps> = ({
   companyName = config.title,
   description = "Learn about our mission to connect talented professionals with exciting career opportunities.",
   url = `${config.url}/about` || "https://example.com/about",
+  logo = config.nav?.logo?.enabled
+    ? `${config.url}${config.nav.logo.src}`
+    : undefined,
 }) => {
   // Create type-safe schema using schema-dts
   const aboutSchema: WithContext<AboutPage> = {
@@ -26,7 +30,7 @@ export const AboutSchema: FC<AboutSchemaProps> = ({
       name: companyName,
       description: description,
       url: config.url,
-      logo: `${config.url}/bordful.svg`,
+      ...(logo && { logo }),
     },
     url: url,
   };

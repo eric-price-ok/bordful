@@ -58,11 +58,22 @@ export default function AboutPage() {
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Add AboutPage Schema */}
-      <AboutSchema />
+      {/* Add AboutPage Schema from config */}
+      <AboutSchema
+        companyName={config.about.schema?.companyName || config.title}
+        description={
+          config.about.schema?.description || config.about.description
+        }
+        logo={
+          config.about.schema?.logo ||
+          (config.nav?.logo?.enabled
+            ? `${config.url}${config.nav.logo.src}`
+            : undefined)
+        }
+      />
 
       <HeroSection
-        badge="About Us"
+        badge={config.about.badge || "About Us"}
         title={config.about.title}
         description={config.about.description}
       />
@@ -94,6 +105,22 @@ export default function AboutPage() {
                 {config.about.team ||
                   "Our diverse team brings together expertise from recruitment, technology, and design to create an innovative job board solution that puts user experience first."}
               </p>
+
+              {/* Contact Us Section - Conditionally rendered based on config */}
+              {config.about.contact?.show && (
+                <>
+                  <h2>Get in Touch</h2>
+                  <p>
+                    Have questions or want to learn more about our services?
+                    We'd love to hear from you.
+                  </p>
+                  <div className="mt-4">
+                    <Link href={config.about.contact.url}>
+                      <Button>{config.about.contact.label}</Button>
+                    </Link>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
