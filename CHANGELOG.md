@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.8] - 2025-03-30
+
+### Changed
+- Enhanced job page UI consistency:
+  - Fixed styling inconsistencies on the `/jobs` page to match other job pages
+  - Standardized spacing and layout in the `/jobs/locations` page
+  - Moved search fields to the hero section on all job detail pages for consistency with homepage
+  - Added "use client" directive to JobSearchInput component
+  - Improved breadcrumb and hero section alignment across all job pages
+  - Implemented 3-column grid layout consistently on all category pages
+
 ## [0.1.7] - 2025-03-30
 
 ### Added

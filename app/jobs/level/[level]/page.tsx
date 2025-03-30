@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { JobsLayout } from "@/components/jobs/JobsLayout";
 import { CAREER_LEVEL_DISPLAY_NAMES } from "@/lib/constants/career-levels";
 import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
+import { JobSearchInput } from "@/components/ui/job-search-input";
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;
@@ -77,7 +78,14 @@ export default async function CareerLevelPage({ params }: Props) {
         description={`Browse ${filteredJobs.length.toLocaleString()} ${
           filteredJobs.length === 1 ? "position" : "positions"
         } for ${displayName.toLowerCase()} roles. Find opportunities that match your career stage.`}
-      />
+      >
+        {/* Search Bar */}
+        <div className="max-w-[480px]">
+          <JobSearchInput
+            placeholder={`Search ${displayName.toLowerCase()} jobs...`}
+          />
+        </div>
+      </HeroSection>
       <JobsLayout allJobs={jobs} filteredJobs={filteredJobs} />
     </>
   );

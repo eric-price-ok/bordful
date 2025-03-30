@@ -10,6 +10,7 @@ import {
   getDisplayNameFromCode,
 } from "@/lib/constants/languages";
 import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
+import { JobSearchInput } from "@/components/ui/job-search-input";
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;
@@ -71,7 +72,12 @@ export default async function LanguagePage({ params }: Props) {
         description={`Browse ${filteredJobs.length.toLocaleString()} ${
           filteredJobs.length === 1 ? "position" : "positions"
         } requiring ${displayName} language skills. Find the perfect role that matches your language abilities.`}
-      />
+      >
+        {/* Search Bar */}
+        <div className="max-w-[480px]">
+          <JobSearchInput placeholder={`Search ${displayName} jobs...`} />
+        </div>
+      </HeroSection>
       <JobsLayout allJobs={jobs} filteredJobs={filteredJobs} />
     </>
   );

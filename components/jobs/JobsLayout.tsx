@@ -195,12 +195,12 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
             <ClientBreadcrumb />
           </div>
 
-          {/* Search - conditionally show based on config */}
-          {(config.search?.showOnAllPages ?? true) && (
+          {/* Search - Remove since it's now in hero section */}
+          {/* {(config.search?.showOnAllPages ?? true) && (
             <div className="w-full max-w-[480px] mb-2">
               <JobSearchInput placeholder="Search jobs..." />
             </div>
-          )}
+          )} */}
 
           {/* Controls */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-4 sm:gap-0">

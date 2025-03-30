@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "@/components/ui/input";
 import { useJobSearch } from "@/lib/hooks/useJobSearch";
 import { Search, X } from "lucide-react";

@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { JobsLayout } from "@/components/jobs/JobsLayout";
 import { getCountryFromSlug } from "@/lib/constants/locations";
+import { JobSearchInput } from "@/components/ui/job-search-input";
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;
@@ -62,7 +63,12 @@ export default async function JobLocationPage({ params }: Props) {
           description={`Browse ${filteredJobs.length.toLocaleString()} remote ${
             filteredJobs.length === 1 ? "position" : "positions"
           }. Work from anywhere with these flexible opportunities.`}
-        />
+        >
+          {/* Search Bar */}
+          <div className="max-w-[480px]">
+            <JobSearchInput placeholder="Search remote jobs..." />
+          </div>
+        </HeroSection>
         <JobsLayout allJobs={jobs} filteredJobs={filteredJobs} />
       </>
     );
@@ -86,7 +92,12 @@ export default async function JobLocationPage({ params }: Props) {
         description={`Browse ${filteredJobs.length.toLocaleString()} ${
           filteredJobs.length === 1 ? "position" : "positions"
         } in ${countryName}. Find the perfect role that matches your location preferences.`}
-      />
+      >
+        {/* Search Bar */}
+        <div className="max-w-[480px]">
+          <JobSearchInput placeholder={`Search ${countryName} jobs...`} />
+        </div>
+      </HeroSection>
       <JobsLayout allJobs={jobs} filteredJobs={filteredJobs} />
     </>
   );

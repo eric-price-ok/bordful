@@ -105,7 +105,7 @@ export default async function LocationsPage() {
       />
 
       <main className="container py-6 sm:py-8">
-        <div className="max-w-5xl space-y-8 sm:space-y-12">
+        <div className="max-w-5xl">
           {/* Breadcrumbs */}
           <div className="mb-6">
             <MetadataBreadcrumb
@@ -121,7 +121,7 @@ export default async function LocationsPage() {
 
           {/* Remote Section */}
           {locationCounts.remote > 0 && (
-            <section className="mb-8 sm:mb-12">
+            <section className="mb-10">
               <div className="flex items-center gap-2 mb-4">
                 <Globe2
                   className="w-4 sm:w-5 h-4 sm:h-5 text-muted-foreground"

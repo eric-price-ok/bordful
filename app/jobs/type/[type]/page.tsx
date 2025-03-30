@@ -10,6 +10,7 @@ import {
   JOB_TYPE_DESCRIPTIONS,
 } from "@/lib/constants/job-types";
 import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
+import { JobSearchInput } from "@/components/ui/job-search-input";
 
 // Revalidate page every 5 minutes
 export const revalidate = 300;
@@ -81,7 +82,14 @@ export default async function JobTypePage({ params }: Props) {
         description={`Browse ${filteredJobs.length.toLocaleString()} ${
           filteredJobs.length === 1 ? "position" : "positions"
         } for ${displayName.toLowerCase()} roles. ${description}`}
-      />
+      >
+        {/* Search Bar */}
+        <div className="max-w-[480px]">
+          <JobSearchInput
+            placeholder={`Search ${displayName.toLowerCase()} jobs...`}
+          />
+        </div>
+      </HeroSection>
       <JobsLayout allJobs={jobs} filteredJobs={filteredJobs} />
     </>
   );
