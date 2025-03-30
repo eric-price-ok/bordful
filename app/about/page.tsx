@@ -79,68 +79,66 @@ export default function AboutPage() {
       />
 
       {/* About Content */}
-      <section className="py-12 md:py-16">
-        <div className="container px-4 mx-auto">
-          <div className="max-w-3xl mx-auto">
-            <div className="mb-6">
-              <MetadataBreadcrumb metadata={metadata} pathname="/about" />
-            </div>
+      <div className="container mx-auto px-4 py-10">
+        <div className="max-w-3xl mx-auto">
+          <div className="mb-6">
+            <MetadataBreadcrumb metadata={metadata} pathname="/about" />
+          </div>
 
-            <div className="prose prose-zinc">
-              {/* Mission Section */}
-              <h2 className="text-xl font-semibold text-zinc-900 mb-4">
-                {config.about.sections?.mission?.title || "Mission"}
-              </h2>
-              <p className="text-zinc-600 mb-8 leading-relaxed">
-                {config.about.sections?.mission?.content ||
-                  "We're on a mission to connect talented professionals with meaningful opportunities and help organizations find the perfect candidates to drive their success."}
-              </p>
+          <div className="w-full">
+            {/* Mission Section */}
+            <h2 className="text-xl font-semibold text-zinc-900 mb-4">
+              {config.about.sections?.mission?.title || "Mission"}
+            </h2>
+            <p className="text-zinc-600 mb-8 leading-relaxed">
+              {config.about.sections?.mission?.content ||
+                "We're on a mission to connect talented professionals with meaningful opportunities and help organizations find the perfect candidates to drive their success."}
+            </p>
 
-              {/* Story Section */}
-              <h2 className="text-xl font-semibold text-zinc-900 mb-4">
-                {config.about.sections?.story?.title || "Story"}
-              </h2>
-              <p className="text-zinc-600 mb-8 leading-relaxed">
-                {config.about.sections?.story?.content ||
-                  "Founded with a passion for revolutionizing the job search experience, our platform was built to address the challenges faced by both job seekers and employers in today's competitive market."}
-              </p>
+            {/* Story Section */}
+            <h2 className="text-xl font-semibold text-zinc-900 mb-4">
+              {config.about.sections?.story?.title || "Story"}
+            </h2>
+            <p className="text-zinc-600 mb-8 leading-relaxed">
+              {config.about.sections?.story?.content ||
+                "Founded with a passion for revolutionizing the job search experience, our platform was built to address the challenges faced by both job seekers and employers in today's competitive market."}
+            </p>
 
-              {/* Team Section */}
-              <h2 className="text-xl font-semibold text-zinc-900 mb-4">
-                {config.about.sections?.team?.title || "Team"}
-              </h2>
-              <p className="text-zinc-600 mb-8 leading-relaxed">
-                {config.about.sections?.team?.content ||
-                  "Our diverse team brings together expertise from recruitment, technology, and design to create an innovative job board solution that puts user experience first."}
-              </p>
+            {/* Team Section */}
+            <h2 className="text-xl font-semibold text-zinc-900 mb-4">
+              {config.about.sections?.team?.title || "Team"}
+            </h2>
+            <p className="text-zinc-600 mb-8 leading-relaxed">
+              {config.about.sections?.team?.content ||
+                "Our diverse team brings together expertise from recruitment, technology, and design to create an innovative job board solution that puts user experience first."}
+            </p>
 
-              {/* Contact Us Section - Conditionally rendered based on config */}
-              {config.about.contact?.show && (
-                <>
-                  <h2 className="text-xl font-semibold text-zinc-900 mb-4">
-                    {config.about.contact.title || "Get in Touch"}
-                  </h2>
-                  <p className="text-zinc-600 mb-6 leading-relaxed">
-                    {config.about.contact.description ||
-                      "Have questions or want to learn more about our services? We&apos;d love to hear from you."}
-                  </p>
-                  <div className="mt-6 mb-8">
-                    <Link href={config.about.contact.url}>
-                      <Button
-                        size="xs"
-                        className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs"
-                        variant={config.about.contact.variant || "default"}
-                      >
-                        {config.about.contact.label}
-                      </Button>
-                    </Link>
-                  </div>
-                </>
-              )}
-            </div>
+            {/* Contact Us Section - Conditionally rendered based on config */}
+            {config.about.contact?.show && (
+              <>
+                <h2 className="text-xl font-semibold text-zinc-900 mb-4">
+                  {config.about.contact.title || "Get in Touch"}
+                </h2>
+                <p className="text-zinc-600 mb-6 leading-relaxed">
+                  {config.about.contact.description ||
+                    "Have questions or want to learn more about our services? We&apos;d love to hear from you."}
+                </p>
+                <div className="mt-6 mb-8">
+                  <Link href={config.about.contact.url}>
+                    <Button
+                      size="xs"
+                      className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs"
+                      variant={config.about.contact.variant || "default"}
+                    >
+                      {config.about.contact.label}
+                    </Button>
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </div>
-      </section>
+      </div>
     </main>
   );
 }
