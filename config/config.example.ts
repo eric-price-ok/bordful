@@ -158,6 +158,35 @@ export const config = {
     ariaLabel: "Search jobs",
   },
 
+  // Quick Stats Configuration
+  quickStats: {
+    // Enable or disable the quick stats section
+    enabled: true,
+
+    // Configure individual stat sections
+    sections: {
+      // Open Jobs counter
+      openJobs: {
+        enabled: true,
+        title: "Open Jobs",
+        showNewJobsIndicator: true,
+      },
+
+      // Last Updated timestamp
+      lastUpdated: {
+        enabled: true,
+        title: "Last Updated",
+      },
+
+      // Trending Companies
+      trending: {
+        enabled: true,
+        title: "Trending",
+        maxCompanies: 3,
+      },
+    },
+  },
+
   // Job Listings Configuration
   jobListings: {
     // Default page title for job listings

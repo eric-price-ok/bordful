@@ -358,35 +358,64 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
           <JobSearchInput />
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-3 gap-4 text-xs text-muted-foreground max-w-[480px]">
-          <div>
-            <div className="font-medium text-foreground">Open Jobs</div>
-            <div className="flex items-center">
-              {jobsAddedToday > 0 && (
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 pulse-dot"></span>
-              )}
-              {initialJobs.length.toLocaleString()}
-              {jobsAddedToday > 0 && (
-                <span className="ml-1">
-                  ({jobsAddedToday.toLocaleString()} added today)
-                </span>
-              )}
-            </div>
+        {/* Quick Stats - Use configuration values */}
+        {(config.quickStats?.enabled ?? true) && (
+          <div className="grid grid-cols-3 gap-4 text-xs text-muted-foreground max-w-[480px]">
+            {/* Open Jobs */}
+            {(config.quickStats?.sections?.openJobs?.enabled ?? true) && (
+              <div>
+                <div className="font-medium text-foreground">
+                  {config.quickStats?.sections?.openJobs?.title || "Open Jobs"}
+                </div>
+                <div className="flex items-center">
+                  {(config.quickStats?.sections?.openJobs
+                    ?.showNewJobsIndicator ??
+                    true) &&
+                    jobsAddedToday > 0 && (
+                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 pulse-dot"></span>
+                    )}
+                  {initialJobs.length.toLocaleString()}
+                  {(config.quickStats?.sections?.openJobs
+                    ?.showNewJobsIndicator ??
+                    true) &&
+                    jobsAddedToday > 0 && (
+                      <span className="ml-1">
+                        ({jobsAddedToday.toLocaleString()} added today)
+                      </span>
+                    )}
+                </div>
+              </div>
+            )}
+
+            {/* Last Updated */}
+            {(config.quickStats?.sections?.lastUpdated?.enabled ?? true) && (
+              <div>
+                <div className="font-medium text-foreground">
+                  {config.quickStats?.sections?.lastUpdated?.title ||
+                    "Last Updated"}
+                </div>
+                <div>{lastUpdated}</div>
+              </div>
+            )}
+
+            {/* Trending Companies */}
+            {(config.quickStats?.sections?.trending?.enabled ?? true) && (
+              <div>
+                <div className="font-medium text-foreground">
+                  {config.quickStats?.sections?.trending?.title || "Trending"}
+                </div>
+                <div>
+                  {Array.from(new Set(initialJobs.map((job) => job.company)))
+                    .slice(
+                      0,
+                      config.quickStats?.sections?.trending?.maxCompanies || 3
+                    )
+                    .join(", ")}
+                </div>
+              </div>
+            )}
           </div>
-          <div>
-            <div className="font-medium text-foreground">Last Updated</div>
-            <div>{lastUpdated}</div>
-          </div>
-          <div>
-            <div className="font-medium text-foreground">Trending</div>
-            <div>
-              {Array.from(new Set(initialJobs.map((job) => job.company)))
-                .slice(0, 3)
-                .join(", ")}
-            </div>
-          </div>
-        </div>
+        )}
       </HeroSection>
 
       {/* Jobs Section */}

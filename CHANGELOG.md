@@ -10,9 +10,11 @@ All notable changes to this project will be documented in this file.
 - Enhanced configuration options with centralized controls:
   - Added search configuration with customizable placeholder, debounce time, and accessibility labels
   - Added job listings configuration with customizable page titles, items per page, and sort options
+  - Added quick stats configuration with customizable sections for open jobs, last updated, and trending
   - Made search functionality optional on job subpages
   - Improved sort and pagination with config-driven defaults
   - Enhanced components to use configuration values with proper fallbacks
+  - Made all homepage elements fully configurable via config file
 
 ## [0.1.1] - 2025-03-30
 
