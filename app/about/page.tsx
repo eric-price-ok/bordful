@@ -112,7 +112,7 @@ export default function AboutPage() {
                   <h2>Get in Touch</h2>
                   <p>
                     Have questions or want to learn more about our services?
-                    We'd love to hear from you.
+                    We&apos;d love to hear from you.
                   </p>
                   <div className="mt-4">
                     <Link href={config.about.contact.url}>
