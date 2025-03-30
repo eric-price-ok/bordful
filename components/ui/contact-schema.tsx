@@ -10,6 +10,7 @@ interface ContactSchemaProps {
   phone?: string;
   address?: string;
   url?: string;
+  description?: string;
 }
 
 export const ContactSchema: FC<ContactSchemaProps> = ({
@@ -19,14 +20,16 @@ export const ContactSchema: FC<ContactSchemaProps> = ({
   address = config.contact?.contactInfo?.address ||
     "123 Main St, Anytown, AN 12345",
   url = `${config.url}/contact` || "https://example.com/contact",
+  description = config.contact?.schema?.description ||
+    config.contact?.description ||
+    "Get in touch with our team for any questions or support needs.",
 }) => {
   // Create type-safe schema using schema-dts
   const contactSchema: WithContext<ContactPage> = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
     name: `Contact ${companyName}`,
-    description:
-      "Get in touch with our team for any questions or support needs.",
+    description: description,
     mainEntity: {
       "@type": "Organization",
       name: companyName,

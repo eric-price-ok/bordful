@@ -14,7 +14,9 @@ export const metadata: Metadata = {
   description:
     config.contact?.description ||
     "Have questions or feedback? We'd love to hear from you.",
-  keywords: "contact us, support, help, questions, feedback, get in touch",
+  keywords:
+    config.contact?.keywords ||
+    "contact us, support, help, questions, feedback, get in touch",
   openGraph: {
     title: `${config.contact?.title || "Contact"} | ${config.title}`,
     description:
@@ -68,44 +70,43 @@ export default function ContactPage() {
         email={config.contact.contactInfo.email}
         phone={config.contact.contactInfo.phone}
         address={config.contact.contactInfo.address}
+        description={config.contact.schema?.description}
       />
 
       <HeroSection
-        badge="Contact Us"
+        badge={config.contact.badge || "Contact Us"}
         title={config.contact.title}
         description={config.contact.description}
       />
 
       {/* Support Channels */}
-      <section className="py-12 md:py-16">
-        <div className="container px-4 mx-auto">
-          <div className="max-w-5xl mx-auto">
-            <div className="mb-6">
-              <MetadataBreadcrumb metadata={metadata} pathname="/contact" />
-            </div>
+      <div className="container mx-auto px-4 py-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-6">
+            <MetadataBreadcrumb metadata={metadata} pathname="/contact" />
+          </div>
 
-            <h2 className="text-2xl font-semibold text-zinc-900 text-center mb-8">
-              {config.contact.supportChannels.title}
-            </h2>
+          <h2 className="text-2xl font-semibold text-zinc-900 text-center mb-8">
+            {config.contact.supportChannels.title}
+          </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {config.contact.supportChannels.channels.map((channel, index) => (
-                <SupportChannelCard
-                  key={index}
-                  title={channel.title}
-                  description={channel.description}
-                  buttonText={channel.buttonText}
-                  buttonLink={channel.buttonLink}
-                  icon={channel.icon}
-                />
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {config.contact.supportChannels.channels.map((channel, index) => (
+              <SupportChannelCard
+                key={index}
+                title={channel.title}
+                description={channel.description}
+                buttonText={channel.buttonText}
+                buttonLink={channel.buttonLink}
+                icon={channel.icon}
+              />
+            ))}
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Contact Information */}
-      <div className="container px-4 mx-auto mb-16">
+      <div className="container mx-auto px-4 pb-10">
         <div className="max-w-2xl mx-auto">
           <ContactInfoSection
             title={config.contact.contactInfo.title}

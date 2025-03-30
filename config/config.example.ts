@@ -669,9 +669,15 @@ export const config = {
     // Navigation label
     navigationLabel: "Contact",
 
+    // Badge text for hero section
+    badge: "Contact Us",
+
     // Page title and description
     title: "Get in Touch",
     description: "Have questions or feedback? We'd love to hear from you.",
+
+    // SEO keywords
+    keywords: "contact us, support, help, questions, feedback, get in touch",
 
     // Support channels section
     supportChannels: {
@@ -715,6 +721,12 @@ export const config = {
       email: "hello@bordful.com",
       phone: "+1 (555) 123-4567",
       address: "123 Main Street, San Francisco, CA 94105",
+    },
+
+    // Schema.org structured data customization
+    schema: {
+      description:
+        "Get in touch with our team for any questions or support needs.",
     },
 
     // Contact link configuration
