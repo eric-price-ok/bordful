@@ -231,10 +231,17 @@ export const config = {
     // Navigation label
     navigationLabel: "FAQ",
 
+    // Badge text for hero section
+    badge: "FAQ",
+
     // Page title and description
     title: "Frequently Asked Questions",
     description:
       "Find answers to common questions about our job board and services.",
+
+    // SEO keywords
+    keywords:
+      "job board FAQ, frequently asked questions, job search help, employer questions",
 
     // Categories of FAQs
     categories: [

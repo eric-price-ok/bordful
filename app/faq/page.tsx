@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     config.faq?.description ||
     "Find answers to common questions about our job board and services.",
   keywords:
+    config.faq?.keywords ||
     "job board FAQ, frequently asked questions, job search help, employer questions",
   openGraph: {
     title: `${config.faq?.title || "FAQ"} | ${config.title}`,
@@ -60,7 +61,7 @@ export default function FAQPage() {
   return (
     <main className="min-h-screen bg-background">
       <HeroSection
-        badge="FAQ"
+        badge={config.faq.badge || "FAQ"}
         title={config.faq.title}
         description={config.faq.description}
       />
