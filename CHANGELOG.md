@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.7] - 2025-03-30
+
+### Added
+- Enhanced Pricing page configurability:
+  - Added configurable badge text for hero section
+  - Added SEO keywords configuration
+  - All pages now fully configurable via config
+
 ## [0.1.6] - 2025-03-30
 
 ### Added

@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     config.pricing?.description ||
     "Choose the plan that's right for your job board needs.",
   keywords:
+    config.pricing?.keywords ||
     "job board pricing, post job, job listing plans, recruitment pricing",
   openGraph: {
     title: `${config.pricing?.title || "Pricing"} | ${config.title}`,
@@ -67,7 +68,7 @@ export default function PricingPage() {
   return (
     <main className="min-h-screen bg-background">
       <HeroSection
-        badge="Pricing"
+        badge={config.pricing.badge || "Pricing"}
         title={config.pricing.title}
         description={config.pricing.description}
       />
@@ -78,7 +79,7 @@ export default function PricingPage() {
           <MetadataBreadcrumb metadata={metadata} pathname="/pricing" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {config.pricing.plans.map((plan, index) => (
             <div key={index} className="group relative">
               <div

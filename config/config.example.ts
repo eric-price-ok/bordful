@@ -513,9 +513,16 @@ export const config = {
     // Navigation label
     navigationLabel: "Pricing",
 
+    // Badge text for hero section
+    badge: "Pricing",
+
     // Page title and description
     title: "Simple, Transparent Pricing",
     description: "Choose the plan that's right for your job board needs.",
+
+    // SEO keywords
+    keywords:
+      "job board pricing, post job, job listing plans, recruitment pricing",
 
     // Currency for pricing display
     currency: "USD" as CurrencyCode,
