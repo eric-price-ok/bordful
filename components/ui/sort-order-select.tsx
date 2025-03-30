@@ -33,14 +33,24 @@ export function SortOrderSelect() {
   const defaultSortOrder =
     (config.jobListings?.defaultSortOrder as SortOption) || "newest";
 
+  // Get label configuration with fallbacks
+  const showLabel = config.jobListings?.labels?.sortOrder?.show ?? true;
+  const labelText = config.jobListings?.labels?.sortOrder?.text || "Sort by:";
+
+  // Adjust width based on whether label is shown
+  const triggerWidth = showLabel ? "w-[110px]" : "w-[140px]";
+
   return (
     <div className="flex items-center gap-2">
-      <label
-        htmlFor="sort-order-trigger"
-        className="text-sm text-muted-foreground whitespace-nowrap"
-      >
-        Sort by:
-      </label>
+      {/* Only show label if configured */}
+      {showLabel && (
+        <label
+          htmlFor="sort-order-trigger"
+          className="text-sm text-muted-foreground whitespace-nowrap"
+        >
+          {labelText}
+        </label>
+      )}
       <Select
         value={sortOrder}
         onValueChange={(value: SortOption) => {
@@ -54,10 +64,14 @@ export function SortOrderSelect() {
       >
         <SelectTrigger
           id="sort-order-trigger"
-          className="w-[110px] h-7 text-xs"
+          className={`${triggerWidth} h-7 text-xs`}
           aria-label="Select sort order for job listings"
         >
-          <SelectValue placeholder="Sort by" />
+          <SelectValue
+            placeholder={
+              showLabel ? "Sort by" : sortOptionLabels[defaultSortOrder]
+            }
+          />
         </SelectTrigger>
         <SelectContent className="bg-white" position="popper">
           {availableSortOptions.map((option) => (

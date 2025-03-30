@@ -200,6 +200,21 @@ export const config = {
 
     // Default sort order
     defaultSortOrder: "newest" as "newest" | "oldest" | "salary",
+
+    // UI Labels Configuration
+    labels: {
+      // Per page dropdown label
+      perPage: {
+        show: true,
+        text: "Jobs per page:",
+      },
+
+      // Sort order dropdown label
+      sortOrder: {
+        show: true,
+        text: "Sort by:",
+      },
+    },
   },
 
   // FAQ Configuration

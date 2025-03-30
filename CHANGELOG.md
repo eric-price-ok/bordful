@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 <!-- Version format: [MAJOR.MINOR.PATCH] - MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes -->
 
+## [0.1.4] - 2025-03-30
+
+### Added
+- Made dropdown labels fully configurable:
+  - Added configuration options for "Jobs per page" and "Sort by" labels
+  - Implemented show/hide toggles for each label
+  - Added customizable label text for internationalization
+  - Optimized dropdown widths based on label visibility
+  - Enhanced dropdown appearance when labels are hidden
+  - Made homepage 100% configurable via config file
+
 ## [0.1.3] - 2025-03-30
 
 ### Changed
