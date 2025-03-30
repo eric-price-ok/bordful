@@ -18,6 +18,9 @@ import { SortOrderSelect } from "@/components/ui/sort-order-select";
 import { useSortOrder } from "@/lib/hooks/useSortOrder";
 import { usePagination } from "@/lib/hooks/usePagination";
 import { PaginationControl } from "@/components/ui/pagination-control";
+import { JobSearchInput } from "@/components/ui/job-search-input";
+import { useJobSearch } from "@/lib/hooks/useJobSearch";
+import { filterJobsBySearch } from "@/lib/utils/filter-jobs";
 
 type Filters = {
   types: string[];
@@ -41,7 +44,7 @@ type FilterValue = string[] | boolean | CareerLevel[] | LanguageCode[] | true;
 function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState("");
+  const { searchTerm } = useJobSearch();
   const { sortOrder } = useSortOrder();
   const { page } = usePagination();
   const [isFiltering, setIsFiltering] = useState(false);
@@ -115,31 +118,6 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
       };
 
       updateParams(updates);
-    },
-    [updateParams]
-  );
-
-  // Handle search with debounce
-  const handleSearch = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchTerm(e.target.value);
-      setIsFiltering(true);
-      const timer = setTimeout(() => {
-        updateParams({ page: null }); // Reset to first page when searching
-        setIsFiltering(false);
-      }, 300);
-      return () => clearTimeout(timer);
-    },
-    [updateParams]
-  );
-
-  // Handle keyboard navigation
-  const handleSearchKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Escape") {
-        setSearchTerm("");
-        updateParams({ page: null });
-      }
     },
     [updateParams]
   );
@@ -231,17 +209,8 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
   const filteredJobs = useMemo(() => {
     let filtered = [...initialJobs];
 
-    // Apply search filter
-    if (searchTerm) {
-      const searchLower = searchTerm.toLowerCase();
-      filtered = filtered.filter(
-        (job) =>
-          job.title.toLowerCase().includes(searchLower) ||
-          job.company.toLowerCase().includes(searchLower) ||
-          (job.workplace_city?.toLowerCase() || "").includes(searchLower) ||
-          (job.workplace_country?.toLowerCase() || "").includes(searchLower)
-      );
-    }
+    // Apply search filter using our utility function
+    filtered = filterJobsBySearch(filtered, searchTerm || "");
 
     // Apply job type filter
     if (filters.types.length > 0) {
@@ -407,32 +376,9 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
         title={config.title}
         description={config.description}
       >
-        {/* Search Bar */}
+        {/* Search Bar - Replace with our new component */}
         <div className="max-w-[480px]">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search by role, company, or location..."
-              className="pl-9 h-10"
-              value={searchTerm}
-              onChange={handleSearch}
-              onKeyDown={handleSearchKeyDown}
-              aria-label="Search jobs"
-            />
-            {searchTerm && (
-              <button
-                onClick={() => {
-                  setSearchTerm("");
-                  updateParams({ page: null });
-                }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                aria-label="Clear search"
-              >
-                ×
-              </button>
-            )}
-          </div>
+          <JobSearchInput />
         </div>
 
         {/* Quick Stats */}

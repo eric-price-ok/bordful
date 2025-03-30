@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 <!-- Version format: [MAJOR.MINOR.PATCH] - MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes -->
 
+## [0.1.1] - 2025-03-30
+
+### Changed
+- Refactored search functionality with DRY principles:
+  - Created reusable `JobSearchInput` component for consistent UI
+  - Implemented type-safe `useJobSearch` hook using nuqs for URL state
+  - Extracted filtering logic to `filterJobsBySearch` utility function
+  - Improved debouncing with 500ms delay for better typing experience
+  - Added search to JobsLayout for consistent experience across pages
+  - Enhanced accessibility with proper ARIA labels and keyboard navigation
+  - Removed duplicate code from HomePage and JobSearch components
+  - Maintained backward compatibility with existing implementations
+
 ## [0.1.0] - 2025-03-29
 
 ### Changed

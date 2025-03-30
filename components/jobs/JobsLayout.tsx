@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type { Job, CareerLevel } from "@/lib/db/airtable";
 import { JobListings } from "@/components/jobs/JobListings";
 import { PostJobBanner } from "@/components/ui/post-job-banner";
@@ -14,6 +14,9 @@ import { PaginationControl } from "@/components/ui/pagination-control";
 import { JobFilters } from "@/components/ui/job-filters";
 import { LanguageCode } from "@/lib/constants/languages";
 import { JobType } from "@/lib/constants/job-types";
+import { JobSearchInput } from "@/components/ui/job-search-input";
+import { useJobSearch } from "@/lib/hooks/useJobSearch";
+import { filterJobsBySearch } from "@/lib/utils/filter-jobs";
 
 interface JobsLayoutProps {
   allJobs: Job[]; // Keep for backward compatibility with existing page components
@@ -25,25 +28,40 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
   const searchParams = useSearchParams();
   const { sortOrder } = useSortOrder();
   const { page } = usePagination();
+  const { searchTerm } = useJobSearch();
 
   // Filter state
   const [selectedJobs, setSelectedJobs] = useState<Job[]>(filteredJobs);
-  
+
   // Get URL params or defaults
   const jobsPerPage = Number(searchParams.get("per_page")) || 10;
 
   // Handle filter changes
   const handleFilterChange = useCallback(
     (
-      filterType: "type" | "role" | "remote" | "salary" | "visa" | "language" | "clear",
-      value: string[] | boolean | CareerLevel[] | LanguageCode[] | JobType[] | true
+      filterType:
+        | "type"
+        | "role"
+        | "remote"
+        | "salary"
+        | "visa"
+        | "language"
+        | "clear",
+      value:
+        | string[]
+        | boolean
+        | CareerLevel[]
+        | LanguageCode[]
+        | JobType[]
+        | true
     ) => {
       if (filterType === "clear") {
         setSelectedJobs(filteredJobs);
         return;
       }
 
-      let newFilteredJobs = [...filteredJobs];
+      // First apply search filter to the original filtered jobs
+      let newFilteredJobs = filterJobsBySearch(filteredJobs, searchTerm || "");
 
       // Apply type filter
       if (filterType === "type" && Array.isArray(value) && value.length > 0) {
@@ -77,7 +95,7 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
         // Handle salary filtering logic here
         newFilteredJobs = newFilteredJobs.filter((job) => {
           if (!job.salary) return false;
-          
+
           // Calculate annual salary based on available data
           let annualSalary = 0;
           if (job.salary.max) {
@@ -86,14 +104,26 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
             // If hourly, convert to annual (assuming 2080 hours per year)
             annualSalary = job.salary.min * 2080;
           }
-          
+
           if (annualSalary === 0) return false;
-            
-          if (salaryRanges.includes("< $50K") && annualSalary < 50000) return true;
-          if (salaryRanges.includes("$50K - $100K") && annualSalary >= 50000 && annualSalary <= 100000) return true;
-          if (salaryRanges.includes("$100K - $200K") && annualSalary > 100000 && annualSalary <= 200000) return true;
-          if (salaryRanges.includes("> $200K") && annualSalary > 200000) return true;
-          
+
+          if (salaryRanges.includes("< $50K") && annualSalary < 50000)
+            return true;
+          if (
+            salaryRanges.includes("$50K - $100K") &&
+            annualSalary >= 50000 &&
+            annualSalary <= 100000
+          )
+            return true;
+          if (
+            salaryRanges.includes("$100K - $200K") &&
+            annualSalary > 100000 &&
+            annualSalary <= 200000
+          )
+            return true;
+          if (salaryRanges.includes("> $200K") && annualSalary > 200000)
+            return true;
+
           return false;
         });
       }
@@ -106,18 +136,31 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
       }
 
       // Apply language filter
-      if (filterType === "language" && Array.isArray(value) && value.length > 0) {
+      if (
+        filterType === "language" &&
+        Array.isArray(value) &&
+        value.length > 0
+      ) {
         // Type assertion to tell TypeScript this is a LanguageCode array
         const languageCodes = value as LanguageCode[];
         newFilteredJobs = newFilteredJobs.filter((job) =>
-          job.languages?.some((lang) => languageCodes.includes(lang as LanguageCode))
+          job.languages?.some((lang) =>
+            languageCodes.includes(lang as LanguageCode)
+          )
         );
       }
 
       setSelectedJobs(newFilteredJobs);
     },
-    [filteredJobs]
+    [filteredJobs, searchTerm]
   );
+
+  // Apply search filter whenever the search term changes
+  useEffect(() => {
+    // Reset filters and apply search
+    const searchFiltered = filterJobsBySearch(filteredJobs, searchTerm || "");
+    setSelectedJobs(searchFiltered);
+  }, [searchTerm, filteredJobs]);
 
   // Sort jobs
   const sortedJobs = [...selectedJobs].sort((a, b) => {
@@ -151,15 +194,18 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
             <ClientBreadcrumb />
           </div>
 
+          {/* Search - Add search component */}
+          <div className="w-full max-w-[480px] mb-2">
+            <JobSearchInput placeholder="Search jobs..." />
+          </div>
+
           {/* Controls */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-4 sm:gap-0">
             <div className="space-y-1 w-full sm:w-auto">
               <h2 className="text-xl font-semibold tracking-tight flex items-center gap-2 flex-wrap">
                 Latest Opportunities
                 {page > 1 && (
-                  <span className="text-gray-500 font-normal">
-                    Page {page}
-                  </span>
+                  <span className="text-gray-500 font-normal">Page {page}</span>
                 )}
               </h2>
               <p className="text-sm text-muted-foreground">
