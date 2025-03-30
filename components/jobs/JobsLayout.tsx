@@ -14,10 +14,8 @@ import { PaginationControl } from "@/components/ui/pagination-control";
 import { JobFilters } from "@/components/ui/job-filters";
 import { LanguageCode } from "@/lib/constants/languages";
 import { JobType } from "@/lib/constants/job-types";
-import { JobSearchInput } from "@/components/ui/job-search-input";
 import { useJobSearch } from "@/lib/hooks/useJobSearch";
 import { filterJobsBySearch } from "@/lib/utils/filter-jobs";
-import config from "@/config";
 
 interface JobsLayoutProps {
   allJobs: Job[]; // Keep for backward compatibility with existing page components
