@@ -4,8 +4,6 @@ import { useState, useMemo, useCallback, useEffect, Suspense } from "react";
 import { JobCard } from "@/components/jobs/JobCard";
 import type { Job, CareerLevel } from "@/lib/db/airtable";
 import { normalizeAnnualSalary } from "@/lib/db/airtable";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import { formatDistanceToNow, isToday } from "date-fns";
 import { useRouter, useSearchParams } from "next/navigation";
 import { JobFilters } from "@/components/ui/job-filters";
@@ -47,7 +45,6 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
   const { searchTerm } = useJobSearch();
   const { sortOrder } = useSortOrder();
   const { page } = usePagination();
-  const [isFiltering, setIsFiltering] = useState(false);
 
   // Parse initial filters from URL
   const initialFilters = {
@@ -351,26 +348,6 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
 
   return (
     <main className="min-h-screen bg-background">
-      <style jsx>{`
-        @keyframes pulse {
-          0% {
-            transform: scale(0.95);
-            opacity: 0.5;
-          }
-          50% {
-            transform: scale(1.05);
-            opacity: 0.8;
-          }
-          100% {
-            transform: scale(0.95);
-            opacity: 0.5;
-          }
-        }
-        .pulse-dot {
-          animation: pulse 2s infinite;
-        }
-      `}</style>
-
       <HeroSection
         badge={config.badge}
         title={config.title}
@@ -439,14 +416,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
             </div>
 
             <div className="space-y-4">
-              {isFiltering ? (
-                <div className="text-center py-8">
-                  <div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-gray-900 border-r-transparent"></div>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Updating results...
-                  </p>
-                </div>
-              ) : paginatedJobs.length === 0 ? (
+              {paginatedJobs.length === 0 ? (
                 <div className="text-center py-8">
                   <p className="text-sm text-muted-foreground">
                     No positions found matching your search criteria. Try
