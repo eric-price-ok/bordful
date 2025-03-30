@@ -33,13 +33,10 @@ export function SortOrderSelect() {
   const defaultSortOrder =
     (config.jobListings?.defaultSortOrder as SortOption) || "newest";
 
-  // Check if current sort is the default
-  const isDefault = sortOrder === defaultSortOrder;
-
   return (
-    <div className="flex items-center gap-2 z-10">
+    <div className="flex items-center gap-2">
       <label
-        htmlFor="sort-order"
+        htmlFor="sort-order-trigger"
         className="text-sm text-muted-foreground whitespace-nowrap"
       >
         Sort by:
@@ -55,18 +52,16 @@ export function SortOrderSelect() {
           }
         }}
       >
-        <SelectTrigger id="sort-order" className="w-[140px] h-8 px-3 text-sm">
-          <SelectValue placeholder={sortOptionLabels[defaultSortOrder]} />
+        <SelectTrigger
+          id="sort-order-trigger"
+          className="w-[110px] h-7 text-xs"
+          aria-label="Select sort order for job listings"
+        >
+          <SelectValue placeholder="Sort by" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-white" position="popper">
           {availableSortOptions.map((option) => (
-            <SelectItem
-              key={option}
-              value={option}
-              className={
-                isDefault && option === defaultSortOrder ? "font-medium" : ""
-              }
-            >
+            <SelectItem key={option} value={option} className="text-xs">
               {sortOptionLabels[option as SortOption]}
             </SelectItem>
           ))}

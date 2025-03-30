@@ -13,7 +13,6 @@ import config from "@/config";
 export function JobsPerPageSelect() {
   const { perPage, setPerPage } = usePagination();
   const defaultPerPage = config.jobListings?.defaultPerPage || 10;
-  const isDefault = perPage === defaultPerPage;
 
   // Options for per page
   const perPageOptions = [5, 10, 25, 50, 100];
@@ -24,9 +23,9 @@ export function JobsPerPageSelect() {
     : defaultPerPage;
 
   return (
-    <div className="flex items-center gap-2 z-10">
+    <div className="flex items-center gap-2">
       <label
-        htmlFor="per-page"
+        htmlFor="per-page-trigger"
         className="text-sm text-muted-foreground whitespace-nowrap"
       >
         Jobs per page:
@@ -38,17 +37,23 @@ export function JobsPerPageSelect() {
           setPerPage(newValue === defaultPerPage ? null : newValue);
         }}
       >
-        <SelectTrigger id="per-page" className="w-[80px] h-8 px-3 text-sm">
-          <SelectValue placeholder={defaultPerPage.toString()} />
+        <SelectTrigger
+          id="per-page-trigger"
+          className="w-[90px] h-7 text-xs"
+          aria-label="Select number of jobs to display per page"
+        >
+          <SelectValue placeholder="Show" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent
+          className="bg-white min-w-[90px]"
+          position="popper"
+          aria-label="Jobs per page options"
+        >
           {perPageOptions.map((option) => (
             <SelectItem
               key={option}
               value={option.toString()}
-              className={
-                isDefault && option === defaultPerPage ? "font-medium" : ""
-              }
+              className="text-xs"
             >
               {option}
             </SelectItem>

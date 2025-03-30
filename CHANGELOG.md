@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 <!-- Version format: [MAJOR.MINOR.PATCH] - MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes -->
 
+## [0.1.3] - 2025-03-30
+
+### Changed
+- Enhanced dropdown components for better user experience:
+  - Added descriptive labels for JobsPerPageSelect and SortOrderSelect components
+  - Maintained original styling of select elements for visual consistency
+  - Improved accessibility with proper label associations
+  - Optimized dropdown widths for better space utilization
+  - Preserved configuration capabilities with enhanced UI patterns
+
 ## [0.1.2] - 2025-03-30
 
 ### Added
