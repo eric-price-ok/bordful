@@ -716,6 +716,18 @@ export const config = {
       phone: "+1 (555) 123-4567",
       address: "123 Main Street, San Francisco, CA 94105",
     },
+
+    // Contact link configuration
+    contact: {
+      // Show or hide the contact link
+      show: true,
+      // URL for the contact page or form
+      url: "/contact",
+      // Label for the contact link
+      label: "Contact Us",
+      // Button variant (default, outline, secondary, ghost, link)
+      variant: "default",
+    },
   },
 
   // About Page Configuration
@@ -733,14 +745,24 @@ export const config = {
     // Description for the about page
     description:
       "Learn more about our mission to connect talent with opportunity.",
-    // Mission statement content
-    mission:
-      "We're on a mission to connect talented professionals with meaningful opportunities and help organizations find the perfect candidates to drive their success.",
-    // Company story content
-    story:
-      "Founded with a passion for revolutionizing the job search experience, our platform was built to address the challenges faced by both job seekers and employers in today's competitive market.",
-    // Team information
-    team: "Our diverse team brings together expertise from recruitment, technology, and design to create an innovative job board solution that puts user experience first.",
+    // Section titles and content
+    sections: {
+      mission: {
+        title: "Mission",
+        content:
+          "We're on a mission to connect talented professionals with meaningful opportunities and help organizations find the perfect candidates to drive their success.",
+      },
+      story: {
+        title: "Story",
+        content:
+          "Founded with a passion for revolutionizing the job search experience, our platform was built to address the challenges faced by both job seekers and employers in today's competitive market.",
+      },
+      team: {
+        title: "Team",
+        content:
+          "Our diverse team brings together expertise from recruitment, technology, and design to create an innovative job board solution that puts user experience first.",
+      },
+    },
     // Contact link configuration
     contact: {
       // Show or hide the contact link
@@ -749,6 +771,13 @@ export const config = {
       url: "/contact",
       // Label for the contact link
       label: "Contact Us",
+      // Button variant (default, outline, secondary, ghost, link)
+      variant: "default",
+      // Contact section title
+      title: "Get in Touch",
+      // Contact section description
+      description:
+        "Have questions or want to learn more about our services? We'd love to hear from you.",
     },
     // Schema.org structured data customization
     schema: {

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.4] - 2025-03-30
+
+### Added
+- Complete About page customization:
+  - Added configurable section titles
+  - Made all content sections fully customizable
+  - Enhanced contact section with configurable title and description
+  - Improved styling consistency with other pages
 
 ## [0.1.3] - 2025-03-30
 
