@@ -143,6 +143,36 @@ export const config = {
     allowedCurrencies: null as CurrencyCode[] | null, // null means all currencies are allowed
   },
 
+  // Search Configuration
+  search: {
+    // Default placeholder text for search inputs
+    placeholder: "Search by role, company, or location...",
+
+    // Debounce time in milliseconds
+    debounceMs: 500,
+
+    // Show search on all job pages (including subpages)
+    showOnAllPages: true,
+
+    // ARIA label for accessibility
+    ariaLabel: "Search jobs",
+  },
+
+  // Job Listings Configuration
+  jobListings: {
+    // Default page title for job listings
+    defaultPageTitle: "Latest Opportunities",
+
+    // Default number of jobs per page
+    defaultPerPage: 10,
+
+    // Available sort options
+    sortOptions: ["newest", "oldest", "salary"] as const,
+
+    // Default sort order
+    defaultSortOrder: "newest" as "newest" | "oldest" | "salary",
+  },
+
   // FAQ Configuration
   faq: {
     // Enable or disable the FAQ page

@@ -1,18 +1,27 @@
 "use client";
 
-import { parseAsInteger, useQueryState } from "nuqs";
+import { parseAsInteger } from "nuqs";
+import { useQueryState } from "nuqs";
+import config from "@/config";
 
 export function usePagination() {
-  const [page, setPage] = useQueryState(
-    "page",
-    parseAsInteger.withDefault(1)
+  // Get default per page from config or fallback to 10
+  const defaultPerPage = config.jobListings?.defaultPerPage || 10;
+
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+
+  const [perPage, setPerPage] = useQueryState(
+    "per_page",
+    parseAsInteger.withDefault(defaultPerPage)
   );
 
+  // Ensure page is at least 1
+  const validPage = Math.max(1, page);
+
   return {
-    page,
-    setPage: (value: number) => {
-      // If value is 1 (default), remove the parameter from URL
-      setPage(value === 1 ? null : value);
-    },
+    page: validPage,
+    setPage,
+    perPage,
+    setPerPage,
   };
 }

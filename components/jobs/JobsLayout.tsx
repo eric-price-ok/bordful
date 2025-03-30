@@ -17,6 +17,7 @@ import { JobType } from "@/lib/constants/job-types";
 import { JobSearchInput } from "@/components/ui/job-search-input";
 import { useJobSearch } from "@/lib/hooks/useJobSearch";
 import { filterJobsBySearch } from "@/lib/utils/filter-jobs";
+import config from "@/config";
 
 interface JobsLayoutProps {
   allJobs: Job[]; // Keep for backward compatibility with existing page components
@@ -194,10 +195,12 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
             <ClientBreadcrumb />
           </div>
 
-          {/* Search - Add search component */}
-          <div className="w-full max-w-[480px] mb-2">
-            <JobSearchInput placeholder="Search jobs..." />
-          </div>
+          {/* Search - conditionally show based on config */}
+          {(config.search?.showOnAllPages ?? true) && (
+            <div className="w-full max-w-[480px] mb-2">
+              <JobSearchInput placeholder="Search jobs..." />
+            </div>
+          )}
 
           {/* Controls */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-4 sm:gap-0">

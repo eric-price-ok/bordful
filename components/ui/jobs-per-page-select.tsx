@@ -7,54 +7,54 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useJobsPerPage } from "@/lib/hooks/useJobsPerPage";
-import { useState } from "react";
+import { usePagination } from "@/lib/hooks/usePagination";
+import config from "@/config";
 
 export function JobsPerPageSelect() {
-  const { jobsPerPage, setJobsPerPage } = useJobsPerPage();
-  const [isUpdating, setIsUpdating] = useState(false);
+  const { perPage, setPerPage } = usePagination();
+  const defaultPerPage = config.jobListings?.defaultPerPage || 10;
+  const isDefault = perPage === defaultPerPage;
 
-  const handleValueChange = (value: string) => {
-    setIsUpdating(true);
-    try {
-      setJobsPerPage(parseInt(value, 10));
-    } catch (error) {
-      console.error("Invalid jobs per page value:", error);
-    } finally {
-      setIsUpdating(false);
-    }
-  };
+  // Options for per page
+  const perPageOptions = [5, 10, 25, 50, 100];
+
+  // Ensure perPage is a valid option
+  const validPerPage = perPageOptions.includes(perPage)
+    ? perPage
+    : defaultPerPage;
 
   return (
-    <Select
-      value={jobsPerPage.toString()}
-      onValueChange={handleValueChange}
-      disabled={isUpdating}
-    >
-      <SelectTrigger
-        className="w-full sm:w-[130px] h-7 text-xs"
-        aria-label="Select number of jobs to display per page"
+    <div className="flex items-center gap-2 z-10">
+      <label
+        htmlFor="per-page"
+        className="text-sm text-muted-foreground whitespace-nowrap"
       >
-        <SelectValue placeholder="Show" />
-      </SelectTrigger>
-      <SelectContent
-        className="bg-white min-w-[130px]"
-        position="popper"
-        aria-label="Jobs per page options"
+        Jobs per page:
+      </label>
+      <Select
+        value={validPerPage.toString()}
+        onValueChange={(value) => {
+          const newValue = parseInt(value, 10);
+          setPerPage(newValue === defaultPerPage ? null : newValue);
+        }}
       >
-        <SelectItem value="10" className="text-xs">
-          10 per page
-        </SelectItem>
-        <SelectItem value="25" className="text-xs">
-          25 per page
-        </SelectItem>
-        <SelectItem value="50" className="text-xs">
-          50 per page
-        </SelectItem>
-        <SelectItem value="100" className="text-xs">
-          100 per page
-        </SelectItem>
-      </SelectContent>
-    </Select>
+        <SelectTrigger id="per-page" className="w-[80px] h-8 px-3 text-sm">
+          <SelectValue placeholder={defaultPerPage.toString()} />
+        </SelectTrigger>
+        <SelectContent>
+          {perPageOptions.map((option) => (
+            <SelectItem
+              key={option}
+              value={option.toString()}
+              className={
+                isDefault && option === defaultPerPage ? "font-medium" : ""
+              }
+            >
+              {option}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 }

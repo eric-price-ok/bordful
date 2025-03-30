@@ -1,6 +1,7 @@
 import { parseAsString } from "nuqs";
 import { useQueryState } from "nuqs";
 import { useCallback, useState, useRef, useEffect } from "react";
+import config from "@/config";
 
 export function useJobSearch() {
   const [searchTerm, setSearchTermState] = useQueryState(
@@ -9,6 +10,9 @@ export function useJobSearch() {
   );
   const [isSearching, setIsSearching] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Get debounce time from config or use default
+  const debounceMs = config.search?.debounceMs || 500;
 
   // Clear timeout on unmount
   useEffect(() => {
@@ -37,9 +41,9 @@ export function useJobSearch() {
         setSearchTermState(value || null);
         setIsSearching(false);
         timerRef.current = null;
-      }, 500); // Increased debounce time for better UX
+      }, debounceMs); // Use configurable debounce time
     },
-    [setSearchTermState]
+    [setSearchTermState, debounceMs]
   );
 
   // Clear search

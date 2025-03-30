@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 <!-- Version format: [MAJOR.MINOR.PATCH] - MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes -->
 
+## [0.1.2] - 2025-03-30
+
+### Added
+- Enhanced configuration options with centralized controls:
+  - Added search configuration with customizable placeholder, debounce time, and accessibility labels
+  - Added job listings configuration with customizable page titles, items per page, and sort options
+  - Made search functionality optional on job subpages
+  - Improved sort and pagination with config-driven defaults
+  - Enhanced components to use configuration values with proper fallbacks
+
 ## [0.1.1] - 2025-03-30
 
 ### Changed

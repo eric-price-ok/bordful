@@ -7,47 +7,71 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useSortOrder, SortOption } from "@/lib/hooks/useSortOrder";
-import { useState } from "react";
+import { useSortOrder } from "@/lib/hooks/useSortOrder";
+import config from "@/config";
+
+type SortOption = "newest" | "oldest" | "salary";
+
+// Sort option labels mapping
+const sortOptionLabels: Record<SortOption, string> = {
+  newest: "Newest first",
+  oldest: "Oldest first",
+  salary: "Highest salary",
+};
 
 export function SortOrderSelect() {
   const { sortOrder, setSortOrder } = useSortOrder();
-  const [isUpdating, setIsUpdating] = useState(false);
 
-  const handleValueChange = (value: string) => {
-    setIsUpdating(true);
-    try {
-      setSortOrder(value as SortOption);
-    } catch (error) {
-      console.error("Invalid sort order value:", error);
-    } finally {
-      setIsUpdating(false);
-    }
-  };
+  // Get available sort options from config or use default
+  const availableSortOptions = config.jobListings?.sortOptions || [
+    "newest",
+    "oldest",
+    "salary",
+  ];
+
+  // Get default sort order from config or use "newest"
+  const defaultSortOrder =
+    (config.jobListings?.defaultSortOrder as SortOption) || "newest";
+
+  // Check if current sort is the default
+  const isDefault = sortOrder === defaultSortOrder;
 
   return (
-    <Select
-      value={sortOrder}
-      onValueChange={handleValueChange}
-      disabled={isUpdating}
-    >
-      <SelectTrigger
-        className="w-full sm:w-[140px] h-7 text-xs"
-        aria-label="Select sort order for job listings"
+    <div className="flex items-center gap-2 z-10">
+      <label
+        htmlFor="sort-order"
+        className="text-sm text-muted-foreground whitespace-nowrap"
       >
-        <SelectValue placeholder="Sort by" />
-      </SelectTrigger>
-      <SelectContent className="bg-white" position="popper">
-        <SelectItem value="newest" className="text-xs">
-          Newest first
-        </SelectItem>
-        <SelectItem value="oldest" className="text-xs">
-          Oldest first
-        </SelectItem>
-        <SelectItem value="salary" className="text-xs">
-          Highest salary
-        </SelectItem>
-      </SelectContent>
-    </Select>
+        Sort by:
+      </label>
+      <Select
+        value={sortOrder}
+        onValueChange={(value: SortOption) => {
+          // Only pass null if it's the default value
+          if (value === defaultSortOrder) {
+            setSortOrder(null);
+          } else {
+            setSortOrder(value);
+          }
+        }}
+      >
+        <SelectTrigger id="sort-order" className="w-[140px] h-8 px-3 text-sm">
+          <SelectValue placeholder={sortOptionLabels[defaultSortOrder]} />
+        </SelectTrigger>
+        <SelectContent>
+          {availableSortOptions.map((option) => (
+            <SelectItem
+              key={option}
+              value={option}
+              className={
+                isDefault && option === defaultSortOrder ? "font-medium" : ""
+              }
+            >
+              {sortOptionLabels[option as SortOption]}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 }

@@ -1,20 +1,34 @@
 "use client";
 
-import { parseAsString, useQueryState } from "nuqs";
+import { parseAsString } from "nuqs";
+import { useQueryState } from "nuqs";
+import config from "@/config";
 
-export type SortOption = "newest" | "oldest" | "salary";
+export type SortOrder = "newest" | "oldest" | "salary";
 
 export function useSortOrder() {
-  const [sortOrder, setSortOrder] = useQueryState(
+  // Get default sort order from config or fallback to "newest"
+  const defaultSortOrder =
+    (config.jobListings?.defaultSortOrder as SortOrder) || "newest";
+
+  const [sortOrder, setSortOrderState] = useQueryState(
     "sort",
-    parseAsString.withDefault("newest")
+    parseAsString.withDefault(defaultSortOrder)
   );
 
+  // Validate sort order to ensure it's one of the allowed values
+  const validSortOrder =
+    sortOrder === "newest" || sortOrder === "oldest" || sortOrder === "salary"
+      ? sortOrder
+      : defaultSortOrder;
+
+  // Handle setting sort order with proper null handling
+  const setSortOrder = (value: SortOrder | null) => {
+    setSortOrderState(value === null ? null : value);
+  };
+
   return {
-    sortOrder: sortOrder as SortOption,
-    setSortOrder: (value: SortOption) => {
-      // If value is "newest" (default), remove the parameter from URL
-      setSortOrder(value === "newest" ? null : value);
-    },
+    sortOrder: validSortOrder as SortOrder,
+    setSortOrder,
   };
 }

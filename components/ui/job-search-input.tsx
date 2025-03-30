@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { useJobSearch } from "@/lib/hooks/useJobSearch";
 import { Search, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import config from "@/config";
 
 interface JobSearchInputProps {
   placeholder?: string;
@@ -10,10 +11,19 @@ interface JobSearchInputProps {
 }
 
 export function JobSearchInput({
-  placeholder = "Search by job title, company, or location...",
+  placeholder,
   className = "pl-9 h-10",
-  "aria-label": ariaLabel = "Search jobs",
+  "aria-label": ariaLabel,
 }: JobSearchInputProps) {
+  // Get config values with fallbacks
+  const defaultPlaceholder =
+    config.search?.placeholder || "Search by role, company, or location...";
+  const defaultAriaLabel = config.search?.ariaLabel || "Search jobs";
+
+  // Use provided props or fallback to config values
+  const finalPlaceholder = placeholder || defaultPlaceholder;
+  const finalAriaLabel = ariaLabel || defaultAriaLabel;
+
   const { searchTerm, isSearching, handleSearch, clearSearch } = useJobSearch();
   const [inputValue, setInputValue] = useState(searchTerm || "");
 
@@ -50,12 +60,12 @@ export function JobSearchInput({
       <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <Input
         type="text"
-        placeholder={placeholder}
+        placeholder={finalPlaceholder}
         className={className}
         value={inputValue}
         onChange={onChange}
         onKeyDown={onKeyDown}
-        aria-label={ariaLabel}
+        aria-label={finalAriaLabel}
       />
       {inputValue && (
         <button
