@@ -86,7 +86,7 @@ export function JobCard({ job }: { job: Job }) {
             )}
             <span>•</span>
             <time dateTime={job.posted_date} className="whitespace-nowrap">
-              {relativeTime}
+              {fullDate} ({relativeTime})
             </time>
           </div>
         </div>
