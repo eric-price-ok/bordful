@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.9] - 2025-03-31
+
+### Changed
+- Enhanced mobile responsiveness:
+  - Improved JobCard component for better mobile display
+  - Added text truncation with line-clamp for job titles
+  - Fixed metadata overflow with proper wrapping and whitespace handling
+  - Optimized filter controls layout for small screens
+  - Implemented responsive select widths with proper spacing
+  - Improved touch targets for mobile users
+  - Simplified date display on small screens
+  - Enhanced filter selection UI with horizontal scrolling
+
 ## [0.1.8] - 2025-03-30
 
 ### Changed

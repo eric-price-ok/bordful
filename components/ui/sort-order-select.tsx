@@ -38,7 +38,7 @@ export function SortOrderSelect() {
   const labelText = config.jobListings?.labels?.sortOrder?.text || "Sort by:";
 
   // Adjust width based on whether label is shown
-  const triggerWidth = showLabel ? "w-[110px]" : "w-[140px]";
+  const triggerWidth = "w-[130px] sm:w-[110px]";
 
   return (
     <div className="flex items-center gap-2">
@@ -46,7 +46,7 @@ export function SortOrderSelect() {
       {showLabel && (
         <label
           htmlFor="sort-order-trigger"
-          className="text-sm text-muted-foreground whitespace-nowrap"
+          className="hidden sm:inline text-sm text-muted-foreground whitespace-nowrap"
         >
           {labelText}
         </label>
@@ -69,7 +69,8 @@ export function SortOrderSelect() {
         >
           <SelectValue
             placeholder={
-              showLabel ? "Sort by" : sortOptionLabels[defaultSortOrder]
+              sortOptionLabels[sortOrder as SortOption] ||
+              sortOptionLabels[defaultSortOrder]
             }
           />
         </SelectTrigger>

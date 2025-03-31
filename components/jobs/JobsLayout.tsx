@@ -214,7 +214,7 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
                 {sortedJobs.length.toLocaleString()} positions
               </p>
             </div>
-            <div className="flex items-center gap-3 pb-[1px] w-full sm:w-auto">
+            <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto overflow-x-auto pb-1">
               <JobsPerPageSelect />
               <SortOrderSelect />
             </div>

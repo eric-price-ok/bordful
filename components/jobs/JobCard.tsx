@@ -43,48 +43,56 @@ export function JobCard({ job }: { job: Job }) {
     <div className="group relative">
       <Link
         href={`/jobs/${generateJobSlug(job.title, job.company)}`}
-        className={`block p-5 border rounded-lg transition-all ${
+        className={`block p-4 sm:p-5 border rounded-lg transition-all ${
           job.featured
             ? "bg-zinc-100 hover:bg-zinc-50"
             : "hover:border-gray-400"
         }`}
       >
         <div className="space-y-2">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <h2 className="text-base font-medium">{job.title}</h2>
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <div className="flex items-center gap-2 flex-wrap max-w-full">
+              <h2 className="text-base font-medium line-clamp-2">
+                {job.title}
+              </h2>
               {isNew() && <JobBadge type="new">New</JobBadge>}
             </div>
             {job.featured && (
-              <JobBadge type="featured" icon={<Sparkles className="w-3 h-3" />}>
+              <JobBadge
+                type="featured"
+                icon={<Sparkles className="w-3 h-3" />}
+                className="shrink-0"
+              >
                 Featured
               </JobBadge>
             )}
           </div>
           <div className="text-sm text-gray-600">{job.company}</div>
-          <div className="flex items-center gap-2 text-xs text-gray-500">
-            <span>{job.type}</span>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500">
+            <span className="whitespace-nowrap">{job.type}</span>
             {showSalary && (
               <>
                 <span>•</span>
-                <span>{formatSalary(job.salary, true)}</span>
+                <span className="whitespace-nowrap">
+                  {formatSalary(job.salary, true)}
+                </span>
               </>
             )}
             {location && (
               <>
                 <span>•</span>
-                <span>{location}</span>
+                <span className="whitespace-nowrap">{location}</span>
               </>
             )}
             <span>•</span>
-            <time dateTime={job.posted_date}>
-              {fullDate} ({relativeTime})
+            <time dateTime={job.posted_date} className="whitespace-nowrap">
+              {relativeTime}
             </time>
           </div>
         </div>
       </Link>
       {job.apply_url && (
-        <div className="absolute right-4 bottom-4 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="absolute right-4 bottom-4 opacity-0 group-hover:opacity-100 transition-opacity hidden sm:block">
           <Button
             asChild
             size="xs"

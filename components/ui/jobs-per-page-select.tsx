@@ -28,7 +28,7 @@ export function JobsPerPageSelect() {
     : defaultPerPage;
 
   // Adjust width based on whether label is shown
-  const triggerWidth = showLabel ? "w-[90px]" : "w-[120px]";
+  const triggerWidth = "w-[80px] sm:w-[90px]";
 
   return (
     <div className="flex items-center gap-2">
@@ -36,7 +36,7 @@ export function JobsPerPageSelect() {
       {showLabel && (
         <label
           htmlFor="per-page-trigger"
-          className="text-sm text-muted-foreground whitespace-nowrap"
+          className="hidden sm:inline text-sm text-muted-foreground whitespace-nowrap"
         >
           {labelText}
         </label>
@@ -54,7 +54,7 @@ export function JobsPerPageSelect() {
           aria-label="Select number of jobs to display per page"
         >
           <SelectValue
-            placeholder={showLabel ? "" : `${defaultPerPage} per page`}
+            placeholder={showLabel ? validPerPage : `${validPerPage} per page`}
           />
         </SelectTrigger>
         <SelectContent
