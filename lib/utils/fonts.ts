@@ -36,7 +36,7 @@ export function getFontClass() {
       default:
         return geistSans.variable;
     }
-  } catch (_) {
+  } catch {
     // Fallback to Geist Sans if config is not available
     return geistSans.variable;
   }
@@ -46,7 +46,7 @@ export function getFontClass() {
 export function getBodyClass() {
   try {
     return config?.font?.family === "ibm-plex-serif" ? "font-serif" : "";
-  } catch (_) {
+  } catch {
     return "";
   }
 }
