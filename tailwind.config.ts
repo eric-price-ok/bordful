@@ -9,6 +9,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: [
+          "var(--font-geist-sans)",
+          "var(--font-inter)",
+          "system-ui",
+          "sans-serif",
+        ],
+        serif: ["var(--font-ibm-plex-serif)", "Georgia", "serif"],
+        mono: ["var(--font-geist-mono)", "monospace"],
+      },
       container: {
         center: true,
         padding: "1rem",

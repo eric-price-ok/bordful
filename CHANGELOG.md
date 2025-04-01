@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.10] - 2024-04-01
+
+### Added
+- Enhanced font configuration with multiple font options:
+  - Added support for Geist, Inter, and IBM Plex Serif fonts
+  - Created font utility with dynamic font loading based on configuration
+  - Implemented proper Google Fonts integration for Inter and IBM Plex Serif
+  - Added font-specific CSS variables and Tailwind configuration
+  - Optimized font loading with proper fallbacks and error handling
+  - Added conditional body styling for serif fonts
+
 ## [0.1.9] - 2025-03-31
 
 ### Changed

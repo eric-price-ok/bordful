@@ -24,6 +24,9 @@ import type { ScriptProps } from "next/script";
 import type { BadgeType } from "@/components/ui/job-badge";
 import type { CurrencyCode } from "@/lib/constants/currencies";
 
+// Available font options
+export type FontFamily = "geist" | "inter" | "ibm-plex-serif";
+
 interface CustomScript {
   src: string;
   strategy: ScriptProps["strategy"];
@@ -64,6 +67,21 @@ interface FAQCategory {
 }
 
 export const config = {
+  // Font Configuration
+  font: {
+    // Font family to use throughout the site
+    // Available options: "geist" | "inter" | "ibm-plex-serif"
+    family: "geist" as FontFamily,
+
+    // Whether to load the font from Google Fonts (for Inter and IBM Plex Serif)
+    // Geist is self-hosted by default
+    useGoogleFonts: true,
+
+    // Font weights to load (applies to Google Fonts)
+    // For Geist, the standard weights are loaded automatically
+    weights: [400, 500, 600, 700],
+  },
+
   // Marketing & SEO
   badge: "Open Source Next.js Job Board Starter Kit",
   title: "Discover and Apply to Your Dream Jobs Today",

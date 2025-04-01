@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --font-geist-sans: 'Geist Sans';
+    --font-geist-mono: 'Geist Mono';
+    --font-inter: 'Inter';
+    --font-ibm-plex-serif: 'IBM Plex Serif';
+  }
+}
+
 @layer components {
   .markdown-content {
     @apply prose prose-sm prose-gray max-w-none;

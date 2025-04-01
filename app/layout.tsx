@@ -1,7 +1,5 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
 import { Nav } from "@/components/ui/nav";
 import { Footer } from "@/components/ui/footer";
 import { Toaster } from "@/components/ui/toaster";
@@ -10,6 +8,13 @@ import config from "@/config";
 import { WebsiteSchema } from "@/components/ui/website-schema";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { type ReactNode } from "react";
+import {
+  geistMono,
+  getFontClass,
+  getBodyClass,
+  ibmPlexSerif,
+  inter,
+} from "@/lib/utils/fonts";
 
 interface CustomScript {
   src: string;
@@ -46,8 +51,17 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  // Get font class based on configuration
+  const fontClass = getFontClass();
+
+  // Get appropriate body class
+  const bodyClass = getBodyClass();
+
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${fontClass} ${geistMono.variable} ${inter.variable} ${ibmPlexSerif.variable}`}
+    >
       <head>
         <link
           rel="alternate"
@@ -77,7 +91,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           />
         ))}
       </head>
-      <body>
+      <body className={bodyClass}>
         <div className="flex min-h-screen flex-col">
           <Nav />
           <main className="flex-1">
