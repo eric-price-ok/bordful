@@ -71,7 +71,7 @@ export const config = {
   font: {
     // Font family to use throughout the site
     // Available options: "geist" | "inter" | "ibm-plex-serif"
-    family: "geist" as FontFamily,
+    family: "inter" as FontFamily,
 
     // Whether to load the font from Google Fonts (for Inter and IBM Plex Serif)
     // Geist is self-hosted by default
