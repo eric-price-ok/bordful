@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import config from "@/config";
 
 interface HeroSectionProps {
   badge: string;
@@ -13,8 +14,16 @@ export function HeroSection({
   description,
   children,
 }: HeroSectionProps) {
+  // Get the hero background color from config if available
+  const heroBackgroundColor = config?.ui?.heroBackgroundColor || "";
+
+  // Apply the background color inline if it's set in config
+  const heroStyle = heroBackgroundColor
+    ? { backgroundColor: heroBackgroundColor }
+    : {};
+
   return (
-    <div className="border-b">
+    <div className="border-b" style={heroStyle}>
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-[640px] space-y-6">
           <div className="space-y-4">

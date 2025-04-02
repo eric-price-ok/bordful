@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.11] - 2024-04-02
+
+### Fixed
+- Fixed font configuration implementation:
+  - Resolved Geist font loading issues
+  - Improved font initialization in the application layout
+  - Enhanced font class assignment and configuration handling
+  - Ensured proper font fallback behavior
+  - Verified Google Fonts integration with preconnect links
+
+### Added
+- Added background customization functionality:
+  - Implemented configurable background styles
+  - Added support for custom background colors
+  - Enhanced theme consistency across components
+
 ## [0.1.10] - 2024-04-01
 
 ### Added

@@ -71,7 +71,7 @@ export const config = {
   font: {
     // Font family to use throughout the site
     // Available options: "geist" | "inter" | "ibm-plex-serif"
-    family: "ibm-plex-serif" as FontFamily,
+    family: "geist" as FontFamily,
 
     // Whether to load the font from Google Fonts (for Inter and IBM Plex Serif)
     // IMPORTANT: Must be true for IBM Plex Serif and Inter
@@ -81,6 +81,13 @@ export const config = {
     // Font weights to load (applies to Google Fonts)
     // For Geist, the standard weights are loaded automatically
     weights: [400, 500, 600, 700],
+  },
+
+  // UI Configuration
+  ui: {
+    // Hero section background color (CSS color value)
+    // Can be hex, rgb, hsl, etc. Leave empty for default.
+    heroBackgroundColor: "#f8fafc", // Example: light gray background
   },
 
   // Marketing & SEO
