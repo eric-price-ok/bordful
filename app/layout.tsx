@@ -51,18 +51,42 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  // Get the current font family from config
+  const fontFamily = siteConfig?.font?.family || "geist";
+
   // Get font class based on configuration
-  const fontClass = getFontClass();
+  const fontClass = getFontClass(fontFamily);
 
   // Get appropriate body class
-  const bodyClass = getBodyClass();
+  const bodyClass = getBodyClass(fontFamily);
+
+  // Determine which font variable classes to include
+  const fontClasses = [];
+  // Always add the selected font class first for CSS specificity
+  fontClasses.push(fontClass);
+  // Then add the other fonts
+  fontClasses.push(geistMono.variable);
+  fontClasses.push(inter.variable);
+  fontClasses.push(ibmPlexSerif.variable);
 
   return (
-    <html
-      lang="en"
-      className={`${fontClass} ${geistMono.variable} ${inter.variable} ${ibmPlexSerif.variable}`}
-    >
+    <html lang="en" className={fontClasses.join(" ")} data-font={fontFamily}>
       <head>
+        {/* Add explicit font preloading */}
+        {fontFamily === "ibm-plex-serif" && (
+          <>
+            <link
+              rel="preconnect"
+              href="https://fonts.googleapis.com"
+              crossOrigin="anonymous"
+            />
+            <link
+              rel="preconnect"
+              href="https://fonts.gstatic.com"
+              crossOrigin="anonymous"
+            />
+          </>
+        )}
         <link
           rel="alternate"
           type="application/rss+xml"

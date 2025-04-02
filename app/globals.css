@@ -9,6 +9,11 @@
     --font-inter: 'Inter';
     --font-ibm-plex-serif: 'IBM Plex Serif';
   }
+  
+  /* Font styling for IBM Plex Serif */
+  html[data-font="ibm-plex-serif"] {
+    font-family: var(--font-ibm-plex-serif), Georgia, serif;
+  }
 }
 
 @layer components {

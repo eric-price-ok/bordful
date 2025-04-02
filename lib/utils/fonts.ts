@@ -1,33 +1,34 @@
 import { Inter } from "next/font/google";
 import { IBM_Plex_Serif } from "next/font/google";
 import { GeistSans, GeistMono } from "geist/font";
-import config from "@/config";
 
-// Load Inter font
+// Export Geist fonts (self-hosted)
+export const geistSans = GeistSans;
+export const geistMono = GeistMono;
+
+// Load Google fonts - these are loaded at build time regardless of configuration
+// We don't import config here to avoid circular dependencies
 export const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
   weight: ["400", "500", "600", "700"],
+  preload: true,
 });
 
-// Load IBM Plex Serif font
+// Load IBM Plex Serif font with improved config
 export const ibmPlexSerif = IBM_Plex_Serif({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-ibm-plex-serif",
   weight: ["400", "500", "600", "700"],
+  preload: true,
+  fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
-// Export Geist fonts
-export const geistSans = GeistSans;
-export const geistMono = GeistMono;
-
 // Helper function to get the appropriate font class based on config
-export function getFontClass() {
+export function getFontClass(fontFamily = "geist") {
   try {
-    const fontFamily = config?.font?.family;
-
     switch (fontFamily) {
       case "inter":
         return inter.variable;
@@ -43,9 +44,12 @@ export function getFontClass() {
 }
 
 // Helper function to get appropriate CSS class for body
-export function getBodyClass() {
+export function getBodyClass(fontFamily = "geist") {
   try {
-    return config?.font?.family === "ibm-plex-serif" ? "font-serif" : "";
+    if (fontFamily === "ibm-plex-serif") {
+      return "font-serif";
+    }
+    return "";
   } catch {
     return "";
   }

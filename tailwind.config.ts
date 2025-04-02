@@ -16,7 +16,12 @@ const config: Config = {
           "system-ui",
           "sans-serif",
         ],
-        serif: ["var(--font-ibm-plex-serif)", "Georgia", "serif"],
+        serif: [
+          "var(--font-ibm-plex-serif)",
+          "Georgia",
+          "Times New Roman",
+          "serif",
+        ],
         mono: ["var(--font-geist-mono)", "monospace"],
       },
       container: {
