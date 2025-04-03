@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { PlusCircle, Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import config from "@/config";
+import { resolveColor } from "@/lib/utils/colors";
 
 // Job links for the footer
 const jobLinks = [
@@ -360,7 +361,9 @@ export function Footer() {
                   size="xs"
                   className="gap-1.5 text-xs"
                   variant="primary"
-                  style={{ backgroundColor: config.ui.primaryColor }}
+                  style={{
+                    backgroundColor: resolveColor(config.ui.primaryColor),
+                  }}
                 >
                   <Link
                     href={config.footer.postJob.button.link}

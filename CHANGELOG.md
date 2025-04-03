@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added Button component support for primary color variant
   - Created comprehensive documentation in `docs/theming-customization.md`
   - Implemented DRY approach using centralized color configuration
+  - Added support for Tailwind color patterns (e.g., `slate-500`) in configuration
+  - Created color resolver utility that handles both CSS colors and Tailwind colors
 
 ## [0.1.11] - 2024-04-02
 

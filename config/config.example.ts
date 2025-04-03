@@ -91,7 +91,7 @@ export const config = {
 
     // Primary color used throughout the site (buttons, links, etc.)
     // Can be hex, rgb, hsl, etc. Leave empty for default.
-    primaryColor: "#1e293b", // Example: indigo color
+    primaryColor: "slate-500", // Example: amber color
   },
 
   // Marketing & SEO

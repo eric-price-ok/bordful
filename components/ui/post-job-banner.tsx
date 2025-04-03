@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import config from "@/config";
+import { resolveColor } from "@/lib/utils/colors";
 
 export function PostJobBanner() {
   // Early return if banner is disabled
@@ -46,7 +47,7 @@ export function PostJobBanner() {
         <Button
           className="w-full text-white"
           variant="primary"
-          style={{ backgroundColor: config.ui.primaryColor }}
+          style={{ backgroundColor: resolveColor(config.ui.primaryColor) }}
         >
           {cta.text}
         </Button>

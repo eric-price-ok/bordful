@@ -26,10 +26,21 @@ export const config = {
 };
 ```
 
-The `primaryColor` value can be any valid CSS color value, including:
-- Hexadecimal: `#4f46e5`
-- RGB: `rgb(79, 70, 229)`
-- HSL: `hsl(245, 75%, 59%)`
+The `primaryColor` value can be any of the following:
+
+1. **Standard CSS color values:**
+   - Hexadecimal: `#4f46e5`
+   - RGB: `rgb(79, 70, 229)`
+   - HSL: `hsl(245, 75%, 59%)`
+
+2. **Tailwind color patterns:**
+   - Format: `{color}-{shade}` (e.g., `slate-500`)
+   - Examples:
+     - `indigo-600` (Tailwind's indigo-600 color)
+     - `blue-700` (Tailwind's blue-700 color)
+     - `emerald-500` (Tailwind's emerald-500 color)
+
+Supported Tailwind colors include: slate, gray, zinc, red, orange, amber, yellow, green, emerald, teal, cyan, blue, indigo, purple, and pink, with shades from 50 to 950.
 
 ### Components Using Primary Color
 
@@ -53,26 +64,12 @@ The primary color is automatically applied to the following components:
 
 ### Implementation Details
 
-The primary color is applied using inline styles with React's `style` prop. This approach was chosen because:
+The primary color is applied using a color resolver that handles both direct CSS colors and Tailwind color patterns. This provides flexibility while maintaining a clean configuration.
 
-1. It allows for runtime configuration changes without requiring CSS rebuilds
-2. It works reliably with any valid CSS color value
-3. It avoids potential issues with CSS-in-JS frameworks or Tailwind's JIT engine
-
-For example, here's how the primary color is applied to buttons:
-
-```tsx
-<Button
-  variant="primary"
-  style={{ backgroundColor: config.ui.primaryColor }}
->
-  Button Text
-</Button>
-```
-
-### Customizing Button Variants
-
-The system extends the button component with a new `primary` variant that uses the configured primary color. This variant is used consistently across all primary action buttons.
+The implementation:
+1. Automatically detects if you're using CSS colors (`#hex`, `rgb()`, etc.) or Tailwind patterns (`blue-500`)
+2. Resolves Tailwind patterns to their corresponding hex values
+3. Applies the color consistently across all components
 
 ## Background Customization
 
@@ -84,7 +81,7 @@ export const config = {
   // ... other configuration
   ui: {
     // Hero section background color
-    heroBackgroundColor: "#f8fafc",
+    heroBackgroundColor: "#f8fafc", // Or use "slate-50" as a Tailwind color
     
     // ... other UI configuration
   },

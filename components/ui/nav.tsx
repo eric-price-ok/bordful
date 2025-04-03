@@ -8,6 +8,7 @@ import { PlusCircle, Menu, X, Rss, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect, ReactNode } from "react";
 import { usePathname } from "next/navigation";
+import { resolveColor } from "@/lib/utils/colors";
 
 // Preload the icon for better performance
 const DynamicIcon = dynamic(
@@ -452,7 +453,9 @@ export function Nav() {
                   variant={config.nav.postJob.variant || "default"}
                   style={
                     config.nav.postJob.variant === "primary"
-                      ? { backgroundColor: config.ui.primaryColor }
+                      ? {
+                          backgroundColor: resolveColor(config.ui.primaryColor),
+                        }
                       : undefined
                   }
                 >
@@ -538,7 +541,11 @@ export function Nav() {
                     variant={config.nav.postJob.variant || "default"}
                     style={
                       config.nav.postJob.variant === "primary"
-                        ? { backgroundColor: config.ui.primaryColor }
+                        ? {
+                            backgroundColor: resolveColor(
+                              config.ui.primaryColor
+                            ),
+                          }
                         : undefined
                     }
                   >

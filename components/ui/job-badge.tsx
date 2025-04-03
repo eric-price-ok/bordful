@@ -2,6 +2,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import config from "@/config";
+import { resolveColor } from "@/lib/utils/colors";
 
 export type BadgeType =
   | "new"
@@ -66,7 +67,7 @@ export function JobBadge({
   // Apply inline style for featured badge to use primary color
   const badgeStyle =
     type === "featured"
-      ? { backgroundColor: config.ui.primaryColor }
+      ? { backgroundColor: resolveColor(config.ui.primaryColor) }
       : undefined;
 
   // If href is provided, render as a link

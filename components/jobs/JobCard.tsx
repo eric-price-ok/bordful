@@ -6,6 +6,7 @@ import { Sparkles, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { JobBadge } from "@/components/ui/job-badge";
 import config from "@/config";
+import { resolveColor } from "@/lib/utils/colors";
 
 export function JobCard({ job }: { job: Job }) {
   const { fullDate, relativeTime } = formatDate(job.posted_date);
@@ -99,7 +100,7 @@ export function JobCard({ job }: { job: Job }) {
             size="xs"
             className="gap-1.5 text-xs"
             variant="primary"
-            style={{ backgroundColor: config.ui.primaryColor }}
+            style={{ backgroundColor: resolveColor(config.ui.primaryColor) }}
           >
             <a
               href={job.apply_url}

@@ -15,6 +15,7 @@ import config from "@/config";
 import { generateMetadata as createMetadata } from "@/lib/utils/metadata";
 import { notFound } from "next/navigation";
 import { ClientBreadcrumb } from "@/components/ui/client-breadcrumb";
+import { resolveColor } from "@/lib/utils/colors";
 
 // Generate static params for all active jobs
 export async function generateStaticParams() {
@@ -228,7 +229,9 @@ export default async function JobPostPage({
                   size="xs"
                   className="gap-1.5 text-xs w-full sm:w-auto"
                   variant="primary"
-                  style={{ backgroundColor: config.ui.primaryColor }}
+                  style={{
+                    backgroundColor: resolveColor(config.ui.primaryColor),
+                  }}
                 >
                   <a
                     href={job.apply_url}
@@ -308,7 +311,9 @@ export default async function JobPostPage({
                 size="xs"
                 className="gap-1.5 text-xs w-full sm:w-auto"
                 variant="primary"
-                style={{ backgroundColor: config.ui.primaryColor }}
+                style={{
+                  backgroundColor: resolveColor(config.ui.primaryColor),
+                }}
               >
                 <a
                   href={job.apply_url}
