@@ -43,7 +43,11 @@ export function PostJobBanner() {
         target={cta.external ? "_blank" : undefined}
         rel={cta.external ? "noopener noreferrer" : undefined}
       >
-        <Button className="w-full bg-zinc-900 text-white hover:bg-zinc-800">
+        <Button
+          className="w-full text-white"
+          variant="primary"
+          style={{ backgroundColor: config.ui.primaryColor }}
+        >
           {cta.text}
         </Button>
       </a>

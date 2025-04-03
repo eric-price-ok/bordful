@@ -358,7 +358,9 @@ export function Footer() {
                 <Button
                   asChild
                   size="xs"
-                  className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs"
+                  className="gap-1.5 text-xs"
+                  variant="primary"
+                  style={{ backgroundColor: config.ui.primaryColor }}
                 >
                   <Link
                     href={config.footer.postJob.button.link}

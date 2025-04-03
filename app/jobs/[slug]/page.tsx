@@ -226,7 +226,9 @@ export default async function JobPostPage({
                 <Button
                   asChild
                   size="xs"
-                  className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs w-full sm:w-auto"
+                  className="gap-1.5 text-xs w-full sm:w-auto"
+                  variant="primary"
+                  style={{ backgroundColor: config.ui.primaryColor }}
                 >
                   <a
                     href={job.apply_url}
@@ -304,7 +306,9 @@ export default async function JobPostPage({
               <Button
                 asChild
                 size="xs"
-                className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs w-full sm:w-auto"
+                className="gap-1.5 text-xs w-full sm:w-auto"
+                variant="primary"
+                style={{ backgroundColor: config.ui.primaryColor }}
               >
                 <a
                   href={job.apply_url}

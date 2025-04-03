@@ -5,6 +5,7 @@ import { generateJobSlug } from "@/lib/utils/slugify";
 import { Sparkles, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { JobBadge } from "@/components/ui/job-badge";
+import config from "@/config";
 
 export function JobCard({ job }: { job: Job }) {
   const { fullDate, relativeTime } = formatDate(job.posted_date);
@@ -96,7 +97,9 @@ export function JobCard({ job }: { job: Job }) {
           <Button
             asChild
             size="xs"
-            className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs"
+            className="gap-1.5 text-xs"
+            variant="primary"
+            style={{ backgroundColor: config.ui.primaryColor }}
           >
             <a
               href={job.apply_url}

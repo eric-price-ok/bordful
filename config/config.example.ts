@@ -88,6 +88,10 @@ export const config = {
     // Hero section background color (CSS color value)
     // Can be hex, rgb, hsl, etc. Leave empty for default.
     heroBackgroundColor: "#f8fafc", // Example: light gray background
+
+    // Primary color used throughout the site (buttons, links, etc.)
+    // Can be hex, rgb, hsl, etc. Leave empty for default.
+    primaryColor: "#1e293b", // Example: indigo color
   },
 
   // Marketing & SEO
@@ -438,6 +442,13 @@ export const config = {
       label: "Post a Job", // Button text
       link: "https://stripe.com", // Button link
       external: true, // Indicates the link is external (opens in a new tab)
+      variant: "primary" as
+        | "default"
+        | "primary"
+        | "outline"
+        | "secondary"
+        | "ghost"
+        | "link", // Button variant
     },
     topMenu: [
       { label: "Home", link: "/" },

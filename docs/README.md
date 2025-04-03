@@ -1,6 +1,24 @@
 # Bordful Documentation
 
-Welcome to the Bordful documentation. This guide will help you understand and use the various features of the Bordful job board platform.
+This directory contains the documentation for setting up and customizing your Bordful job board.
+
+## Getting Started
+
+- **[Deployment](./deployment.md)**: Instructions for deploying your job board
+- **[Job Alerts Configuration](./job-alerts-configuration.md)**: How to set up and customize job alerts
+- **[Email Providers](./email-providers.md)**: Configuring email providers for notifications
+- **[Encharge Integration](./encharge-integration.md)**: Detailed guide for setting up Encharge
+
+## Customization
+
+- **[Theming and Color Customization](./theming-customization.md)**: Configure primary colors and theming
+- **[Post Job Banner](./post-job-banner.md)**: Customize the "Post a Job" banner
+- **[Currencies](./currencies.md)**: Configure and customize currency display
+
+## Advanced Features
+
+- **[Schema Implementation](./schema-implementation.md)**: Structured data for better SEO
+- **[Rate Limiting](./rate-limiting.md)**: Protect your API endpoints from abuse
 
 ## Table of Contents
 

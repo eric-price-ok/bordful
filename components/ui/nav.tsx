@@ -50,13 +50,21 @@ interface DropdownItemProps {
 }
 
 // Reusable navigation link component
-function NavLink({ href, isActive, onClick, children, className = "" }: NavLinkProps) {
+function NavLink({
+  href,
+  isActive,
+  onClick,
+  children,
+  className = "",
+}: NavLinkProps) {
   const baseClasses = "text-sm px-2.5 py-1 rounded-lg transition-colors";
   const activeClasses = "text-zinc-900 bg-zinc-100";
   const inactiveClasses = "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50";
-  
-  const linkClasses = `${baseClasses} ${isActive ? activeClasses : inactiveClasses} ${className}`;
-  
+
+  const linkClasses = `${baseClasses} ${
+    isActive ? activeClasses : inactiveClasses
+  } ${className}`;
+
   return (
     <Link href={href} className={linkClasses} onClick={onClick}>
       {children}
@@ -80,13 +88,20 @@ function SocialLink({ href, label, children }: SocialLinkProps) {
 }
 
 // Dropdown menu item component
-function DropdownItem({ href, isActive, onClick, children }: DropdownItemProps) {
+function DropdownItem({
+  href,
+  isActive,
+  onClick,
+  children,
+}: DropdownItemProps) {
   const baseClasses = "block px-4 py-2 text-sm";
   const activeClasses = "bg-zinc-100 text-zinc-900";
   const inactiveClasses = "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900";
-  
-  const itemClasses = `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`;
-  
+
+  const itemClasses = `${baseClasses} ${
+    isActive ? activeClasses : inactiveClasses
+  }`;
+
   return (
     <Link href={href} className={itemClasses} onClick={onClick} role="menuitem">
       {children}
@@ -202,7 +217,7 @@ export function Nav() {
             <Rss className="h-4 w-4" aria-hidden="true" />
           </SocialLink>
         )}
-        
+
         {config.nav.github.show && (
           <SocialLink href={config.nav.github.url} label="View on GitHub">
             <svg
@@ -219,9 +234,12 @@ export function Nav() {
             </svg>
           </SocialLink>
         )}
-        
+
         {config.nav.linkedin.show && (
-          <SocialLink href={config.nav.linkedin.url} label="Follow us on LinkedIn">
+          <SocialLink
+            href={config.nav.linkedin.url}
+            label="Follow us on LinkedIn"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -236,9 +254,12 @@ export function Nav() {
             </svg>
           </SocialLink>
         )}
-        
+
         {config.nav.twitter.show && (
-          <SocialLink href={config.nav.twitter.url} label="Follow us on X (Twitter)">
+          <SocialLink
+            href={config.nav.twitter.url}
+            label="Follow us on X (Twitter)"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -253,9 +274,12 @@ export function Nav() {
             </svg>
           </SocialLink>
         )}
-        
+
         {config.nav.bluesky.show && (
-          <SocialLink href={config.nav.bluesky.url} label="Follow us on Bluesky">
+          <SocialLink
+            href={config.nav.bluesky.url}
+            label="Follow us on Bluesky"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
@@ -266,7 +290,7 @@ export function Nav() {
             </svg>
           </SocialLink>
         )}
-        
+
         {config.nav.reddit.show && (
           <SocialLink href={config.nav.reddit.url} label="Follow us on Reddit">
             <svg
@@ -404,9 +428,9 @@ export function Nav() {
 
                 // Regular menu items
                 return (
-                  <NavLink 
-                    key={link} 
-                    href={link} 
+                  <NavLink
+                    key={link}
+                    href={link}
                     isActive={isActivePath(link)}
                     onClick={() => {}}
                   >
@@ -419,12 +443,18 @@ export function Nav() {
             {/* Actions */}
             <div className="flex items-center space-x-6" aria-label="Actions">
               {renderSocialLinks()}
-              
+
               {config.nav.postJob.show && (
                 <Button
                   asChild
                   size="xs"
-                  className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs"
+                  className={`gap-1.5 text-xs`}
+                  variant={config.nav.postJob.variant || "default"}
+                  style={
+                    config.nav.postJob.variant === "primary"
+                      ? { backgroundColor: config.ui.primaryColor }
+                      : undefined
+                  }
                 >
                   <Link
                     href={config.nav.postJob.link}
@@ -504,7 +534,13 @@ export function Nav() {
                   <Button
                     asChild
                     size="sm"
-                    className="w-full bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5"
+                    className={`w-full gap-1.5`}
+                    variant={config.nav.postJob.variant || "default"}
+                    style={
+                      config.nav.postJob.variant === "primary"
+                        ? { backgroundColor: config.ui.primaryColor }
+                        : undefined
+                    }
                   >
                     <Link
                       href={config.nav.postJob.link}

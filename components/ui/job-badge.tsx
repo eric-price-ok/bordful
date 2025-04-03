@@ -1,6 +1,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import config from "@/config";
 
 export type BadgeType =
   | "new"
@@ -38,7 +39,7 @@ export function JobBadge({
     remote: "bg-green-50 border-green-100 border text-green-700",
     onsite: "bg-red-50 border-red-100 border text-red-700",
     hybrid: "bg-blue-50 border-blue-100 border text-blue-700",
-    featured: "bg-zinc-900 text-zinc-50",
+    featured: "text-zinc-50",
     default: "bg-white border text-gray-700",
     "not specified": "bg-white border text-gray-700",
     "visa-yes": "bg-green-50 border-green-100 border text-green-700",
@@ -62,10 +63,20 @@ export function JobBadge({
 
   const styles = cn(featuredStyles, badgeStyles[type], hoverStyles, className);
 
+  // Apply inline style for featured badge to use primary color
+  const badgeStyle =
+    type === "featured"
+      ? { backgroundColor: config.ui.primaryColor }
+      : undefined;
+
   // If href is provided, render as a link
   if (href) {
     return (
-      <Link href={href} className={cn(styles, "cursor-pointer")}>
+      <Link
+        href={href}
+        className={cn(styles, "cursor-pointer")}
+        style={badgeStyle}
+      >
         {icon && <span className="mr-1">{icon}</span>}
         {children}
       </Link>
@@ -74,7 +85,7 @@ export function JobBadge({
 
   // Regular badge (non-clickable)
   return (
-    <span className={styles}>
+    <span className={styles} style={badgeStyle}>
       {icon && <span className="mr-1">{icon}</span>}
       {children}
     </span>
