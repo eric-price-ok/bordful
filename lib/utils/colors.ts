@@ -201,6 +201,9 @@ const tailwindColors: Record<string, Record<number, string>> = {
   },
 };
 
+// Default color to use when no color is specified or for fallback
+const DEFAULT_COLOR = "#09090b"; // zinc-900
+
 /**
  * Resolves a color value from either a direct CSS color or a Tailwind color name
  *
@@ -209,9 +212,13 @@ const tailwindColors: Record<string, Record<number, string>> = {
  * - "rgb(255, 0, 0)" -> "rgb(255, 0, 0)" (direct pass-through)
  * - "slate-500" -> "#64748b" (tailwind lookup)
  * - "blue-700" -> "#1d4ed8" (tailwind lookup)
+ *
+ * @param color Color value to resolve
+ * @returns Resolved CSS color value
  */
-export function resolveColor(color: string): string {
-  if (!color) return "";
+export function resolveColor(color?: string): string {
+  // If color is undefined, empty or null, return the default color
+  if (!color) return DEFAULT_COLOR;
 
   // If it starts with #, rgb, rgba, hsl, etc., it's already a CSS color
   if (/^(#|rgb|rgba|hsl|hsla)/.test(color)) {
@@ -230,9 +237,13 @@ export function resolveColor(color: string): string {
     }
   }
 
-  // If not found or not a valid pattern, return the original
-  console.warn(
-    `Color "${color}" not recognized as a Tailwind color. Using as-is.`
-  );
-  return color;
+  // If not found or not a valid pattern, return the original or default
+  // Only log a warning in development
+  if (process.env.NODE_ENV === "development") {
+    console.warn(
+      `Color "${color}" not recognized as a Tailwind color. Using as-is.`
+    );
+  }
+
+  return color || DEFAULT_COLOR;
 }
