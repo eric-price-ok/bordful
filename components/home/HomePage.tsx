@@ -19,6 +19,7 @@ import { PaginationControl } from "@/components/ui/pagination-control";
 import { JobSearchInput } from "@/components/ui/job-search-input";
 import { useJobSearch } from "@/lib/hooks/useJobSearch";
 import { filterJobsBySearch } from "@/lib/utils/filter-jobs";
+import { cn } from "@/lib/utils"; // Import cn utility
 
 type Filters = {
   types: string[];
@@ -329,15 +330,15 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
   const startIndex = (page - 1) * jobsPerPage;
   const paginatedJobs = sortedJobs.slice(startIndex, startIndex + jobsPerPage);
 
-  // Get the most recent job's posted date
-  const lastUpdated = useMemo(() => {
-    if (initialJobs.length === 0) return "No jobs yet";
+  // Get the most recent job's posted date (timestamp or null)
+  const lastUpdatedTimestamp = useMemo(() => {
+    if (initialJobs.length === 0) return null;
 
     const mostRecentDate = Math.max(
       ...initialJobs.map((job) => new Date(job.posted_date).getTime())
     );
 
-    return formatDistanceToNow(mostRecentDate, { addSuffix: true });
+    return mostRecentDate; // Return the timestamp
   }, [initialJobs]);
 
   // Calculate jobs added today
@@ -358,13 +359,25 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
           <JobSearchInput />
         </div>
 
-        {/* Quick Stats - Use configuration values */}
+        {/* Quick Stats - Reverted to original structure with color customization */}
         {(config.quickStats?.enabled ?? true) && (
-          <div className="grid grid-cols-3 gap-4 text-xs text-muted-foreground max-w-[480px]">
+          <div
+            className="mt-6 grid grid-cols-3 gap-4 text-xs text-muted-foreground max-w-[480px]"
+            // Apply base color here, specific elements might override
+            style={{ color: config.ui.heroStatsColor || undefined }}
+          >
             {/* Open Jobs */}
             {(config.quickStats?.sections?.openJobs?.enabled ?? true) && (
               <div>
-                <div className="font-medium text-foreground">
+                <div
+                  className="font-medium text-foreground"
+                  // Override title color if heroStatsColor is set
+                  style={{
+                    color:
+                      config.ui.heroStatsColor ||
+                      undefined /* Default: text-foreground */,
+                  }}
+                >
                   {config.quickStats?.sections?.openJobs?.title || "Open Jobs"}
                 </div>
                 <div className="flex items-center">
@@ -374,12 +387,17 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
                     jobsAddedToday > 0 && (
                       <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 pulse-dot"></span>
                     )}
-                  {initialJobs.length.toLocaleString()}
+                  <span /* Value inherits color from parent div */>
+                    {initialJobs.length.toLocaleString()}
+                  </span>
                   {(config.quickStats?.sections?.openJobs
                     ?.showNewJobsIndicator ??
                     true) &&
                     jobsAddedToday > 0 && (
-                      <span className="ml-1">
+                      <span
+                        className="ml-1"
+                        /* Added today text inherits color */
+                      >
                         ({jobsAddedToday.toLocaleString()} added today)
                       </span>
                     )}
@@ -388,23 +406,42 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
             )}
 
             {/* Last Updated */}
-            {(config.quickStats?.sections?.lastUpdated?.enabled ?? true) && (
-              <div>
-                <div className="font-medium text-foreground">
-                  {config.quickStats?.sections?.lastUpdated?.title ||
-                    "Last Updated"}
+            {(config.quickStats?.sections?.lastUpdated?.enabled ?? true) &&
+              lastUpdatedTimestamp && ( // Ensure timestamp exists
+                <div>
+                  <div
+                    className="font-medium text-foreground"
+                    style={{
+                      color:
+                        config.ui.heroStatsColor ||
+                        undefined /* Default: text-foreground */,
+                    }}
+                  >
+                    {config.quickStats?.sections?.lastUpdated?.title ||
+                      "Last Updated"}
+                  </div>
+                  <div /* Value inherits color */>
+                    {formatDistanceToNow(new Date(lastUpdatedTimestamp), {
+                      addSuffix: true,
+                    })}
+                  </div>
                 </div>
-                <div>{lastUpdated}</div>
-              </div>
-            )}
+              )}
 
             {/* Trending Companies */}
             {(config.quickStats?.sections?.trending?.enabled ?? true) && (
               <div>
-                <div className="font-medium text-foreground">
+                <div
+                  className="font-medium text-foreground"
+                  style={{
+                    color:
+                      config.ui.heroStatsColor ||
+                      undefined /* Default: text-foreground */,
+                  }}
+                >
                   {config.quickStats?.sections?.trending?.title || "Trending"}
                 </div>
-                <div>
+                <div /* Value inherits color */>
                   {Array.from(new Set(initialJobs.map((job) => job.company)))
                     .slice(
                       0,

@@ -87,7 +87,40 @@ export const config = {
   ui: {
     // Hero section background color (CSS color value)
     // Can be hex, rgb, hsl, etc. Leave empty for default.
-    heroBackgroundColor: "#f8fafc", // Example: light gray background
+    heroBackgroundColor: "#005450", // Example: light gray background
+
+    // Hero section main title color (CSS color value)
+    // Can be hex, rgb, hsl, etc. Leave empty for default.
+    heroTitleColor: "#fff", // Example: "text-gray-900"
+
+    // Hero section subtitle color (CSS color value)
+    // Can be hex, rgb, hsl, etc. Leave empty for default.
+    heroSubtitleColor: "#fff", // Example: "text-gray-600"
+
+    // Hero section stats text color (CSS color value)
+    // Can be hex, rgb, hsl, etc. Leave empty for default.
+    heroStatsColor: "#fff", // Example: "text-gray-500"
+
+    // Hero Badge variant (controls base style)
+    // Options: "default", "secondary", "outline", "destructive"
+    heroBadgeVariant: "outline" as
+      | "default"
+      | "secondary"
+      | "outline"
+      | "destructive",
+
+    // Hero Badge custom Tailwind classes (for specific color styling)
+    // Example: "bg-teal-100 text-teal-800 border-teal-200"
+    // heroBadgeClassName: "bg-white", // REMOVED for V1 simplicity
+
+    // Optional: Override badge background color (CSS color value)
+    heroBadgeBgColor: "#fff", // Example: "#ffffff"
+
+    // Optional: Override badge text color (CSS color value)
+    heroBadgeTextColor: "#005450", // Example: "#005450"
+
+    // Optional: Override badge border color (CSS color value, mainly for outline variant)
+    heroBadgeBorderColor: "#fff", // Example: "#ffffff"
 
     // Primary color used throughout the site (buttons, links, etc.)
     // Can be hex, rgb, hsl, etc. Leave empty for default.
