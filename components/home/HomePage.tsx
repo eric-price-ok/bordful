@@ -19,7 +19,6 @@ import { PaginationControl } from "@/components/ui/pagination-control";
 import { JobSearchInput } from "@/components/ui/job-search-input";
 import { useJobSearch } from "@/lib/hooks/useJobSearch";
 import { filterJobsBySearch } from "@/lib/utils/filter-jobs";
-import { cn } from "@/lib/utils"; // Import cn utility
 
 type Filters = {
   types: string[];
