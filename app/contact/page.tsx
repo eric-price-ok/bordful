@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { SupportChannelCard } from "@/components/contact/SupportChannelCard";
 import { ContactInfoSection } from "@/components/contact/ContactInfoSection";
 import { ContactSchema } from "@/components/ui/contact-schema";
+import { resolveColor } from "@/lib/utils/colors";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -55,7 +56,12 @@ export default function ContactPage() {
           </h1>
           <p className="mb-6">The contact page is currently not available.</p>
           <Link href="/">
-            <Button>Return Home</Button>
+            <Button
+              variant="primary"
+              style={{ backgroundColor: resolveColor(config.ui.primaryColor) }}
+            >
+              Return Home
+            </Button>
           </Link>
         </div>
       </main>

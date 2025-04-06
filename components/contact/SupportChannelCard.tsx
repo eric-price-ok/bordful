@@ -19,6 +19,8 @@ import {
   Rss,
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
+import config from "@/config";
+import { resolveColor } from "@/lib/utils/colors";
 
 interface SupportChannelCardProps {
   title: string;
@@ -68,7 +70,9 @@ export function SupportChannelCard({
         <Button
           asChild
           size="xs"
-          className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs w-full"
+          variant="primary"
+          className="gap-1.5 text-xs w-full"
+          style={{ backgroundColor: resolveColor(config.ui.primaryColor) }}
         >
           <Link
             href={buttonLink}

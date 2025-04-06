@@ -6,6 +6,8 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import config from "@/config";
+import { resolveColor } from "@/lib/utils/colors";
 
 interface ContactInfoSectionProps {
   title: string;
@@ -24,6 +26,8 @@ export function ContactInfoSection({
   phone,
   address,
 }: ContactInfoSectionProps) {
+  const primaryColor = resolveColor(config.ui.primaryColor);
+
   return (
     <Card className="border-zinc-200">
       <CardHeader className="pb-4">
@@ -42,7 +46,8 @@ export function ContactInfoSection({
             <Mail className="h-4 w-4 text-zinc-500" />
             <a
               href={`mailto:${email}`}
-              className="text-zinc-700 hover:text-zinc-900 hover:underline text-sm"
+              className="text-sm hover:underline"
+              style={{ color: primaryColor }}
             >
               {email}
             </a>
@@ -52,7 +57,8 @@ export function ContactInfoSection({
             <Phone className="h-4 w-4 text-zinc-500" />
             <a
               href={`tel:${phone.replace(/\D/g, "")}`}
-              className="text-zinc-700 hover:text-zinc-900 hover:underline text-sm"
+              className="text-sm hover:underline"
+              style={{ color: primaryColor }}
             >
               {phone}
             </a>

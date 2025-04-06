@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { JobBadge } from "@/components/ui/job-badge";
 import config from "@/config";
 import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
+import { resolveColor } from "@/lib/utils/colors";
 
 // Format a billing term for display
 const formatPricingBillingTerm = (billingTerm: string): string => {
@@ -122,12 +123,17 @@ export default function PricingPage() {
                       asChild
                       size="xs"
                       variant={
-                        plan.cta.variant === "outline" ? "outline" : "default"
+                        plan.cta.variant === "outline" ? "outline" : "primary"
                       }
-                      className={
+                      className="gap-1.5 text-xs w-full"
+                      style={
                         plan.cta.variant !== "outline"
-                          ? "bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs w-full"
-                          : "gap-1.5 text-xs w-full"
+                          ? {
+                              backgroundColor: resolveColor(
+                                config.ui.primaryColor
+                              ),
+                            }
+                          : undefined
                       }
                     >
                       <Link

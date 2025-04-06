@@ -6,6 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { CheckCircle, RefreshCw, ArrowRight } from "lucide-react";
+import { resolveColor } from "@/lib/utils/colors";
+import config from "@/config";
 import {
   Card,
   CardHeader,
@@ -180,8 +182,13 @@ export function JobAlertsForm() {
             <CardFooter>
               <Button
                 type="submit"
-                className="w-full bg-zinc-900 text-white hover:bg-zinc-800"
+                variant="primary"
+                size="xs"
+                className="w-full gap-1.5 text-xs"
                 disabled={isSubmitting}
+                style={{
+                  backgroundColor: resolveColor(config.ui.primaryColor),
+                }}
               >
                 {isSubmitting ? (
                   <>

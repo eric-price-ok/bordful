@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.15] - 2024-04-06
+
+### Changed
+- Enhanced button styling consistency throughout the application:
+  - Updated buttons on the FAQ page with primary color and arrow icon
+  - Applied primary color styling to About page contact buttons
+  - Updated Contact page buttons (SupportChannelCard and "Return Home") to use primary color
+  - Enhanced email and phone links in ContactInfoSection to use primary color
+  - Updated "View Jobs" buttons on category cards to use primary color when hovered
+  - Ensured visual consistency across all interactive elements using the configured primary color
+
 ## [0.1.14] - 2024-04-06
 
 ### Added

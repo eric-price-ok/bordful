@@ -5,6 +5,8 @@ import { HeroSection } from "@/components/ui/hero-section";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { AboutSchema } from "@/components/ui/about-schema";
+import { ArrowRight } from "lucide-react";
+import { resolveColor } from "@/lib/utils/colors";
 
 // Add metadata for SEO
 export const metadata: Metadata = {
@@ -49,7 +51,12 @@ export default function AboutPage() {
           <h1 className="text-2xl font-bold mb-4">About Page Not Available</h1>
           <p className="mb-6">The about page is currently not available.</p>
           <Link href="/">
-            <Button>Return Home</Button>
+            <Button
+              variant="primary"
+              style={{ backgroundColor: resolveColor(config.ui.primaryColor) }}
+            >
+              Return Home
+            </Button>
           </Link>
         </div>
       </main>
@@ -127,10 +134,17 @@ export default function AboutPage() {
                   <Link href={config.about.contact.url}>
                     <Button
                       size="xs"
-                      className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs"
-                      variant={config.about.contact.variant || "default"}
+                      variant="primary"
+                      className="gap-1.5 text-xs"
+                      style={{
+                        backgroundColor: resolveColor(config.ui.primaryColor),
+                      }}
                     >
                       {config.about.contact.label}
+                      <ArrowRight
+                        className="h-3.5 w-3.5 ml-1"
+                        aria-hidden="true"
+                      />
                     </Button>
                   </Link>
                 </div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
-import { Search, Link as LinkIcon, X } from "lucide-react";
+import { Search, Link as LinkIcon, X, ArrowRight } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -17,6 +17,8 @@ import remarkBreaks from "remark-breaks";
 import { useRouter, useSearchParams } from "next/navigation";
 import { slugify } from "@/lib/utils/slugify";
 import type { FAQPage, WithContext, Question, Answer } from "schema-dts";
+import { resolveColor } from "@/lib/utils/colors";
+import config from "@/config";
 
 // Define the types based on the config
 interface FAQItem {
@@ -293,6 +295,20 @@ export function FAQContent({ categories }: FAQContentProps) {
                             <div className="markdown-content">
                               <ReactMarkdown
                                 remarkPlugins={[remarkGfm, remarkBreaks]}
+                                components={{
+                                  // Apply primary color to all links in markdown content
+                                  a: ({ node, ...props }) => (
+                                    <a
+                                      {...props}
+                                      style={{
+                                        color: resolveColor(
+                                          config.ui.primaryColor
+                                        ),
+                                      }}
+                                      className="underline hover:opacity-80 transition-opacity"
+                                    />
+                                  ),
+                                }}
                               >
                                 {item.answer}
                               </ReactMarkdown>
@@ -322,9 +338,14 @@ export function FAQContent({ categories }: FAQContentProps) {
           <Button
             asChild
             size="xs"
-            className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs"
+            variant="primary"
+            className="gap-1.5 text-xs"
+            style={{ backgroundColor: resolveColor(config.ui.primaryColor) }}
           >
-            <Link href="/about">Contact</Link>
+            <Link href="/about">
+              Contact
+              <ArrowRight className="h-3.5 w-3.5 ml-1" aria-hidden="true" />
+            </Link>
           </Button>
         </div>
       </div>

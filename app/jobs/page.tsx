@@ -27,6 +27,7 @@ import { generateMetadata } from "@/lib/utils/metadata";
 import { MetadataBreadcrumb } from "@/components/ui/metadata-breadcrumb";
 import Script from "next/script";
 import type { ItemList, WithContext, ListItem } from "schema-dts";
+import { resolveColor } from "@/lib/utils/colors";
 
 // Generate metadata for SEO
 export const metadata: Metadata = generateMetadata({
@@ -81,7 +82,9 @@ function CategoryCard({ href, title, count }: CategoryCardProps) {
         <Button
           asChild
           size="xs"
-          className="bg-zinc-900 text-white hover:bg-zinc-800 gap-1.5 text-xs hidden sm:inline-flex"
+          variant="primary"
+          className="gap-1.5 text-xs hidden sm:inline-flex"
+          style={{ backgroundColor: resolveColor(config.ui.primaryColor) }}
         >
           <Link href={href} aria-label={`View all ${title} positions`}>
             View Jobs
