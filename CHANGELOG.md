@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added `heroSearchBgColor` config option for search input background
 - Updated `JobSearchInput` component to apply this configuration using inline styles
+- Added configurable hero section image (`ui.heroImage` in config)
+- Updated `HeroSection` component to display image on the right with responsive layout
 
 ## [0.1.13] - 2024-04-05
 

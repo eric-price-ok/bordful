@@ -128,6 +128,13 @@ export const config = {
     // Primary color used throughout the site (buttons, links, etc.)
     // Can be hex, rgb, hsl, etc. Leave empty for default.
     primaryColor: "#005450", // Example: amber color
+
+    // Optional: Configure an image for the right side of the hero section
+    heroImage: {
+      enabled: true, // Set to false to disable the image
+      src: "/office.jpg", // Path to the image (place in /public folder)
+      alt: "Hero section illustration", // Alt text for accessibility
+    },
   },
 
   // Marketing & SEO
