@@ -297,7 +297,7 @@ export function FAQContent({ categories }: FAQContentProps) {
                                 remarkPlugins={[remarkGfm, remarkBreaks]}
                                 components={{
                                   // Apply primary color to all links in markdown content
-                                  a: ({ node, ...props }) => (
+                                  a: ({ ...props }) => (
                                     <a
                                       {...props}
                                       style={{
