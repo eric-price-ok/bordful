@@ -122,6 +122,9 @@ export const config = {
     // Optional: Override badge border color (CSS color value, mainly for outline variant)
     heroBadgeBorderColor: "#fff", // Example: "#ffffff"
 
+    // Optional: Set search input background color (CSS color value)
+    heroSearchBgColor: "#fff", // Example: "#ffffff"
+
     // Primary color used throughout the site (buttons, links, etc.)
     // Can be hex, rgb, hsl, etc. Leave empty for default.
     primaryColor: "#005450", // Example: amber color

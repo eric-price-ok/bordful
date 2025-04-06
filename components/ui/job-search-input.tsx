@@ -57,6 +57,9 @@ export function JobSearchInput({
     clearSearch();
   };
 
+  // Get hero search background color from config
+  const heroSearchBgColor = config?.ui?.heroSearchBgColor || "";
+
   return (
     <div className="relative">
       <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -68,6 +71,7 @@ export function JobSearchInput({
         onChange={onChange}
         onKeyDown={onKeyDown}
         aria-label={finalAriaLabel}
+        style={{ backgroundColor: heroSearchBgColor || undefined }}
       />
       {inputValue && (
         <button
