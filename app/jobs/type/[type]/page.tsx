@@ -82,6 +82,7 @@ export default async function JobTypePage({ params }: Props) {
         description={`Browse ${filteredJobs.length.toLocaleString()} ${
           filteredJobs.length === 1 ? "position" : "positions"
         } for ${displayName.toLowerCase()} roles. ${description}`}
+        heroImage={config.jobsPages?.dynamicPages?.type?.heroImage}
       >
         {/* Search Bar */}
         <div className="max-w-[480px]">

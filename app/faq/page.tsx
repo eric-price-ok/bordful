@@ -64,6 +64,7 @@ export default function FAQPage() {
         badge={config.faq.badge || "FAQ"}
         title={config.faq.title}
         description={config.faq.description}
+        heroImage={config.faq.heroImage}
       />
 
       {/* FAQ Content */}

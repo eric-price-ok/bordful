@@ -83,6 +83,7 @@ export default function AboutPage() {
         badge={config.about.badge || "About Us"}
         title={config.about.title}
         description={config.about.description}
+        heroImage={config.about.heroImage}
       />
 
       {/* About Content */}

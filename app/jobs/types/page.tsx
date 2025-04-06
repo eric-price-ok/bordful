@@ -83,6 +83,7 @@ export default async function JobTypesPage() {
         badge="Job Types"
         title="Browse Jobs by Type"
         description={`Explore ${jobs.length.toLocaleString()} open positions across different employment types. Find the perfect role that matches your preferences.`}
+        heroImage={config.jobsPages?.types?.heroImage}
       />
 
       <main className="container py-6 sm:py-8">

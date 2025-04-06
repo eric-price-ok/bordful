@@ -98,6 +98,7 @@ export default async function CareerLevelsPage() {
         badge="Career Levels"
         title="Browse Jobs by Career Level"
         description={`Explore ${jobs.length.toLocaleString()} open positions across different experience levels. Find the perfect role that matches your career stage.`}
+        heroImage={config.jobsPages?.levels?.heroImage}
       />
 
       <main className="container py-6 sm:py-8">

@@ -72,6 +72,7 @@ export default async function LanguagePage({ params }: Props) {
         description={`Browse ${filteredJobs.length.toLocaleString()} ${
           filteredJobs.length === 1 ? "position" : "positions"
         } requiring ${displayName} language skills. Find the perfect role that matches your language abilities.`}
+        heroImage={config.jobsPages?.dynamicPages?.language?.heroImage}
       >
         {/* Search Bar */}
         <div className="max-w-[480px]">

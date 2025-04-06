@@ -82,6 +82,7 @@ export default async function LanguagesPage() {
         badge="Languages"
         title="Browse Jobs by Language"
         description={`Explore ${jobs.length.toLocaleString()} open positions across different language requirements. Find the perfect role that matches your language skills.`}
+        heroImage={config.jobsPages?.languages?.heroImage}
       />
 
       <main className="container py-6 sm:py-8">

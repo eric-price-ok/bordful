@@ -5,7 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.15] - 2024-04-06
+## [0.1.16] - 2025-04-06
+
+### Added
+- Enhanced hero image configuration with per-page controls:
+  - Added ability to enable/disable hero image on specific pages
+  - Added support for page-specific custom hero images
+  - Made hero image settings fully configurable via `config.example.ts`
+  - Added comprehensive configuration for all key pages:
+    - About, FAQ, and Contact pages
+    - Pricing page
+    - Job Alerts page
+    - Jobs directory and category pages (types, levels, locations, languages)
+    - Dynamic job detail pages (/jobs/level/[level], /jobs/language/[language], etc.)
+  - Updated all page components to use the centralized configuration
+  - Implemented optional fallback to global image settings
+  - Maintained backward compatibility with existing implementations
 
 ### Changed
 - Enhanced button styling consistency throughout the application:
@@ -16,7 +31,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated "View Jobs" buttons on category cards to use primary color when hovered
   - Ensured visual consistency across all interactive elements using the configured primary color
 
-## [0.1.14] - 2024-04-06
+## [0.1.15] - 2025-04-06
+
+### Changed
+- Enhanced button styling consistency throughout the application:
+  - Updated buttons on the FAQ page with primary color and arrow icon
+  - Applied primary color styling to About page contact buttons
+  - Updated Contact page buttons (SupportChannelCard and "Return Home") to use primary color
+  - Enhanced email and phone links in ContactInfoSection to use primary color
+  - Updated "View Jobs" buttons on category cards to use primary color when hovered
+  - Ensured visual consistency across all interactive elements using the configured primary color
+
+## [0.1.14] - 2025-04-06
 
 ### Added
 - Added `heroSearchBgColor` config option for search input background
@@ -24,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added configurable hero section image (`ui.heroImage` in config)
 - Updated `HeroSection` component to display image on the right with responsive layout
 
-## [0.1.13] - 2024-04-05
+## [0.1.13] - 2025-04-05
 
 ### Added
 - Enhanced hero section customization:
@@ -35,7 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added `heroBadgeBgColor`, `heroBadgeTextColor`, `heroBadgeBorderColor` config options for badge color overrides
   - Updated HeroSection component to apply these configurations using inline styles
 
-## [0.1.12] - 2024-04-03
+## [0.1.12] - 2025-04-03
 
 ### Added
 - Enhanced color customization with primary color support:
@@ -50,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added support for Tailwind color patterns (e.g., `slate-500`) in configuration
   - Created color resolver utility that handles both CSS colors and Tailwind colors
 
-## [0.1.11] - 2024-04-02
+## [0.1.11] - 2025-04-02
 
 ### Fixed
 - Fixed font configuration implementation:
@@ -66,7 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added support for custom background colors
   - Enhanced theme consistency across components
 
-## [0.1.10] - 2024-04-01
+## [0.1.10] - 2025-04-01
 
 ### Added
 - Enhanced font configuration with multiple font options:

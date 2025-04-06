@@ -55,6 +55,7 @@ export default async function JobAlertsPage() {
         badge="Job Alerts"
         title="Get Jobs Right to Your Inbox"
         description="Subscribe to job alerts and get notified when new opportunities are posted."
+        heroImage={config.jobAlerts.heroImage}
       />
 
       <div className="container mx-auto px-4 py-12">

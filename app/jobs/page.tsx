@@ -222,6 +222,7 @@ export default async function JobsDirectoryPage() {
         badge="Job Categories"
         title="Browse All Job Categories"
         description={`Explore ${jobs.length.toLocaleString()} open positions across different categories. Find the perfect role that matches your skills and preferences.`}
+        heroImage={config.jobsPages?.directory?.heroImage}
       />
 
       <main className="container py-6 sm:py-8">

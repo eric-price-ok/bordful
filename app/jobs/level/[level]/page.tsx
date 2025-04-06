@@ -78,6 +78,7 @@ export default async function CareerLevelPage({ params }: Props) {
         description={`Browse ${filteredJobs.length.toLocaleString()} ${
           filteredJobs.length === 1 ? "position" : "positions"
         } for ${displayName.toLowerCase()} roles. Find opportunities that match your career stage.`}
+        heroImage={config.jobsPages?.dynamicPages?.level?.heroImage}
       >
         {/* Search Bar */}
         <div className="max-w-[480px]">

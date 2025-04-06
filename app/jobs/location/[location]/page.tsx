@@ -63,6 +63,7 @@ export default async function JobLocationPage({ params }: Props) {
           description={`Browse ${filteredJobs.length.toLocaleString()} remote ${
             filteredJobs.length === 1 ? "position" : "positions"
           }. Work from anywhere with these flexible opportunities.`}
+          heroImage={config.jobsPages?.dynamicPages?.location?.heroImage}
         >
           {/* Search Bar */}
           <div className="max-w-[480px]">
@@ -92,6 +93,7 @@ export default async function JobLocationPage({ params }: Props) {
         description={`Browse ${filteredJobs.length.toLocaleString()} ${
           filteredJobs.length === 1 ? "position" : "positions"
         } in ${countryName}. Find the perfect role that matches your location preferences.`}
+        heroImage={config.jobsPages?.dynamicPages?.location?.heroImage}
       >
         {/* Search Bar */}
         <div className="max-w-[480px]">

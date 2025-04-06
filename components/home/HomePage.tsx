@@ -352,6 +352,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
         badge={config.badge}
         title={config.title}
         description={config.description}
+        // Will use the global config.ui.heroImage since we're not specifying a custom one
       >
         {/* Search Bar - Replace with our new component */}
         <div className="max-w-[480px]">

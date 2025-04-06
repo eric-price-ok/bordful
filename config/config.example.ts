@@ -27,6 +27,13 @@ import type { CurrencyCode } from "@/lib/constants/currencies";
 // Available font options
 export type FontFamily = "geist" | "inter" | "ibm-plex-serif";
 
+// Hero image configuration
+interface HeroImageConfig {
+  enabled: boolean;
+  src?: string;
+  alt?: string;
+}
+
 interface CustomScript {
   src: string;
   strategy: ScriptProps["strategy"];
@@ -168,6 +175,13 @@ export const config = {
 
     // Navigation label
     navigationLabel: "Job Alerts",
+
+    // Hero image configuration (overrides global setting)
+    heroImage: {
+      enabled: false, // Disable hero image on the job alerts page
+      src: "", // Optional custom image path
+      alt: "", // Optional custom alt text
+    },
 
     // The email provider to use (must match a provider in the email section)
     provider: "encharge",
@@ -311,6 +325,13 @@ export const config = {
     title: "Frequently Asked Questions",
     description:
       "Find answers to common questions about our job board and services.",
+
+    // Hero image configuration (overrides global setting)
+    heroImage: {
+      enabled: false, // Enable hero image on the FAQ page
+      src: "/faq-hero.jpg", // Custom image path
+      alt: "Frequently Asked Questions", // Custom alt text
+    },
 
     // SEO keywords
     keywords:
@@ -600,6 +621,13 @@ export const config = {
     title: "Simple, Transparent Pricing",
     description: "Choose the plan that's right for your job board needs.",
 
+    // Hero image configuration (overrides global setting)
+    heroImage: {
+      enabled: false, // Disable hero image on the pricing page
+      src: "", // Optional custom image path
+      alt: "", // Optional custom alt text
+    },
+
     // SEO keywords
     keywords:
       "job board pricing, post job, job listing plans, recruitment pricing",
@@ -770,6 +798,13 @@ export const config = {
     title: "Get in Touch",
     description: "Have questions or feedback? We'd love to hear from you.",
 
+    // Hero image configuration (overrides global setting)
+    heroImage: {
+      enabled: false, // Disable hero image on the contact page
+      src: "", // Optional custom image path
+      alt: "", // Optional custom alt text
+    },
+
     // SEO keywords
     keywords: "contact us, support, help, questions, feedback, get in touch",
 
@@ -851,6 +886,14 @@ export const config = {
     // Description for the about page
     description:
       "Learn more about our mission to connect talent with opportunity.",
+
+    // Hero image configuration (overrides global setting)
+    heroImage: {
+      enabled: false, // Disable hero image on the about page
+      src: "", // Optional custom image path
+      alt: "", // Optional custom alt text
+    },
+
     // Section titles and content
     sections: {
       mission: {
@@ -869,6 +912,7 @@ export const config = {
           "Our diverse team brings together expertise from recruitment, technology, and design to create an innovative job board solution that puts user experience first.",
       },
     },
+
     // Contact link configuration
     contact: {
       // Show or hide the contact link
@@ -894,6 +938,94 @@ export const config = {
         "Connect talented professionals with meaningful opportunities",
       // Logo URL for the schema
       logo: "/bordful.svg",
+    },
+  },
+
+  // Jobs Pages Configuration
+  jobsPages: {
+    // Main Jobs directory page
+    directory: {
+      // Hero image configuration (overrides global setting)
+      heroImage: {
+        enabled: false, // Disable hero image on the main jobs directory page
+        src: "", // Optional custom image path
+        alt: "", // Optional custom alt text
+      },
+    },
+    // Job Types page
+    types: {
+      // Hero image configuration (overrides global setting)
+      heroImage: {
+        enabled: false, // Disable hero image on the job types page
+        src: "", // Optional custom image path
+        alt: "", // Optional custom alt text
+      },
+    },
+    // Job Levels page
+    levels: {
+      // Hero image configuration (overrides global setting)
+      heroImage: {
+        enabled: false, // Disable hero image on the job levels page
+        src: "", // Optional custom image path
+        alt: "", // Optional custom alt text
+      },
+    },
+    // Job Locations page
+    locations: {
+      // Hero image configuration (overrides global setting)
+      heroImage: {
+        enabled: false, // Disable hero image on the job locations page
+        src: "", // Optional custom image path
+        alt: "", // Optional custom alt text
+      },
+    },
+    // Job Languages page
+    languages: {
+      // Hero image configuration (overrides global setting)
+      heroImage: {
+        enabled: false, // Disable hero image on the job languages page
+        src: "", // Optional custom image path
+        alt: "", // Optional custom alt text
+      },
+    },
+    // Dynamic Pages
+    dynamicPages: {
+      // Specific level pages (e.g., /jobs/level/senior)
+      level: {
+        // Hero image configuration (overrides global setting)
+        heroImage: {
+          enabled: false, // Disable hero image on specific level pages
+          src: "", // Optional custom image path
+          alt: "", // Optional custom alt text
+        },
+      },
+      // Specific language pages (e.g., /jobs/language/en)
+      language: {
+        // Hero image configuration (overrides global setting)
+        heroImage: {
+          enabled: false, // Disable hero image on specific language pages
+          src: "", // Optional custom image path
+          alt: "", // Optional custom alt text
+        },
+      },
+      // Specific type pages (e.g., /jobs/type/full-time)
+      type: {
+        // Hero image configuration (overrides global setting)
+        heroImage: {
+          enabled: false, // Disable hero image on specific type pages
+          src: "", // Optional custom image path
+          alt: "", // Optional custom alt text
+        },
+      },
+      // Specific location pages (e.g., /jobs/location/remote)
+      location: {
+        // Hero image configuration (overrides global setting)
+        heroImage: {
+          enabled: false, // Disable hero image on specific location pages
+          src: "", // Optional custom image path
+          alt: "", // Optional custom alt text
+        },
+      },
     },
   },
 } as const;

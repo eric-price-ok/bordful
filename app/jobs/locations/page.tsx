@@ -102,6 +102,7 @@ export default async function LocationsPage() {
         badge="Locations"
         title="Browse Jobs by Location"
         description={`Explore ${jobs.length.toLocaleString()} open positions across different locations. Find remote opportunities or positions in your preferred country.`}
+        heroImage={config.jobsPages?.locations?.heroImage}
       />
 
       <main className="container py-6 sm:py-8">

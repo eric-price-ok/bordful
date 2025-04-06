@@ -3,11 +3,18 @@ import config from "@/config";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
+interface HeroImageConfig {
+  enabled?: boolean;
+  src?: string;
+  alt?: string;
+}
+
 interface HeroSectionProps {
   badge: string;
   title: string;
   description: string;
   children?: React.ReactNode;
+  heroImage?: HeroImageConfig; // Add per-page hero image configuration
 }
 
 export function HeroSection({
@@ -15,6 +22,7 @@ export function HeroSection({
   title,
   description,
   children,
+  heroImage,
 }: HeroSectionProps) {
   // Get the hero background color from config if available
   const heroBackgroundColor = config?.ui?.heroBackgroundColor || "";
@@ -24,7 +32,9 @@ export function HeroSection({
   const heroBadgeBgColor = config?.ui?.heroBadgeBgColor || "";
   const heroBadgeTextColor = config?.ui?.heroBadgeTextColor || "";
   const heroBadgeBorderColor = config?.ui?.heroBadgeBorderColor || "";
-  const heroImageConfig = config?.ui?.heroImage;
+
+  // Use page-specific hero image config if provided, otherwise fall back to global config
+  const heroImageConfig = heroImage || config?.ui?.heroImage;
 
   // Apply the background color inline if it's set in config
   const heroStyle = heroBackgroundColor

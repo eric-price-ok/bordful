@@ -83,6 +83,7 @@ export default function ContactPage() {
         badge={config.contact.badge || "Contact Us"}
         title={config.contact.title}
         description={config.contact.description}
+        heroImage={config.contact.heroImage}
       />
 
       {/* Support Channels */}

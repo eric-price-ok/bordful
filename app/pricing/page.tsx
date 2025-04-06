@@ -72,6 +72,7 @@ export default function PricingPage() {
         badge={config.pricing.badge || "Pricing"}
         title={config.pricing.title}
         description={config.pricing.description}
+        heroImage={config.pricing.heroImage}
       />
 
       {/* Pricing Cards */}
