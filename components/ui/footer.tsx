@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import config from "@/config";
 import { resolveColor } from "@/lib/utils/colors";
-import { JobBadge } from "@/components/ui/job-badge";
 
 // Define interfaces for our column configuration
 interface FooterLink {
