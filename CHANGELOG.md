@@ -24,6 +24,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced platform configuration with dedicated enabled/getUrl functions
   - Removed Lucide RSS icon dependency in favor of SVG
   - Unified rendering approach for all social links including RSS
+- Enhanced similar jobs component in sidebar:
+  - Fixed text wrapping by adding proper flex-wrap to job metadata
+  - Reduced job title size from text-sm to text-xs for better space efficiency
+  - Added tighter line height with leading-tight for more compact display
+  - Decreased metadata text to 10px for improved information density
+  - Fixed typo in CSS class and reduced spacing between elements
+  - Improved overall layout consistency with more compact styling
 
 ## [0.1.23] - 2025-04-08
 

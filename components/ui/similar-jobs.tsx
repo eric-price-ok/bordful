@@ -67,8 +67,8 @@ export function SimilarJobs({ currentJob, allJobs }: SimilarJobsProps) {
               href={`/jobs/${generateJobSlug(job.title, job.company)}`}
               className="block hover:text-gray-900"
             >
-              <div className="text-sm">{job.title}</div>
-              <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
+              <div className="text-xs leading-tight">{job.title}</div>
+              <div className="flex flex-wrap items-center gap-1.5 text-[11px] text-gray-500 mt-0.5 leading-tight">
                 <span>{job.company}</span>
                 <span>•</span>
                 <span>{job.type}</span>
