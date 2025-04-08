@@ -526,7 +526,7 @@ export function Nav() {
                 <Button
                   asChild
                   size="xs"
-                  className="ml-3 gap-1.5 text-xs whitespace-nowrap"
+                  className="ml-5 gap-1.5 text-xs whitespace-nowrap"
                   variant={config.nav.postJob.variant || "default"}
                   style={
                     config.nav.postJob.variant === "primary"
