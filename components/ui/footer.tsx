@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Rss, ArrowRight, ArrowUpRight, Briefcase } from "lucide-react";
+import { Rss, ArrowUpRight, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import config from "@/config";
 import { resolveColor } from "@/lib/utils/colors";
