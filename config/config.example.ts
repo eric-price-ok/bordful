@@ -34,6 +34,43 @@ interface HeroImageConfig {
   alt?: string;
 }
 
+// Menu item interface for new flexible menu structure
+export interface MenuItem {
+  label: string;
+  link: string;
+  icon?: string;
+  dropdown?: boolean;
+  items?: MenuItem[];
+  external?: boolean;
+  // For accessibility
+  ariaLabel?: string;
+}
+
+// Navigation configuration type
+export interface NavConfig {
+  title: string;
+  logo: {
+    enabled: boolean;
+    src: string;
+    width: number;
+    height: number;
+    alt: string;
+  };
+  github: { show: boolean; url: string };
+  linkedin: { show: boolean; url: string };
+  twitter: { show: boolean; url: string };
+  bluesky: { show: boolean; url: string };
+  reddit: { show: boolean; url: string };
+  postJob: {
+    show: boolean;
+    label: string;
+    link: string;
+    external: boolean;
+    variant: "default" | "primary" | "outline" | "secondary" | "ghost" | "link";
+  };
+  menu: MenuItem[];
+}
+
 interface CustomScript {
   src: string;
   strategy: ScriptProps["strategy"];
@@ -473,7 +510,6 @@ export const config = {
   // Navigation
   nav: {
     title: "Bordful", // The text shown in the navigation bar
-    icon: "BriefcaseBusiness", // Lucide icon name (see https://lucide.dev/icons)
     logo: {
       enabled: true, // Set to true to use a custom logo instead of icon + text
       src: "/bordful.svg", // Path to your logo image (place it in the public directory)
@@ -514,15 +550,26 @@ export const config = {
         | "ghost"
         | "link", // Button variant
     },
-    topMenu: [
+    menu: [
       { label: "Home", link: "/" },
-      { label: "Jobs", link: "/jobs" },
+      {
+        label: "Jobs",
+        link: "/jobs",
+        dropdown: true,
+        items: [
+          { label: "All Jobs", link: "/jobs" },
+          { label: "Job Types", link: "/jobs/types" },
+          { label: "Job Locations", link: "/jobs/locations" },
+          { label: "Job Levels", link: "/jobs/levels" },
+          { label: "Job Languages", link: "/jobs/languages" },
+        ],
+      },
       { label: "About", link: "/about" },
-      { label: "Changelog", link: "/changelog" },
-      // Pricing link will be added dynamically in the nav component
-      // FAQ link will be added dynamically in the nav component
+      { label: "Pricing", link: "/pricing" },
+      { label: "Job Alerts", link: "/job-alerts" },
+      { label: "Contact", link: "/contact" },
     ],
-  },
+  } as NavConfig,
 
   // Footer
   footer: {

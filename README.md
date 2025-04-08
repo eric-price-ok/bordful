@@ -417,6 +417,32 @@ export const config = {
       { label: "About", link: "/about" },
       { label: "Changelog", link: "/changelog" },
     ],
+    
+    // Navigation menu with dropdown support
+    menu: [
+      { label: "Home", link: "/" },
+      // Example dropdown menu
+      { 
+        label: "Jobs", 
+        link: "/jobs",
+        dropdown: true,
+        items: [
+          { label: "All Jobs", link: "/jobs" },
+          { label: "Job Types", link: "/jobs/types" },
+          { label: "Job Locations", link: "/jobs/locations" },
+          { label: "Job Levels", link: "/jobs/levels" },
+          { label: "Job Languages", link: "/jobs/languages" }
+        ]
+      },
+      { label: "About", link: "/about" },
+      { label: "Resources", link: "#", dropdown: true, items: [
+        { label: "FAQ", link: "/faq" },
+        { label: "Job Alerts", link: "/job-alerts" },
+        { label: "RSS Feed", link: "/feed.xml" }
+      ]},
+    ],
+    // Helper functions are also available:
+    // import { createJobsMenu, createResourcesMenu } from "@/lib/menu-helpers";
   },
   
   // Pricing Configuration

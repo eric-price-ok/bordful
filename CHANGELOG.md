@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.23] - 2025-04-08
+
+### Changed
+- Refactored navigation component with improved DRY principles:
+  - Created custom `useDropdownMenu` hook for centralized dropdown state management
+  - Improved TypeScript type safety with proper interface definitions for social platforms
+  - Unified navigation item rendering for both mobile and desktop with single source of truth
+  - Enhanced social media icon implementation with centralized configuration
+  - Optimized hover effects for dropdown menus with delayed transitions
+  - Improved accessibility with better ARIA attributes and keyboard navigation
+  - Enhanced maintainability with proper component structure and organization
+
 ## [0.1.22] - 2025-04-08
 
 ### Changed
