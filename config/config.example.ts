@@ -546,15 +546,15 @@ export const config = {
     // Custom columns - configure as many as needed
     columns: [
       {
-        id: "resources",
+        id: "company",
         show: true,
         order: 2,
-        title: "Resources",
+        title: "Company",
         links: [
           { label: "Home", link: "/" },
-          { label: "Jobs", link: "/jobs" },
           { label: "About", link: "/about" },
           { label: "Changelog", link: "/changelog" },
+          { label: "Sitemap", link: "/sitemap.xml" },
         ],
         // Automatically add these feature links if they're enabled in config
         autoAddFeatures: {
