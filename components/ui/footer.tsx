@@ -636,7 +636,7 @@ export function Footer() {
                   >
                     {config.footer.postJob.button.label || "Get started"}
                     <Briefcase
-                      className="h-3.5 w-3.5 ml-1.5"
+                      className="h-3.5 w-3.5 ml-1"
                       aria-hidden="true"
                     />
                   </Link>

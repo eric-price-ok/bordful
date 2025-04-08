@@ -8,12 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.20] - 2025-04-08
 
 ### Changed
-- Enhanced footer button styling for better UI consistency:
+- Enhanced button styling for better UI consistency:
   - Updated button sizing to use "xs" size to match other site buttons
   - Added proper spacing and alignment with gap-1.5 class
   - Added appropriate icons for each button type
   - Used ArrowUpRight for Pricing button for better context
-  - Added Briefcase icon to Post a Job button for improved visual meaning
+  - Added Briefcase icon to Post a Job button in both footer and navbar
+  - Ensured consistent spacing (ml-1) between text and icons across all buttons
+  - Applied consistent icon placement and styling across the entire application
   - Maintained consistent visual style with Apply Now and Contact page buttons
 
 ## [0.1.19] - 2025-04-08

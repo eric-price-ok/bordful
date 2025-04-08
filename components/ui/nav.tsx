@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import config from "@/config";
 import dynamic from "next/dynamic";
-import { PlusCircle, Menu, X, Rss, ChevronDown } from "lucide-react";
+import { PlusCircle, Menu, X, Rss, ChevronDown, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect, ReactNode } from "react";
 import { usePathname } from "next/navigation";
@@ -464,9 +464,14 @@ export function Nav() {
                     {...(config.nav.postJob.external
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-center"
                   >
-                    <PlusCircle className="h-3.5 w-3.5" aria-hidden="true" />
                     {config.nav.postJob.label}
+                    <Briefcase
+                      className="h-3.5 w-3.5 ml-1"
+                      aria-hidden="true"
+                    />
                   </Link>
                 </Button>
               )}
@@ -536,8 +541,8 @@ export function Nav() {
                 <div className="px-4 pt-2">
                   <Button
                     asChild
-                    size="sm"
-                    className={`w-full gap-1.5`}
+                    size="xs"
+                    className={`w-full gap-1.5 text-xs`}
                     variant={config.nav.postJob.variant || "default"}
                     style={
                       config.nav.postJob.variant === "primary"
@@ -555,9 +560,13 @@ export function Nav() {
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
                       onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-center"
                     >
-                      <PlusCircle className="h-3.5 w-3.5" aria-hidden="true" />
                       {config.nav.postJob.label}
+                      <Briefcase
+                        className="h-3.5 w-3.5 ml-1"
+                        aria-hidden="true"
+                      />
                     </Link>
                   </Button>
                 </div>
