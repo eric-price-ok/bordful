@@ -608,52 +608,6 @@ export const config = {
           },
         ],
       },
-      {
-        id: "legaler",
-        show: true,
-        order: 6,
-        title: "Legaler",
-        links: [
-          {
-            label: "Privacy & Cookies",
-            link: "/privacy",
-            external: false,
-          },
-          {
-            label: "Terms of Service",
-            link: "/terms",
-            external: false,
-          },
-          {
-            label: "License",
-            link: "https://github.com/craftled/bordful/blob/main/LICENSE",
-            external: true,
-          },
-        ],
-      },
-      {
-        id: "legalerer",
-        show: true,
-        order: 7,
-        title: "Legalerer",
-        links: [
-          {
-            label: "Privacy & Cookies",
-            link: "/privacy",
-            external: false,
-          },
-          {
-            label: "Terms of Service",
-            link: "/terms",
-            external: false,
-          },
-          {
-            label: "License",
-            link: "https://github.com/craftled/bordful/blob/main/LICENSE",
-            external: true,
-          },
-        ],
-      },
     ],
 
     // Post Job section
