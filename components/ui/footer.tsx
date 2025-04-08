@@ -579,7 +579,7 @@ export function Footer() {
                     asChild
                     size="xs"
                     variant="outline"
-                    className="gap-1.5 text-xs flex items-center justify-center"
+                    className="gap-1.5 text-xs h-8 sm:h-7 px-3 sm:px-2.5 flex items-center justify-center"
                     style={{
                       color:
                         backgroundColor === "#0C0E12" ? "white" : undefined,
@@ -614,7 +614,7 @@ export function Footer() {
                 <Button
                   asChild
                   size="xs"
-                  className="gap-1.5 text-xs flex items-center justify-center"
+                  className="gap-1.5 text-xs h-8 sm:h-7 px-3 sm:px-2.5 flex items-center justify-center"
                   variant={config.ui.primaryColor ? "primary" : "default"}
                   style={{
                     backgroundColor: resolveColor(config.ui.primaryColor),
@@ -651,15 +651,15 @@ export function Footer() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 pb-8 border-b border-zinc-800">
               {/* Special handling for brand column */}
               {sortedColumns.length > 0 && sortedColumns[0].id === "brand" ? (
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-10 min-[960px]:grid-cols-12 gap-4">
                   {/* Brand column takes up full height on the left */}
-                  <div className="md:col-span-3 self-start md:sticky md:top-8">
+                  <div className="md:col-span-3 min-[960px]:col-span-3 self-start md:sticky md:top-8">
                     {sortedColumns[0].content}
                   </div>
 
                   {/* Other columns stack in remaining space */}
-                  <div className="md:col-span-9">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8">
+                  <div className="md:col-span-7 min-[960px]:col-span-9">
+                    <div className="grid grid-cols-1 min-[300px]:grid-cols-2 md:grid-cols-3 min-[960px]:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-x-4 gap-y-8">
                       {sortedColumns.slice(1).map((column) => (
                         <div key={column.id}>{column.content}</div>
                       ))}
@@ -668,7 +668,7 @@ export function Footer() {
                 </div>
               ) : (
                 /* Fallback to regular grid if brand isn't first */
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                <div className="grid grid-cols-1 min-[300px]:grid-cols-2 md:grid-cols-3 min-[960px]:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                   {sortedColumns.map((column) => (
                     <div key={column.id}>{column.content}</div>
                   ))}

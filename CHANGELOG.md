@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.21] - 2025-04-08
+
+### Changed
+- Enhanced footer responsiveness with optimized breakpoints:
+  - Added earlier two-column layout at 300px for better mobile space utilization
+  - Improved medium screen layouts with custom 960px breakpoint
+  - Optimized column progression (1 → 2 → 3 → 4 → 5/6) for smoother transitions
+  - Enhanced brand column layout with better proportions (3-7 split at md, 3-9 at 960px)
+  - Improved touch targets for buttons on smaller screens
+  - Maintained consistent styling across all screen sizes
+  - Fine-tuned grid spacing for optimal content density
+
 ## [0.1.20] - 2025-04-08
 
 ### Changed
