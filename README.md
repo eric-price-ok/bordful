@@ -381,7 +381,6 @@ export const config = {
   // Navigation
   nav: {
     title: "JobBoard", // Navigation bar text
-    icon: "Briefcase", // Lucide icon name
     logo: {
       enabled: false, // Set to true to use a custom logo instead of icon + text
       src: "/your-logo.svg", // Path to your logo image (place it in the public directory)
@@ -633,23 +632,15 @@ The site URL automatically adjusts based on the environment:
 
 ### Navigation Customization
 
-- **Icon & Logo**: Choose between:
-  - Default mode: Uses [Lucide icons](https://lucide.dev/icons) with text
-  - Custom logo: Enable custom logo mode and specify your logo image
-- **Title**: Customize the text shown in the navigation bar (when not using custom logo)
-- **Social Media**: Toggle visibility and set URLs for:
-  - GitHub repository
-  - LinkedIn company page
-  - Twitter/X profile
-  - Bluesky profile
-- **Post Job Button**: Customize the job posting button:
-  - Toggle visibility
-  - Change button text
-  - Set custom URL
-- **Top Menu**: Define navigation menu items with labels and links
-  - Each item has a label and link
-  - Order items as needed
-  - Add or remove menu items easily
+The navigation bar is fully customizable to match your branding and navigation needs. Key features include:
+
+- Brand display with icon+text or custom logo
+- Dropdown menu support with hover effects
+- Social media integration (GitHub, LinkedIn, Twitter/X, Bluesky, Reddit)
+- Mobile-responsive design with hamburger menu
+- Accessible navigation with ARIA attributes
+
+For detailed documentation on navigation bar customization, see [Navigation Bar Customization](./docs/navbar-customization.md).
 
 ### Pricing Page Customization
 

@@ -464,19 +464,49 @@ export function Nav() {
             )}
           </Link>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-zinc-600 hover:text-zinc-900 transition-colors"
-            aria-expanded={isOpen}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? (
-              <X className="h-4 w-4" aria-hidden="true" />
-            ) : (
-              <Menu className="h-4 w-4" aria-hidden="true" />
+          {/* Mobile Actions */}
+          <div className="flex items-center space-x-2 md:hidden">
+            {/* Mobile Post Job Button - Smaller version */}
+            {config.nav.postJob.show && (
+              <Button
+                asChild
+                size="xs"
+                className="gap-1 text-xs px-2 py-1"
+                variant={config.nav.postJob.variant || "default"}
+                style={
+                  config.nav.postJob.variant === "primary"
+                    ? {
+                        backgroundColor: resolveColor(config.ui.primaryColor),
+                      }
+                    : undefined
+                }
+              >
+                <Link
+                  href={config.nav.postJob.link}
+                  {...(config.nav.postJob.external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                >
+                  {config.nav.postJob.label}
+                  <Briefcase className="h-3 w-3 ml-1" aria-hidden="true" />
+                </Link>
+              </Button>
             )}
-          </button>
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 text-zinc-600 hover:text-zinc-900 transition-colors"
+              aria-expanded={isOpen}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? (
+                <X className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Menu className="h-4 w-4" aria-hidden="true" />
+              )}
+            </button>
+          </div>
 
           {/* Desktop navigation */}
           <div className="hidden md:flex items-center">
@@ -540,7 +570,7 @@ export function Nav() {
 
               {/* Post Job Action */}
               {config.nav.postJob.show && (
-                <div className="px-4 pt-2">
+                <div className="px-4 pt-2 md:hidden">
                   <Button
                     asChild
                     size="xs"
