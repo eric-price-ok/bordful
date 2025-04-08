@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Ensured proper spacing and alignment with compact styling
   - Created comprehensive documentation in `docs/navbar-customization.md`
   - Updated mobile menu to avoid duplicate Post Job buttons
+- Improved social icons implementation:
+  - Moved RSS icon to `/assets/social/` folder for consistency with other social icons
+  - Refactored social platform configuration with better TypeScript type safety
+  - Enhanced platform configuration with dedicated enabled/getUrl functions
+  - Removed Lucide RSS icon dependency in favor of SVG
+  - Unified rendering approach for all social links including RSS
 
 ## [0.1.23] - 2025-04-08
 

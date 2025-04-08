@@ -6,7 +6,6 @@ import config from "@/config";
 import {
   Menu,
   X,
-  Rss,
   ChevronDown,
   Briefcase,
   BriefcaseBusiness,
@@ -147,20 +146,33 @@ function DropdownItem({
 // Use a consistent type for social platform configuration
 type SocialPlatformConfig = {
   id: string;
-  configProp: keyof typeof config.nav;
+  configProp: string;
   src: string;
   alt: string;
   labelPrefix: string;
+  enabled: (config: typeof import("@/config").default) => boolean;
+  getUrl: (config?: typeof import("@/config").default) => string;
 };
 
 // Define social platforms with their properties outside of component for reuse
 const SOCIAL_PLATFORMS: SocialPlatformConfig[] = [
+  {
+    id: "rss",
+    configProp: "rssFeed",
+    src: "/assets/social/rss.svg",
+    alt: "RSS Feed",
+    labelPrefix: "Subscribe to",
+    enabled: (config) => config.rssFeed?.enabled,
+    getUrl: () => "/feed.xml",
+  },
   {
     id: "github",
     configProp: "github",
     src: "/assets/social/github.svg",
     alt: "GitHub",
     labelPrefix: "View on",
+    enabled: (config) => config.nav.github?.show,
+    getUrl: (config) => config!.nav.github?.url || "",
   },
   {
     id: "linkedin",
@@ -168,6 +180,8 @@ const SOCIAL_PLATFORMS: SocialPlatformConfig[] = [
     src: "/assets/social/linkedin.svg",
     alt: "LinkedIn",
     labelPrefix: "Follow us on",
+    enabled: (config) => config.nav.linkedin?.show,
+    getUrl: (config) => config!.nav.linkedin?.url || "",
   },
   {
     id: "twitter",
@@ -175,6 +189,8 @@ const SOCIAL_PLATFORMS: SocialPlatformConfig[] = [
     src: "/assets/social/twitter.svg",
     alt: "Twitter",
     labelPrefix: "Follow us on X (",
+    enabled: (config) => config.nav.twitter?.show,
+    getUrl: (config) => config!.nav.twitter?.url || "",
   },
   {
     id: "bluesky",
@@ -182,6 +198,8 @@ const SOCIAL_PLATFORMS: SocialPlatformConfig[] = [
     src: "/assets/social/bluesky.svg",
     alt: "Bluesky",
     labelPrefix: "Follow us on",
+    enabled: (config) => config.nav.bluesky?.show,
+    getUrl: (config) => config!.nav.bluesky?.url || "",
   },
   {
     id: "reddit",
@@ -189,6 +207,8 @@ const SOCIAL_PLATFORMS: SocialPlatformConfig[] = [
     src: "/assets/social/reddit.svg",
     alt: "Reddit",
     labelPrefix: "Follow us on",
+    enabled: (config) => config.nav.reddit?.show,
+    getUrl: (config) => config!.nav.reddit?.url || "",
   },
 ];
 
@@ -300,21 +320,10 @@ export function Nav() {
   const renderSocialLinks = () => {
     return (
       <div className="flex items-center space-x-3">
-        {/* RSS Feed Icon */}
-        {config.rssFeed?.enabled && (
-          <SocialLink href="/feed.xml" label="Subscribe to RSS Feed">
-            <Rss className="h-4 w-4" aria-hidden="true" />
-          </SocialLink>
-        )}
-
         {/* Social Media Links */}
         {SOCIAL_PLATFORMS.map((platform) => {
-          // Type assertion to access the social platform config
-          const platformConfig = config.nav[platform.configProp] as {
-            show: boolean;
-            url: string;
-          };
-          if (!platformConfig?.show) return null;
+          // Check if this platform is enabled in the configuration
+          if (!platform.enabled(config)) return null;
 
           const label =
             platform.labelPrefix +
@@ -323,7 +332,7 @@ export function Nav() {
           return (
             <SocialLink
               key={platform.id}
-              href={platformConfig.url}
+              href={platform.getUrl(config)}
               label={label}
             >
               <SocialIcon src={platform.src} alt={platform.alt} />
