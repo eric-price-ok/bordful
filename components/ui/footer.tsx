@@ -1,11 +1,43 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import { Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import config from "@/config";
 import { resolveColor } from "@/lib/utils/colors";
+
+// Define interfaces for our column configuration
+interface FooterLink {
+  label: string;
+  link: string;
+  external?: boolean;
+}
+
+interface BaseFooterColumn {
+  id: string;
+  show: boolean;
+  order: number;
+  title: string;
+}
+
+interface LinksFooterColumn extends BaseFooterColumn {
+  type?: "links";
+  links: FooterLink[];
+  autoAddFeatures?: {
+    jobAlerts?: boolean;
+    pricing?: boolean;
+    faq?: boolean;
+    contact?: boolean;
+  };
+}
+
+interface FeedsFooterColumn extends BaseFooterColumn {
+  type: "feeds";
+}
+
+type CustomFooterColumn = LinksFooterColumn | FeedsFooterColumn;
 
 // Job links for the footer
 const jobLinks = [
@@ -73,14 +105,32 @@ export function Footer() {
 
   // Define the brand column content
   const brandColumn = (
-    <div className="space-y-2">
-      <h3 className="text-sm font-semibold" style={headingStyle}>
-        {config.nav.title}
-      </h3>
-      <p className="text-sm max-w-[280px]" style={textStyle}>
-        {config.footer.brand.description}
-      </p>
-      <div className="flex items-center space-x-3 pt-1">
+    <div className="space-y-6">
+      <div>
+        {config.footer.brand.logo?.enabled ? (
+          <Link href="/" className="block" aria-label={config.nav.title}>
+            <Image
+              src={config.footer.brand.logo.src}
+              alt={config.footer.brand.logo.alt || config.nav.title}
+              width={config.footer.brand.logo.width || 130}
+              height={config.footer.brand.logo.height || 34}
+              style={{
+                maxHeight: `${config.footer.brand.logo.height || 34}px`,
+                width: "auto",
+              }}
+              className="dark:brightness-100 dark:invert-0" // Don't invert in dark mode as it's already a light logo
+            />
+          </Link>
+        ) : (
+          <h3 className="text-sm font-semibold mb-3.5" style={headingStyle}>
+            {config.nav.title}
+          </h3>
+        )}
+        <p className="text-sm max-w-[350px] mt-4" style={textStyle}>
+          {config.footer.brand.description}
+        </p>
+      </div>
+      <div className="flex items-center space-x-3">
         {/* Social links */}
         {rssEnabled && (
           <Link
@@ -287,179 +337,14 @@ export function Footer() {
     </div>
   );
 
-  // Define the resources column content
-  const resourcesColumn = (
+  // Generate job feeds column content
+  const renderJobFeedsContent = (title: string) => (
     <div className="space-y-2">
-      <h3 className="text-sm font-semibold" style={headingStyle}>
-        {config.footer.resources.title}
+      <h3 className="text-sm font-semibold mb-3.5" style={headingStyle}>
+        {title}
       </h3>
-      <ul className="space-y-1.5">
-        {/* Resource links */}
-        {config.footer.resources.links.map((item) => (
-          <li key={item.link}>
-            <Link
-              href={item.link}
-              className="text-sm transition-colors"
-              style={
-                {
-                  ...linkStyle,
-                  "--hover-color": linkHoverColor,
-                } as React.CSSProperties
-              }
-              onMouseOver={(e) => {
-                e.currentTarget.style.color = linkHoverColor;
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.color = linkColor;
-              }}
-            >
-              {item.label}
-            </Link>
-          </li>
-        ))}
-
-        {/* Conditionally show Job Alerts link in footer */}
-        {config.jobAlerts?.enabled && config.jobAlerts?.showInFooter && (
-          <li key="/job-alerts">
-            <Link
-              href="/job-alerts"
-              className="text-sm transition-colors"
-              style={
-                {
-                  ...linkStyle,
-                  "--hover-color": linkHoverColor,
-                } as React.CSSProperties
-              }
-              onMouseOver={(e) => {
-                e.currentTarget.style.color = linkHoverColor;
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.color = linkColor;
-              }}
-            >
-              {config.jobAlerts.navigationLabel || "Job Alerts"}
-            </Link>
-          </li>
-        )}
-
-        {/* Add Pricing Link if enabled */}
-        {config.pricing?.enabled && config.pricing?.showInFooter && (
-          <li key="/pricing">
-            <Link
-              href="/pricing"
-              className="text-sm transition-colors"
-              style={
-                {
-                  ...linkStyle,
-                  "--hover-color": linkHoverColor,
-                } as React.CSSProperties
-              }
-              onMouseOver={(e) => {
-                e.currentTarget.style.color = linkHoverColor;
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.color = linkColor;
-              }}
-            >
-              {config.pricing.navigationLabel}
-            </Link>
-          </li>
-        )}
-
-        {/* Add FAQ Link if enabled */}
-        {config.faq?.enabled && config.faq?.showInFooter && (
-          <li key="/faq">
-            <Link
-              href="/faq"
-              className="text-sm transition-colors"
-              style={
-                {
-                  ...linkStyle,
-                  "--hover-color": linkHoverColor,
-                } as React.CSSProperties
-              }
-              onMouseOver={(e) => {
-                e.currentTarget.style.color = linkHoverColor;
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.color = linkColor;
-              }}
-            >
-              {config.faq.navigationLabel}
-            </Link>
-          </li>
-        )}
-
-        {/* Add Contact Link if enabled */}
-        {config.contact?.enabled && config.contact?.showInFooter && (
-          <li key="/contact">
-            <Link
-              href="/contact"
-              className="text-sm transition-colors"
-              style={
-                {
-                  ...linkStyle,
-                  "--hover-color": linkHoverColor,
-                } as React.CSSProperties
-              }
-              onMouseOver={(e) => {
-                e.currentTarget.style.color = linkHoverColor;
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.color = linkColor;
-              }}
-            >
-              {config.contact.navigationLabel}
-            </Link>
-          </li>
-        )}
-      </ul>
-    </div>
-  );
-
-  // Define the jobs column content
-  const jobsColumn = (
-    <div className="space-y-2">
-      <h3 className="text-sm font-semibold" style={headingStyle}>
-        {config.footer.jobs?.title || "Jobs"}
-      </h3>
-      <ul className="space-y-1.5">
-        {jobLinks.map((item) => (
-          <li key={item.link}>
-            <Link
-              href={item.link}
-              className="text-sm transition-colors"
-              style={
-                {
-                  ...linkStyle,
-                  "--hover-color": linkHoverColor,
-                } as React.CSSProperties
-              }
-              onMouseOver={(e) => {
-                e.currentTarget.style.color = linkHoverColor;
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.color = linkColor;
-              }}
-            >
-              {item.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-
-  // Define the job feeds column content
-  const jobFeedsColumn = (
-    <div className="space-y-2">
-      <h3 className="text-sm font-semibold" style={headingStyle}>
-        {config.footer.jobFeeds?.title ||
-          config.rssFeed?.footerLabel ||
-          "Job Feeds"}
-      </h3>
-      <ul className="space-y-1.5">
-        {/* Always show RSS format */}
+      <ul className="space-y-2.5">
+        {/* RSS format */}
         <li>
           <Link
             href="/feed.xml"
@@ -484,7 +369,7 @@ export function Footer() {
             <span className="text-xs opacity-60">XML</span>
           </Link>
         </li>
-        {/* Show Atom format */}
+        {/* Atom format */}
         <li>
           <Link
             href="/atom.xml"
@@ -509,7 +394,7 @@ export function Footer() {
             <span className="text-xs opacity-60">XML</span>
           </Link>
         </li>
-        {/* Show JSON format */}
+        {/* JSON format */}
         <li>
           <Link
             href="/feed.json"
@@ -538,15 +423,17 @@ export function Footer() {
     </div>
   );
 
-  // Define the legal column content
-  const legalColumn = (
+  // Render a standard links column
+  const renderLinksColumn = (
+    title: string,
+    links: Array<{ label: string; link: string; external?: boolean }>
+  ) => (
     <div className="space-y-2">
-      <h3 className="text-sm font-semibold" style={headingStyle}>
-        {config.footer.legal.title}
+      <h3 className="text-sm font-semibold mb-3.5" style={headingStyle}>
+        {title}
       </h3>
-      <ul className="space-y-1.5">
-        {/* Legal links */}
-        {config.footer.legal.links.map(({ link, label, external }) => (
+      <ul className="space-y-1">
+        {links.map(({ link, label, external }) => (
           <li key={link}>
             <Link
               href={link}
@@ -575,44 +462,94 @@ export function Footer() {
     </div>
   );
 
-  // Create an array of column objects with their display order
-  const footerColumns: FooterColumn[] = [
-    {
-      id: "resources",
-      order: config.footer.resources.order || 1,
-      show: config.footer.resources.show,
-      content: resourcesColumn,
-    },
-    {
+  // Create footer columns array
+  const footerColumns: FooterColumn[] = [];
+
+  // Add brand column if enabled
+  if (config.footer.brand.show) {
+    footerColumns.push({
       id: "brand",
-      order: config.footer.brand.order || 2,
-      show: config.footer.brand.show,
+      order: config.footer.brand.order || 1,
+      show: true,
       content: brandColumn,
-    },
-    {
-      id: "jobs",
-      order: config.footer.jobs?.order || 3,
-      show:
-        config.footer.jobs?.show === undefined ||
-        Boolean(config.footer.jobs?.show),
-      content: jobsColumn,
-    },
-    {
-      id: "jobFeeds",
-      order: config.footer.jobFeeds?.order || 4,
-      show:
-        rssEnabled &&
-        (config.footer.jobFeeds?.show === undefined ||
-          Boolean(config.footer.jobFeeds?.show)),
-      content: jobFeedsColumn,
-    },
-    {
-      id: "legal",
-      order: config.footer.legal.order || 5,
-      show: config.footer.legal.show,
-      content: legalColumn,
-    },
-  ];
+    });
+  }
+
+  // Add custom columns from config
+  if (Array.isArray(config.footer.columns)) {
+    config.footer.columns.forEach((column: any) => {
+      if (column.show) {
+        // Skip job feeds columns if RSS is disabled
+        if (column.type === "feeds" && !rssEnabled) {
+          return;
+        }
+
+        // Prepare links array, potentially with auto-added feature links
+        let links = [...(column.links || [])];
+
+        // Auto-add feature links if configured
+        if (column.autoAddFeatures) {
+          // Add Job Alerts link if enabled
+          if (
+            column.autoAddFeatures.jobAlerts &&
+            config.jobAlerts?.enabled &&
+            config.jobAlerts?.showInFooter
+          ) {
+            links.push({
+              label: config.jobAlerts.navigationLabel || "Job Alerts",
+              link: "/job-alerts",
+            });
+          }
+
+          // Add Pricing link if enabled
+          if (
+            column.autoAddFeatures.pricing &&
+            config.pricing?.enabled &&
+            config.pricing?.showInFooter
+          ) {
+            links.push({
+              label: config.pricing.navigationLabel || "Pricing",
+              link: "/pricing",
+            });
+          }
+
+          // Add FAQ link if enabled
+          if (
+            column.autoAddFeatures.faq &&
+            config.faq?.enabled &&
+            config.faq?.showInFooter
+          ) {
+            links.push({
+              label: config.faq.navigationLabel || "FAQ",
+              link: "/faq",
+            });
+          }
+
+          // Add Contact link if enabled
+          if (
+            column.autoAddFeatures.contact &&
+            config.contact?.enabled &&
+            config.contact?.showInFooter
+          ) {
+            links.push({
+              label: config.contact.navigationLabel || "Contact",
+              link: "/contact",
+            });
+          }
+        }
+
+        footerColumns.push({
+          id: column.id,
+          order: column.order || 99,
+          show: true,
+          content:
+            column.type === "feeds"
+              ? renderJobFeedsContent(column.title)
+              : renderLinksColumn(column.title, links),
+        });
+      }
+    });
+  }
 
   // Sort columns by their order value and filter out hidden columns
   const sortedColumns = footerColumns
@@ -701,11 +638,32 @@ export function Footer() {
 
         <div className="py-10">
           <div className="flex flex-col gap-8">
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-5 pb-8 border-b border-zinc-800">
-              {/* Render footer columns in their sorted order */}
-              {sortedColumns.map((column) => (
-                <div key={column.id}>{column.content}</div>
-              ))}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 pb-8 border-b border-zinc-800">
+              {/* Special handling for brand column */}
+              {sortedColumns.length > 0 && sortedColumns[0].id === "brand" ? (
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+                  {/* Brand column takes up full height on the left */}
+                  <div className="md:col-span-3 self-start md:sticky md:top-8">
+                    {sortedColumns[0].content}
+                  </div>
+
+                  {/* Other columns stack in remaining space */}
+                  <div className="md:col-span-9">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                      {sortedColumns.slice(1).map((column) => (
+                        <div key={column.id}>{column.content}</div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* Fallback to regular grid if brand isn't first */
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                  {sortedColumns.map((column) => (
+                    <div key={column.id}>{column.content}</div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Copyright and Built With */}

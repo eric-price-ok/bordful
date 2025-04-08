@@ -532,59 +532,129 @@ export const config = {
       order: 1, // Display order in footer grid (lower numbers displayed first)
       description:
         "Browse curated opportunities from leading companies. Updated daily with the latest positions.",
+      // Optional logo configuration specifically for the footer
+      logo: {
+        enabled: true,
+        // Use different image from navbar if needed (e.g., light logo for dark footer)
+        src: "/bordful-light.svg", // Path to footer-specific logo (light version)
+        width: 67,
+        height: 20,
+        alt: "Bordful",
+      },
     },
 
-    // Resources section
-    resources: {
-      show: true,
-      order: 2, // Display order in footer grid (lower numbers displayed first)
-      title: "Company",
-      links: [
-        { label: "Home", link: "/" },
-        { label: "About", link: "/about" },
-        { label: "Changelog", link: "/changelog" },
-        // Pricing link will be added dynamically in the footer component if enabled
-        // FAQ link will be added dynamically in the footer component if enabled
-      ],
-    },
-
-    // Legal section
-    legal: {
-      show: true,
-      order: 5, // Display order in footer grid (lower numbers displayed first)
-      title: "Legal",
-      links: [
-        {
-          label: "Privacy & Cookies",
-          link: "/privacy",
-          external: false,
+    // Custom columns - configure as many as needed
+    columns: [
+      {
+        id: "resources",
+        show: true,
+        order: 2,
+        title: "Resources",
+        links: [
+          { label: "Home", link: "/" },
+          { label: "Jobs", link: "/jobs" },
+          { label: "About", link: "/about" },
+          { label: "Changelog", link: "/changelog" },
+        ],
+        // Automatically add these feature links if they're enabled in config
+        autoAddFeatures: {
+          jobAlerts: true, // Add Job Alerts link if feature is enabled
+          pricing: true, // Add Pricing link if feature is enabled
+          faq: true, // Add FAQ link if feature is enabled
+          contact: true, // Add Contact link if feature is enabled
         },
-        {
-          label: "Terms of Service",
-          link: "/terms",
-          external: false,
-        },
-        {
-          label: "License",
-          link: "https://github.com/craftled/bordful/blob/main/LICENSE",
-          external: true,
-        },
-      ],
-    },
-
-    // Jobs section
-    jobs: {
-      show: true,
-      order: 3, // Display order in footer grid (lower numbers displayed first)
-      title: "Jobs",
-    },
-
-    // Job Feeds section
-    jobFeeds: {
-      show: true,
-      order: 4, // Display order in footer grid (lower numbers displayed first)
-      title: "Job Feeds",
-    },
+      },
+      {
+        id: "jobs",
+        show: true,
+        order: 3,
+        title: "Jobs",
+        links: [
+          { label: "All Jobs", link: "/jobs" },
+          { label: "Job Types", link: "/jobs/types" },
+          { label: "Job Locations", link: "/jobs/locations" },
+          { label: "Career Levels", link: "/jobs/levels" },
+          { label: "Job Languages", link: "/jobs/languages" },
+        ],
+      },
+      {
+        id: "job-feeds",
+        show: true,
+        order: 4,
+        title: "Job Feeds",
+        // Special column type that will render feed links (RSS, Atom, JSON)
+        type: "feeds",
+      },
+      {
+        id: "legal",
+        show: true,
+        order: 5,
+        title: "Legal",
+        links: [
+          {
+            label: "Privacy & Cookies",
+            link: "/privacy",
+            external: false,
+          },
+          {
+            label: "Terms of Service",
+            link: "/terms",
+            external: false,
+          },
+          {
+            label: "License",
+            link: "https://github.com/craftled/bordful/blob/main/LICENSE",
+            external: true,
+          },
+        ],
+      },
+      {
+        id: "legaler",
+        show: true,
+        order: 6,
+        title: "Legaler",
+        links: [
+          {
+            label: "Privacy & Cookies",
+            link: "/privacy",
+            external: false,
+          },
+          {
+            label: "Terms of Service",
+            link: "/terms",
+            external: false,
+          },
+          {
+            label: "License",
+            link: "https://github.com/craftled/bordful/blob/main/LICENSE",
+            external: true,
+          },
+        ],
+      },
+      {
+        id: "legalerer",
+        show: true,
+        order: 7,
+        title: "Legalerer",
+        links: [
+          {
+            label: "Privacy & Cookies",
+            link: "/privacy",
+            external: false,
+          },
+          {
+            label: "Terms of Service",
+            link: "/terms",
+            external: false,
+          },
+          {
+            label: "License",
+            link: "https://github.com/craftled/bordful/blob/main/LICENSE",
+            external: true,
+          },
+        ],
+      },
+    ],
 
     // Post Job section
     postJob: {

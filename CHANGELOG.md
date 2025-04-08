@@ -5,17 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.17] - 2025-04-08
+## [0.1.18] - 2025-04-08
+
+### Changed
+- Enhanced footer layout and structure:
+  - Implemented asymmetric grid layout with brand column on left and other columns on right
+  - Added dedicated footer logo configuration separate from navbar
+  - Optimized column spacing for better fit and readability
+  - Improved responsiveness with progressive column display (1-6 columns based on screen size)
+  - Made brand column sticky on desktop for better visibility
+  - Enhanced vertical spacing between elements for better hierarchy
+
+## [0.1.17] - 2025-04-07
 
 ### Added
-- Enhanced footer customization with configurable column order:
-  - Added `order` property to all footer sections (brand, resources, jobs, jobFeeds, legal)
-  - Implemented dynamic column sorting based on configuration values
-  - Created a centralized FooterColumn interface for better type safety
-  - Added ability to show/hide specific footer sections via configuration
-  - Made footer columns fully responsive across all screen sizes
+- Enhanced footer customization with flexible column system:
+  - Replaced hardcoded columns with fully customizable user-defined columns
+  - Added support for custom link columns with configurable title and content
+  - Added special column type for feed links (RSS, Atom, JSON)
+  - Maintained support for automatic addition of feature links (Job Alerts, Pricing, FAQ, Contact)
+  - Implemented proper TypeScript interfaces for better type safety
+  - Made all footer columns fully responsive across all screen sizes
   - Ensured backward compatibility with existing implementations
-  - Fixed boolean type handling for show/hide toggles in footer configuration
+  - Fixed boolean type handling for show/hide toggles 
+  - Added proper order control for column arrangement
 
 ## [0.1.16] - 2025-04-06
 
