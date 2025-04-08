@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.17] - 2025-04-07
+
+### Added
+- Enhanced footer customization with configurable column order:
+  - Added `order` property to all footer sections (brand, resources, jobs, jobFeeds, legal)
+  - Implemented dynamic column sorting based on configuration values
+  - Created a centralized FooterColumn interface for better type safety
+  - Added ability to show/hide specific footer sections via configuration
+  - Made footer columns fully responsive across all screen sizes
+  - Ensured backward compatibility with existing implementations
+  - Fixed boolean type handling for show/hide toggles in footer configuration
+
 ## [0.1.16] - 2025-04-06
 
 ### Added

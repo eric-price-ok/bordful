@@ -529,6 +529,7 @@ export const config = {
     // Brand section (reuses nav social links)
     brand: {
       show: true,
+      order: 1, // Display order in footer grid (lower numbers displayed first)
       description:
         "Browse curated opportunities from leading companies. Updated daily with the latest positions.",
     },
@@ -536,10 +537,10 @@ export const config = {
     // Resources section
     resources: {
       show: true,
-      title: "Resources",
+      order: 2, // Display order in footer grid (lower numbers displayed first)
+      title: "Company",
       links: [
         { label: "Home", link: "/" },
-        { label: "Jobs", link: "/jobs" },
         { label: "About", link: "/about" },
         { label: "Changelog", link: "/changelog" },
         // Pricing link will be added dynamically in the footer component if enabled
@@ -550,6 +551,7 @@ export const config = {
     // Legal section
     legal: {
       show: true,
+      order: 5, // Display order in footer grid (lower numbers displayed first)
       title: "Legal",
       links: [
         {
@@ -570,16 +572,36 @@ export const config = {
       ],
     },
 
+    // Jobs section
+    jobs: {
+      show: true,
+      order: 3, // Display order in footer grid (lower numbers displayed first)
+      title: "Jobs",
+    },
+
+    // Job Feeds section
+    jobFeeds: {
+      show: true,
+      order: 4, // Display order in footer grid (lower numbers displayed first)
+      title: "Job Feeds",
+    },
+
     // Post Job section
     postJob: {
       show: true,
-      title: "Post a Job",
+      title: "Post a Job for 30 Days for Free",
       description:
         "Reach our community of talented professionals. Get quality applications fast.",
       button: {
         label: "Post a Job",
         link: "https://stripe.com",
         external: true, // Indicates the footer link should open externally
+      },
+      learnMoreButton: {
+        show: true,
+        label: "Pricing",
+        link: "/pricing",
+        external: false,
       },
     },
 
@@ -597,6 +619,27 @@ export const config = {
       name: "Bordful",
       link: "https://bordful.com/",
       showLogo: true,
+    },
+
+    // Styling options
+    style: {
+      // Background color for the footer (CSS color value)
+      backgroundColor: "#0C0E12",
+
+      // Text color for regular text in the footer (CSS color value)
+      textColor: "#94979C",
+
+      // Heading color for section titles in the footer (CSS color value)
+      headingColor: "#FFFFFF",
+
+      // Link color for footer links (CSS color value)
+      linkColor: "#94979C",
+
+      // Link hover color for footer links on hover (CSS color value)
+      linkHoverColor: "#FFFFFF",
+
+      // Border color for the top border of the footer (CSS color value)
+      borderColor: "", // Empty string means use the default border color
     },
   },
 
