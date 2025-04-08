@@ -69,7 +69,7 @@ export default async function JobAlertsPage() {
             <h2 className="text-xl font-semibold mb-4">
               Subscribe for Updates
             </h2>
-            <p className="text-zinc-600 mb-6">
+            <p className="text-zinc-600 text-sm mb-6">
               Get notified when new jobs are posted. We&apos;ll also subscribe
               you to Bordful newsletter.
             </p>
