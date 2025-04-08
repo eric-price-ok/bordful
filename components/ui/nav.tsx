@@ -10,15 +10,11 @@ import {
   ChevronDown,
   Briefcase,
   BriefcaseBusiness,
-  Github,
-  Linkedin,
-  Twitter,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect, ReactNode, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { resolveColor } from "@/lib/utils/colors";
-import type { MenuItem } from "@/config/config.example";
 
 // Brand icon component that uses the configured icon name or falls back to BriefcaseBusiness
 function BrandIcon() {
