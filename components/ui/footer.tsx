@@ -7,6 +7,7 @@ import { Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import config from "@/config";
 import { resolveColor } from "@/lib/utils/colors";
+import { JobBadge } from "@/components/ui/job-badge";
 
 // Define interfaces for our column configuration
 interface FooterLink {
@@ -332,7 +333,7 @@ export function Footer() {
   // Generate job feeds column content
   const renderJobFeedsContent = (title: string) => (
     <div className="space-y-2">
-      <h3 className="text-sm font-semibold mb-3.5" style={headingStyle}>
+      <h3 className="text-sm font-semibold mb-2" style={headingStyle}>
         {title}
       </h3>
       <ul className="space-y-2.5">
@@ -358,7 +359,9 @@ export function Footer() {
           >
             <Rss className="h-3.5 w-3.5" />
             <span>RSS</span>
-            <span className="text-xs opacity-60">XML</span>
+            <span className="ml-1 text-[10px] border border-current rounded px-1 leading-none py-0.5 opacity-70">
+              XML
+            </span>
           </Link>
         </li>
         {/* Atom format */}
@@ -383,7 +386,9 @@ export function Footer() {
           >
             <Rss className="h-3.5 w-3.5" />
             <span>Atom</span>
-            <span className="text-xs opacity-60">XML</span>
+            <span className="ml-1 text-[10px] border border-current rounded px-1 leading-none py-0.5 opacity-70">
+              XML
+            </span>
           </Link>
         </li>
         {/* JSON format */}
@@ -408,7 +413,9 @@ export function Footer() {
           >
             <Rss className="h-3.5 w-3.5" />
             <span>JSON</span>
-            <span className="text-xs opacity-60">Feed</span>
+            <span className="ml-1 text-[10px] border border-current rounded px-1 leading-none py-0.5 opacity-70">
+              Feed
+            </span>
           </Link>
         </li>
       </ul>
@@ -421,7 +428,7 @@ export function Footer() {
     links: Array<{ label: string; link: string; external?: boolean }>
   ) => (
     <div className="space-y-2">
-      <h3 className="text-sm font-semibold mb-3.5" style={headingStyle}>
+      <h3 className="text-sm font-semibold mb-2" style={headingStyle}>
         {title}
       </h3>
       <ul className="space-y-1">
@@ -643,7 +650,7 @@ export function Footer() {
 
                   {/* Other columns stack in remaining space */}
                   <div className="md:col-span-9">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8">
                       {sortedColumns.slice(1).map((column) => (
                         <div key={column.id}>{column.content}</div>
                       ))}
