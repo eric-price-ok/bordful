@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { PlusCircle, Rss } from "lucide-react";
+import { Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import config from "@/config";
 import { resolveColor } from "@/lib/utils/colors";
