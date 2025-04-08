@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import config from "@/config";
 import dynamic from "next/dynamic";
-import { PlusCircle, Menu, X, Rss, ChevronDown, Briefcase } from "lucide-react";
+import { Menu, X, Rss, ChevronDown, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect, ReactNode } from "react";
 import { usePathname } from "next/navigation";
