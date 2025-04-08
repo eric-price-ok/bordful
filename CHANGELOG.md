@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.20] - 2025-04-08
+
+### Changed
+- Enhanced footer button styling for better UI consistency:
+  - Updated button sizing to use "xs" size to match other site buttons
+  - Added proper spacing and alignment with gap-1.5 class
+  - Added appropriate icons for each button type
+  - Used ArrowUpRight for Pricing button for better context
+  - Added Briefcase icon to Post a Job button for improved visual meaning
+  - Maintained consistent visual style with Apply Now and Contact page buttons
+
 ## [0.1.19] - 2025-04-08
 
 ### Changed

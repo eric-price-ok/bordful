@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Rss } from "lucide-react";
+import { Rss, ArrowRight, ArrowUpRight, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import config from "@/config";
 import { resolveColor } from "@/lib/utils/colors";
@@ -577,8 +577,9 @@ export function Footer() {
                 {config.footer.postJob.learnMoreButton?.show && (
                   <Button
                     asChild
+                    size="xs"
                     variant="outline"
-                    className="h-10 px-4 py-2 rounded-md font-medium leading-none flex items-center justify-center"
+                    className="gap-1.5 text-xs flex items-center justify-center"
                     style={{
                       color:
                         backgroundColor === "#0C0E12" ? "white" : undefined,
@@ -603,12 +604,17 @@ export function Footer() {
                       className="flex items-center justify-center"
                     >
                       {config.footer.postJob.learnMoreButton.label}
+                      <ArrowUpRight
+                        className="h-3.5 w-3.5 ml-1"
+                        aria-hidden="true"
+                      />
                     </Link>
                   </Button>
                 )}
                 <Button
                   asChild
-                  className="h-10 px-4 py-2 rounded-md font-medium leading-none flex items-center justify-center"
+                  size="xs"
+                  className="gap-1.5 text-xs flex items-center justify-center"
                   variant={config.ui.primaryColor ? "primary" : "default"}
                   style={{
                     backgroundColor: resolveColor(config.ui.primaryColor),
@@ -629,6 +635,10 @@ export function Footer() {
                     className="flex items-center justify-center"
                   >
                     {config.footer.postJob.button.label || "Get started"}
+                    <Briefcase
+                      className="h-3.5 w-3.5 ml-1.5"
+                      aria-hidden="true"
+                    />
                   </Link>
                 </Button>
               </div>
