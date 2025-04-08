@@ -465,7 +465,7 @@ export function Nav() {
           </Link>
 
           {/* Mobile Actions */}
-          <div className="flex items-center space-x-2 md:hidden">
+          <div className="flex items-center space-x-2 lg:hidden">
             {/* Mobile Post Job Button - Smaller version */}
             {config.nav.postJob.show && (
               <Button
@@ -509,24 +509,24 @@ export function Nav() {
           </div>
 
           {/* Desktop navigation */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden lg:flex items-center">
             {/* Primary Navigation */}
             <nav
-              className="flex items-center space-x-2 mr-4"
+              className="flex items-center space-x-2 mr-4 whitespace-nowrap"
               aria-label="Primary"
             >
               {renderDesktopNavItems()}
             </nav>
 
             {/* Social links and post job */}
-            <div className="flex items-center">
+            <div className="flex items-center whitespace-nowrap">
               {renderSocialLinks()}
 
               {config.nav.postJob.show && (
                 <Button
                   asChild
                   size="xs"
-                  className="ml-3 gap-1.5 text-xs"
+                  className="ml-3 gap-1.5 text-xs whitespace-nowrap"
                   variant={config.nav.postJob.variant || "default"}
                   style={
                     config.nav.postJob.variant === "primary"
@@ -555,7 +555,7 @@ export function Nav() {
         </nav>
 
         {isOpen && (
-          <div className="md:hidden border-t border-zinc-200">
+          <div className="lg:hidden border-t border-zinc-200">
             <nav
               className="flex flex-col py-4 px-4"
               aria-label="Mobile navigation"
@@ -570,7 +570,7 @@ export function Nav() {
 
               {/* Post Job Action */}
               {config.nav.postJob.show && (
-                <div className="px-4 pt-2 md:hidden">
+                <div className="px-4 pt-2 lg:hidden">
                   <Button
                     asChild
                     size="xs"

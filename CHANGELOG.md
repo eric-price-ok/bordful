@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Enhanced navigation mobile responsiveness:
   - Added Post Job button next to hamburger menu on small screens
+  - Improved responsive breakpoint from md (768px) to lg (1024px) for better layout stability
+  - Prevented content wrapping and social icon scaling with whitespace-nowrap
+  - Implemented binary responsive approach - full desktop or mobile view with no problematic in-between states
   - Maintained visual consistency with desktop button styling
   - Improved mobile UX by making primary CTA immediately accessible
   - Ensured proper spacing and alignment with compact styling

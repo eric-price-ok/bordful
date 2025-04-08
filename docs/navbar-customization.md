@@ -131,15 +131,22 @@ The button supports:
 
 ## Mobile Responsiveness
 
-The navigation bar automatically adapts to mobile screens:
+The navigation bar implements a clean binary responsive approach:
 
-1. On desktop: Horizontal menu with dropdowns on hover
-2. On mobile: 
+1. **Desktop View (≥1024px)**: 
+   - Full horizontal menu with all elements at their proper size
+   - Dropdowns on hover with 300ms close delay
+   - All social icons and navigation items visible without scaling
+   - No text wrapping or layout breaking
+   
+2. **Mobile View (<1024px)**:
    - "Post a Job" button remains visible next to the hamburger menu for easy access
    - Hamburger icon toggle for menu access
-   - Vertical accordion-style menu
+   - Vertical accordion-style menu when expanded
    - Nested items with proper indentation
    - Social links in a separate section
+
+This approach avoids problematic "in-between" states where content might scale down inappropriately or wrap to multiple lines, breaking the layout. By using the `lg` breakpoint (1024px) instead of the standard `md` breakpoint (768px), the navbar has enough space to display all elements at their full size before switching to the mobile view.
 
 ## Accessibility Features
 
