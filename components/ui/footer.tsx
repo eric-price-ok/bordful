@@ -37,16 +37,8 @@ interface FeedsFooterColumn extends BaseFooterColumn {
   type: "feeds";
 }
 
-type CustomFooterColumn = LinksFooterColumn | FeedsFooterColumn;
-
-// Job links for the footer
-const jobLinks = [
-  { label: "All Jobs", link: "/jobs" },
-  { label: "Job Types", link: "/jobs/types" },
-  { label: "Job Locations", link: "/jobs/locations" },
-  { label: "Career Levels", link: "/jobs/levels" },
-  { label: "Job Languages", link: "/jobs/languages" },
-];
+// We'll use this union type for our config type checking
+type FooterColumnConfig = LinksFooterColumn | FeedsFooterColumn;
 
 // Footer column interface for easier sorting
 interface FooterColumn {
@@ -477,7 +469,7 @@ export function Footer() {
 
   // Add custom columns from config
   if (Array.isArray(config.footer.columns)) {
-    config.footer.columns.forEach((column: any) => {
+    config.footer.columns.forEach((column: FooterColumnConfig) => {
       if (column.show) {
         // Skip job feeds columns if RSS is disabled
         if (column.type === "feeds" && !rssEnabled) {
@@ -485,13 +477,15 @@ export function Footer() {
         }
 
         // Prepare links array, potentially with auto-added feature links
-        let links = [...(column.links || [])];
+        const links = [...((column as LinksFooterColumn).links || [])];
 
         // Auto-add feature links if configured
-        if (column.autoAddFeatures) {
+        if ((column as LinksFooterColumn).autoAddFeatures) {
+          const autoAddFeatures = (column as LinksFooterColumn).autoAddFeatures;
+
           // Add Job Alerts link if enabled
           if (
-            column.autoAddFeatures.jobAlerts &&
+            autoAddFeatures?.jobAlerts &&
             config.jobAlerts?.enabled &&
             config.jobAlerts?.showInFooter
           ) {
@@ -503,7 +497,7 @@ export function Footer() {
 
           // Add Pricing link if enabled
           if (
-            column.autoAddFeatures.pricing &&
+            autoAddFeatures?.pricing &&
             config.pricing?.enabled &&
             config.pricing?.showInFooter
           ) {
@@ -515,7 +509,7 @@ export function Footer() {
 
           // Add FAQ link if enabled
           if (
-            column.autoAddFeatures.faq &&
+            autoAddFeatures?.faq &&
             config.faq?.enabled &&
             config.faq?.showInFooter
           ) {
@@ -527,7 +521,7 @@ export function Footer() {
 
           // Add Contact link if enabled
           if (
-            column.autoAddFeatures.contact &&
+            autoAddFeatures?.contact &&
             config.contact?.enabled &&
             config.contact?.showInFooter
           ) {
