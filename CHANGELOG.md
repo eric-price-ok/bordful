@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.22] - 2025-04-08
+
+### Changed
+- Enhanced Post Job banner for UI consistency:
+  - Updated Post Job button to match navbar and footer button styling
+  - Added Briefcase icon to maintain visual consistency across all Post Job buttons
+  - Applied responsive sizing with better touch targets for mobile devices
+  - Ensured consistent spacing and alignment with other Call-to-Action buttons
+  - Improved accessibility with proper ARIA attributes
+
 ## [0.1.21] - 2025-04-08
 
 ### Changed

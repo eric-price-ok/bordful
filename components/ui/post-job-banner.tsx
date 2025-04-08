@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import config from "@/config";
 import { resolveColor } from "@/lib/utils/colors";
+import { Briefcase } from "lucide-react";
 
 export function PostJobBanner() {
   // Early return if banner is disabled
@@ -29,7 +30,7 @@ export function PostJobBanner() {
         <div className="flex items-center gap-2 mb-4">
           <div className="flex -space-x-3">
             {companyAvatars.map((avatar, index) => (
-              <Avatar key={index} className="h-8 w-8 border border-background">
+              <Avatar key={index} className="h-7 w-7 border border-background">
                 <AvatarImage src={avatar.src} alt={avatar.alt} />
                 <AvatarFallback>{avatar.fallback}</AvatarFallback>
               </Avatar>
@@ -43,13 +44,18 @@ export function PostJobBanner() {
         href={cta.link}
         target={cta.external ? "_blank" : undefined}
         rel={cta.external ? "noopener noreferrer" : undefined}
+        className="block"
       >
         <Button
-          className="w-full text-white"
+          size="xs"
+          className="w-full gap-1.5 text-xs h-8 sm:h-7 px-3 sm:px-2.5 flex items-center justify-center"
           variant="primary"
           style={{ backgroundColor: resolveColor(config.ui.primaryColor) }}
         >
-          {cta.text}
+          <span className="flex items-center justify-center">
+            {cta.text}
+            <Briefcase className="h-3.5 w-3.5 ml-1" aria-hidden="true" />
+          </span>
         </Button>
       </a>
 
