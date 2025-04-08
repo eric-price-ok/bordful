@@ -568,7 +568,7 @@ export function Footer() {
                   {config.footer.postJob.title ||
                     "Start your 30-day free trial"}
                 </h2>
-                <p className="text-sm max-w-[480px]" style={textStyle}>
+                <p className="text-sm max-w-[520px]" style={textStyle}>
                   {config.footer.postJob.description ||
                     "Join over 4,000+ startups already growing with Bordful."}
                 </p>
