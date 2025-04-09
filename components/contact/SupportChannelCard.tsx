@@ -1,16 +1,9 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
-import {
   ArrowUpRight,
   ArrowRight,
   Mail,
-  Twitter,
   HelpCircle,
   Phone,
   MessageSquare,
@@ -19,6 +12,7 @@ import {
   Rss,
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
+import Image from "next/image";
 import config from "@/config";
 import { resolveColor } from "@/lib/utils/colors";
 
@@ -33,7 +27,6 @@ interface SupportChannelCardProps {
 // Map of icon names to components
 const iconMap: Record<string, LucideIcon> = {
   Mail,
-  Twitter,
   HelpCircle,
   Phone,
   MessageSquare,
@@ -49,24 +42,39 @@ export function SupportChannelCard({
   buttonLink,
   icon,
 }: SupportChannelCardProps) {
+  // Check if it's Twitter icon
+  const isTwitterIcon = icon === "Twitter";
+
   // Get the icon component or use HelpCircle as fallback
-  const IconComponent = iconMap[icon] || HelpCircle;
+  const IconComponent = !isTwitterIcon ? iconMap[icon] || HelpCircle : null;
 
   const isExternalLink =
     buttonLink.startsWith("http") || buttonLink.startsWith("mailto");
 
   return (
-    <Card className="h-full flex flex-col border-zinc-200 hover:border-zinc-300 transition-colors">
-      <CardHeader className="pb-2 space-y-3">
+    <div className="h-full flex flex-col p-5 border rounded-lg hover:border-gray-400 transition-all">
+      <div className="pb-2 space-y-3">
         <div>
-          <IconComponent className="h-5 w-5 text-zinc-700" />
+          {isTwitterIcon ? (
+            <div className="h-5 w-5 relative">
+              <Image
+                src="/assets/social/twitter.svg"
+                alt="Twitter/X"
+                width={20}
+                height={20}
+                className="object-contain"
+              />
+            </div>
+          ) : (
+            <IconComponent className="h-5 w-5 text-zinc-700" />
+          )}
         </div>
         <h3 className="text-base font-medium text-zinc-900">{title}</h3>
-      </CardHeader>
-      <CardContent className="pb-6 flex-grow">
+      </div>
+      <div className="pb-6 flex-grow">
         <p className="text-sm text-zinc-600 leading-relaxed">{description}</p>
-      </CardContent>
-      <CardFooter className="pt-0">
+      </div>
+      <div className="pt-0 mt-auto">
         <Button
           asChild
           size="xs"
@@ -88,7 +96,7 @@ export function SupportChannelCard({
             )}
           </Link>
         </Button>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 }

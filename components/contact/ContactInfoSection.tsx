@@ -1,11 +1,5 @@
 import { Mail, Phone, MapPin } from "lucide-react";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
+// No card components needed
 import config from "@/config";
 import { resolveColor } from "@/lib/utils/colors";
 
@@ -29,16 +23,12 @@ export function ContactInfoSection({
   const primaryColor = resolveColor(config.ui.primaryColor);
 
   return (
-    <Card className="border-zinc-200">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-xl font-semibold text-zinc-900">
-          {title}
-        </CardTitle>
-        <CardDescription className="text-zinc-600 mt-1">
-          {description}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+    <div className="p-5 border rounded-lg hover:border-gray-400 transition-all">
+      <div className="pb-4">
+        <h3 className="text-xl font-semibold text-zinc-900">{title}</h3>
+        <p className="text-zinc-600 mt-1 text-sm">{description}</p>
+      </div>
+      <div>
         <div className="space-y-4">
           <p className="font-medium text-zinc-900">{companyName}</p>
 
@@ -69,7 +59,7 @@ export function ContactInfoSection({
             <span className="text-zinc-700 text-sm">{address}</span>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

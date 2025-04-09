@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.25] - 2025-04-09
+
+### Changed
+- Enhanced UI consistency and mobile responsiveness across the site:
+  - Improved job post page layout on mobile by centering "Apply before" date below the apply button
+  - Updated footer to left-align "Built with" line and logo on smaller screens
+  - Made "View all" buttons on /jobs page consistent with other site buttons (size, capitalization)
+  - Enhanced button hover effects with solid backgrounds for better visibility
+  - Removed moving animations on button hover for more stable UI
+  - Updated toast notifications with solid backgrounds to ensure readability on dark backgrounds
+  - Improved job-alerts subscription form styling to match the rest of the site
+  - Made input fields smaller and consistent with other forms
+  - Updated contact page boxes to match site styling and removed Card components
+  - Replaced Lucide Twitter icon with SVG from assets folder
+  - Made contact page layout full-width with 4 cards in one row
+  - Positioned contact information as the first card in the grid
+
 ## [0.1.24] - 2025-04-09
 
 ### Changed
@@ -111,7 +128,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented proper TypeScript interfaces for better type safety
   - Made all footer columns fully responsive across all screen sizes
   - Ensured backward compatibility with existing implementations
-  - Fixed boolean type handling for show/hide toggles 
+  - Fixed boolean type handling for show/hide toggles
   - Added proper order control for column arrangement
 
 ## [0.1.16] - 2025-04-06
@@ -360,7 +377,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added browser history support for back/forward navigation with filters
   - Aligned filter state management with existing pagination and sorting patterns
 - Extended filter system to job subpages for unified filtering experience:
-  - Integrated optimized filter components in JobsLayout used by all job subpages 
+  - Integrated optimized filter components in JobsLayout used by all job subpages
   - Added consistent filtering capabilities across all pages (home, job types, career levels, etc.)
   - Implemented smart filter handling to properly filter already-filtered job listings
   - Maintained proper type safety with TypeScript for all filter operations
@@ -447,7 +464,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated job directory page metadata and structure:
   - Improved description
   - Added OpenGraph type
-  - Simplified container layout 
+  - Simplified container layout
 - Improved About and Contact pages:
   - Enhanced integration with configuration system
   - Added proper metadata for SEO

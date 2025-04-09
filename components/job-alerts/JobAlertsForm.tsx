@@ -8,14 +8,6 @@ import { useToast } from "@/hooks/use-toast";
 import { CheckCircle, RefreshCw, ArrowRight } from "lucide-react";
 import { resolveColor } from "@/lib/utils/colors";
 import config from "@/config";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
 
 export function JobAlertsForm() {
   const [name, setName] = useState("");
@@ -78,6 +70,7 @@ export function JobAlertsForm() {
           title: "Subscription successful!",
           description: "You'll now receive job alerts in your inbox.",
           variant: "default",
+          className: "bg-white border border-green-200 shadow-md",
         });
 
         // Set success state
@@ -88,6 +81,7 @@ export function JobAlertsForm() {
           title: "Rate limit exceeded",
           description: "Too many requests. Please try again later.",
           variant: "destructive",
+          className: "bg-destructive border border-red-600 shadow-md",
         });
       } else {
         throw new Error(result.error || "Subscription failed");
@@ -102,12 +96,14 @@ export function JobAlertsForm() {
           title: "Subscription failed",
           description: error.message,
           variant: "destructive",
+          className: "bg-destructive border border-red-600 shadow-md",
         });
       } else {
         toast({
           title: "Something went wrong",
           description: "Failed to subscribe to job alerts. Please try again.",
           variant: "destructive",
+          className: "bg-destructive border border-red-600 shadow-md",
         });
       }
     } finally {
@@ -124,31 +120,34 @@ export function JobAlertsForm() {
   return (
     <div className="w-full max-w-md mx-auto">
       {isSuccess ? (
-        <Card className="border-green-200">
-          <CardHeader>
-            <div className="flex justify-center mb-2">
-              <CheckCircle className="w-12 h-12 text-green-500" />
-            </div>
-            <CardTitle className="text-xl text-center text-green-800">
+        <div className="p-6 border rounded-lg border-green-200 bg-green-50">
+          <div className="flex flex-col items-center text-center space-y-3">
+            <CheckCircle className="w-10 h-10 text-green-500" />
+            <h3 className="text-md font-semibold text-green-800">
               Subscription Confirmed!
-            </CardTitle>
-            <CardDescription className="text-center text-green-700">
+            </h3>
+            <p className="text-sm text-green-700 mb-4">
               Thank you for subscribing to job alerts. You&apos;ll receive
               emails when jobs matching your interests are posted.
-            </CardDescription>
-          </CardHeader>
-          <CardFooter className="flex justify-center pt-2">
-            <Button onClick={handleReset} variant="outline" size="sm">
+            </p>
+            <Button
+              onClick={handleReset}
+              variant="outline"
+              size="xs"
+              className="gap-1.5 text-xs"
+            >
               Subscribe with another email
             </Button>
-          </CardFooter>
-        </Card>
+          </div>
+        </div>
       ) : (
-        <Card>
-          <form onSubmit={handleSubmit}>
-            <CardContent className="pt-6 space-y-4">
+        <div className="p-5 border rounded-lg hover:border-gray-400 transition-all">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Name *</Label>
+                <Label htmlFor="name" className="text-sm font-medium">
+                  Name *
+                </Label>
                 <Input
                   id="name"
                   type="text"
@@ -157,6 +156,7 @@ export function JobAlertsForm() {
                   onChange={(e) => setName(e.target.value)}
                   disabled={isSubmitting}
                   required
+                  className="h-7 text-xs w-full"
                 />
                 {errors.name && (
                   <p className="text-sm text-red-500 mt-1">{errors.name}</p>
@@ -164,7 +164,9 @@ export function JobAlertsForm() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email *</Label>
+                <Label htmlFor="email" className="text-sm font-medium">
+                  Email *
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -173,38 +175,37 @@ export function JobAlertsForm() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={isSubmitting}
+                  className="h-7 text-xs w-full"
                 />
                 {errors.email && (
                   <p className="text-sm text-red-500 mt-1">{errors.email}</p>
                 )}
               </div>
-            </CardContent>
-            <CardFooter>
-              <Button
-                type="submit"
-                variant="primary"
-                size="xs"
-                className="w-full gap-1.5 text-xs"
-                disabled={isSubmitting}
-                style={{
-                  backgroundColor: resolveColor(config.ui.primaryColor),
-                }}
-              >
-                {isSubmitting ? (
-                  <>
-                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                    Subscribing...
-                  </>
-                ) : (
-                  <>
-                    Subscribe to Job Alerts
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </>
-                )}
-              </Button>
-            </CardFooter>
+            </div>
+            <Button
+              type="submit"
+              variant="primary"
+              size="xs"
+              className="w-full gap-1.5 text-xs"
+              disabled={isSubmitting}
+              style={{
+                backgroundColor: resolveColor(config.ui.primaryColor),
+              }}
+            >
+              {isSubmitting ? (
+                <>
+                  <RefreshCw className="mr-2 h-3.5 w-3.5 animate-spin" />
+                  Subscribing...
+                </>
+              ) : (
+                <>
+                  Subscribe to Job Alerts
+                  <ArrowRight className="h-3.5 w-3.5 ml-1" aria-hidden="true" />
+                </>
+              )}
+            </Button>
           </form>
-        </Card>
+        </div>
       )}
     </div>
   );
