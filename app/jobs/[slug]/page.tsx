@@ -305,7 +305,7 @@ export default async function JobPostPage({
           )}
 
           <div className="mt-8">
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3">
               <Button
                 asChild
                 size="xs"
@@ -325,7 +325,7 @@ export default async function JobPostPage({
                 </a>
               </Button>
               {job.valid_through && (
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-gray-500 text-center sm:text-left w-full sm:w-auto">
                   Apply before:{" "}
                   {new Date(job.valid_through).toLocaleDateString("en-US", {
                     year: "numeric",
