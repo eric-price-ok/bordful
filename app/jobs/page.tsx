@@ -273,11 +273,11 @@ export default async function JobsDirectoryPage() {
                     <Button
                       asChild
                       variant="outline"
-                      size="sm"
-                      className="gap-1 mt-2"
+                      size="xs"
+                      className="gap-1.5 mt-2 text-xs"
                     >
                       <Link href="/jobs/types">
-                        View all job types
+                        View All Job Types
                         <ArrowUpRight
                           className="h-3.5 w-3.5"
                           aria-hidden="true"
@@ -330,15 +330,15 @@ export default async function JobsDirectoryPage() {
                   <div>
                     <Button
                       variant="outline"
-                      size="sm"
-                      className="gap-1 mt-2"
+                      size="xs"
+                      className="gap-1.5 mt-2 text-xs"
                       asChild
                     >
                       <Link
                         href="/jobs/locations"
                         aria-label="View all available locations"
                       >
-                        View all locations
+                        View All Locations
                         <ArrowUpRight
                           className="h-3.5 w-3.5"
                           aria-hidden="true"
@@ -378,15 +378,15 @@ export default async function JobsDirectoryPage() {
                   <div>
                     <Button
                       variant="outline"
-                      size="sm"
-                      className="gap-1 mt-2"
+                      size="xs"
+                      className="gap-1.5 mt-2 text-xs"
                       asChild
                     >
                       <Link
                         href="/jobs/levels"
                         aria-label="View all career levels"
                       >
-                        View all career levels
+                        View All Career Levels
                         <ArrowUpRight
                           className="h-3.5 w-3.5"
                           aria-hidden="true"
@@ -426,15 +426,15 @@ export default async function JobsDirectoryPage() {
                   <div>
                     <Button
                       variant="outline"
-                      size="sm"
-                      className="gap-1 mt-2"
+                      size="xs"
+                      className="gap-1.5 mt-2 text-xs"
                       asChild
                     >
                       <Link
                         href="/jobs/languages"
                         aria-label="View all languages"
                       >
-                        View all languages
+                        View All Languages
                         <ArrowUpRight
                           className="h-3.5 w-3.5"
                           aria-hidden="true"
