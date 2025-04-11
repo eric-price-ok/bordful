@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.26] - 2025-04-11
+
+### Changed
+- Enhanced hero section responsiveness and layout:
+  - Fixed excessive left spacing on mobile for about, pricing, and contact pages
+  - Improved mobile-first approach with better padding control
+  - Maintained proper 50/50 split on desktop while optimizing mobile layout
+  - Removed redundant margin on mobile for cleaner spacing
+  - Enhanced container padding with responsive breakpoints
+  - Optimized content width and spacing across all screen sizes
+
 ## [0.1.25] - 2025-04-09
 
 ### Changed
