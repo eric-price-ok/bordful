@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.27] - 2025-04-12
+
+### Added
+- Dynamic OG image generation for the homepage:
+  - Created an API route with Vercel OG for generating Open Graph images
+  - Uses the website title, description, and brand colors from config
+  - Applies the font family specified in the configuration
+  - Enhances social sharing with customized preview images
+
 ## [0.1.26] - 2025-04-11
 
 ### Changed
@@ -270,7 +279,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced Pricing page configurability:
   - Added configurable badge text for hero section
   - Added SEO keywords configuration
-  - All pages now fully configurable via config
 
 ## [0.1.6] - 2025-03-30
 
@@ -855,16 +863,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.0.70] - 2025-03-08
 
 ### Changed
-- Enhanced RSS feed implementation to better utilize configuration options:
-  - Added checks to disable feeds based on configuration settings
-  - Made feed title fully configurable via the config file
-  - Implemented configurable description length for job previews
-  - Applied proper MIME type for JSON Feed format (application/feed+json)
-  - Added conditional rendering for disabled feed formats
-  - Improved error handling when feeds are disabled
-  - Enhanced type safety with proper optional chaining
+- Enhanced job filters with improved state management:
+  - Added custom hooks for array and boolean filters
+  - Optimized filter performance and reduced re-renders
+  - Fixed "Clear all" functionality for language filters
+  - Added missing "Freelance" job type option
+  - Improved filter synchronization with URL parameters
 
-## [0.0.69] - 2025-03-07
+## [0.0.69] - 2025-02-27
+
+### Fixed
+- Fixed configuration loading in production by removing development-only check:
+  - Custom `config.ts` now loads in all environments
+  - Ensures consistent configuration between development and production
+  - Resolves issue with example config being used in production
+
+## [0.0.68] - 2025-02-27
+
+### Changed
+- Updated Next.js to version 15.2.0
+
+## [0.0.67] - 2025-02-27
 
 ### Added
 - Added comprehensive RSS feed system:
@@ -880,7 +899,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced feeds with content summaries and formatted descriptions
   - Implemented proper MIME types for each feed format
 
-## [0.0.68] - 2025-03-07
+## [0.0.66] - 2025-02-27
 
 ### Changed
 - Improved canonical URLs implementation for better SEO:
@@ -906,261 +925,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Eliminated ESLint warnings by removing explicit 'any' types
   - Used consistent approach for both country and city data handling
 
-## [0.0.67] - 2025-03-07
-
-### Added
-- Added robots.txt implementation:
-  - Created dynamic robots.ts following Next.js metadata conventions
-  - Added programmatic control over crawler rules
-  - Configured comprehensive crawler directives for search engines
-  - Linked sitemap.xml for improved search engine indexing
-  - Established canonical host definition
-  - Protected private routes from indexing
-
-## [0.0.66] - 2025-03-07
-
-### Fixed
-- Enhanced dynamic route parameter handling in job detail pages:
-  - Improved async parameter handling in `generateMetadata` function
-  - Optimized job data fetching with parallel Promise.all
-  - Updated `JobPage` component to use consistent async patterns
-  - Enhanced error handling for job not found cases
-  - Maintained proper TypeScript types for params object
-
-## [0.0.65] - 2025-03-06
-
-### Added
-- Added thousands separators to all job count displays:
-  - Implemented `toLocaleString()` for consistent number formatting
-  - Applied formatting to main hero section job counts
-  - Added formatting to "added today" counts
-  - Updated all job listings and pagination counts
-  - Enhanced filter sidebar count displays
-  - Improved category card job count displays
-  - Updated aria-labels with formatted numbers for accessibility
-
-### Fixed
-- Cleaned up console logs throughout the codebase:
-  - Removed excessive debugging logs while preserving important error messages
-  - Maintained API key and configuration error reporting for better troubleshooting
-  - Removed verbose data normalization logs from job detail pages
-  - Improved code cleanliness and reduced console noise
-  - Enhanced production readiness while keeping meaningful error context
-
-## [0.0.64] - 2025-03-03
-
-### Fixed
-- Fixed deployment configuration issue:
-  - Modified `config/index.ts` to properly handle missing `config.ts` file
-  - Added environment-specific configuration loading
-  - Ensured production builds always use `config.example.ts`
-  - Prevented build errors when `config.ts` doesn't exist
-  - Improved configuration loading logic for development environments
-
-## [0.0.63] - 2025-03-03
-
-### Added
-- Compact job card system:
-  - New `CompactJobCard` and `CompactJobCardList` components
-  - Space-efficient row layout with badges
-  - Latest jobs preview on alerts page
+## [0.0.65] - 2025-02-27
 
 ### Changed
-- Improved job alerts form and layout:
-  - Added name field validation
-  - Enhanced server-side validation
-  - Added client-side validation
-  - Improved form styling and layout
-
-## [0.0.62] - 2025-03-03
-
-### Added
-- Made job alerts feature optional:
-  - Added configuration options to enable/disable job alerts
-  - Added conditional rendering in navigation and footer
-  - Added redirect to home page when job alerts are disabled
-  - Added API endpoint protection when feature is disabled
-
-## [0.0.61] - 2025-03-03
-
-### Added
-- Added API rate limiting to prevent abuse:
-  - Implemented in-memory rate limiting for subscription endpoint
-  - Limited to 5 requests per hour per IP address
-  - Added client-side handling of rate limit responses
-  - Created comprehensive documentation in `/docs/rate-limiting.md`
-
-### Changed
-- Enhanced documentation structure:
-  - Added documentation index in `/docs/README.md`
-  - Improved navigation between documentation files
-  - Added getting started instructions in documentation
-
-## [0.0.60] - 2025-03-03
-
-### Added
-- Added Encharge email provider integration:
-  - Implemented subscription handling via Encharge API
-  - Added detailed documentation in `/docs/encharge-integration.md`
-
-### Changed
-- Improved form validation for job alerts subscription:
-  - Enhanced server-side validation with comprehensive email regex
-  - Added required name field validation on server
-  - Implemented client-side validation with error messages
-  - Added visual indicators for required fields
-
-## [0.0.59] - 2025-02-28
-
-### Fixed
-- Fixed job filters count indicators to consistently show 0 for empty categories:
-  - Added fallback zero values for Job Type filters
-  - Standardized count display across all filter sections
-  - Improved visual consistency with Career Level options
-
-## [0.0.58] - 2025-02-27
-
-### Fixed
-- Fixed configuration loading in production by removing development-only check:
-  - Custom `config.ts` now loads in all environments
-  - Ensures consistent configuration between development and production
-  - Resolves issue with example config being used in production
-
-## [0.0.57] - 2025-02-27
-
-### Changed
-- Updated Next.js to version 15.2.0
-
-## [0.0.56] - 2025-02-27
-
-### Changed
-- Optimized Airtable API usage with consistent revalidation strategy:
-  - Standardized 5-minute (300 seconds) revalidation across all dynamic pages
-  - Replaced `force-dynamic` with revalidation on job detail pages
-  - Added `force-static` to static content pages (about, privacy, terms)
-  - Enhanced documentation with revalidation customization guide
-
-## [0.0.55] - 2025-02-27
-
-### Added
-- Added reusable `JobBadge` component for consistent badge styling across the application:
-  - Centralized badge styling for workplace types, visa status, career levels, and languages
-  - Improved code maintainability through DRY principle
-  - Added "New" badge for jobs posted within the last 48 hours
-  - Consistent visual language for all badge types
-  - TypeScript type safety for badge variants
-
-## [0.0.54] - 2025-02-20
-
-### Added
-- Added `config.example.ts` as the template for job board configuration:
-  - Complete example with detailed comments
-  - TypeScript type safety
-  - All customizable options documented
-  - Works out of the box without requiring custom config
-  - Supports deep merging with custom config.ts when present
-
-### Changed
-- Enhanced configuration system:
-  - Uses example config by default for immediate usability
-  - Supports optional config.ts for customization
-  - Deep merges custom config with example defaults
-  - Improved configuration documentation
-  - Better setup instructions for forked repositories
-  - Replaced "Built by Craftled" with "Built with Bordful" in the footer
-  - Simplified configuration imports across all files for better maintainability
-  - Removed redundant type imports in favor of TypeScript's automatic type inference
-
-## [0.0.53] - 2025-02-19
-
-### Changed
-- Improved caching consistency across pages:
-  - Removed double-caching on homepage to match subpage behavior
-  - Standardized 5-minute revalidation across all job pages
-  - Fixed issue with stale data persisting on homepage
-
-## [0.0.52] - 2025-02-19
-
-### Added
-- Added language-based job filtering:
-  - New /jobs/languages directory page
-  - Individual language-specific job listing pages
-  - Language filter in sidebar with show/hide functionality
-  - Support for multiple language selection
-
-### Changed
-- Enhanced job filters with improved state management:
-  - Added custom hooks for array and boolean filters
-  - Optimized filter performance and reduced re-renders
-  - Fixed "Clear all" functionality for language filters
-  - Added missing "Freelance" job type option
-  - Improved filter synchronization with URL parameters
-
-## [0.0.51] - 2025-02-11
-
-### Added
-- Added Reddit social icon in navigation and footer
-- Support for Reddit social link in configuration
-
-## [0.0.50] - 2025-02-11
-
-### Added
-- Added automatic XML sitemap generation:
-  - SEO-friendly URLs with descriptive job slugs
-  - Dynamic updates through ISR (5-minute revalidation)
-  - Prioritized URLs (1.0 for homepage, 0.9 for featured jobs)
-  - Comprehensive coverage of all job listings and category pages
-
-## [0.0.49] - 2025-02-09
-
-### Added
-- Added flexible script management system:
-  - Support for head and body script injection
-  - Next.js Script component integration with loading strategies
-  - TypeScript-safe configuration
-  - Documentation for script management in README
-
-## [0.0.48] - 2025-02-09
-
-### Added
-- Added custom logo support in navigation:
-  - Option to replace default icon+text with custom logo image
-  - Configurable logo dimensions and alt text
-  - SVG support for crisp display
-
-## [0.0.47] - 2025-02-08
-
-### Changed
-- Added configurable Airtable table name via `AIRTABLE_TABLE_NAME` environment variable
-
-## [0.0.46] - 2025-02-08
-
-### Added
-- Added "Freelance" as a new job type option:
-  - Updated Job interface to include Freelance type
-  - Added Freelance to job type constants with descriptions
-  - Updated Airtable setup documentation
-  - Enhanced job filtering to support Freelance positions
-
-## [0.0.45] - 2025-02-07
-
-### Changed
-- Added external link handling for "Post a Job" buttons
-
-## [0.0.44] - 2025-02-07
-
-### Changed
-
-- Enhanced job directory pages:
-  - Added consistent "View All" buttons for job types, locations, and career levels
-  - Improved type safety for location handling
-  - Standardized layout and navigation across directory pages
-  - Fixed unused imports and variables
-
-## [0.0.43] - 2025-02-07
-
-### Changed
-
 - Standardized job listing pages:
   - Unified sorting and pagination across all job pages
   - Consistent URL parameters (per_page, sort)
@@ -1168,27 +935,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved loading states and empty results handling
 
 ### Added
-
 - Added location-based job browsing:
   - New /jobs/locations page with comprehensive location directory
   - Individual location pages with filtered job listings
   - Support for remote and country-specific job searches
   - Consistent layout and functionality with other job pages
 
-## [0.0.42] - 2025-02-06
+## [0.0.64] - 2025-02-06
 
 ### Added
-
 - Added `/jobs` page with category browsing:
   - Job types, locations, and career levels
   - Dynamic data aggregation
   - Centralized constants for career levels and locations
   - Accessible UI components
 
-## [0.0.41] - 2025-02-06
+## [0.0.63] - 2025-02-06
 
 ### Added
-
 - Added `/jobs` page:
   - Added ARIA labels and landmarks for accessibility
   - Improved semantic HTML structure
@@ -1196,24 +960,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added dynamic data revalidation (5 min)
   - Enhanced mobile responsiveness
 
-## [0.0.40] - 2025-02-06
+## [0.0.62] - 2025-02-06
 
 ### Added
-
 - Added Airtable template for quick setup
 - Added `.env.example` file for easier environment configuration
 
 ### Changed
-
 - Updated README with Airtable template link
 - Improved environment setup documentation
 - Enhanced setup instructions with template-first approach
 - Added note about preserving `.env.example` for reference
 
-## [0.0.39] - 2025-02-04
+## [0.0.61] - 2025-02-04
 
 ### Changed
-
 - Enhanced homepage and job post page responsive layouts:
   - Optimized layout breakpoints for better space utilization
   - Adjusted sidebar to start at medium screens (768px) instead of large screens
@@ -1225,10 +986,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved mobile UX by prioritizing job content and reordering sidebar sections
   - Optimized content flow on mobile with job details followed by similar jobs
 
-## [0.0.38] - 2025-02-03
+## [0.0.60] - 2025-02-03
 
 ### Changed
-
 - Improved navigation responsiveness and styling:
   - Adjusted mobile menu breakpoint for better usability
   - Enhanced active link styling with subtle background
@@ -1237,10 +997,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Consistent hover effects across desktop and mobile
   - Reduced icon sizes in collapsed menu
 
-## [0.0.37] - 2025-02-03
+## [0.0.59] - 2025-02-03
 
 ### Changed
-
 - Updated Privacy & Terms pages layout and styling:
   - Centered content layout for better readability
   - Consistent styling with job post pages
@@ -1249,10 +1008,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Combined Cookie Policy into Privacy Policy page
   - Updated footer links to reflect merged pages
 
-## [0.0.36] - 2025-02-03
+## [0.0.58] - 2025-02-03
 
 ### Changed
-
 - Enhanced footer configuration with centralized controls
 - Added configuration options for all footer sections (brand, resources, legal, post job)
 - Added customizable copyright section with dynamic year range
@@ -1261,10 +1019,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added show/hide toggles for all footer sections
 - Added external link support for legal links
 
-## [0.0.35] - 2025-02-03
+## [0.0.57] - 2025-02-03
 
 ### Changed
-
 - Enhanced navigation configuration with centralized social media controls
 - Added configuration options for LinkedIn, Twitter, and Bluesky social links
 - Added customizable "Post Job" button with show/hide, label, and link options
@@ -1272,8 +1029,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated navigation component to use dynamic configuration values
 - Improved code maintainability with configuration-driven navigation
 
-## [0.0.34] - 2025-01-26
+## [0.0.56] - 2025-01-26
 
 ### Changed
-
 - Migrated Next.js configuration from JavaScript to TypeScript for better type safety and consistency

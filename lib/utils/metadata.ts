@@ -24,6 +24,12 @@ interface MetadataParams {
     title?: string;
     description?: string;
     type?: OpenGraphType;
+    images?: Array<{
+      url: string;
+      width: number;
+      height: number;
+      alt: string;
+    }>;
   };
 }
 
@@ -64,6 +70,7 @@ export function generateMetadata({
       description: openGraph?.description || description,
       type: openGraph?.type || "website",
       url: pageUrl,
+      ...(openGraph?.images && { images: openGraph.images }),
     },
     twitter: {
       card: "summary_large_image",

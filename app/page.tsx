@@ -11,6 +11,14 @@ export const metadata: Metadata = generateMetadata({
   path: "/",
   openGraph: {
     type: "website",
+    images: [
+      {
+        url: "/api/og",
+        width: 1200,
+        height: 630,
+        alt: config.title + " - " + config.description,
+      },
+    ],
   },
 });
 
