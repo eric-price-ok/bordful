@@ -84,14 +84,14 @@ export async function GET(): Promise<ImageResponse | Response> {
     imageResponseFonts.push({
       name: fontFamilyName,
       data: fontData, // Use the single loaded data buffer
-      weight: 400 as 400,
-      style: 'normal' as 'normal',
+      weight: 400 as const, // Use 'as const' for specific literal type
+      style: 'normal' as const, // Use 'as const' for specific literal type
     });
     imageResponseFonts.push({
       name: fontFamilyName,
       data: fontData, // Use the single loaded data buffer
-      weight: 800 as 800, // Use Extra Bold weight
-      style: 'normal' as 'normal',
+      weight: 800 as const, // Use 'as const' for specific literal type
+      style: 'normal' as const, // Use 'as const' for specific literal type
     });
   }
 
@@ -145,9 +145,10 @@ export async function GET(): Promise<ImageResponse | Response> {
         fonts: imageResponseFonts.length > 0 ? imageResponseFonts : undefined,
       }
     );
-  } catch (e: any) {
-    console.error(`Error generating ImageResponse (${fontFamilyName}): ${e.message}`);
-    return new Response(`Failed to generate the image: ${e.message}`, {
+  } catch (e: unknown) { // Use unknown instead of any
+    const errorMessage = e instanceof Error ? e.message : String(e); // Type check before accessing message
+    console.error(`Error generating ImageResponse (${fontFamilyName}): ${errorMessage}`);
+    return new Response(`Failed to generate the image: ${errorMessage}`, {
       status: 500,
     });
   }
