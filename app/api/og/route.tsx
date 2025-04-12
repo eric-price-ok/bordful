@@ -32,7 +32,6 @@ async function loadGoogleFontData(fontFamily: string, text: string): Promise<Arr
       }
     } else {
       console.error(`Could not extract compatible (TTF/OTF) font URL from Google CSS (${fontFamily})`);
-      // console.log("Google CSS received:", css); // Optional debug logging
       return null;
     }
   } catch (error) {
@@ -100,6 +99,32 @@ export async function GET(): Promise<ImageResponse | Response> {
     ? fontFamilyName
     : (fontFamily === 'ibm-plex-serif' ? 'serif' : 'sans-serif');
 
+  // --- Fetch Logo --- START
+  let logoDataUri = ""; // Initialize as empty
+  const logoConfig = config.footer.brand.logo;
+  if (logoConfig?.enabled && logoConfig?.src) {
+    try {
+      const logoUrl = `${config.url}${logoConfig.src}`;
+      const logoResponse = await fetch(logoUrl);
+      if (!logoResponse.ok) {
+        throw new Error(`Failed to fetch logo: ${logoResponse.statusText}`);
+      }
+      let svgText = await logoResponse.text();
+      // Remove width and height attributes from the root <svg> tag using a single regex
+      // Satori struggles with respecting aspect ratio via CSS for some SVGs,
+      // so removing internal dimensions and setting explicit W/H in CSS is more reliable.
+      svgText = svgText.replace(/<svg(?=\s)([^>]*?)\s+(width|height)="[^"]*"/g, '<svg$1');
+
+      logoDataUri = `data:image/svg+xml;base64,${btoa(svgText)}`;
+
+    } catch (logoError: unknown) {
+      const errorMessage = logoError instanceof Error ? logoError.message : String(logoError);
+      console.error(`Error fetching or processing logo: ${errorMessage}`);
+      // logoDataUri remains "" on error
+    }
+  }
+  // --- Fetch Logo --- END
+
   try {
     return new ImageResponse(
       (
@@ -116,8 +141,24 @@ export async function GET(): Promise<ImageResponse | Response> {
             fontFamily: fontFamilyCSS,
             textAlign: 'center',
             padding: '50px',
+            position: 'relative', // Needed for absolute positioning of logo
           }}
         >
+          {/* Logo Image - Added */}
+          {logoDataUri && (
+            <img
+              src={logoDataUri}
+              alt={`${config.title} Logo`}
+              style={{
+                position: "absolute",
+                top: "60px",
+                left: "60px",
+                height: "56px",      // Set height as requested
+                width: "186.48px",   // Set calculated width (56 * (1665/500))
+                                     // Explicit width needed due to Satori SVG rendering quirks
+              }}
+            />
+          )}
           <h1 style={{
             fontSize: '60px',
             fontWeight: 800, // Request Extra Bold weight
