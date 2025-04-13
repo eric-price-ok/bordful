@@ -115,7 +115,7 @@ export const config = {
   font: {
     // Font family to use throughout the site
     // Available options: "geist" | "inter" | "ibm-plex-serif"
-    family: "ibm-plex-serif" as FontFamily,
+    family: "geist" as FontFamily,
 
     // Whether to load the font from Google Fonts (for Inter and IBM Plex Serif)
     // IMPORTANT: Must be true for IBM Plex Serif and Inter
@@ -194,6 +194,21 @@ export const config = {
 
     // Background color (defaults to heroBackgroundColor if not specified)
     backgroundColor: null, // Use null to default to heroBackgroundColor
+
+    // Background color overlay opacity (0-1, where 1 is fully opaque)
+    backgroundOpacity: 0.9,
+
+    // Background image (path from public folder)
+    backgroundImage: "/office.jpg",
+
+    // Gradient overlay (bottom to top fade)
+    gradient: {
+      enabled: true,
+      color: null, // Uses backgroundColor if not specified
+      angle: 0, // Degrees - 90 means bottom to top
+      startOpacity: 0, // Opacity at the top (0-1)
+      endOpacity: 1, // Opacity at the bottom (0-1)
+    },
 
     // Title color (defaults to heroTitleColor if not specified)
     titleColor: null, // Use null to default to heroTitleColor

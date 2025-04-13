@@ -5,7 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.32] - 2025-04-13
+
+### Added
+- Enhanced OpenGraph image generation with DRY code optimization:
+  - Created centralized shared style constants for dimensions, fonts, and z-indices
+  - Added reusable `fetchImageAsDataURI` helper function for both logo and background images
+  - Improved type safety with proper TypeScript interfaces for all config options
+  - Created comprehensive constants system for consistent styling
+  - Consolidated duplicated image handling code
+  - Enhanced maintainability with organized code sections and better comments
+  - Removed redundant style definitions for better consistency
+
 ## [0.1.31] - 2025-04-13
+
+### Added
+- Added layered background image support to OpenGraph images:
+  - Added `backgroundImage` config option to specify image path from public folder
+  - Added `backgroundOpacity` option (0-1) to control color overlay transparency
+  - Implemented HEX to RGBA color conversion for semi-transparent overlays
+  - Added support for both local and remote background images
+  - Maintained proper z-index layering (background → color overlay → content)
+  - Enhanced visual depth with multi-layered design
+  - Error handling for missing or invalid background images
+- Added gradient overlay support to OpenGraph images:
+  - Added `gradient` configuration with customizable properties
+  - Implemented bottom-to-top fade effect with brand color
+  - Added controls for gradient angle, start opacity, and end opacity
+  - Created custom linear gradient generator with proper color handling
+  - Enhanced visual depth with layered background elements
+  - Made gradient configurable and optional via config file
+  - Added proper z-index prioritization between layers
 
 ### Fixed
 - Fixed OpenGraph (OG) image logo display issues:
@@ -13,6 +43,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added documentation warning about Satori's limitation with "auto" width values
   - Updated example configuration to use recommended fixed width values
   - Fixed logo rendering issues by explicitly setting dimensions
+- Fixed OG image rendering error with Satori:
+  - Added explicit `display: flex` to nested div elements
+  - Added proper flex properties to all container elements
+  - Simplified layout structure to avoid nested containers
+  - Fixed zIndex property to use unitless value
+  - Resolved issues with background image and overlay rendering
+  - Removed unnecessary div wrappers to improve compatibility
+  - Ensured compatibility with Vercel's OG image renderer
+- Fixed text wrapping in OG images:
+  - Increased headline max-width from 900px to 1080px
+  - Increased description max-width from 800px to 1080px
+  - Optimized text container to use full available content width (accounting for 60px padding)
+  - Improved text layout to allow more content per line
+  - Maintained readability while maximizing text container capacity
+
+### Changed
+- Enhanced OpenGraph image layout:
+  - Repositioned headline and description to bottom left corner
+  - Changed text alignment from center to left
+  - Added consistent 60px padding on all sides
+  - Improved typography with adjusted max-width constraints
+  - Created more balanced composition with logo at top, text at bottom
+  - Enhanced readability with better text positioning
+  - Maintained proper spacing between title and description
 
 ## [0.1.30] - 2025-04-13
 
