@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.31] - 2025-04-13
+
+### Fixed
+- Fixed OpenGraph (OG) image logo display issues:
+  - Changed default logo width behavior to use fixed pixel values (185px) instead of "auto"
+  - Added documentation warning about Satori's limitation with "auto" width values
+  - Updated example configuration to use recommended fixed width values
+  - Fixed logo rendering issues by explicitly setting dimensions
+
+## [0.1.30] - 2025-04-13
+
+### Added
+- Enhanced OpenGraph (OG) image logo support:
+  - Added direct logo configuration with `show`, `src`, `width`, `height`, and `position` options
+  - Added support for PNG, JPG, and other image formats in addition to SVG
+  - Improved logo rendering with proper aspect ratio preservation
+  - Added support for absolute URLs in logo source
+  - Fixed TypeScript type definitions for better consistency
+  - Enhanced error handling with detailed error messages
+  - Improved documentation with examples in config file
+  - Added proper content-type detection for different image formats
+
 ## [0.1.29] - 2025-04-12
 
 ### Added

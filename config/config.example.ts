@@ -181,6 +181,53 @@ export const config = {
     },
   },
 
+  // Open Graph Image Configuration
+  og: {
+    // Enable or disable custom OG image
+    enabled: true,
+
+    // Title to display (defaults to site title if not specified)
+    title: null, // Use null to default to site title
+
+    // Description to display (defaults to site description if not specified)
+    description: null, // Use null to default to site description
+
+    // Background color (defaults to heroBackgroundColor if not specified)
+    backgroundColor: null, // Use null to default to heroBackgroundColor
+
+    // Title color (defaults to heroTitleColor if not specified)
+    titleColor: null, // Use null to default to heroTitleColor
+
+    // Description color (defaults to heroSubtitleColor if not specified)
+    descriptionColor: null, // Use null to default to heroSubtitleColor
+
+    // Font configuration (defaults to site font if not specified)
+    font: {
+      // Override the font family just for OG image
+      family: null, // Use null to default to site font.family
+    },
+
+    // Logo configuration
+    logo: {
+      // Show or hide logo in OG image
+      show: true,
+
+      // Logo source path (direct path from public folder)
+      // Examples: "/bordful.svg", "/logo/my-logo.png", etc.
+      src: "/bordful-light.svg",
+
+      // Logo dimensions
+      width: 185, // IMPORTANT: Use a fixed pixel value, "auto" doesn't work reliably
+      height: 56, // Height in pixels
+
+      // Logo positioning
+      position: {
+        top: 60, // Position from top in pixels
+        left: 60, // Position from left in pixels
+      },
+    },
+  },
+
   // Marketing & SEO
   badge: "Open Source Next.js Job Board Starter Kit",
   title: "Discover and Apply to Your Dream Jobs Today",
