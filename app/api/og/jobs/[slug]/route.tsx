@@ -41,12 +41,8 @@ interface OGJobConfig {
   gradient?: OGGradientConfig;
   titleColor?: string | null;
   companyColor?: string | null;
-  detailsColor?: string | null;
   font?: OGFontConfig;
   logo?: OGLogoConfig;
-  showSalary?: boolean;
-  showLocation?: boolean;
-  showJobType?: boolean;
 }
 
 // Common style constants
@@ -60,13 +56,10 @@ const SHARED_STYLES = {
   FONTS: {
     TITLE_SIZE: 60,
     COMPANY_SIZE: 36,
-    DETAILS_SIZE: 32,
     TITLE_WEIGHT: 800,
     COMPANY_WEIGHT: 600,
-    DETAILS_WEIGHT: 400,
     TITLE_LINE_HEIGHT: 1.2,
     COMPANY_LINE_HEIGHT: 1.3,
-    DETAILS_LINE_HEIGHT: 1.5,
   },
   Z_INDEX: {
     CONTENT: 10, // Unitless value
@@ -389,8 +382,6 @@ export async function GET(
       ogJobConfig.titleColor || config.ui.heroTitleColor || "#FFFFFF";
     const companyColor =
       ogJobConfig.companyColor || config.ui.heroTitleColor || "#FFFFFF";
-    const detailsColor =
-      ogJobConfig.detailsColor || config.ui.heroSubtitleColor || "#FFFFFF";
 
     // Gradient configuration
     const gradientEnabled = ogJobConfig.gradient?.enabled !== false; // Default to true if not specified
@@ -425,84 +416,8 @@ export async function GET(
     const jobTitle = job.title;
     const companyName = job.company;
 
-    // Prepare job details to display (job type, salary, location)
-    // Show details for both real job data and extracted data
-    let detailsText = "";
-
-    // Determine which job details to show based on config
-    const showLocation = ogJobConfig.showLocation !== false;
-    const showJobType = ogJobConfig.showJobType !== false;
-    const showSalary = ogJobConfig.showSalary !== false;
-
-    if (realJobData) {
-      // We have real job data - use it exactly as on the job post page
-
-      // Format location based on workplace type - exactly as on the job post page
-      let location = null;
-      if (showLocation) {
-        if (realJobData.workplace_type === "Remote") {
-          location = realJobData.remote_region
-            ? `Remote (${realJobData.remote_region})`
-            : null;
-        } else if (realJobData.workplace_type === "Hybrid") {
-          const locationParts = [
-            realJobData.workplace_city,
-            realJobData.workplace_country,
-            realJobData.remote_region
-              ? `Hybrid (${realJobData.remote_region})`
-              : null,
-          ].filter(Boolean);
-          location = locationParts.length > 0 ? locationParts.join(", ") : null;
-        } else {
-          const locationParts = [
-            realJobData.workplace_city,
-            realJobData.workplace_country,
-          ].filter(Boolean);
-          location = locationParts.length > 0 ? locationParts.join(", ") : null;
-        }
-      }
-
-      // Format salary if available - exactly as on the job post page
-      let salaryText = null;
-      if (showSalary && realJobData.salary) {
-        try {
-          salaryText = formatSalary(realJobData.salary, true);
-        } catch (error) {
-          console.error("Error formatting salary:", error);
-        }
-      }
-
-      // Prepare details array with the details to display - exactly as on the job post page
-      const details = [];
-      if (showJobType && realJobData.type) details.push(realJobData.type);
-      if (showSalary && salaryText) details.push(salaryText);
-      if (showLocation && location) details.push(location);
-
-      // Join details with bullet separators
-      detailsText = details.join(" • ");
-      console.log("Real job data details text:", detailsText);
-    } else {
-      // We don't have real job data - use extracted data
-      console.log("No real job data available, using extracted data");
-
-      // Format location based on workplace type
-      let location = null;
-      if (showLocation && job.workplace_type) {
-        location = "Remote";
-      }
-
-      // Prepare details array with the details to display
-      const details = [];
-      if (showJobType && job.type) details.push(job.type);
-      if (showLocation && location) details.push(location);
-
-      // Join details with bullet separators
-      detailsText = details.join(" • ");
-      console.log("Extracted data details text:", detailsText);
-    }
-
-    // Combine all text for font loading
-    const textToRender = `${jobTitle} ${companyName} ${detailsText}`;
+    // Combine text for font loading
+    const textToRender = `${jobTitle} ${companyName}`;
 
     // --- Font Loading & Processing ---
     let fontFamilyName = ""; // Name to use in ImageResponse fonts array
@@ -701,27 +616,13 @@ export async function GET(
                   fontSize: `${SHARED_STYLES.FONTS.TITLE_SIZE}px`,
                   fontWeight: SHARED_STYLES.FONTS.TITLE_WEIGHT,
                   color: titleColor,
-                  margin: "0 0 24px 0",
+                  margin: "0",
                   lineHeight: SHARED_STYLES.FONTS.TITLE_LINE_HEIGHT,
                   textAlign: "left",
                 }}
               >
                 {jobTitle}
               </h1>
-              {detailsText && (
-                <p
-                  style={{
-                    fontSize: `${SHARED_STYLES.FONTS.DETAILS_SIZE}px`,
-                    fontWeight: SHARED_STYLES.FONTS.DETAILS_WEIGHT,
-                    color: detailsColor,
-                    margin: 0,
-                    lineHeight: SHARED_STYLES.FONTS.DETAILS_LINE_HEIGHT,
-                    textAlign: "left",
-                  }}
-                >
-                  {detailsText}
-                </p>
-              )}
             </div>
           </div>
         </div>
