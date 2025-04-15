@@ -2,7 +2,6 @@ import { ImageResponse } from "next/og";
 import config from "@/config";
 import { getJobs } from "@/lib/db/airtable";
 import { generateJobSlug } from "@/lib/utils/slugify";
-import { formatSalary } from "@/lib/db/airtable";
 
 // Specify that this route should run on Vercel's edge runtime
 export const runtime = "edge";
