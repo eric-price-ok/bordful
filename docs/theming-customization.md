@@ -71,6 +71,8 @@ The implementation:
 2. Resolves Tailwind patterns to their corresponding hex values
 3. Applies the color consistently across all components
 
+The implementation intelligently handles color stops to ensure smooth transitions even if stops are not specified.
+
 ## Background Customization
 
 In addition to the primary color, you can customize the background color of specific sections:
@@ -252,6 +254,186 @@ background: radial-gradient(circle, #3b82f6 0%, #d946ef 100%);
 ```
 
 The implementation intelligently handles color stops to ensure smooth transitions even if stops are not specified.
+
+## Hero Background Images
+
+The hero section now also supports background images for even more visual customization options. Background images take precedence over both gradients and solid background colors when enabled.
+
+### Basic Configuration
+
+To set up a background image:
+
+```typescript
+// config/config.ts
+export const config = {
+  // ... other configuration
+  ui: {
+    // Hero background image (highest precedence)
+    heroBackgroundImage: {
+      enabled: true, // Set to true to enable background image
+      src: "/hero-background.jpg", // Path to image from public directory
+      position: "center", // CSS background-position value
+      size: "cover", // CSS background-size value
+      // Optional overlay for better text readability
+      overlay: {
+        enabled: true, // Set to true to enable a color overlay
+        color: "rgba(0, 84, 80, 0.7)", // Semi-transparent color
+        opacity: 0.7, // Opacity from 0 to 1
+      },
+    },
+    
+    // Fallback options if image is disabled or fails to load
+    heroGradient: {
+      enabled: false,
+      // gradient options...
+    },
+    heroBackgroundColor: "#005450",
+    
+    // ... other UI configuration
+  },
+  // ... other configuration
+};
+```
+
+### Configuration Options
+
+#### Basic Image Settings
+
+- **enabled**: Boolean to toggle the background image on/off
+- **src**: Path to the image file (relative to the `public` directory)
+- **position**: CSS `background-position` value (default: `"center"`)
+- **size**: CSS `background-size` value (default: `"cover"`)
+
+#### Overlay Settings
+
+The overlay is a semi-transparent color layer that sits on top of the background image to improve text readability:
+
+- **overlay.enabled**: Boolean to toggle the overlay on/off
+- **overlay.color**: Color value in rgba or hex format
+- **overlay.opacity**: Number between 0 and 1 (alternative to using rgba)
+
+### Optimal Image Sizes
+
+For crisp images on high-resolution displays, including Retina screens, follow these guidelines:
+
+| Screen Size | Recommended Image Dimensions | Format | Max File Size |
+| ----------- | ---------------------------- | ------ | ------------- |
+| Desktop     | 2560px × 1440px              | WebP   | 400KB         |
+| Tablet      | 1536px × 1024px              | WebP   | 250KB         |
+| Mobile      | 828px × 1792px               | WebP   | 150KB         |
+
+- **Resolution**: Aim for 180-220 PPI for optimal quality
+- **Format**: Use WebP for best compression-to-quality ratio, with JPEG fallback
+- **Aspect Ratio**: 16:9 or 3:2 typically works well for hero sections
+
+### Examples
+
+#### Simple Background Image
+
+```typescript
+heroBackgroundImage: {
+  enabled: true,
+  src: "/images/hero-background.jpg",
+  position: "center",
+  size: "cover",
+}
+```
+
+#### Background Image with Dark Overlay
+
+```typescript
+heroBackgroundImage: {
+  enabled: true,
+  src: "/images/office-space.jpg",
+  position: "center",
+  size: "cover",
+  overlay: {
+    enabled: true,
+    color: "rgba(0, 0, 0, 0.6)", // Dark overlay for better text contrast
+  },
+}
+```
+
+#### Background Image with Brand Color Overlay
+
+```typescript
+heroBackgroundImage: {
+  enabled: true,
+  src: "/images/team-collaboration.jpg",
+  position: "top center",
+  size: "cover",
+  overlay: {
+    enabled: true,
+    color: "rgba(79, 70, 229, 0.7)", // Brand color (indigo) overlay
+  },
+}
+```
+
+#### Background Image with Custom Position
+
+```typescript
+heroBackgroundImage: {
+  enabled: true,
+  src: "/images/cityscape.jpg",
+  position: "bottom center", // Shows the bottom part of the image
+  size: "cover",
+  overlay: {
+    enabled: true,
+    color: "rgba(0, 0, 0, 0.4)",
+  },
+}
+```
+
+### Performance Considerations
+
+Background images can affect page load performance. Follow these best practices:
+
+1. **Optimize your images**:
+   - Use tools like ImageOptim, TinyPNG, or Squoosh to compress images
+   - Consider using Next.js Image Optimization API for dynamically served optimized images
+
+2. **Use appropriate dimensions**:
+   - Don't use an 8K image for a small hero section
+   - Balance quality and file size
+
+3. **Consider responsive images**:
+   - Use different sized images for different device sizes
+   - Implement with media queries or Next.js responsive image features
+
+4. **Lazy loading**:
+   - For hero sections below the fold, consider lazy loading the background image
+
+### Technical Implementation
+
+The hero background image is implemented using CSS `background-image` with optional overlay:
+
+```css
+/* Base background image */
+.hero {
+  background-image: url('/path/to/image.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Overlay implementation */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+/* Content sits above the overlay */
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+```
+
+In the actual implementation, these styles are applied inline via the React component style props.
 
 ## Best Practices
 

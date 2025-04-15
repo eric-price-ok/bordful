@@ -9,6 +9,20 @@ interface HeroImageConfig {
   alt?: string;
 }
 
+interface HeroBackgroundImageOverlay {
+  enabled?: boolean;
+  color?: string;
+  opacity?: number;
+}
+
+interface HeroBackgroundImageConfig {
+  enabled?: boolean;
+  src?: string;
+  position?: string;
+  size?: string;
+  overlay?: HeroBackgroundImageOverlay;
+}
+
 interface HeroSectionProps {
   badge: string;
   title: string;
@@ -33,14 +47,43 @@ export function HeroSection({
   const heroBadgeTextColor = config?.ui?.heroBadgeTextColor || "";
   const heroBadgeBorderColor = config?.ui?.heroBadgeBorderColor || "";
   const heroGradient = config?.ui?.heroGradient;
+  const heroBackgroundImage = config?.ui?.heroBackgroundImage;
 
   // Use page-specific hero image config if provided, otherwise fall back to global config
   const heroImageConfig = heroImage || config?.ui?.heroImage;
 
-  // Create background style based on gradient or solid color
+  // Create background style based on image, gradient, or solid color (in order of precedence)
   let heroStyle = {};
+  let overlayStyle = {};
+  let hasOverlay = false;
 
-  if (heroGradient?.enabled && heroGradient.colors?.length) {
+  // Image background takes precedence over gradient and solid color
+  if (heroBackgroundImage?.enabled && heroBackgroundImage.src) {
+    heroStyle = {
+      backgroundImage: `url(${heroBackgroundImage.src})`,
+      backgroundPosition: heroBackgroundImage.position || "center",
+      backgroundSize: heroBackgroundImage.size || "cover",
+      backgroundRepeat: "no-repeat",
+      position: "relative", // Required for overlay positioning
+    };
+
+    // Add overlay if enabled
+    if (
+      heroBackgroundImage.overlay?.enabled &&
+      heroBackgroundImage.overlay.color
+    ) {
+      hasOverlay = true;
+      overlayStyle = {
+        backgroundColor: heroBackgroundImage.overlay.color,
+        opacity:
+          heroBackgroundImage.overlay.opacity !== undefined
+            ? heroBackgroundImage.overlay.opacity
+            : 0.7,
+      };
+    }
+  }
+  // Gradient takes precedence over solid color if image is not enabled
+  else if (heroGradient?.enabled && heroGradient.colors?.length) {
     const { type, direction, colors, stops } = heroGradient;
     const colorStops = colors
       .map((color, index) => {
@@ -61,13 +104,21 @@ export function HeroSection({
       };
     }
   } else if (heroBackgroundColor) {
-    // Apply solid background color if gradient is not enabled
+    // Apply solid background color if neither image nor gradient is enabled
     heroStyle = { backgroundColor: heroBackgroundColor };
   }
 
   return (
-    <div className="border-b overflow-hidden" style={heroStyle}>
-      <div className="container mx-auto px-0 sm:px-4 md:px-6 py-6 sm:py-8 md:py-12">
+    <div className="border-b overflow-hidden relative" style={heroStyle}>
+      {/* Overlay for background image if needed */}
+      {hasOverlay && (
+        <div
+          className="absolute inset-0 z-0"
+          style={overlayStyle}
+          aria-hidden="true"
+        />
+      )}
+      <div className="container mx-auto px-0 sm:px-4 md:px-6 py-6 sm:py-8 md:py-12 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 lg:gap-12">
           <div className="w-full md:w-1/2 px-4 sm:px-0 space-y-3 sm:space-y-4">
             <div className="space-y-2 sm:space-y-3">

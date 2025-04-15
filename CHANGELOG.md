@@ -8,14 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.35] - 2025-04-15
 
 ### Added
-- Added gradient background support for hero section:
-  - Implemented both linear and radial gradient options
-  - Added configuration for gradient type (linear/radial), direction, colors, and stops
-  - Created intelligent color stop handling with optional percentage values
+- Added hero section background customization options:
+  - Added background image support with overlay capabilities:
+    - Configurable image source, position, and size
+    - Semi-transparent color overlay for better text contrast
+    - Responsive design with optimal image size recommendations
+    - Performance optimization best practices
+  - Implemented both linear and radial gradient options:
+    - Added configuration for gradient type (linear/radial), direction, colors, and stops
+    - Created intelligent color stop handling with optional percentage values
   - Maintained backward compatibility with solid background color
-  - Enhanced visual depth with layered gradient options
-  - Made all gradient settings fully configurable via config file
-  - Implemented proper fallback for when gradient is disabled
+  - Enhanced visual depth with layered background options
+  - Implemented proper precedence (image > gradient > solid color)
+  - Made all background settings fully configurable via config file
 
 ## [0.1.34] - 2025-04-15
 

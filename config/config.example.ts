@@ -150,6 +150,21 @@ export const config = {
       stops: ["0%", "50%", "100%"],
     },
 
+    // Hero section background image
+    // Takes precedence over both gradient and solid background when enabled
+    heroBackgroundImage: {
+      enabled: true, // Set to true to enable background image
+      src: "/hero-background.jpg", // Path to image from public directory
+      position: "center", // CSS background-position value
+      size: "cover", // CSS background-size value: "cover", "contain", "100% auto", etc.
+      // Optional overlay for better text readability
+      overlay: {
+        enabled: false, // Set to true to enable a color overlay
+        color: "rgba(0, 84, 80, 0.7)", // Semi-transparent color (RGB or RGBA)
+        opacity: 0.7, // Opacity value from 0 to 1 (alternative to using rgba)
+      },
+    },
+
     // Hero section main title color (CSS color value)
     // Can be hex, rgb, hsl, etc. Leave empty for default.
     heroTitleColor: "#fff", // Example: "text-gray-900"

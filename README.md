@@ -32,6 +32,7 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
 - Enhanced hero section with customization options:
   - Configurable background colors
   - Support for both linear and radial gradients
+  - Background image support with overlay capabilities
   - Customizable gradient directions, colors, and stops
   - Consistent styling with application theme
   - Seamless fallbacks for solid background colors
@@ -663,6 +664,11 @@ export const config = {
     // Hero section subtitle color (CSS color value)
     // Can be hex, rgb, hsl, etc. Leave empty for default.
     heroSubtitleColor: "#fff", // Example: "text-gray-600"
+
+    // Hero section background image
+    heroBackgroundImage: {
+      enabled: false, // Make sure background image is disabled
+    },
   },
 };
 ```
@@ -1463,7 +1469,7 @@ The hero section is fully configurable through the `ui` section in the configura
 
 #### Background Options
 
-The hero section supports two background styles:
+The hero section supports three background styles:
 
 1. **Solid Background Color**:
    ```typescript
@@ -1471,6 +1477,9 @@ The hero section supports two background styles:
      heroBackgroundColor: "#005450", // Any valid CSS color value
      heroGradient: {
        enabled: false, // Make sure gradient is disabled
+     },
+     heroBackgroundImage: {
+       enabled: false, // Make sure background image is disabled
      },
    }
    ```
@@ -1485,8 +1494,29 @@ The hero section supports two background styles:
        colors: ["#3b82f6", "#8b5cf6", "#d946ef"], // Array of colors (2+ colors)
        stops: ["0%", "50%", "100%"], // Optional percentage stops
      },
+     heroBackgroundImage: {
+       enabled: false, // Make sure background image is disabled
+     },
    }
    ```
+
+3. **Background Image**:
+   ```typescript
+   ui: {
+     heroBackgroundImage: {
+       enabled: true, // Enable background image
+       src: "/images/hero-background.jpg",
+       position: "center",
+       size: "cover",
+       overlay: {
+         enabled: true, // Enable overlay for better text readability
+         color: "rgba(0, 0, 0, 0.5)", // Semi-transparent overlay
+       },
+     },
+   }
+   ```
+
+The system follows a precedence order: background image > gradient > solid color. If the highest-priority option is disabled or fails, it falls back to the next option.
 
 #### Linear Gradient Examples
 
@@ -1537,6 +1567,30 @@ heroGradient: {
 }
 ```
 
+#### Background Image Examples
+
+```typescript
+// Simple background image
+heroBackgroundImage: {
+  enabled: true,
+  src: "/images/hero-background.jpg",
+  position: "center",
+  size: "cover",
+}
+
+// Background image with overlay
+heroBackgroundImage: {
+  enabled: true,
+  src: "/images/team.jpg",
+  position: "center",
+  size: "cover",
+  overlay: {
+    enabled: true,
+    color: "rgba(0, 0, 0, 0.5)", // Dark overlay for better text readability
+  },
+}
+```
+
 #### Text and Badge Styling
 
 In addition to background customization, you can also customize text colors and badge styling:
@@ -1554,5 +1608,3 @@ ui: {
   heroBadgeBorderColor: "#ffffff",
 }
 ```
-
-The hero section gradient takes precedence over the solid background color when enabled. If you disable the gradient, the system will fall back to using the solid background color.
