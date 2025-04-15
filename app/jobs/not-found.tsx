@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowUpRight, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import config from "@/config";
 import { resolveColor } from "@/lib/utils/colors";
 
@@ -10,8 +10,8 @@ export default function JobNotFound() {
       <div className="max-w-[640px] mx-auto text-center">
         <h1 className="text-2xl font-semibold mb-4">Job Not Found</h1>
         <p className="text-gray-600 mb-3">
-          The job posting you're looking for doesn't exist, has been removed, or
-          has expired.
+          The job posting you&apos;re looking for doesn&apos;t exist, has been
+          removed, or has expired.
         </p>
         <p className="text-gray-600 mb-8">
           Companies may remove job listings when positions are filled or no
