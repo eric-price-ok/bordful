@@ -47,7 +47,8 @@ export function HeroSection({
   const heroBadgeTextColor = config?.ui?.heroBadgeTextColor || "";
   const heroBadgeBorderColor = config?.ui?.heroBadgeBorderColor || "";
   const heroGradient = config?.ui?.heroGradient;
-  const heroBackgroundImage = config?.ui?.heroBackgroundImage;
+  const heroBackgroundImage = config?.ui
+    ?.heroBackgroundImage as HeroBackgroundImageConfig;
 
   // Use page-specific hero image config if provided, otherwise fall back to global config
   const heroImageConfig = heroImage || config?.ui?.heroImage;
