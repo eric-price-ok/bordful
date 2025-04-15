@@ -536,6 +536,12 @@ export async function getJob(id: string): Promise<Job | null> {
     const record = await base(TABLE_NAME).find(id);
     const fields = record.fields;
 
+    // Return null for inactive jobs - consistent with Google's guidelines to return 404
+    if (fields.status !== "active") {
+      console.log(`Job ${id} is inactive, not returning data`);
+      return null;
+    }
+
     return {
       id: record.id,
       title: fields.title as string,

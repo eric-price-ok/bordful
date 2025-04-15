@@ -33,6 +33,13 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
 - Application requirements for clear candidate expectations
 - Application deadline display with relative time indicators
 - Job identifier display for better reference and tracking
+- Google-compliant status handling:
+  - Active/inactive status management for job listings
+  - Automatic 404 responses for inactive job listings (Google best practice)
+  - Enhanced 404 pages with explanatory messaging
+  - Consistent status checking across all job-related routes
+  - API routes with proper status-based responses
+  - OpenGraph images following the same status rules
 - Advanced salary structure with currency and time unit support
   - Supports 50+ global fiat currencies
   - Cryptocurrency support (Bitcoin, Ethereum, etc.)

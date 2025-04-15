@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.34] - 2025-04-15
+
+### Added
+- Implemented Google-compliant 404 handling for inactive job posts:
+  - Added status checks to ensure inactive jobs return 404 responses as per Google's structured data guidelines
+  - Enhanced job not-found page with clearer messaging about expired or removed job listings
+  - Updated "Back to Jobs" button to use consistent primary color and styling from other site buttons
+  - Improved error messages to explain that jobs may be removed when positions are filled
+  - Added consistent status checking across all job-related API routes and pages
+  - Updated Open Graph API routes to return 404 for inactive jobs
+  - Enhanced getJob() function to properly filter inactive jobs
+  - Added explicit status filter to generateStaticParams() for job detail pages
+
 ## [0.1.33] - 2025-04-15
 
 ### Added

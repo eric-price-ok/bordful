@@ -275,6 +275,14 @@ export async function GET(
           "Salary:",
           realJobData.salary ? "Available" : "Not available"
         );
+
+        // Check if job is inactive - getJobs() should already filter active jobs only
+        // but we'll add an extra check for safety
+        if (realJobData.status !== "active") {
+          return new Response(`Job is no longer active`, {
+            status: 404,
+          });
+        }
       }
     } catch (error) {
       console.error("Error fetching jobs from Airtable:", error);

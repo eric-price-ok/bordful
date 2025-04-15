@@ -20,9 +20,12 @@ import { resolveColor } from "@/lib/utils/colors";
 // Generate static params for all active jobs
 export async function generateStaticParams() {
   const jobs = await getJobs();
-  return jobs.map((job) => ({
-    slug: generateJobSlug(job.title, job.company),
-  }));
+  // getJobs already filters for active jobs, but we'll explicitly filter here for clarity
+  return jobs
+    .filter((job) => job.status === "active")
+    .map((job) => ({
+      slug: generateJobSlug(job.title, job.company),
+    }));
 }
 
 // Generate metadata for the job page
@@ -172,6 +175,11 @@ export default async function JobPostPage({
   const job = jobs.find((j) => generateJobSlug(j.title, j.company) === slug);
 
   if (!job) {
+    notFound();
+  }
+
+  // Return 404 for inactive jobs as per Google's structured data guidelines
+  if (job.status !== "active") {
     notFound();
   }
 
