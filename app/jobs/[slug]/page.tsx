@@ -145,6 +145,14 @@ export async function generateMetadata({
     path: `/jobs/${slug}`,
     openGraph: {
       type: "article",
+      images: [
+        {
+          url: `/api/og/jobs/${slug}`,
+          width: 1200,
+          height: 630,
+          alt: `${job.title} at ${job.company}`,
+        },
+      ],
     },
   });
 }

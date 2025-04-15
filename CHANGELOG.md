@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.33] - 2025-04-15
+
+### Added
+- Added job-specific OG image generation for enhanced social sharing:
+  - Created new API route `/api/og/jobs/[slug]` for dynamic job-specific OG images
+  - Implemented company name display above job title for better branding
+  - Added job details display (job type, location) when available
+  - Integrated with existing OG image styling and configuration
+  - Added intelligent job type extraction from job titles when Airtable data is unavailable
+  - Enhanced title case formatting for proper capitalization
+  - Made all aspects customizable through `config.og.jobs` settings
+  - Followed Next.js best practices for file-based API routes
+  - Used Edge Runtime for optimal performance
+  - Added proper error handling and fallback mechanisms
+
 ## [0.1.32] - 2025-04-13
 
 ### Added

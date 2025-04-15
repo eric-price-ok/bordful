@@ -241,6 +241,63 @@ export const config = {
         left: 60, // Position from left in pixels
       },
     },
+
+    // Job-specific OG image configuration
+    jobs: {
+      // Enable or disable job-specific OG images
+      enabled: true,
+
+      // Background color (defaults to heroBackgroundColor if not specified)
+      backgroundColor: null, // Use null to default to heroBackgroundColor
+
+      // Background color overlay opacity (0-1, where 1 is fully opaque)
+      backgroundOpacity: 0.9,
+
+      // Background image (path from public folder)
+      backgroundImage: "/office.jpg",
+
+      // Gradient overlay
+      gradient: {
+        enabled: true,
+        color: null, // Uses backgroundColor if not specified
+        angle: 0, // Degrees
+        startOpacity: 0, // Opacity at the start (0-1)
+        endOpacity: 1, // Opacity at the end (0-1)
+      },
+
+      // Title color (defaults to heroTitleColor if not specified)
+      titleColor: null, // Use null to default to heroTitleColor
+
+      // Company name color
+      companyColor: null, // Use null to default to heroTitleColor
+
+      // Details color (job type, location, salary)
+      detailsColor: null, // Use null to default to heroSubtitleColor
+
+      // Font configuration (defaults to site font if not specified)
+      font: {
+        // Override the font family just for job OG images
+        family: null, // Use null to default to site font.family
+      },
+
+      // Logo configuration
+      logo: {
+        // Show or hide logo in job OG images
+        show: true,
+
+        // Logo source path (direct path from public folder)
+        src: "/bordful-light.svg",
+
+        // Logo dimensions
+        width: 185, // IMPORTANT: Use a fixed pixel value
+        height: 56, // Height in pixels
+      },
+
+      // Job details to display
+      showSalary: true, // Show salary information if available
+      showLocation: true, // Show job location
+      showJobType: true, // Show job type (Full-time, Part-time, etc.)
+    },
   },
 
   // Marketing & SEO
