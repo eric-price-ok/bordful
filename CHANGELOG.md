@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.35] - 2025-04-15
+
+### Added
+- Added gradient background support for hero section:
+  - Implemented both linear and radial gradient options
+  - Added configuration for gradient type (linear/radial), direction, colors, and stops
+  - Created intelligent color stop handling with optional percentage values
+  - Maintained backward compatibility with solid background color
+  - Enhanced visual depth with layered gradient options
+  - Made all gradient settings fully configurable via config file
+  - Implemented proper fallback for when gradient is disabled
+
 ## [0.1.34] - 2025-04-15
 
 ### Added

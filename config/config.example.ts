@@ -133,6 +133,23 @@ export const config = {
     // Can be hex, rgb, hsl, etc. Leave empty for default.
     heroBackgroundColor: "#005450", // Example: light gray background
 
+    // Hero section gradient background
+    // Takes precedence over heroBackgroundColor when enabled
+    heroGradient: {
+      enabled: false, // Set to true to enable gradient background
+      type: "linear" as "linear" | "radial", // Type of gradient: "linear" or "radial"
+      direction: "to top", // For linear gradients: "to right", "to bottom", "45deg", etc.
+      // For radial gradients: "circle", "ellipse at center", etc.
+      colors: [
+        "#005450", // Start color
+        "#007a73", // Optional middle color(s)
+        "#00a59c", // End color
+      ],
+      // Optional stops for precise control (0-100%)
+      // If not provided, colors will be evenly distributed
+      stops: ["0%", "50%", "100%"],
+    },
+
     // Hero section main title color (CSS color value)
     // Can be hex, rgb, hsl, etc. Leave empty for default.
     heroTitleColor: "#fff", // Example: "text-gray-900"

@@ -32,14 +32,38 @@ export function HeroSection({
   const heroBadgeBgColor = config?.ui?.heroBadgeBgColor || "";
   const heroBadgeTextColor = config?.ui?.heroBadgeTextColor || "";
   const heroBadgeBorderColor = config?.ui?.heroBadgeBorderColor || "";
+  const heroGradient = config?.ui?.heroGradient;
 
   // Use page-specific hero image config if provided, otherwise fall back to global config
   const heroImageConfig = heroImage || config?.ui?.heroImage;
 
-  // Apply the background color inline if it's set in config
-  const heroStyle = heroBackgroundColor
-    ? { backgroundColor: heroBackgroundColor }
-    : {};
+  // Create background style based on gradient or solid color
+  let heroStyle = {};
+
+  if (heroGradient?.enabled && heroGradient.colors?.length) {
+    const { type, direction, colors, stops } = heroGradient;
+    const colorStops = colors
+      .map((color, index) => {
+        const stop = stops && stops[index] ? ` ${stops[index]}` : "";
+        return `${color}${stop}`;
+      })
+      .join(", ");
+
+    if (type === "linear") {
+      heroStyle = {
+        background: `linear-gradient(${
+          direction || "to right"
+        }, ${colorStops})`,
+      };
+    } else if (type === "radial") {
+      heroStyle = {
+        background: `radial-gradient(${direction || "circle"}, ${colorStops})`,
+      };
+    }
+  } else if (heroBackgroundColor) {
+    // Apply solid background color if gradient is not enabled
+    heroStyle = { backgroundColor: heroBackgroundColor };
+  }
 
   return (
     <div className="border-b overflow-hidden" style={heroStyle}>

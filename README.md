@@ -29,6 +29,12 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
 - Incremental Static Regeneration (ISR) for real-time updates
 - Rich text support for job descriptions
 - Comprehensive job metadata with multi-select career levels
+- Enhanced hero section with customization options:
+  - Configurable background colors
+  - Support for both linear and radial gradients
+  - Customizable gradient directions, colors, and stops
+  - Consistent styling with application theme
+  - Seamless fallbacks for solid background colors
 - Job benefits and perks displaying in the sidebar
 - Application requirements for clear candidate expectations
 - Application deadline display with relative time indicators
@@ -625,6 +631,38 @@ export const config = {
     // This list can include any valid CurrencyCode from lib/constants/currencies.ts
     // Set to null to allow all currencies, or specify a subset
     allowedCurrencies: ["USD", "EUR", "GBP", "BTC", "ETH", "USDT", "USDC"] as CurrencyCode[] | null, // null means all currencies are allowed
+  },
+
+  // UI Configuration
+  ui: {
+    // Hero section background color (CSS color value)
+    // Can be hex, rgb, hsl, etc. Leave empty for default.
+    heroBackgroundColor: "#005450", // Example: light gray background
+
+    // Hero section gradient background
+    // Takes precedence over heroBackgroundColor when enabled
+    heroGradient: {
+      enabled: false, // Set to true to enable gradient background
+      type: "linear", // Type of gradient: "linear" or "radial"
+      direction: "to right", // For linear gradients: "to right", "to bottom", "45deg", etc.
+      // For radial gradients: "circle", "ellipse at center", etc.
+      colors: [
+        "#005450", // Start color
+        "#007a73", // Optional middle color(s)
+        "#00a59c", // End color
+      ],
+      // Optional stops for precise control (0-100%)
+      // If not provided, colors will be evenly distributed
+      stops: ["0%", "50%", "100%"],
+    },
+
+    // Hero section main title color (CSS color value)
+    // Can be hex, rgb, hsl, etc. Leave empty for default.
+    heroTitleColor: "#fff", // Example: "text-gray-900"
+
+    // Hero section subtitle color (CSS color value)
+    // Can be hex, rgb, hsl, etc. Leave empty for default.
+    heroSubtitleColor: "#fff", // Example: "text-gray-600"
   },
 };
 ```
@@ -1418,3 +1456,103 @@ If you find this helpful, please ⭐️ this repository!
 ## Credits
 
 Built by [Craftled](https://craftled.com)
+
+### Hero Section Customization
+
+The hero section is fully configurable through the `ui` section in the configuration file. You can customize the background, text colors, and badge styling:
+
+#### Background Options
+
+The hero section supports two background styles:
+
+1. **Solid Background Color**:
+   ```typescript
+   ui: {
+     heroBackgroundColor: "#005450", // Any valid CSS color value
+     heroGradient: {
+       enabled: false, // Make sure gradient is disabled
+     },
+   }
+   ```
+
+2. **Gradient Background**:
+   ```typescript
+   ui: {
+     heroGradient: {
+       enabled: true, // Enable gradient background
+       type: "linear", // "linear" or "radial"
+       direction: "to right", // Direction for linear gradients
+       colors: ["#3b82f6", "#8b5cf6", "#d946ef"], // Array of colors (2+ colors)
+       stops: ["0%", "50%", "100%"], // Optional percentage stops
+     },
+   }
+   ```
+
+#### Linear Gradient Examples
+
+```typescript
+// Horizontal gradient (left to right)
+heroGradient: {
+  enabled: true,
+  type: "linear",
+  direction: "to right",
+  colors: ["#3b82f6", "#d946ef"],
+}
+
+// Diagonal gradient
+heroGradient: {
+  enabled: true,
+  type: "linear",
+  direction: "45deg", // You can use any degree value
+  colors: ["#3b82f6", "#8b5cf6", "#d946ef"],
+}
+
+// Vertical gradient with explicit stops
+heroGradient: {
+  enabled: true,
+  type: "linear",
+  direction: "to bottom",
+  colors: ["#3b82f6", "#8b5cf6", "#d946ef"],
+  stops: ["0%", "60%", "100%"], // Control color distribution
+}
+```
+
+#### Radial Gradient Examples
+
+```typescript
+// Simple radial gradient
+heroGradient: {
+  enabled: true,
+  type: "radial",
+  direction: "circle", // Creates a circular gradient
+  colors: ["#3b82f6", "#d946ef"],
+}
+
+// Elliptical gradient with center position
+heroGradient: {
+  enabled: true,
+  type: "radial",
+  direction: "ellipse at center", // Creates an elliptical gradient
+  colors: ["#3b82f6", "#8b5cf6", "#d946ef"],
+}
+```
+
+#### Text and Badge Styling
+
+In addition to background customization, you can also customize text colors and badge styling:
+
+```typescript
+ui: {
+  // Text colors
+  heroTitleColor: "#ffffff",
+  heroSubtitleColor: "#f3f4f6",
+  
+  // Badge styling
+  heroBadgeVariant: "outline", // "default", "secondary", "outline", "destructive"
+  heroBadgeBgColor: "#ffffff",
+  heroBadgeTextColor: "#005450",
+  heroBadgeBorderColor: "#ffffff",
+}
+```
+
+The hero section gradient takes precedence over the solid background color when enabled. If you disable the gradient, the system will fall back to using the solid background color.
