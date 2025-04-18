@@ -220,8 +220,8 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
             />
           )}
 
-          {/* Post Job Banner - Moved below pagination */}
-          <div className="mt-8">
+          {/* Post Job Banner - Mobile only */}
+          <div className="mt-8 lg:hidden">
             <PostJobBanner />
           </div>
         </div>
@@ -241,6 +241,10 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
               }}
               jobs={filteredJobs}
             />
+            {/* Post Job Banner - Desktop only */}
+            <div className="hidden lg:block">
+              <PostJobBanner />
+            </div>
           </div>
         </aside>
       </div>

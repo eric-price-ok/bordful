@@ -502,8 +502,8 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
               />
             )}
 
-            {/* Post Job Banner - Moved below pagination */}
-            <div className="mt-8">
+            {/* Post Job Banner - Mobile only */}
+            <div className="mt-8 md:hidden">
               <PostJobBanner />
             </div>
           </div>
@@ -516,6 +516,10 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
                 initialFilters={initialFilters}
                 jobs={initialJobs}
               />
+              {/* Post Job Banner - Desktop only */}
+              <div className="hidden md:block">
+                <PostJobBanner />
+              </div>
             </div>
           </aside>
         </div>

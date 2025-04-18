@@ -16,10 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed extra spacing issues when filters are collapsed
   - Maintained desktop experience with filters always visible
 - Improved post job banner placement:
-  - Moved post job banner below pagination on both homepage and job listings pages
-  - Enhanced focus on primary content (job listings) before call-to-action
-  - Created consistent banner placement across all job-related pages
-  - Improved mobile-first content hierarchy
+  - Implemented responsive post job banner placement strategy
+  - Displayed below pagination on mobile screens for better content hierarchy
+  - Maintained traditional sidebar placement on desktop for space efficiency
+  - Enhanced mobile-first content focusing on primary job listings first
+  - Created consistent banner visibility across different device sizes
 
 ## [0.1.36] - 2025-04-18
 
