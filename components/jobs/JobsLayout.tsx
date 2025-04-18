@@ -184,31 +184,22 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
   const paginatedJobs = sortedJobs.slice(startIndex, startIndex + jobsPerPage);
 
   return (
-    <main className="container py-6 sm:py-8">
-      <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
-        {/* Main Content */}
-        <div className="flex-[3] space-y-6">
-          {/* Breadcrumbs */}
-          <div className="mb-2">
-            <ClientBreadcrumb />
-          </div>
+    <main className="container mx-auto px-4 py-6 sm:py-8">
+      <div className="mb-4">
+        <ClientBreadcrumb />
+      </div>
 
-          {/* Search - Remove since it's now in hero section */}
-          {/* {(config.search?.showOnAllPages ?? true) && (
-            <div className="w-full max-w-[480px] mb-2">
-              <JobSearchInput placeholder="Search jobs..." />
-            </div>
-          )} */}
-
-          {/* Controls */}
+      <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-8">
+        {/* Main content */}
+        <div className="flex-[3] order-2 lg:order-1">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-4 sm:gap-0">
             <div className="space-y-1 w-full sm:w-auto">
-              <h2 className="text-xl font-semibold tracking-tight flex items-center gap-2 flex-wrap">
-                Latest Opportunities
+              <h1 className="text-xl lg:text-2xl font-semibold tracking-tight flex items-center gap-2 flex-wrap">
+                Latest Jobs
                 {page > 1 && (
                   <span className="text-gray-500 font-normal">Page {page}</span>
                 )}
-              </h2>
+              </h1>
               <p className="text-sm text-muted-foreground">
                 Showing {paginatedJobs.length.toLocaleString()} of{" "}
                 {sortedJobs.length.toLocaleString()} positions
@@ -220,25 +211,19 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
             </div>
           </div>
 
-          {/* Job Listings */}
-          {paginatedJobs.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-sm text-muted-foreground">
-                No positions found matching your search criteria. Try adjusting
-                your search terms.
-              </p>
-            </div>
-          ) : (
-            <JobListings jobs={paginatedJobs} showFiltered={false} />
-          )}
+          <JobListings jobs={paginatedJobs} />
 
-          {/* Pagination */}
           {sortedJobs.length > jobsPerPage && (
             <PaginationControl
               totalItems={sortedJobs.length}
               itemsPerPage={jobsPerPage}
             />
           )}
+
+          {/* Post Job Banner - Moved below pagination */}
+          <div className="mt-8">
+            <PostJobBanner />
+          </div>
         </div>
 
         {/* Sidebar */}
@@ -256,7 +241,6 @@ export function JobsLayout({ allJobs, filteredJobs }: JobsLayoutProps) {
               }}
               jobs={filteredJobs}
             />
-            <PostJobBanner />
           </div>
         </aside>
       </div>

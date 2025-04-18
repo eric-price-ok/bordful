@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.37] - 2025-04-18
+
+### Changed
+- Enhanced job filters mobile experience:
+  - Made filters collapsible on mobile for better space utilization
+  - Added expandable/collapsible toggle next to "Filters" heading
+  - Added visual affordance with chevron indicators for expandable sections
+  - Removed redundant toggle controls for cleaner UI
+  - Fixed extra spacing issues when filters are collapsed
+  - Maintained desktop experience with filters always visible
+- Improved post job banner placement:
+  - Moved post job banner below pagination on both homepage and job listings pages
+  - Enhanced focus on primary content (job listings) before call-to-action
+  - Created consistent banner placement across all job-related pages
+  - Improved mobile-first content hierarchy
+
 ## [0.1.36] - 2025-04-18
 
 ### Added

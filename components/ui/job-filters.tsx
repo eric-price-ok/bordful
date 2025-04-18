@@ -15,6 +15,7 @@ import {
   parseAsBoolean,
   useQueryState,
 } from "nuqs";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 type FilterType =
   | "type"
@@ -115,6 +116,9 @@ export function JobFilters({
   initialFilters,
   jobs,
 }: JobFiltersProps) {
+  // Mobile expand/collapse state
+  const [isExpanded, setIsExpanded] = useState(false);
+
   // URL state for job types filter using nuqs
   const [typesParam, setTypesParam] = useQueryState(
     "types",
@@ -440,9 +444,26 @@ export function JobFilters({
     : initialLevels;
 
   return (
-    <div className="p-5 border rounded-lg space-y-6 bg-gray-50 relative">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-md font-semibold">Filters</h2>
+    <div className="p-5 border rounded-lg bg-gray-50 relative">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-2">
+          <h2 className="text-md font-semibold">Filters</h2>
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="md:hidden flex items-center text-sm text-zinc-900"
+            aria-expanded={isExpanded}
+            aria-controls="filter-content"
+          >
+            {isExpanded ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+            <span className="sr-only">
+              {isExpanded ? "Collapse filters" : "Expand filters"}
+            </span>
+          </button>
+        </div>
         <button
           onClick={handleClearFilters}
           className="text-sm underline underline-offset-4 text-zinc-900 hover:text-zinc-700 transition-colors"
@@ -451,116 +472,131 @@ export function JobFilters({
         </button>
       </div>
 
-      {/* Job Type */}
-      <div className="space-y-4">
-        <h2 className="text-md font-semibold">Job Type</h2>
-        <div className="space-y-3">
-          {/* Map over job types from constants instead of hardcoding */}
-          {Object.entries(JOB_TYPE_DISPLAY_NAMES).map(([type, displayName]) => (
-            <FilterItem
-              key={type}
-              id={`job-type-${type}`}
-              label={displayName}
-              count={counts.types[type as JobType] || 0}
-              checked={typesParam.includes(type)}
-              onCheckedChange={(checked) => handleTypeChange(checked, type)}
-            />
-          ))}
+      {isExpanded && (
+        <div className="md:hidden h-[1px] w-full bg-gray-200 my-4"></div>
+      )}
+
+      <div
+        id="filter-content"
+        className={`${isExpanded ? "mt-6" : "mt-0"} space-y-6 ${
+          isExpanded ? "block" : "hidden md:block md:mt-6"
+        }`}
+      >
+        {/* Job Type */}
+        <div className="space-y-4">
+          <h2 className="text-md font-semibold">Job Type</h2>
+          <div className="space-y-3">
+            {/* Map over job types from constants instead of hardcoding */}
+            {Object.entries(JOB_TYPE_DISPLAY_NAMES).map(
+              ([type, displayName]) => (
+                <FilterItem
+                  key={type}
+                  id={`job-type-${type}`}
+                  label={displayName}
+                  count={counts.types[type as JobType] || 0}
+                  checked={typesParam.includes(type)}
+                  onCheckedChange={(checked) => handleTypeChange(checked, type)}
+                />
+              )
+            )}
+          </div>
         </div>
-      </div>
 
-      {/* Career Level */}
-      <div className="space-y-4">
-        <h2 className="text-md font-semibold">Career Level</h2>
-        <div className="space-y-3">
-          {visibleLevels.map((level) => (
-            <FilterItem
-              key={level}
-              id={level.toLowerCase().replace(" ", "-")}
-              label={CAREER_LEVEL_DISPLAY_NAMES[level]}
-              count={counts.roles[level] || 0}
-              checked={rolesParam.includes(level)}
-              onCheckedChange={(checked) => handleLevelChange(checked, level)}
-            />
-          ))}
-        </div>
-        <button
-          onClick={() => setShowAllLevels(!showAllLevels)}
-          className="text-sm underline underline-offset-4 text-zinc-900 hover:text-zinc-700 transition-colors"
-        >
-          {showAllLevels ? "Show fewer levels" : "Show more levels"}
-        </button>
-      </div>
-
-      {/* Remote Only */}
-      <div className="space-y-4">
-        <h2 className="text-md font-semibold">Remote Only</h2>
-        <SwitchItem
-          id="remote-only"
-          checked={remoteParam}
-          onCheckedChange={handleRemoteChange}
-          count={counts.remote}
-          total={jobs.length}
-        />
-      </div>
-
-      {/* Salary Range */}
-      <div className="space-y-4">
-        <h2 className="text-md font-semibold">Salary Range</h2>
-        <div className="space-y-3">
-          {Object.entries(counts.salary).map(([range, count]) => (
-            <FilterItem
-              key={range}
-              id={`salary-${range.toLowerCase().replace(/[\s\$>]/g, "-")}`}
-              label={`${range}/year`}
-              count={count}
-              checked={salaryRangesParam.includes(range)}
-              onCheckedChange={(checked) => handleSalaryChange(checked, range)}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Visa Sponsorship */}
-      <div className="space-y-4">
-        <h2 className="text-md font-semibold">Visa Sponsorship</h2>
-        <SwitchItem
-          id="visa-sponsorship"
-          checked={visaParam}
-          onCheckedChange={handleVisaChange}
-          count={counts.visa || 0}
-        />
-      </div>
-
-      {/* Languages */}
-      <div className="space-y-4">
-        <h2 className="text-md font-semibold">Languages</h2>
-        <div className="space-y-3">
-          {languageEntries.visible.map(([lang, count]) => (
-            <FilterItem
-              key={lang}
-              id={`lang-${lang.toLowerCase()}`}
-              label={getDisplayNameFromCode(lang as LanguageCode)}
-              count={count}
-              checked={languagesParam.includes(lang)}
-              onCheckedChange={(checked) =>
-                handleLanguageChange(checked, lang as LanguageCode)
-              }
-            />
-          ))}
-        </div>
-        {languageEntries.additional.length > 0 && (
+        {/* Career Level */}
+        <div className="space-y-4">
+          <h2 className="text-md font-semibold">Career Level</h2>
+          <div className="space-y-3">
+            {visibleLevels.map((level) => (
+              <FilterItem
+                key={level}
+                id={level.toLowerCase().replace(" ", "-")}
+                label={CAREER_LEVEL_DISPLAY_NAMES[level]}
+                count={counts.roles[level] || 0}
+                checked={rolesParam.includes(level)}
+                onCheckedChange={(checked) => handleLevelChange(checked, level)}
+              />
+            ))}
+          </div>
           <button
-            onClick={() => setShowAllLanguages(!showAllLanguages)}
+            onClick={() => setShowAllLevels(!showAllLevels)}
             className="text-sm underline underline-offset-4 text-zinc-900 hover:text-zinc-700 transition-colors"
           >
-            {showAllLanguages
-              ? "Show fewer languages"
-              : `Show ${languageEntries.additional.length} more language${
-                  languageEntries.additional.length > 1 ? "s" : ""
-                }`}
+            {showAllLevels ? "Show fewer levels" : "Show more levels"}
           </button>
-        )}
+        </div>
+
+        {/* Remote Only */}
+        <div className="space-y-4">
+          <h2 className="text-md font-semibold">Remote Only</h2>
+          <SwitchItem
+            id="remote-only"
+            checked={remoteParam}
+            onCheckedChange={handleRemoteChange}
+            count={counts.remote}
+            total={jobs.length}
+          />
+        </div>
+
+        {/* Salary Range */}
+        <div className="space-y-4">
+          <h2 className="text-md font-semibold">Salary Range</h2>
+          <div className="space-y-3">
+            {Object.entries(counts.salary).map(([range, count]) => (
+              <FilterItem
+                key={range}
+                id={`salary-${range.toLowerCase().replace(/[\s\$>]/g, "-")}`}
+                label={`${range}/year`}
+                count={count}
+                checked={salaryRangesParam.includes(range)}
+                onCheckedChange={(checked) =>
+                  handleSalaryChange(checked, range)
+                }
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Visa Sponsorship */}
+        <div className="space-y-4">
+          <h2 className="text-md font-semibold">Visa Sponsorship</h2>
+          <SwitchItem
+            id="visa-sponsorship"
+            checked={visaParam}
+            onCheckedChange={handleVisaChange}
+            count={counts.visa || 0}
+          />
+        </div>
+
+        {/* Languages */}
+        <div className="space-y-4">
+          <h2 className="text-md font-semibold">Languages</h2>
+          <div className="space-y-3">
+            {languageEntries.visible.map(([lang, count]) => (
+              <FilterItem
+                key={lang}
+                id={`lang-${lang.toLowerCase()}`}
+                label={getDisplayNameFromCode(lang as LanguageCode)}
+                count={count}
+                checked={languagesParam.includes(lang)}
+                onCheckedChange={(checked) =>
+                  handleLanguageChange(checked, lang as LanguageCode)
+                }
+              />
+            ))}
+          </div>
+          {languageEntries.additional.length > 0 && (
+            <button
+              onClick={() => setShowAllLanguages(!showAllLanguages)}
+              className="text-sm underline underline-offset-4 text-zinc-900 hover:text-zinc-700 transition-colors"
+            >
+              {showAllLanguages
+                ? "Show fewer languages"
+                : `Show ${languageEntries.additional.length} more language${
+                    languageEntries.additional.length > 1 ? "s" : ""
+                  }`}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

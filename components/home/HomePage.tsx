@@ -501,6 +501,11 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
                 itemsPerPage={jobsPerPage}
               />
             )}
+
+            {/* Post Job Banner - Moved below pagination */}
+            <div className="mt-8">
+              <PostJobBanner />
+            </div>
           </div>
 
           {/* Sidebar */}
@@ -511,7 +516,6 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
                 initialFilters={initialFilters}
                 jobs={initialJobs}
               />
-              <PostJobBanner />
             </div>
           </aside>
         </div>
