@@ -557,7 +557,7 @@ export function Footer() {
     .sort((a, b) => a.order - b.order);
 
   return (
-    <footer className="border-t mt-6" style={footerStyle}>
+    <footer className="border-t mt-8" style={footerStyle}>
       <div className="container mx-auto px-4">
         {/* Post Job Banner - Moved to the top and redesigned */}
         {config.footer.postJob.show && (
