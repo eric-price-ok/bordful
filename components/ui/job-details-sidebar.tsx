@@ -26,8 +26,11 @@ import {
 import { JobBadge } from "@/components/ui/job-badge";
 import { CollapsibleText } from "@/components/ui/collapsible-text";
 import { formatDistanceToNow } from "date-fns";
+import config from "@/config";
 
 interface JobDetailsSidebarProps {
+  title: string;
+  jobUrl: string;
   fullDate: string;
   relativeTime: string;
   workplace_type: WorkplaceType;
@@ -72,6 +75,8 @@ function formatCareerLevel(level: CareerLevel): string {
 }
 
 export function JobDetailsSidebar({
+  title,
+  jobUrl,
   fullDate,
   relativeTime,
   workplace_type,
@@ -132,10 +137,21 @@ export function JobDetailsSidebar({
     <div className="p-5 border rounded-lg space-y-4 bg-gray-50">
       <div className="flex justify-between items-center mb-2">
         <h2 className="text-lg font-semibold">Job Details</h2>
-        <button className="text-red-700 hover:text-red-800 text-xs font-medium flex items-center gap-1">
-          <Flag className="h-3 w-3" />
-          Report
-        </button>
+        {config.jobReport.enabled && config.jobReport.showInSidebar && (
+          <a
+            href={`mailto:${config.jobReport.email}?subject=${encodeURIComponent(
+              config.jobReport.emailSubject.replace("[Job Title]", title)
+            )}&body=${encodeURIComponent(
+              config.jobReport.emailMessage
+                .replace("[Job Title]", title)
+                .replace("[Job URL]", jobUrl)
+            )}`}
+            className="text-red-700 hover:text-red-800 text-xs font-medium flex items-center gap-1"
+          >
+            <Flag className="h-3 w-3" />
+            {config.jobReport.buttonText}
+          </a>
+        )}
       </div>
 
       <div>

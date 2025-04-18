@@ -1293,6 +1293,30 @@ export const config = {
       },
     },
   },
+
+  // Job Report Configuration
+  jobReport: {
+    // Enable or disable the job report feature
+    enabled: true,
+
+    // Button text
+    buttonText: "Report",
+
+    // Email address to send reports to
+    email: "support@bordful.com",
+
+    // Subject line for the report email
+    emailSubject: "Job Report: [Job Title]",
+
+    // Message template for the report email
+    // Available placeholders:
+    // [Job Title] - The title of the job
+    // [Job URL] - The full URL of the job posting
+    emailMessage: "I would like to report the following job posting:\n\nJob Title: [Job Title]\nJob URL: [Job URL]\n\nReason for reporting:",
+
+    // Whether to show the report button in the job details sidebar
+    showInSidebar: true,
+  },
 } as const;
 
 export type Config = typeof config;

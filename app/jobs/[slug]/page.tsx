@@ -358,6 +358,8 @@ export default async function JobPostPage({
         <aside className="w-full md:w-[240px] lg:w-[250px] xl:w-[260px] flex flex-col gap-6 order-2">
           {/* Job Details - Always show first in sidebar */}
           <JobDetailsSidebar
+            title={job.title}
+            jobUrl={`${config.url}/jobs/${slug}`}
             fullDate={fullDate}
             relativeTime={relativeTime}
             workplace_type={job.workplace_type}
