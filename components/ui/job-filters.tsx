@@ -9,7 +9,12 @@ import {
   getDisplayNameFromCode,
 } from "@/lib/constants/languages";
 import { JOB_TYPE_DISPLAY_NAMES, JobType } from "@/lib/constants/job-types";
-import { parseAsArrayOf, parseAsString, parseAsBoolean, useQueryState } from "nuqs";
+import {
+  parseAsArrayOf,
+  parseAsString,
+  parseAsBoolean,
+  useQueryState,
+} from "nuqs";
 
 type FilterType =
   | "type"
@@ -43,24 +48,24 @@ interface FilterItemProps {
   onCheckedChange: (checked: boolean) => void;
 }
 
-function FilterItem({ id, label, count, checked, onCheckedChange }: FilterItemProps) {
+function FilterItem({
+  id,
+  label,
+  count,
+  checked,
+  onCheckedChange,
+}: FilterItemProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center space-x-2">
-        <Checkbox
-          id={id}
-          checked={checked}
-          onCheckedChange={onCheckedChange}
-        />
+        <Checkbox id={id} checked={checked} onCheckedChange={onCheckedChange} />
         <Label htmlFor={id} className="text-sm font-normal">
           {label}
         </Label>
       </div>
       <span
         className={`text-xs px-2 py-0.5 rounded-full ${
-          checked
-            ? "bg-zinc-900 text-zinc-50"
-            : "bg-zinc-100 text-zinc-500"
+          checked ? "bg-zinc-900 text-zinc-50" : "bg-zinc-100 text-zinc-500"
         }`}
       >
         {count.toLocaleString()}
@@ -78,30 +83,28 @@ interface SwitchItemProps {
   total?: number;
 }
 
-function SwitchItem({ id, checked, onCheckedChange, count, total }: SwitchItemProps) {
+function SwitchItem({
+  id,
+  checked,
+  onCheckedChange,
+  count,
+  total,
+}: SwitchItemProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center space-x-2">
-        <Switch
-          id={id}
-          checked={checked}
-          onCheckedChange={onCheckedChange}
-        />
-        <Label
-          htmlFor={id}
-          className="text-sm font-normal text-gray-500"
-        >
+        <Switch id={id} checked={checked} onCheckedChange={onCheckedChange} />
+        <Label htmlFor={id} className="text-sm font-normal text-gray-500">
           {checked ? "Yes" : "No"}
         </Label>
       </div>
       <span
         className={`text-xs px-2 py-0.5 rounded-full ${
-          checked
-            ? "bg-zinc-900 text-zinc-50"
-            : "bg-zinc-100 text-zinc-500"
+          checked ? "bg-zinc-900 text-zinc-50" : "bg-zinc-100 text-zinc-500"
         }`}
       >
-        {count.toLocaleString()}{total ? ` of ${total.toLocaleString()}` : ''}
+        {count.toLocaleString()}
+        {total ? ` of ${total.toLocaleString()}` : ""}
       </span>
     </div>
   );
@@ -117,59 +120,62 @@ export function JobFilters({
     "types",
     parseAsArrayOf(parseAsString).withDefault([])
   );
-  
+
   // URL state for career levels filter using nuqs
   const [rolesParam, setRolesParam] = useQueryState(
     "roles",
     parseAsArrayOf(parseAsString).withDefault([])
   );
-  
+
   // URL state for salary ranges filter using nuqs
   const [salaryRangesParam, setSalaryRangesParam] = useQueryState(
     "salary",
     parseAsArrayOf(parseAsString).withDefault([])
   );
-  
+
   // URL state for languages filter using nuqs
   const [languagesParam, setLanguagesParam] = useQueryState(
     "languages",
     parseAsArrayOf(parseAsString).withDefault([])
   );
-  
+
   // URL state for boolean filters using nuqs
   const [remoteParam, setRemoteParam] = useQueryState(
     "remote",
     parseAsBoolean.withDefault(false)
   );
-  
+
   const [visaParam, setVisaParam] = useQueryState(
     "visa",
     parseAsBoolean.withDefault(false)
   );
-  
+
   // Initialize URL state with initialFilters when there are no URL params
   useEffect(() => {
     // Only set initial values if URL params are empty
     if (typesParam.length === 0 && initialFilters.types.length > 0) {
       setTypesParam(initialFilters.types);
     }
-    
+
     if (rolesParam.length === 0 && initialFilters.roles.length > 0) {
       setRolesParam(initialFilters.roles);
     }
-    
-    if (salaryRangesParam.length === 0 && initialFilters.salaryRanges.length > 0) {
+
+    if (
+      salaryRangesParam.length === 0 &&
+      initialFilters.salaryRanges.length > 0
+    ) {
       setSalaryRangesParam(initialFilters.salaryRanges);
     }
-    
+
     if (languagesParam.length === 0 && initialFilters.languages.length > 0) {
       setLanguagesParam(initialFilters.languages);
     }
-    
+
     if (!remoteParam && initialFilters.remote) {
       setRemoteParam(initialFilters.remote);
     }
-    
+
     if (!visaParam && initialFilters.visa) {
       setVisaParam(initialFilters.visa);
     }
@@ -188,111 +194,131 @@ export function JobFilters({
     setRemoteParam,
     setVisaParam,
   ]);
-  
-  // Sync URL state with component state for job types
+
+  // Generic handler for array-based filters
+  const createArrayFilterHandler = useCallback(
+    (
+      filterType: Extract<FilterType, "type" | "role" | "salary" | "language">,
+      currentValues: string[],
+      setter: (value: string[] | null) => Promise<URLSearchParams>
+    ) => {
+      return async (checked: boolean, value: string) => {
+        const newValues = checked
+          ? [...currentValues, value]
+          : currentValues.filter((item) => item !== value);
+
+        // Remove parameter from URL if empty but ensure we pass [] to filters
+        await setter(newValues.length ? newValues : null);
+        onFilterChange(filterType, newValues);
+      };
+    },
+    [onFilterChange]
+  );
+
+  // Generic handler for boolean filters
+  const createBooleanFilterHandler = useCallback(
+    (
+      filterType: Extract<FilterType, "remote" | "visa">,
+      setter: (value: boolean | null) => Promise<URLSearchParams>
+    ) => {
+      return async (checked: boolean) => {
+        await setter(checked || null);
+        onFilterChange(filterType, checked);
+      };
+    },
+    [onFilterChange]
+  );
+
+  // Generic reset function for array filters
+  const createArrayFilterReset = useCallback(
+    (
+      filterType: Extract<FilterType, "type" | "role" | "salary" | "language">,
+      setter: (value: null) => Promise<URLSearchParams>
+    ) => {
+      return async () => {
+        await setter(null);
+        onFilterChange(filterType, []);
+      };
+    },
+    [onFilterChange]
+  );
+
+  // Generic reset function for boolean filters
+  const createBooleanFilterReset = useCallback(
+    (
+      filterType: Extract<FilterType, "remote" | "visa">,
+      setter: (value: null) => Promise<URLSearchParams>
+    ) => {
+      return async () => {
+        await setter(null);
+        onFilterChange(filterType, false);
+      };
+    },
+    [onFilterChange]
+  );
+
+  // Create handlers using the generic functions
   const handleTypeChange = useCallback(
-    (checked: boolean, value: string) => {
-      const newTypes = checked
-        ? [...typesParam, value]
-        : typesParam.filter((type) => type !== value);
-      
-      // Remove parameter from URL if empty
-      setTypesParam(newTypes.length ? newTypes : null);
-      onFilterChange("type", newTypes);
-    },
-    [typesParam, setTypesParam, onFilterChange]
+    createArrayFilterHandler("type", typesParam, setTypesParam),
+    [typesParam, setTypesParam, createArrayFilterHandler]
   );
-  
-  // Sync URL state with component state for career levels
+
   const handleLevelChange = useCallback(
-    (checked: boolean, value: CareerLevel) => {
-      const newRoles = checked
-        ? [...rolesParam, value]
-        : rolesParam.filter((role) => role !== value);
-      
-      // Remove parameter from URL if empty
-      setRolesParam(newRoles.length ? newRoles : null);
-      onFilterChange("role", newRoles);
-    },
-    [rolesParam, setRolesParam, onFilterChange]
+    createArrayFilterHandler("role", rolesParam, setRolesParam),
+    [rolesParam, setRolesParam, createArrayFilterHandler]
   );
-  
-  // Sync URL state with component state for salary ranges
+
   const handleSalaryChange = useCallback(
-    (checked: boolean, value: string) => {
-      const newRanges = checked
-        ? [...salaryRangesParam, value]
-        : salaryRangesParam.filter((range) => range !== value);
-      
-      // Remove parameter from URL if empty
-      setSalaryRangesParam(newRanges.length ? newRanges : null);
-      onFilterChange("salary", newRanges);
-    },
-    [salaryRangesParam, setSalaryRangesParam, onFilterChange]
+    createArrayFilterHandler("salary", salaryRangesParam, setSalaryRangesParam),
+    [salaryRangesParam, setSalaryRangesParam, createArrayFilterHandler]
   );
-  
-  // Sync URL state with component state for languages
+
   const handleLanguageChange = useCallback(
-    (checked: boolean, value: LanguageCode) => {
-      const newLanguages = checked
-        ? [...languagesParam, value]
-        : languagesParam.filter((lang) => lang !== value);
-      
-      // Remove parameter from URL if empty
-      setLanguagesParam(newLanguages.length ? newLanguages : null);
-      onFilterChange("language", newLanguages);
-    },
-    [languagesParam, setLanguagesParam, onFilterChange]
+    createArrayFilterHandler("language", languagesParam, setLanguagesParam),
+    [languagesParam, setLanguagesParam, createArrayFilterHandler]
   );
-  
-  // Sync URL state with component state for boolean filters
+
   const handleRemoteChange = useCallback(
-    (checked: boolean) => {
-      setRemoteParam(checked || null);
-      onFilterChange("remote", checked);
-    },
-    [setRemoteParam, onFilterChange]
+    createBooleanFilterHandler("remote", setRemoteParam),
+    [setRemoteParam, createBooleanFilterHandler]
   );
-  
+
   const handleVisaChange = useCallback(
-    (checked: boolean) => {
-      setVisaParam(checked || null);
-      onFilterChange("visa", checked);
-    },
-    [setVisaParam, onFilterChange]
+    createBooleanFilterHandler("visa", setVisaParam),
+    [setVisaParam, createBooleanFilterHandler]
   );
-  
-  // Reset functions for all filters
-  const resetTypes = useCallback(() => {
-    setTypesParam(null);
-    onFilterChange("type", []);
-  }, [setTypesParam, onFilterChange]);
-  
-  const resetLevels = useCallback(() => {
-    setRolesParam(null);
-    onFilterChange("role", []);
-  }, [setRolesParam, onFilterChange]);
-  
-  const resetSalary = useCallback(() => {
-    setSalaryRangesParam(null);
-    onFilterChange("salary", []);
-  }, [setSalaryRangesParam, onFilterChange]);
-  
-  const resetLanguages = useCallback(() => {
-    setLanguagesParam(null);
-    onFilterChange("language", []);
-  }, [setLanguagesParam, onFilterChange]);
-  
-  const resetRemote = useCallback(() => {
-    setRemoteParam(null);
-    onFilterChange("remote", false);
-  }, [setRemoteParam, onFilterChange]);
-  
-  const resetVisa = useCallback(() => {
-    setVisaParam(null);
-    onFilterChange("visa", false);
-  }, [setVisaParam, onFilterChange]);
-  
+
+  // Create reset functions using the generic functions
+  const resetTypes = useCallback(
+    createArrayFilterReset("type", setTypesParam),
+    [setTypesParam, createArrayFilterReset]
+  );
+
+  const resetLevels = useCallback(
+    createArrayFilterReset("role", setRolesParam),
+    [setRolesParam, createArrayFilterReset]
+  );
+
+  const resetSalary = useCallback(
+    createArrayFilterReset("salary", setSalaryRangesParam),
+    [setSalaryRangesParam, createArrayFilterReset]
+  );
+
+  const resetLanguages = useCallback(
+    createArrayFilterReset("language", setLanguagesParam),
+    [setLanguagesParam, createArrayFilterReset]
+  );
+
+  const resetRemote = useCallback(
+    createBooleanFilterReset("remote", setRemoteParam),
+    [setRemoteParam, createBooleanFilterReset]
+  );
+
+  const resetVisa = useCallback(
+    createBooleanFilterReset("visa", setVisaParam),
+    [setVisaParam, createBooleanFilterReset]
+  );
+
   // Toggle states for expandable sections
   const [showAllLevels, setShowAllLevels] = useState(false);
   const [showAllLanguages, setShowAllLanguages] = useState(false);
@@ -323,13 +349,15 @@ export function JobFilters({
   ];
 
   // Handle clearing all filters
-  const handleClearFilters = useCallback(() => {
-    resetTypes();
-    resetLevels();
-    resetSalary();
-    resetLanguages();
-    resetRemote();
-    resetVisa();
+  const handleClearFilters = useCallback(async () => {
+    await Promise.all([
+      resetTypes(),
+      resetLevels(),
+      resetSalary(),
+      resetLanguages(),
+      resetRemote(),
+      resetVisa(),
+    ]);
     onFilterChange("clear", true);
   }, [
     onFilterChange,
@@ -435,9 +463,7 @@ export function JobFilters({
               label={displayName}
               count={counts.types[type as JobType] || 0}
               checked={typesParam.includes(type)}
-              onCheckedChange={(checked) =>
-                handleTypeChange(checked, type)
-              }
+              onCheckedChange={(checked) => handleTypeChange(checked, type)}
             />
           ))}
         </div>
@@ -454,9 +480,7 @@ export function JobFilters({
               label={CAREER_LEVEL_DISPLAY_NAMES[level]}
               count={counts.roles[level] || 0}
               checked={rolesParam.includes(level)}
-              onCheckedChange={(checked) =>
-                handleLevelChange(checked, level)
-              }
+              onCheckedChange={(checked) => handleLevelChange(checked, level)}
             />
           ))}
         </div>
@@ -491,9 +515,7 @@ export function JobFilters({
               label={`${range}/year`}
               count={count}
               checked={salaryRangesParam.includes(range)}
-              onCheckedChange={(checked) =>
-                handleSalaryChange(checked, range)
-              }
+              onCheckedChange={(checked) => handleSalaryChange(checked, range)}
             />
           ))}
         </div>
@@ -534,9 +556,7 @@ export function JobFilters({
           >
             {showAllLanguages
               ? "Show fewer languages"
-              : `Show ${
-                  languageEntries.additional.length
-                } more language${
+              : `Show ${languageEntries.additional.length} more language${
                   languageEntries.additional.length > 1 ? "s" : ""
                 }`}
           </button>
