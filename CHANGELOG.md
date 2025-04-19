@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.38] - 2025-04-19
+
+### Changed
+- Enhanced Markdown job description formatting (`cleanMarkdownFormatting`):
+  - Improved handling of bold text within list items, including cases with trailing spaces.
+  - Added robust paragraph break detection to correctly separate standalone bold text and sentences (like mottos) without hardcoding specific phrases.
+  - Ensured consistent spacing around bold headers and between list items and bold text.
+  - Refined regex patterns for better accuracy and robustness against various Markdown inconsistencies from Airtable.
+
 ## [0.1.37] - 2025-04-18
 
 ### Changed

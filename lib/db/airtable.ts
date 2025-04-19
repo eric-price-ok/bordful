@@ -232,10 +232,25 @@ function normalizeCareerLevel(value: unknown): CareerLevel[] {
 function cleanMarkdownFormatting(text: string): string {
   if (!text) return "";
 
+  // First, normalize line endings
+  let normalized = text.replace(/\r\n/g, "\n");
+
+  // Pre-process to identify potential paragraph breaks in the original text
+  // This looks for lines that should be treated as separate paragraphs in common patterns
+  normalized = normalized
+    // Standard Markdown paragraph break is a blank line
+    .replace(/\n\s*\n/g, "\n\n")
+    // Detect sentences that end a paragraph and should have a break before the next line
+    .replace(/([.!?]"?'?)\s*\n+(?=[A-Z0-9])/g, "$1\n\n")
+    // Ensure lines starting with "Our" (like mottos) and similar standalone statements
+    // are treated as paragraphs without hardcoding specific phrases
+    .replace(
+      /\n([A-Z][^.\n]+?(?:is|are|was|were|has|have|had)[^\n]*?)\n/g,
+      "\n\n$1\n\n"
+    );
+
   return (
-    text
-      // First, normalize line endings
-      .replace(/\r\n/g, "\n")
+    normalized
       // Fix bold text with extra spaces before closing asterisks and ensure space after
       .replace(/\*\*(.*?)\s*:\s*\*\*(\S)/g, "**$1:** $2")
       // Ensure proper spacing around headers
@@ -243,16 +258,30 @@ function cleanMarkdownFormatting(text: string): string {
       .replace(/###\s*(.*?)\n/g, "### $1\n\n")
       // Fix headers with bold text
       .replace(/###\s*\*\*(.*?)\*\*/g, "### **$1**")
-      // Fix bold headers that appear after list items or text
+      // Ensure bold headers are on their own lines
       .replace(/([^\n]+?)\s*\*\*([\w\s,]+?):\*\*/g, "$1\n\n**$2:**")
       // Fix any remaining bold headers
-      .replace(/\*\*([\w\s,]+?):\*\*/g, "**$1:**")
+      .replace(/\*\*([\w\s,]+?):\*\*(\S)/g, "**$1:** $2")
       // Fix nested list indentation
       .replace(/\n- ([^\n]+)\n {1,2}-/g, "\n- $1\n    -")
-      // Fix list items with bold text (but not headers)
-      .replace(/(\n- .*?[^:])\n\s*\*\*([^:]+?)\*\*/g, "$1 **$2**")
+      // Properly handle bold text within list items (more robust)
+      .replace(/(^|\n)(- \s*)\*\*(.*?)\*\*/g, "$1$2**$3**")
+      // Trim trailing spaces inside any bold markers to prevent rendering issues
+      .replace(/\*\*(.*?)\s+\*\*/g, "**$1**")
+      // Fix line breaks after list items with bold text
+      .replace(/(\n- .*?\*\*.*?\*\*)\s*\n\s*\*\*/g, "$1\n\n**")
+      // Ensure proper paragraph breaks after sentences
+      .replace(/([.!?]"?'?)\s*(\n|$)(\s*)(\*\*)/g, "$1\n\n$4")
+      // Ensure standalone bold text gets proper paragraph breaks (general pattern)
+      .replace(/([^\n])\n(\*\*[^:\n*]+?\*\*)([^\n*]|$)/g, "$1\n\n$2$3")
       // Ensure consecutive bold sections are separated
       .replace(/\*\*([^*]+?)\*\*\*\*([^*]+?)\*\*/g, "**$1**\n\n**$2**")
+      // Ensure proper spacing between list items and bold text
+      .replace(/(\n- .+)\n\s*\*\*([^:*]+?)\*\*/g, "$1\n\n**$2**")
+      // Ensure proper spacing before bold text after list items
+      .replace(/(\n- .+?\n)(\*\*[^*]+?\*\*)/g, "$1\n$2")
+      // Handle paragraphs with bold text/sentences - general pattern
+      .replace(/([^\n])\n\*\*/g, "$1\n\n**")
       // Remove extra blank lines
       .replace(/\n{3,}/g, "\n\n")
       // Clean up extra spaces
@@ -275,6 +304,8 @@ function cleanMarkdownFormatting(text: string): string {
       .replace(/\*\*([\w\s,]+?):\*\*(\S)/g, "**$1:** $2")
       // Ensure proper spacing around multi-line bold text
       .replace(/\*\*([^*]+?)\*\*\n([^\n-])/g, "**$1**\n\n$2")
+      // Handle consecutive bold sections separated by newlines
+      .replace(/\*\*([^*]+?)\*\*\n\s*\*\*([^*]+?)\*\*/g, "**$1**\n\n**$2**")
       // Ensure proper spacing around final paragraphs
       .replace(/\n\s*(\*\*[^*]+?\*\*)\s*\n/g, "\n\n$1\n\n")
       .replace(/\n\s*([^-\n][^*\n]+?)\s*$/g, "\n\n$1")
