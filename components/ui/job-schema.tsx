@@ -236,10 +236,12 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
   // Use slug to create the job URL
   const jobUrl = `${baseUrl}/jobs/${slug}`;
 
-  // Calculate valid through date if not provided (default to 30 days from posted date)
+  // Calculate valid through date if not provided (default to configured days from posted date or 30 days)
   const postDate = new Date(job.posted_date);
   const defaultValidThrough = new Date(postDate);
-  defaultValidThrough.setDate(defaultValidThrough.getDate() + 30);
+  // Use config value or fallback to 30 days
+  const validityDays = config.jobListings?.defaultValidityDays ?? 30;
+  defaultValidThrough.setDate(defaultValidThrough.getDate() + validityDays);
 
   // Only add valid_through if the job has it (will need to be added to Airtable)
   const validThrough = job.valid_through

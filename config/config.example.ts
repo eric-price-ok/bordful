@@ -470,6 +470,10 @@ export const config = {
     // Default number of jobs per page
     defaultPerPage: 10,
 
+    // Default number of days a job posting is considered valid if an expiration date
+    // is not explicitly provided by the source. Used in structured data (schema.org).
+    defaultValidityDays: 30,
+
     // Available sort options
     sortOptions: ["newest", "oldest", "salary"] as const,
 
@@ -1312,7 +1316,8 @@ export const config = {
     // Available placeholders:
     // [Job Title] - The title of the job
     // [Job URL] - The full URL of the job posting
-    emailMessage: "I would like to report the following job posting:\n\nJob Title: [Job Title]\nJob URL: [Job URL]\n\nReason for reporting:",
+    emailMessage:
+      "I would like to report the following job posting:\n\nJob Title: [Job Title]\nJob URL: [Job URL]\n\nReason for reporting:",
 
     // Whether to show the report button in the job details sidebar
     showInSidebar: true,
