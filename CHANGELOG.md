@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.40] - 2025-04-20
+
+### Added
+- Added new `job_source_name` field to the Airtable schema:
+  - Added field for storing job source platform names (e.g., "LinkedIn Jobs", "Workable", "Figma Careers")
+  - Updated Job interface with new optional field in `lib/db/airtable.ts`
+  - Updated `JobDetailsSidebarProps` interface to include the new field
+  - Made Job Source section in sidebar conditional to only appear when job_source_name is provided
+  - Updated documentation in README.md and schema-implementation.md
+
 ## [0.1.39] - 2025-04-20
 
 ### Added

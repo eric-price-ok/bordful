@@ -46,6 +46,7 @@ interface JobDetailsSidebarProps {
   benefits: string | null;
   valid_through: string | null;
   job_identifier: string | null;
+  job_source_name: string | null;
 }
 
 function formatCareerLevel(level: CareerLevel): string {
@@ -92,6 +93,7 @@ export function JobDetailsSidebar({
   benefits,
   valid_through,
   job_identifier,
+  job_source_name,
 }: JobDetailsSidebarProps) {
   const showSalary = salary && (salary.min !== null || salary.max !== null);
   const usdApprox = showSalary ? formatUSDApproximation(salary) : null;
@@ -139,7 +141,9 @@ export function JobDetailsSidebar({
         <h2 className="text-lg font-semibold">Job Details</h2>
         {config.jobReport.enabled && config.jobReport.showInSidebar && (
           <a
-            href={`mailto:${config.jobReport.email}?subject=${encodeURIComponent(
+            href={`mailto:${
+              config.jobReport.email
+            }?subject=${encodeURIComponent(
               config.jobReport.emailSubject.replace("[Job Title]", title)
             )}&body=${encodeURIComponent(
               config.jobReport.emailMessage
@@ -273,20 +277,22 @@ export function JobDetailsSidebar({
         </div>
       </div>
 
-      <div>
-        <div className="flex items-center gap-2 mb-1">
-          <Link className="h-4 w-4 text-gray-500 shrink-0" />
-          <h2 className="text-sm font-medium">Job Source</h2>
+      {job_source_name && (
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <Link className="h-4 w-4 text-gray-500 shrink-0" />
+            <h2 className="text-sm font-medium">Job Source</h2>
+          </div>
+          <a
+            href={apply_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-zinc-900 underline underline-offset-4 hover:text-zinc-800 transition-colors ml-6"
+          >
+            {job_source_name}
+          </a>
         </div>
-        <a
-          href={apply_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-zinc-900 underline underline-offset-4 hover:text-zinc-800 transition-colors ml-6"
-        >
-          Apply on company website
-        </a>
-      </div>
+      )}
 
       {/* Job Identifier */}
       {job_identifier && (

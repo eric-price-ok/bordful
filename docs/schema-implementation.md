@@ -30,6 +30,7 @@ The schema implementation maps directly to fields in your Airtable base. The fol
 ### Recommended Fields
 - `valid_through` - Expiration date (defaults to 30 days from posted_date if not specified)
 - `job_identifier` - Job reference code/ID
+- `job_source_name` - Name of the job source platform (e.g., "LinkedIn Jobs", "Workable", "Figma Careers")
 - `visa_sponsorship` - Whether visa sponsorship is available ("Yes"/"No"/"Not specified")
 
 ### Enhanced Schema Fields

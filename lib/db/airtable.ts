@@ -65,6 +65,7 @@ export interface Job {
   posted_date: string;
   valid_through?: string | null;
   job_identifier?: string | null;
+  job_source_name?: string | null;
   status: "active" | "inactive";
   career_level: CareerLevel[];
   visa_sponsorship: "Yes" | "No" | "Not specified";
@@ -531,6 +532,7 @@ export async function getJobs(): Promise<Job[]> {
         // New fields
         valid_through: (fields.valid_through as string) || null,
         job_identifier: (fields.job_identifier as string) || null,
+        job_source_name: (fields.job_source_name as string) || null,
         status: fields.status as Job["status"],
         career_level: normalizeCareerLevel(fields.career_level),
         visa_sponsorship: normalizeVisaSponsorship(fields.visa_sponsorship),
@@ -597,6 +599,7 @@ export async function getJob(id: string): Promise<Job | null> {
       // New fields
       valid_through: (fields.valid_through as string) || null,
       job_identifier: (fields.job_identifier as string) || null,
+      job_source_name: (fields.job_source_name as string) || null,
       status: fields.status as Job["status"],
       career_level: normalizeCareerLevel(fields.career_level),
       visa_sponsorship: normalizeVisaSponsorship(fields.visa_sponsorship),

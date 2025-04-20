@@ -375,6 +375,7 @@ export default async function JobPostPage({
             benefits={job.benefits}
             valid_through={job.valid_through || null}
             job_identifier={job.job_identifier || null}
+            job_source_name={job.job_source_name || null}
           />
 
           {/* On mobile, Similar Jobs appear before Post Job Banner */}

@@ -266,6 +266,7 @@ npm install
   posted_date: Date
   valid_through: Date (application deadline date)
   job_identifier: Single line text (unique identifier/reference code for the job)
+  job_source_name: Single line text (the name of the job source platform, e.g. "LinkedIn Jobs", "Workable", "Figma Careers")
   status: Single select (active, inactive)
   workplace_type: Single select (On-site, Hybrid, Remote, Not specified)
   remote_region: Single select (Worldwide, Americas Only, Europe Only, Asia-Pacific Only, US Only, EU Only, UK/EU Only, US/Canada Only)
