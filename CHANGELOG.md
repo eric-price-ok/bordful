@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.41] - 2025-04-21
+
+### Fixed
+- Fixed robots.txt configuration to allow scraping of Open Graph images:
+  - Updated robots.txt rules to specifically allow `/api/og/*` paths
+  - Maintained security by keeping other API routes protected
+  - Enabled proper social media preview generation from external sites
+  - Fixed issue where external sites couldn't scrape OG images due to robots.txt restrictions
+
 ## [0.1.40] - 2025-04-20
 
 ### Added
