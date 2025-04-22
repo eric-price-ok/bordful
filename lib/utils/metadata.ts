@@ -55,6 +55,22 @@ export function generateMetadata({
   // Create full URLs for hreflang tags
   const pageUrl = `${config.url}${normalizedPath}`;
 
+  // Build the Twitter metadata object
+  const twitterMetadata: Record<string, string> = {
+    card: "summary_large_image",
+    title,
+    description,
+  };
+
+  // Only add site handle if Twitter is enabled and URL is provided
+  if (config.nav.twitter.show && config.nav.twitter.url) {
+    const twitterUrl = config.nav.twitter.url;
+    const twitterHandle = twitterUrl.split("/").pop();
+    if (twitterHandle) {
+      twitterMetadata.site = `@${twitterHandle}`;
+    }
+  }
+
   return {
     title,
     description,
@@ -72,11 +88,7 @@ export function generateMetadata({
       url: pageUrl,
       ...(openGraph?.images && { images: openGraph.images }),
     },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
+    twitter: twitterMetadata,
   };
 }
 
