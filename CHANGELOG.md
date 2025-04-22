@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.42] - 2025-04-22
+
+### Added
+- Enhanced job alerts form with comprehensive text customization:
+  - Added configurable text options for entire job alerts page
+  - Made hero section text fully customizable (badge, title, description)
+  - Added form field customization (labels, placeholders, validation messages)
+  - Added success message and button text customization options
+  - Added toast notification message configuration
+  - Enhanced user experience with consistent white-labeling capabilities
+  - Updated documentation with detailed configuration options
+  - Maintained backward compatibility with fallbacks for all text fields
+
 ## [0.1.41] - 2025-04-21
 
 ### Fixed

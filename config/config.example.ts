@@ -364,11 +364,83 @@ export const config = {
     // Navigation label
     navigationLabel: "Job Alerts",
 
+    // Hero section configuration
+    hero: {
+      // Badge text in hero section
+      badge: "Job Alerts",
+
+      // Main title in hero section
+      title: "Get Jobs Right to Your Inbox",
+
+      // Description text in hero section
+      description:
+        "Subscribe to job alerts and get notified when new opportunities are posted.",
+    },
+
     // Hero image configuration (overrides global setting)
     heroImage: {
       enabled: false, // Disable hero image on the job alerts page
       src: "", // Optional custom image path
       alt: "", // Optional custom alt text
+    },
+
+    // Form text configuration
+    form: {
+      // Heading text for the form section
+      heading: "Subscribe for Updates",
+
+      // Description text under the heading
+      description:
+        "Get notified when new jobs are posted. We'll also subscribe you to Bordful newsletter.",
+
+      // Form fields configuration
+      fields: {
+        // Name field labels and errors
+        name: {
+          label: "Name *",
+          placeholder: "Your name",
+          required: "Name is required",
+        },
+        // Email field labels and errors
+        email: {
+          label: "Email *",
+          placeholder: "your@email.com",
+          required: "Email is required",
+          invalid: "Please enter a valid email address",
+        },
+      },
+
+      // Button text for the subscribe form
+      buttonText: "Subscribe to Job Alerts",
+
+      // Loading text when form is being submitted
+      loadingText: "Subscribing...",
+
+      // Success message heading after successful subscription
+      successHeading: "Subscription Confirmed!",
+
+      // Success message description after successful subscription
+      successDescription:
+        "Thank you for subscribing to job alerts. You'll receive emails when jobs matching your interests are posted.",
+
+      // Text for the button to subscribe with another email after success
+      resetButtonText: "Subscribe with another email",
+
+      // Toast notification messages
+      toast: {
+        success: {
+          title: "Subscription successful!",
+          description: "You'll now receive job alerts in your inbox.",
+        },
+        rateLimit: {
+          title: "Rate limit exceeded",
+          description: "Too many requests. Please try again later.",
+        },
+        error: {
+          title: "Something went wrong",
+          description: "Failed to subscribe to job alerts. Please try again.",
+        },
+      },
     },
 
     // The email provider to use (must match a provider in the email section)

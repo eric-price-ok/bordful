@@ -11,12 +11,14 @@ import { CompactJobCardList } from "@/components/jobs/CompactJobCardList";
 export const metadata: Metadata = {
   title: "Job Alerts | Get Notified of New Opportunities",
   description:
+    config.jobAlerts.form?.description ||
     "Subscribe to job alerts and get notified when new opportunities are posted.",
   keywords:
     "job alerts, job notifications, career alerts, employment updates, job subscription",
   openGraph: {
     title: "Job Alerts | Get Notified of New Opportunities",
     description:
+      config.jobAlerts.form?.description ||
       "Subscribe to job alerts and get notified when new opportunities are posted.",
     type: "website",
     url: `${config.url}/job-alerts`,
@@ -25,6 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Job Alerts | Get Notified of New Opportunities",
     description:
+      config.jobAlerts.form?.description ||
       "Subscribe to job alerts and get notified when new opportunities are posted.",
   },
   alternates: {
@@ -52,9 +55,12 @@ export default async function JobAlertsPage() {
   return (
     <main className="min-h-screen bg-background">
       <HeroSection
-        badge="Job Alerts"
-        title="Get Jobs Right to Your Inbox"
-        description="Subscribe to job alerts and get notified when new opportunities are posted."
+        badge={config.jobAlerts.hero?.badge || "Job Alerts"}
+        title={config.jobAlerts.hero?.title || "Get Jobs Right to Your Inbox"}
+        description={
+          config.jobAlerts.hero?.description ||
+          "Subscribe to job alerts and get notified when new opportunities are posted."
+        }
         heroImage={config.jobAlerts.heroImage}
       />
 
@@ -67,11 +73,11 @@ export default async function JobAlertsPage() {
           {/* Job alerts form */}
           <div className="lg:col-span-1">
             <h2 className="text-xl font-semibold mb-4">
-              Subscribe for Updates
+              {config.jobAlerts.form?.heading || "Subscribe for Updates"}
             </h2>
             <p className="text-zinc-600 text-sm mb-6">
-              Get notified when new jobs are posted. We&apos;ll also subscribe
-              you to Bordful newsletter.
+              {config.jobAlerts.form?.description ||
+                "Get notified when new jobs are posted. We'll also subscribe you to Bordful newsletter."}
             </p>
             <JobAlertsForm />
           </div>

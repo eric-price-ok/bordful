@@ -23,17 +23,21 @@ export function JobAlertsForm() {
 
     // Validate name
     if (!name || name.trim() === "") {
-      newErrors.name = "Name is required";
+      newErrors.name =
+        config.jobAlerts.form?.fields?.name?.required || "Name is required";
       isValid = false;
     }
 
     // Validate email with regex
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!email) {
-      newErrors.email = "Email is required";
+      newErrors.email =
+        config.jobAlerts.form?.fields?.email?.required || "Email is required";
       isValid = false;
     } else if (!emailRegex.test(email)) {
-      newErrors.email = "Please enter a valid email address";
+      newErrors.email =
+        config.jobAlerts.form?.fields?.email?.invalid ||
+        "Please enter a valid email address";
       isValid = false;
     }
 
@@ -67,8 +71,12 @@ export function JobAlertsForm() {
       if (response.ok && result.success) {
         // Show success message
         toast({
-          title: "Subscription successful!",
-          description: "You'll now receive job alerts in your inbox.",
+          title:
+            config.jobAlerts.form?.toast?.success?.title ||
+            "Subscription successful!",
+          description:
+            config.jobAlerts.form?.toast?.success?.description ||
+            "You'll now receive job alerts in your inbox.",
           variant: "default",
           className: "bg-white border border-green-200 shadow-md",
         });
@@ -78,8 +86,12 @@ export function JobAlertsForm() {
       } else if (response.status === 429) {
         // Rate limit error
         toast({
-          title: "Rate limit exceeded",
-          description: "Too many requests. Please try again later.",
+          title:
+            config.jobAlerts.form?.toast?.rateLimit?.title ||
+            "Rate limit exceeded",
+          description:
+            config.jobAlerts.form?.toast?.rateLimit?.description ||
+            "Too many requests. Please try again later.",
           variant: "destructive",
           className: "bg-destructive border border-red-600 shadow-md",
         });
@@ -100,8 +112,12 @@ export function JobAlertsForm() {
         });
       } else {
         toast({
-          title: "Something went wrong",
-          description: "Failed to subscribe to job alerts. Please try again.",
+          title:
+            config.jobAlerts.form?.toast?.error?.title ||
+            "Something went wrong",
+          description:
+            config.jobAlerts.form?.toast?.error?.description ||
+            "Failed to subscribe to job alerts. Please try again.",
           variant: "destructive",
           className: "bg-destructive border border-red-600 shadow-md",
         });
@@ -124,11 +140,12 @@ export function JobAlertsForm() {
           <div className="flex flex-col items-center text-center space-y-3">
             <CheckCircle className="w-10 h-10 text-green-500" />
             <h3 className="text-md font-semibold text-green-800">
-              Subscription Confirmed!
+              {config.jobAlerts.form?.successHeading ||
+                "Subscription Confirmed!"}
             </h3>
             <p className="text-sm text-green-700 mb-4">
-              Thank you for subscribing to job alerts. You&apos;ll receive
-              emails when jobs matching your interests are posted.
+              {config.jobAlerts.form?.successDescription ||
+                "Thank you for subscribing to job alerts. You'll receive emails when jobs matching your interests are posted."}
             </p>
             <Button
               onClick={handleReset}
@@ -136,7 +153,8 @@ export function JobAlertsForm() {
               size="xs"
               className="gap-1.5 text-xs"
             >
-              Subscribe with another email
+              {config.jobAlerts.form?.resetButtonText ||
+                "Subscribe with another email"}
             </Button>
           </div>
         </div>
@@ -146,12 +164,15 @@ export function JobAlertsForm() {
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-sm font-medium">
-                  Name *
+                  {config.jobAlerts.form?.fields?.name?.label || "Name *"}
                 </Label>
                 <Input
                   id="name"
                   type="text"
-                  placeholder="Your name"
+                  placeholder={
+                    config.jobAlerts.form?.fields?.name?.placeholder ||
+                    "Your name"
+                  }
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   disabled={isSubmitting}
@@ -165,12 +186,15 @@ export function JobAlertsForm() {
 
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-sm font-medium">
-                  Email *
+                  {config.jobAlerts.form?.fields?.email?.label || "Email *"}
                 </Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder={
+                    config.jobAlerts.form?.fields?.email?.placeholder ||
+                    "your@email.com"
+                  }
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -195,11 +219,12 @@ export function JobAlertsForm() {
               {isSubmitting ? (
                 <>
                   <RefreshCw className="mr-2 h-3.5 w-3.5 animate-spin" />
-                  Subscribing...
+                  {config.jobAlerts.form?.loadingText || "Subscribing..."}
                 </>
               ) : (
                 <>
-                  Subscribe to Job Alerts
+                  {config.jobAlerts.form?.buttonText ||
+                    "Subscribe to Job Alerts"}
                   <ArrowRight className="h-3.5 w-3.5 ml-1" aria-hidden="true" />
                 </>
               )}
