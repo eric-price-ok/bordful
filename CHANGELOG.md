@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.43] - 2025-04-22
+
+### Fixed
+- Fixed navbar dropdown menu z-index issue:
+  - Increased dropdown menu z-index from 10 to 50 to ensure proper layering above hero sections
+  - Added relative positioning with z-index 40 to the header element for proper stacking context
+  - Resolved issue with dropdown menu items being unclickable when overlapping with hero content
+  - Ensured consistent behavior across all pages with different hero section configurations
+
 ## [0.1.42] - 2025-04-22
 
 ### Added

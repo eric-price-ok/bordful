@@ -402,7 +402,7 @@ export function Nav() {
 
             {isDropdownOpen && (
               <div
-                className="absolute left-0 mt-1 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+                className="absolute left-0 mt-1 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50"
                 onMouseEnter={() => handleDropdownMouseEnter(item.label)}
                 onMouseLeave={() => handleDropdownMouseLeave(item.label)}
               >
@@ -444,7 +444,7 @@ export function Nav() {
   const renderMobileNavItems = () => renderNavItems(true);
 
   return (
-    <header className="border-b border-zinc-200 bg-white">
+    <header className="border-b border-zinc-200 bg-white relative z-40">
       <div className="container mx-auto px-4">
         <nav
           className="flex h-14 items-center justify-between"
