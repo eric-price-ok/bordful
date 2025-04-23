@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og";
 import config from "@/config";
 import Airtable from "airtable";
-import { generateJobSlug } from "@/lib/utils/slugify";
 
 // Specify that this route should run on Vercel's edge runtime
 export const runtime = "edge";
@@ -134,45 +133,6 @@ async function loadGoogleFontData(
     console.error(`Error loading Google Font (${fontFamily}):`, error);
     return null;
   }
-}
-
-// Helper function to convert a string to Title Case
-function toTitleCase(str: string): string {
-  // List of words that should not be capitalized (articles, conjunctions, prepositions)
-  const minorWords = [
-    "a",
-    "an",
-    "the",
-    "and",
-    "but",
-    "or",
-    "for",
-    "nor",
-    "on",
-    "at",
-    "to",
-    "from",
-    "by",
-    "with",
-    "in",
-    "of",
-  ];
-
-  return str
-    .toLowerCase()
-    .split(" ")
-    .map((word, index) => {
-      // Always capitalize the first and last word, and any word that's not in the minorWords list
-      if (
-        index === 0 ||
-        index === str.split(" ").length - 1 ||
-        !minorWords.includes(word)
-      ) {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      }
-      return word;
-    })
-    .join(" ");
 }
 
 // Helper function to convert hex color to RGBA
