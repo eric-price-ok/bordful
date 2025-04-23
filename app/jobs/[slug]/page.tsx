@@ -325,7 +325,7 @@ export default async function JobPostPage({
                     />
                   ),
                   // Style code blocks
-                  code: ({ inline, className, children, ...props }) => {
+                  code: ({ inline, children, ...props }) => {
                     if (inline) {
                       return (
                         <code

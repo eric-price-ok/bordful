@@ -377,7 +377,7 @@ function cleanMarkdownFormatting(text: string): string {
     let line = lines[i].trim();
 
     // Check if this is a section header (bold text with colon)
-    const isSectionHeader = line.match(/^\*\*([^*:]+?):\*\*/);
+    // const isSectionHeader = line.match(/^\*\*([^*:]+?):\*\*/);
 
     // Check if this is a list item
     const isListItem = line.match(/^- /);
