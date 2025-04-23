@@ -1,7 +1,6 @@
 import { getJobs, formatSalary } from "@/lib/db/airtable";
 import { formatDate } from "@/lib/utils/formatDate";
 import { generateJobSlug } from "@/lib/utils/slugify";
-import { processAirtableMarkdown } from "@/lib/utils/airtableMarkdown";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -297,20 +296,19 @@ export default async function JobPostPage({
                     />
                   ),
                   // Style lists with better nesting support
-                  ul: ({ depth = 0, ...props }) => {
-                    const indentClass = depth === 0 ? "ml-4" : "ml-8";
+                  ul: ({ className, ...props }) => {
+                    // Always indent top-level lists; nested lists get natural browser indent
                     return (
                       <ul
-                        className={`list-disc ${indentClass} my-2`}
+                        className={`list-disc ml-4 my-2 ${className || ""}`}
                         {...props}
                       />
                     );
                   },
-                  ol: ({ depth = 0, ...props }) => {
-                    const indentClass = depth === 0 ? "ml-4" : "ml-8";
+                  ol: ({ className, ...props }) => {
                     return (
                       <ol
-                        className={`list-decimal ${indentClass} my-2`}
+                        className={`list-decimal ml-4 my-2 ${className || ""}`}
                         {...props}
                       />
                     );
@@ -325,8 +323,10 @@ export default async function JobPostPage({
                     />
                   ),
                   // Style code blocks
-                  code: ({ inline, children, ...props }) => {
-                    if (inline) {
+                  code: ({ className, children, ...props }) => {
+                    // Inline code typically has no language class
+                    const isInline = !className;
+                    if (isInline) {
                       return (
                         <code
                           className="px-1.5 py-0.5 bg-gray-100 rounded text-sm font-mono"
@@ -336,6 +336,7 @@ export default async function JobPostPage({
                         </code>
                       );
                     }
+                    // Block code
                     return (
                       <pre className="p-4 bg-gray-100 rounded-md overflow-x-auto my-4">
                         <code className="text-sm font-mono" {...props}>
@@ -345,20 +346,20 @@ export default async function JobPostPage({
                     );
                   },
                   // Style checkboxes for Airtable's checkbox format and improve list item handling
-                  li: ({ children, className, ordered, ...props }) => {
+                  li: ({ children, className, ...props }) => {
                     // Check if this is a checkbox item
                     if (
                       typeof children === "string" &&
                       (children.startsWith("[x] ") ||
                         children.startsWith("[ ] "))
                     ) {
-                      const checked = children.startsWith("[x] ");
+                      const checkedBox = children.startsWith("[x] ");
                       const text = children.substring(4);
                       return (
                         <li className="flex items-start gap-2 my-1" {...props}>
                           <input
                             type="checkbox"
-                            checked={checked}
+                            checked={checkedBox}
                             readOnly
                             className="mt-1"
                           />
@@ -382,9 +383,10 @@ export default async function JobPostPage({
                       );
                     }
 
-                    // Add proper spacing for list items
+                    // Default list item
                     const listItemClass = className || "";
-                    const spacingClass = ordered ? "pl-1" : "pl-0";
+                    // Use standard padding for list items
+                    const spacingClass = "pl-1";
 
                     return (
                       <li
@@ -397,7 +399,7 @@ export default async function JobPostPage({
                   },
                 }}
               >
-                {processAirtableMarkdown(job.description || "")}
+                {job.description}
               </ReactMarkdown>
             </div>
           </div>

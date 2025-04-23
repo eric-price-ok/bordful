@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.46] - 2025-04-23
+
+### Changed
+- Centralized Markdown cleaning into a new `normalizeMarkdown` utility (unified + remark-based), replacing the old `cleanMarkdownFormatting` and `processAirtableMarkdown` functions.
+- Updated `getJobs` and `getJob` in `lib/db/airtable.ts` to use `normalizeMarkdown` for job descriptions.
+- Removed the obsolete `cleanMarkdownFormatting` implementation and deleted `lib/utils/airtableMarkdown.ts`.
+- Simplified the ReactMarkdown usage in `app/jobs/[slug]/page.tsx` to render the pre-cleaned `job.description` directly.
+- Refactored component overrides to eliminate unsupported props and reduce complexity.
+- Installed dependencies: `unified`, `remark-parse`, `remark-gfm`, and `remark-stringify`.
+- Reduced client bundle size and improved maintainability by moving all Markdown parsing to server-side only.
+
 ## [0.1.45] - 2025-04-23
 
 ### Changed
