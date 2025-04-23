@@ -1,10 +1,32 @@
 import { ImageResponse } from "next/og";
 import config from "@/config";
-import { getJobs } from "@/lib/db/airtable";
+import Airtable from "airtable";
 import { generateJobSlug } from "@/lib/utils/slugify";
 
 // Specify that this route should run on Vercel's edge runtime
 export const runtime = "edge";
+
+// Minimal Airtable client for OG image route (only loads title, company, type, and workplace_type)
+const base = new Airtable({
+  apiKey: process.env.AIRTABLE_ACCESS_TOKEN || "",
+  endpointUrl: "https://api.airtable.com",
+}).base(process.env.AIRTABLE_BASE_ID || "");
+
+async function getJobBySlugMinimal(slug: string) {
+  // Airtable formula to match slug format: LOWER(CONCATENATE({title},"-at-",{company}))
+  const formula = `LOWER(CONCATENATE({title},"-at-",{company}))="${slug.toLowerCase()}"`;
+  const records = await base("Jobs")
+    .select({ filterByFormula: formula, maxRecords: 1 })
+    .all();
+  if (records.length === 0) return null;
+  const fields = records[0].fields;
+  return {
+    title: fields.title as string,
+    company: fields.company as string,
+    type: fields.type as string,
+    workplace_type: fields.workplace_type as string,
+  };
+}
 
 // Define TypeScript interfaces to match our configuration
 interface OGLogoPosition {
@@ -252,122 +274,15 @@ export async function GET(
   context: { params: { slug: string } }
 ): Promise<ImageResponse | Response> {
   try {
-    // Get the job slug from the URL - await params to fix Next.js error
+    // Get the job slug and fetch minimal data from Airtable
     const params = await context.params;
     const { slug } = params;
-
-    // Try to fetch the actual job data from Airtable
-    let job;
-    let realJobData = null;
-
-    try {
-      // First try to get the real job data
-      const jobs = await getJobs();
-      realJobData = jobs.find(
-        (j) => generateJobSlug(j.title, j.company) === slug
-      );
-      console.log(
-        `Found job data for slug ${slug}:`,
-        realJobData ? "YES" : "NO"
-      );
-      if (realJobData) {
-        console.log("Job type:", realJobData.type);
-        console.log("Workplace type:", realJobData.workplace_type);
-        console.log(
-          "Salary:",
-          realJobData.salary ? "Available" : "Not available"
-        );
-
-        // Check if job is inactive - getJobs() should already filter active jobs only
-        // but we'll add an extra check for safety
-        if (realJobData.status !== "active") {
-          return new Response(`Job is no longer active`, {
-            status: 404,
-          });
-        }
-      }
-    } catch (error) {
-      console.error("Error fetching jobs from Airtable:", error);
-      // We'll continue with extracted data from the slug
+    const job = await getJobBySlugMinimal(slug);
+    if (!job) {
+      return new Response(`Job not found: ${slug}`, { status: 404 });
     }
 
-    // If we couldn't get the real job data, extract from slug
-    if (!realJobData) {
-      try {
-        // Extract job title and company from slug
-        // Format is typically "job-title-at-company-name"
-        const slugParts = slug.split("-at-");
-
-        if (slugParts.length < 2) {
-          return new Response(`Invalid job slug format: ${slug}`, {
-            status: 404,
-          });
-        }
-
-        // Convert slug parts to title case
-        const company = toTitleCase(slugParts[1].replace(/-/g, " "));
-        const title = toTitleCase(slugParts[0].replace(/-/g, " "));
-
-        // Create a job object with title, company, and some extracted details
-        // Extract job type from the title if possible
-        let type = "";
-        if (
-          title.toLowerCase().includes("fullstack") ||
-          title.toLowerCase().includes("full stack")
-        ) {
-          type = "Full-stack";
-        } else if (
-          title.toLowerCase().includes("frontend") ||
-          title.toLowerCase().includes("front end") ||
-          title.toLowerCase().includes("front-end")
-        ) {
-          type = "Frontend";
-        } else if (
-          title.toLowerCase().includes("backend") ||
-          title.toLowerCase().includes("back end") ||
-          title.toLowerCase().includes("back-end")
-        ) {
-          type = "Backend";
-        } else if (title.toLowerCase().includes("developer")) {
-          type = "Developer";
-        } else if (title.toLowerCase().includes("designer")) {
-          type = "Designer";
-        } else if (title.toLowerCase().includes("manager")) {
-          type = "Manager";
-        } else if (title.toLowerCase().includes("engineer")) {
-          type = "Engineer";
-        } else if (title.toLowerCase().includes("writer")) {
-          type = "Content";
-        } else if (title.toLowerCase().includes("marketing")) {
-          type = "Marketing";
-        } else {
-          type = "Full-time";
-        }
-
-        // Create a job object with extracted information
-        job = {
-          title,
-          company,
-          type,
-          workplace_type: "Remote",
-        };
-      } catch (error) {
-        console.error("Error processing job slug:", error);
-        return new Response(
-          `Error processing job slug: ${
-            error instanceof Error ? error.message : String(error)
-          }`,
-          {
-            status: 500,
-          }
-        );
-      }
-    } else {
-      // Use the real job data
-      job = realJobData;
-    }
-
-    // Get and type-check the OG configuration
+    // Continue with OG configuration using minimal job data
     const ogJobConfig: OGJobConfig = config.og?.jobs || {};
 
     // Check if job OG image generation is enabled
