@@ -1,6 +1,8 @@
 import { getJobs, formatSalary } from "@/lib/db/airtable";
 import { formatDate } from "@/lib/utils/formatDate";
 import { generateJobSlug } from "@/lib/utils/slugify";
+import { processAirtableMarkdown } from "@/lib/utils/airtableMarkdown";
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
@@ -271,6 +273,7 @@ export default async function JobPostPage({
               <div className="hidden">
                 Raw description: {JSON.stringify(job.description)}
               </div>
+              {/* Use our custom utility to process Airtable's markdown format */}
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkBreaks]}
                 components={{
@@ -288,21 +291,113 @@ export default async function JobPostPage({
                   a: ({ ...props }) => (
                     <a
                       className="text-blue-600 hover:text-blue-800"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       {...props}
                     />
                   ),
-                  // Style lists
-                  ul: ({ ...props }) => (
-                    <ul className="list-disc ml-4 my-2" {...props} />
-                  ),
-                  ol: ({ ...props }) => (
-                    <ol className="list-decimal ml-4 my-2" {...props} />
-                  ),
+                  // Style lists with better nesting support
+                  ul: ({ depth = 0, ...props }) => {
+                    const indentClass = depth === 0 ? "ml-4" : "ml-8";
+                    return (
+                      <ul
+                        className={`list-disc ${indentClass} my-2`}
+                        {...props}
+                      />
+                    );
+                  },
+                  ol: ({ depth = 0, ...props }) => {
+                    const indentClass = depth === 0 ? "ml-4" : "ml-8";
+                    return (
+                      <ol
+                        className={`list-decimal ${indentClass} my-2`}
+                        {...props}
+                      />
+                    );
+                  },
                   // Style paragraphs
                   p: ({ ...props }) => <p className="my-2" {...props} />,
+                  // Style blockquotes (for Airtable quote blocks)
+                  blockquote: ({ ...props }) => (
+                    <blockquote
+                      className="pl-4 border-l-4 border-gray-200 my-4 italic"
+                      {...props}
+                    />
+                  ),
+                  // Style code blocks
+                  code: ({ inline, className, children, ...props }) => {
+                    if (inline) {
+                      return (
+                        <code
+                          className="px-1.5 py-0.5 bg-gray-100 rounded text-sm font-mono"
+                          {...props}
+                        >
+                          {children}
+                        </code>
+                      );
+                    }
+                    return (
+                      <pre className="p-4 bg-gray-100 rounded-md overflow-x-auto my-4">
+                        <code className="text-sm font-mono" {...props}>
+                          {children}
+                        </code>
+                      </pre>
+                    );
+                  },
+                  // Style checkboxes for Airtable's checkbox format and improve list item handling
+                  li: ({ children, className, ordered, ...props }) => {
+                    // Check if this is a checkbox item
+                    if (
+                      typeof children === "string" &&
+                      (children.startsWith("[x] ") ||
+                        children.startsWith("[ ] "))
+                    ) {
+                      const checked = children.startsWith("[x] ");
+                      const text = children.substring(4);
+                      return (
+                        <li className="flex items-start gap-2 my-1" {...props}>
+                          <input
+                            type="checkbox"
+                            checked={checked}
+                            readOnly
+                            className="mt-1"
+                          />
+                          <span>{text}</span>
+                        </li>
+                      );
+                    }
+
+                    // Check if this is a bold list item (like "**Lifecycle Marketing**")
+                    // This is a special case for job descriptions with bold list headers
+                    const isBoldListItem =
+                      typeof children === "object" &&
+                      React.isValidElement(children) &&
+                      children.type === "strong";
+
+                    if (isBoldListItem) {
+                      return (
+                        <li className="font-bold my-2" {...props}>
+                          {children}
+                        </li>
+                      );
+                    }
+
+                    // Add proper spacing for list items
+                    const listItemClass = className || "";
+                    const spacingClass = ordered ? "pl-1" : "pl-0";
+
+                    return (
+                      <li
+                        className={`${listItemClass} ${spacingClass} my-1`}
+                        {...props}
+                      >
+                        {children}
+                      </li>
+                    );
+                  },
                 }}
               >
-                {job.description || ""}
+                {processAirtableMarkdown(job.description || "")}
               </ReactMarkdown>
             </div>
           </div>

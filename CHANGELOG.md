@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.45] - 2025-04-23
+
+### Changed
+- Enhanced Airtable markdown rendering for job descriptions:
+  - Created a dedicated utility module for handling Airtable's markdown format
+  - Implemented a robust, pattern-agnostic solution that works across all job descriptions
+  - Created a comprehensive line-by-line processor that handles all formatting variations
+  - Added intelligent state tracking to properly manage list hierarchies and indentation
+  - Implemented pattern detection for various Airtable markdown styles without hardcoding specific content
+  - Properly handled italic text that should be rendered as bold (common in Airtable)
+  - Fixed list item indentation based on context rather than specific content
+  - Added support for Airtable's specific rich text format features
+  - Improved handling of checkboxes with proper rendering as interactive elements
+  - Enhanced code block and inline code styling with better visual presentation
+  - Added support for blockquotes with proper styling
+  - Fixed handling of Airtable's trailing newline character in API responses
+  - Improved list formatting for both bullet and numbered lists with proper nesting
+  - Enhanced spacing and formatting consistency across all markdown elements
+  - Made links open in new tabs with proper security attributes
+  - Fixed specific formatting issues with asterisks in list items
+  - Fixed nested list indentation for better readability
+  - Added special handling for section headers in lists
+  - Improved handling of emoji characters in formatted text
+  - Added special handling for bold list items with normal subitems
+  - Enhanced ReactMarkdown component to properly style bold list items
+  - Increased indentation for nested lists for better visual hierarchy
+
 ## [0.1.44] - 2025-04-22
 
 ### Added

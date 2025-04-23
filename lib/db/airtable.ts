@@ -229,76 +229,230 @@ function normalizeCareerLevel(value: unknown): CareerLevel[] {
   return [normalized as CareerLevel];
 }
 
-// Clean up Markdown formatting
+// Clean up Markdown formatting for Airtable's rich text format
 function cleanMarkdownFormatting(text: string): string {
   if (!text) return "";
 
   // First, normalize line endings
   let normalized = text.replace(/\r\n/g, "\n");
 
+  // Handle Airtable's trailing newline character that's always included in API responses
+  if (normalized.endsWith("\n")) {
+    normalized = normalized.slice(0, -1);
+  }
+
+  // First pass: Fix specific patterns that cause issues
+  normalized = normalized
+    // Fix "About the role" pattern with asterisks
+    .replace(/- \*\*About the role\*\*/g, "**About the role**")
+    .replace(/- \*About the role\*\*/g, "**About the role**")
+    .replace(/- \*About the role\*/g, "**About the role**")
+    // Fix emoji announcements with bold formatting - handle all variations
+    .replace(/- \*\*(\p{Emoji}[^*\n]+?)\*\*/gmu, "**$1**")
+    .replace(/- \*(\p{Emoji}[^*\n]+?)\*\*/gmu, "**$1**")
+    .replace(/- \*(\p{Emoji}[^*\n]+?)\*/gmu, "**$1**")
+    // Fix specific emoji announcement pattern
+    .replace(
+      /- \*\*(📣 It would be an amazing added bonus[^*\n]+?)\*\*/g,
+      "**$1**"
+    )
+    .replace(
+      /- \*(📣 It would be an amazing added bonus[^*\n]+?)\*\*/g,
+      "**$1**"
+    )
+    .replace(/- \*(📣 It would be an amazing added bonus[^*\n]+?)\*/g, "**$1**")
+    // Fix the pattern with trailing asterisks
+    .replace(/- \*(.*?)\*\*/g, "- **$1**")
+    .replace(/- \*(.*?)\*/g, "- **$1**")
+    // Preserve specific list patterns like "- **Lifecycle Marketing**"
+    // These should remain as list items with bold text
+    .replace(
+      /- \*\*(Lifecycle Marketing|Website Management|Automation and Workflow Development|Requirements|What success looks like|Collaborating with other teams)\*\*/g,
+      "- **$1**"
+    )
+    // Fix section headers that should be bold, not list items
+    .replace(/- \*\*([^*\n:]+?):\*\*/g, "**$1:**");
+
   // Pre-process to identify potential paragraph breaks in the original text
-  // This looks for lines that should be treated as separate paragraphs in common patterns
   normalized = normalized
     // Standard Markdown paragraph break is a blank line
     .replace(/\n\s*\n/g, "\n\n")
     // Detect sentences that end a paragraph and should have a break before the next line
     .replace(/([.!?]"?'?)\s*\n+(?=[A-Z0-9])/g, "$1\n\n")
-    // Ensure lines starting with "Our" (like mottos) and similar standalone statements
-    // are treated as paragraphs without hardcoding specific phrases
+    // Ensure lines starting with standalone statements are treated as paragraphs
     .replace(
       /\n([A-Z][^.\n]+?(?:is|are|was|were|has|have|had)[^\n]*?)\n/g,
       "\n\n$1\n\n"
     );
 
+  // Handle Airtable's specific markdown features
+  normalized = normalized
+    // Handle Airtable checkboxes: [x] and [ ]
+    .replace(/\[(x|X)\]\s*/g, "- [x] ")
+    .replace(/\[ \]\s*/g, "- [ ] ")
+    // Handle Airtable's code blocks (ensure proper spacing)
+    .replace(/```([^`]+?)```/g, "\n```\n$1\n```\n")
+    .replace(/`([^`\n]+?)`/g, "`$1`")
+    // Handle Airtable's quote blocks
+    .replace(/^>\s*(.+)$/gm, "> $1")
+    // Handle Airtable's headings (ensure proper spacing)
+    .replace(/^(#{1,3})\s*(.+)$/gm, "$1 $2")
+    // Fix Airtable's asterisk formatting for bold text
+    .replace(/\*\*([^*]+?)\*\*\*/g, "**$1**")
+    // Fix specific formatting issues with asterisks
+    .replace(/- \*(.*?)\*\*\*/g, "- **$1**")
+    .replace(/- \*(.*?)\*/g, "- **$1**")
+    // Fix specific issues with "About the role" and similar patterns
+    .replace(/- \*(About the role)\*\*/g, "**$1**")
+    .replace(/- \*\*(About the role)\*\*/g, "**$1**")
+    // Fix emoji with bold text being treated as list items
+    .replace(/- \*\*(📣.*?)\*\*/g, "**$1**")
+    .replace(/- \*(📣.*?)\*\*/g, "**$1**")
+    .replace(/- \*(📣.*?)\*/g, "**$1**")
+    // Fix any line with emoji and bold text
+    .replace(/^- \*\*([\p{Emoji}\p{Emoji_Presentation}].*?)\*\*/gmu, "**$1**")
+    // Fix nested list structure for multiple levels
+    .replace(/^(- .*?)\n\s*- /gm, "$1\n  - ")
+    .replace(/^(  - .*?)\n\s*- /gm, "$1\n    - ")
+    // Fix specific nested list patterns
+    .replace(
+      /- \*\*(Lifecycle Marketing|Website Management|Automation and Workflow Development)\*\*/g,
+      "**$1**"
+    )
+    // Fix section headers in lists
+    .replace(/^- \*\*([^*\n]+?)\*\*/gm, "**$1**")
+    // Ensure proper indentation for regular list items
+    .replace(/\n- ([^*\n]+)/g, "\n  - $1");
+
+  // Final processing pass
+  normalized = normalized
+    // Fix bold text with extra spaces before closing asterisks and ensure space after
+    .replace(/\*\*(.*?)\s*:\s*\*\*(\S)/g, "**$1:** $2")
+    // Ensure proper spacing around headers
+    .replace(/([^\n])\s*###/g, "$1\n\n###")
+    .replace(/###\s*(.*?)\n/g, "### $1\n\n")
+    // Fix headers with bold text
+    .replace(/###\s*\*\*(.*?)\*\*/g, "### **$1**")
+    // Ensure bold headers are on their own lines
+    .replace(/([^\n]+?)\s*\*\*([\w\s,]+?):\*\*/g, "$1\n\n**$2:**")
+    // Fix any remaining bold headers
+    .replace(/\*\*([\w\s,]+?):\*\*(\S)/g, "**$1:** $2")
+    // Fix nested list indentation
+    .replace(/\n- ([^\n]+)\n {1,2}-/g, "\n- $1\n    -")
+    // Properly handle bold text within list items (more robust)
+    .replace(/(^|\n)(- \s*)\*\*(.*?)\*\*/g, "$1$2**$3**")
+    // Trim trailing spaces inside any bold markers to prevent rendering issues
+    .replace(/\*\*(.*?)\s+\*\*/g, "**$1**")
+    // Fix line breaks after list items with bold text
+    .replace(/(\n- .*?\*\*.*?\*\*)\s*\n\s*\*\*/g, "$1\n\n**")
+    // Ensure proper paragraph breaks after sentences
+    .replace(/([.!?]"?'?)\s*(\n|$)(\s*)(\*\*)/g, "$1\n\n$4")
+    // Ensure standalone bold text gets proper paragraph breaks (general pattern)
+    .replace(/([^\n])\n(\*\*[^:\n*]+?\*\*)([^\n*]|$)/g, "$1\n\n$2$3")
+    // Ensure consecutive bold sections are separated
+    .replace(/\*\*([^*]+?)\*\*\*\*([^*]+?)\*\*/g, "**$1**\n\n**$2**")
+    // Ensure proper spacing between list items and bold text
+    .replace(/(\n- .+)\n\s*\*\*([^:*]+?)\*\*/g, "$1\n\n**$2**")
+    // Ensure proper spacing before bold text after list items
+    .replace(/(\n- .+?\n)(\*\*[^*]+?\*\*)/g, "$1\n$2")
+    // Handle paragraphs with bold text/sentences - general pattern
+    .replace(/([^\n])\n\*\*/g, "$1\n\n**")
+    // Handle Airtable's numbered lists (ensure proper spacing)
+    .replace(/^(\d+\.)\s*(.+)$/gm, "$1 $2")
+    // Handle Airtable's bullet lists (ensure proper spacing)
+    .replace(/^(-|\*)\s*(.+)$/gm, "- $2")
+    // Remove extra blank lines
+    .replace(/\n{3,}/g, "\n\n")
+    // Clean up extra spaces
+    .replace(/[ \t]+/g, " ");
+
+  // Process line by line for better control
+  const lines = normalized.split("\n");
+  const processedLines = [];
+  let inList = false;
+  let listLevel = 0;
+  let previousWasBoldListItem = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].trim();
+
+    // Check if this is a section header (bold text with colon)
+    const isSectionHeader = line.match(/^\*\*([^*:]+?):\*\*/);
+
+    // Check if this is a list item
+    const isListItem = line.match(/^- /);
+
+    // Check if this is a bold list item (like "- **Lifecycle Marketing**")
+    const isBoldListItem = line.match(/^- \*\*([^*:]+?)\*\*$/);
+
+    // Handle section headers that might be incorrectly formatted as list items
+    if (line.match(/^- \*\*([^*:]+?):\*\*/)) {
+      line = line.replace(/^- \*\*([^*:]+?):\*\*/, "**$1:**");
+      inList = false;
+      listLevel = 0;
+      previousWasBoldListItem = false;
+    }
+    // Handle bold list items (like "- **Lifecycle Marketing**")
+    else if (isBoldListItem) {
+      // Keep the bold list item as is, but mark it for the next items
+      previousWasBoldListItem = true;
+      inList = true;
+      listLevel = 1;
+    }
+    // Handle regular list items
+    else if (isListItem) {
+      if (!inList) {
+        inList = true;
+        listLevel = 1;
+      }
+
+      // If previous line was a bold list item, this should be indented
+      if (previousWasBoldListItem) {
+        line = "    " + line; // Indent with 4 spaces for subitems
+        listLevel = 2;
+      }
+      // Add proper indentation based on list level
+      else if (listLevel === 1) {
+        // Keep as is for first level
+      } else if (listLevel === 2) {
+        line = "  " + line;
+      } else if (listLevel === 3) {
+        line = "    " + line;
+      }
+
+      // Check if next line is also a list item to determine nesting
+      if (i < lines.length - 1) {
+        const nextLine = lines[i + 1].trim();
+        if (nextLine.match(/^- /)) {
+          // Check if next line is a bold list item
+          if (nextLine.match(/^- \*\*([^*:]+?)\*\*$/)) {
+            // End current sublist if next is a new bold list item
+            previousWasBoldListItem = false;
+          }
+          // Same level list item continues
+        } else {
+          // End of list
+          inList = false;
+          listLevel = 0;
+          previousWasBoldListItem = false;
+        }
+      }
+    }
+    // Handle non-list items
+    else {
+      inList = false;
+      listLevel = 0;
+      previousWasBoldListItem = false;
+    }
+
+    processedLines.push(line);
+  }
+
+  normalized = processedLines.join("\n");
+
+  // Final cleanup passes
   return (
     normalized
-      // Fix bold text with extra spaces before closing asterisks and ensure space after
-      .replace(/\*\*(.*?)\s*:\s*\*\*(\S)/g, "**$1:** $2")
-      // Ensure proper spacing around headers
-      .replace(/([^\n])\s*###/g, "$1\n\n###")
-      .replace(/###\s*(.*?)\n/g, "### $1\n\n")
-      // Fix headers with bold text
-      .replace(/###\s*\*\*(.*?)\*\*/g, "### **$1**")
-      // Ensure bold headers are on their own lines
-      .replace(/([^\n]+?)\s*\*\*([\w\s,]+?):\*\*/g, "$1\n\n**$2:**")
-      // Fix any remaining bold headers
-      .replace(/\*\*([\w\s,]+?):\*\*(\S)/g, "**$1:** $2")
-      // Fix nested list indentation
-      .replace(/\n- ([^\n]+)\n {1,2}-/g, "\n- $1\n    -")
-      // Properly handle bold text within list items (more robust)
-      .replace(/(^|\n)(- \s*)\*\*(.*?)\*\*/g, "$1$2**$3**")
-      // Trim trailing spaces inside any bold markers to prevent rendering issues
-      .replace(/\*\*(.*?)\s+\*\*/g, "**$1**")
-      // Fix line breaks after list items with bold text
-      .replace(/(\n- .*?\*\*.*?\*\*)\s*\n\s*\*\*/g, "$1\n\n**")
-      // Ensure proper paragraph breaks after sentences
-      .replace(/([.!?]"?'?)\s*(\n|$)(\s*)(\*\*)/g, "$1\n\n$4")
-      // Ensure standalone bold text gets proper paragraph breaks (general pattern)
-      .replace(/([^\n])\n(\*\*[^:\n*]+?\*\*)([^\n*]|$)/g, "$1\n\n$2$3")
-      // Ensure consecutive bold sections are separated
-      .replace(/\*\*([^*]+?)\*\*\*\*([^*]+?)\*\*/g, "**$1**\n\n**$2**")
-      // Ensure proper spacing between list items and bold text
-      .replace(/(\n- .+)\n\s*\*\*([^:*]+?)\*\*/g, "$1\n\n**$2**")
-      // Ensure proper spacing before bold text after list items
-      .replace(/(\n- .+?\n)(\*\*[^*]+?\*\*)/g, "$1\n$2")
-      // Handle paragraphs with bold text/sentences - general pattern
-      .replace(/([^\n])\n\*\*/g, "$1\n\n**")
-      // Remove extra blank lines
-      .replace(/\n{3,}/g, "\n\n")
-      // Clean up extra spaces
-      .replace(/[ \t]+/g, " ")
-      // Process line by line
-      .split("\n")
-      .map((line) => {
-        const trimmedLine = line.trim();
-        // If line starts with a list marker and is not a bold text, preserve it
-        if (trimmedLine.startsWith("- ") || trimmedLine.match(/^\d+\./)) {
-          return line;
-        }
-        // For all other lines (including bold text), remove indentation
-        return trimmedLine;
-      })
-      .join("\n")
       // Final pass to ensure bold headers are on their own lines
       .replace(/([^\n]+)\s*(\*\*[\w\s,]+?:\*\*)/g, "$1\n\n$2")
       // Final pass to ensure space after bold headers
