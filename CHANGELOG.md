@@ -10,10 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Enhanced Airtable markdown rendering for job descriptions:
   - Created a dedicated utility module for handling Airtable's markdown format
-  - Implemented a robust, pattern-agnostic solution that works across all job descriptions
+  - Implemented a truly pattern-agnostic solution that works with any job description content
+  - Removed all hardcoded content patterns in favor of structural pattern detection
   - Created a comprehensive line-by-line processor that handles all formatting variations
   - Added intelligent state tracking to properly manage list hierarchies and indentation
-  - Implemented pattern detection for various Airtable markdown styles without hardcoding specific content
+  - Implemented smart heuristics to detect headers vs. list items based on structure, not content
+  - Added pre-processing and post-processing steps for more reliable formatting
+  - Improved paragraph detection and formatting with proper spacing between paragraphs
+  - Fixed issues with bolded text being confused as list items
   - Properly handled italic text that should be rendered as bold (common in Airtable)
   - Fixed list item indentation based on context rather than specific content
   - Added support for Airtable's specific rich text format features
