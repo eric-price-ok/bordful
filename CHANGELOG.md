@@ -1,3 +1,25 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.1.48] - 2025-04-24
+
+### Fixed
+- Enhanced Markdown rendering for job descriptions with improved formatting:
+  - Implemented robust preprocessing for Airtable markdown content to handle common formatting issues
+  - Fixed issues with bold text containing trailing spaces (`**text **` → `**text**`)
+  - Added proper handling of paragraphs mixed with ordered and unordered lists
+  - Ensured proper spacing between section headings and list items
+  - Fixed formatting of section headings within list items
+  - Added proper indentation for content following headings in lists
+  - Configured remarkStringify with optimal settings for consistent output
+  - Maintained compatibility with existing well-rendered job posts
+  - Followed CommonMark specification for standardized rendering
+  - Improved overall readability of job descriptions with consistent formatting
+
 ## [0.1.47] - 2025-04-24
 
 ### Fixed
@@ -7,13 +29,6 @@
   - Restored `generateJobSlug` usage for job matching to maintain consistency with the rest of the application
   - Added improved error handling and logging for better diagnostics
   - Fixed route handler approach with proper job data fetching and rendering
-
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.1.46] - 2025-04-23
 
