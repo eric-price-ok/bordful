@@ -6,35 +6,19 @@ import { generateJobSlug } from "@/lib/utils/slugify";
 // Use the nodejs runtime to ensure full environment variable access
 export const runtime = "nodejs";
 
-// Use centralized job fetching with the getJobs function
+// Get job data using the existing getJobs function for consistency
 async function getJobBySlugMinimal(slug: string) {
   try {
-    console.log(`OG Image: Searching for job with slug: ${slug}`);
-
     // Get all jobs using the existing getJobs function
     const jobs = await getJobs();
-
-    console.log(`OG Image: Found ${jobs.length} total records from getJobs()`);
 
     // Find the job with a matching slug
     const job = jobs.find((j) => generateJobSlug(j.title, j.company) === slug);
 
-    if (!job) {
-      console.log(`OG Image: No job found with slug: ${slug}`);
-      return null;
-    }
+    if (!job) return null;
 
     // Check if job is active (though getJobs() should already filter active jobs)
-    if (job.status !== "active") {
-      console.log(
-        `OG Image: Job found but status is not active: ${job.status}`
-      );
-      return null;
-    }
-
-    console.log(
-      `OG Image: Successfully found active job: ${job.title} at ${job.company}`
-    );
+    if (job.status !== "active") return null;
 
     // Return only the fields needed for OG image generation
     return {
@@ -45,7 +29,7 @@ async function getJobBySlugMinimal(slug: string) {
     };
   } catch (error) {
     console.error(
-      `OG Image: Error fetching job: ${
+      `Error fetching job: ${
         error instanceof Error ? error.message : String(error)
       }`
     );
@@ -108,7 +92,7 @@ const SHARED_STYLES = {
     COMPANY_LINE_HEIGHT: 1.3,
   },
   Z_INDEX: {
-    CONTENT: 10, // Unitless value
+    CONTENT: 10, // Unitless value for zIndex
   },
 };
 
@@ -117,9 +101,7 @@ async function loadGoogleFontData(
   fontFamily: string,
   text: string
 ): Promise<ArrayBuffer | null> {
-  // Replace spaces for URL compatibility
   const fontNameForUrl = fontFamily.replace(/\s/g, "+");
-  // Fetch CSS for the family, subset by text, WITHOUT specifying weight
   const url = `https://fonts.googleapis.com/css2?family=${fontNameForUrl}&text=${encodeURIComponent(
     text
   )}`;
@@ -134,7 +116,6 @@ async function loadGoogleFontData(
     }
     const css = await cssResponse.text();
 
-    // Extract the first compatible (TTF/OTF) font URL
     const resource = css.match(
       /src: url\((.+?)\) format\('(opentype|truetype)'\)/
     );
@@ -216,8 +197,6 @@ async function fetchImageAsDataURI(
         ? imageSrc
         : `${baseUrl}${imageSrc}`;
 
-    console.log(`Fetching image from: ${imageUrl}`);
-
     const response = await fetch(imageUrl);
     if (!response.ok) {
       throw new Error(
@@ -253,32 +232,22 @@ async function fetchImageAsDataURI(
 
 /**
  * Generate a dynamic Open Graph image for a specific job post
- * @returns {Promise<ImageResponse | Response>} The generated image response or an error response
  */
 export async function GET(
   _request: Request,
   context: { params: { slug: string } }
 ): Promise<ImageResponse | Response> {
   try {
-    // Get the job slug and fetch minimal data from Airtable
+    // Get the job slug and fetch job data
     const params = await context.params;
     const { slug } = params;
 
-    console.log(`OG Image: GET request for slug: ${slug}`);
-
     const job = await getJobBySlugMinimal(slug);
     if (!job) {
-      console.log(
-        `OG Image: getJobBySlugMinimal returned null for slug: ${slug}`
-      );
       return new Response(`Job not found: ${slug}`, { status: 404 });
     }
 
-    console.log(
-      `OG Image: Found job: ${job.title} at ${job.company}, proceeding with image generation`
-    );
-
-    // Continue with OG configuration using minimal job data
+    // Continue with OG configuration using job data
     const ogJobConfig: OGJobConfig = config.og?.jobs || {};
 
     // Check if job OG image generation is enabled
@@ -304,7 +273,7 @@ export async function GET(
       ogJobConfig.companyColor || config.ui.heroTitleColor || "#FFFFFF";
 
     // Gradient configuration
-    const gradientEnabled = ogJobConfig.gradient?.enabled !== false; // Default to true if not specified
+    const gradientEnabled = ogJobConfig.gradient?.enabled !== false;
     const gradientColor = ogJobConfig.gradient?.color || backgroundColor;
     const gradientAngle =
       ogJobConfig.gradient?.angle !== undefined
@@ -477,7 +446,7 @@ export async function GET(
           {/* Content Container */}
           <div
             style={{
-              position: "relative", // Position on top of the background
+              position: "relative",
               width: "100%",
               height: "100%",
               display: "flex",
@@ -488,7 +457,7 @@ export async function GET(
               fontFamily: fontFamilyCSS,
               textAlign: "left",
               padding: `${SHARED_STYLES.DIMENSIONS.PADDING}px`,
-              zIndex: 10, // Ensure content is on top
+              zIndex: SHARED_STYLES.Z_INDEX.CONTENT, // Use unitless value for zIndex
             }}
           >
             {/* Logo Image */}
@@ -554,8 +523,7 @@ export async function GET(
       }
     );
   } catch (e: unknown) {
-    // Use unknown instead of any
-    const errorMessage = e instanceof Error ? e.message : String(e); // Type check before accessing message
+    const errorMessage = e instanceof Error ? e.message : String(e);
     console.error(`Error generating job ImageResponse: ${errorMessage}`);
     return new Response(`Failed to generate the job image: ${errorMessage}`, {
       status: 500,
