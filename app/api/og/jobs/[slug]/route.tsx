@@ -1,30 +1,56 @@
 import { ImageResponse } from "next/og";
 import config from "@/config";
-import Airtable from "airtable";
+import { getJobs } from "@/lib/db/airtable";
+import { generateJobSlug } from "@/lib/utils/slugify";
 
-// Specify that this route should run on Vercel's edge runtime
-export const runtime = "edge";
+// Use the nodejs runtime to ensure full environment variable access
+export const runtime = "nodejs";
 
-// Minimal Airtable client for OG image route (only loads title, company, type, and workplace_type)
-const base = new Airtable({
-  apiKey: process.env.AIRTABLE_ACCESS_TOKEN || "",
-  endpointUrl: "https://api.airtable.com",
-}).base(process.env.AIRTABLE_BASE_ID || "");
-
+// Use centralized job fetching with the getJobs function
 async function getJobBySlugMinimal(slug: string) {
-  // Airtable formula to match slug format: LOWER(CONCATENATE({title},"-at-",{company}))
-  const formula = `LOWER(CONCATENATE({title},"-at-",{company}))="${slug.toLowerCase()}"`;
-  const records = await base("Jobs")
-    .select({ filterByFormula: formula, maxRecords: 1 })
-    .all();
-  if (records.length === 0) return null;
-  const fields = records[0].fields;
-  return {
-    title: fields.title as string,
-    company: fields.company as string,
-    type: fields.type as string,
-    workplace_type: fields.workplace_type as string,
-  };
+  try {
+    console.log(`OG Image: Searching for job with slug: ${slug}`);
+
+    // Get all jobs using the existing getJobs function
+    const jobs = await getJobs();
+
+    console.log(`OG Image: Found ${jobs.length} total records from getJobs()`);
+
+    // Find the job with a matching slug
+    const job = jobs.find((j) => generateJobSlug(j.title, j.company) === slug);
+
+    if (!job) {
+      console.log(`OG Image: No job found with slug: ${slug}`);
+      return null;
+    }
+
+    // Check if job is active (though getJobs() should already filter active jobs)
+    if (job.status !== "active") {
+      console.log(
+        `OG Image: Job found but status is not active: ${job.status}`
+      );
+      return null;
+    }
+
+    console.log(
+      `OG Image: Successfully found active job: ${job.title} at ${job.company}`
+    );
+
+    // Return only the fields needed for OG image generation
+    return {
+      title: job.title,
+      company: job.company,
+      type: job.type,
+      workplace_type: job.workplace_type,
+    };
+  } catch (error) {
+    console.error(
+      `OG Image: Error fetching job: ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    );
+    return null;
+  }
 }
 
 // Define TypeScript interfaces to match our configuration
@@ -237,10 +263,20 @@ export async function GET(
     // Get the job slug and fetch minimal data from Airtable
     const params = await context.params;
     const { slug } = params;
+
+    console.log(`OG Image: GET request for slug: ${slug}`);
+
     const job = await getJobBySlugMinimal(slug);
     if (!job) {
+      console.log(
+        `OG Image: getJobBySlugMinimal returned null for slug: ${slug}`
+      );
       return new Response(`Job not found: ${slug}`, { status: 404 });
     }
+
+    console.log(
+      `OG Image: Found job: ${job.title} at ${job.company}, proceeding with image generation`
+    );
 
     // Continue with OG configuration using minimal job data
     const ogJobConfig: OGJobConfig = config.og?.jobs || {};

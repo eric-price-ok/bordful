@@ -1,3 +1,13 @@
+## [0.1.47] - 2025-04-24
+
+### Fixed
+- Fixed job-specific OG image generation that was broken after markdown processing centralization:
+  - Changed the runtime from `edge` to `nodejs` to ensure full environment variable access
+  - Replaced direct Airtable API client with centralized `getJobs()` function for consistent behavior
+  - Restored `generateJobSlug` usage for job matching to maintain consistency with the rest of the application
+  - Added improved error handling and logging for better diagnostics
+  - Fixed route handler approach with proper job data fetching and rendering
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
