@@ -8,17 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.49] - 2025-05-04
 
 ### Fixed
-- Improved Markdown preprocessing for job descriptions with targeted fixes:
-  - Fixed bold text with extra spaces (e.g., `**cloud engineering **` → `**cloud engineering**`)
-  - Added proper spacing between bold text and parentheses (e.g., `**term**(details)` → `**term** (details)`)
-  - Fixed spacing between words and bold text (e.g., `and**term**` → `and **term**`)
-  - Improved handling of technical terms followed by bold text
-  - Enhanced paragraph break detection for better readability
-  - Fixed sentences like "Residency and authorization to work in the U.S. is required." to appear as separate paragraphs
-  - Fixed paragraph breaks for specific patterns in job descriptions using more precise regex patterns
-  - Added general patterns to ensure proper paragraph breaks after list items
-  - Maintained compatibility with existing well-rendered job posts
-  - Used targeted pattern matching to avoid unintended side effects
+- Improved Markdown preprocessing for job descriptions with targeted fixes
 
 ## [0.1.48] - 2025-04-24
 

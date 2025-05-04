@@ -2,123 +2,205 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
 import remarkStringify from "remark-stringify";
+import remarkBreaks from "remark-breaks";
 
 /**
- * Pre-process markdown to fix common formatting issues with Airtable content
+ * Normalize list structure in markdown content.
+ * This function specifically targets the complex nested list structures in technical requirements sections.
+ *
+ * @param text The markdown text to normalize
+ * @returns Normalized markdown with proper list structure
+ */
+function normalizeListStructure(text: string): string {
+  if (!text) return "";
+
+  // First, normalize complex structures to make line-by-line processing easier
+  let normalized = text;
+
+  // Fix the technical requirements header line that has multiple sections on one line
+  // Example: "**Technical Requirements:** - **Frontend Development:** - **Frameworks & Libraries:**"
+  normalized = normalized.replace(
+    /(\*\*Technical Requirements:\*\*)\s*-\s*(\*\*[^*\n]+:\*\*)\s*-\s*(\*\*[^*\n]+:\*\*)/g,
+    "$1\n\n- $2\n  - $3"
+  );
+
+  // Fix lines where a category and subcategory are on the same line
+  // Example: "* **Backend Development:** - **Frameworks & Tools:**"
+  normalized = normalized.replace(
+    /(\*\s+\*\*[^*\n]+:\*\*)\s*-\s*(\*\*[^*\n]+:\*\*)/g,
+    "$1\n  - $2"
+  );
+
+  // Process line by line with the normalized text
+  const lines = normalized.split("\n");
+  const result: string[] = [];
+
+  // Track section state
+  let inTechnicalSection = false;
+  let currentMainCategory = "";
+  let currentSubCategory = "";
+  let indentLevel = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].trim();
+
+    // Skip empty lines but preserve them in the output
+    if (line === "") {
+      result.push("");
+      continue;
+    }
+
+    // Check if we're entering a technical requirements section
+    if (line.includes("**Technical Requirements:**")) {
+      inTechnicalSection = true;
+      result.push(line);
+      result.push(""); // Add blank line after section header
+      continue;
+    }
+
+    // Check if we're exiting a technical section (by finding another section header)
+    if (
+      inTechnicalSection &&
+      (line.startsWith("###") ||
+        line.startsWith("##") ||
+        line.startsWith("#")) &&
+      !line.includes("Technical Requirements")
+    ) {
+      inTechnicalSection = false;
+      currentMainCategory = "";
+      currentSubCategory = "";
+      indentLevel = 0;
+      result.push(""); // Add blank line before new section
+      result.push(line);
+      continue;
+    }
+
+    // Process lines in technical section
+    if (inTechnicalSection) {
+      // Check if this is a main category (e.g., "- **Frontend Development:**")
+      const mainCategoryMatch = line.match(/^-\s+\*\*([^*\n]+):\*\*$/);
+      if (mainCategoryMatch) {
+        currentMainCategory = mainCategoryMatch[1];
+        currentSubCategory = "";
+        indentLevel = 0;
+        result.push(`- **${currentMainCategory}:**`);
+        continue;
+      }
+
+      // Check if this is a subcategory (e.g., "  - **Frameworks & Libraries:**")
+      const subCategoryMatch = line.match(/^-\s+\*\*([^*\n]+):\*\*$/);
+      if (subCategoryMatch && line.startsWith("  ")) {
+        currentSubCategory = subCategoryMatch[1];
+        indentLevel = 1;
+        result.push(`  - **${currentSubCategory}:**`);
+        continue;
+      }
+
+      // Check if this is a list item with an asterisk
+      const listItemMatch = line.match(/^\*\s+(.*)/);
+      if (listItemMatch) {
+        const content = listItemMatch[1];
+
+        // If the content is a subcategory header (e.g., "* **API Integration:**")
+        const subCategoryMatch = content.match(/^\*\*([^*\n]+):\*\*$/);
+        if (subCategoryMatch) {
+          const subCategory = subCategoryMatch[1];
+          currentSubCategory = subCategory;
+          indentLevel = 1;
+          result.push(`  - ${content}`);
+        } else {
+          // This is a regular list item
+          // If we're in a subcategory, indent it more
+          if (currentSubCategory) {
+            indentLevel = 2;
+            result.push(`    - ${content}`);
+          } else {
+            // Top-level list item
+            indentLevel = 1;
+            result.push(`  - ${content}`);
+          }
+        }
+        continue;
+      }
+
+      // Check if this is an indented list item (e.g., "  * Proficiency with...")
+      const indentedListItemMatch = line.match(/^\*\s+(.*)/);
+      if (indentedListItemMatch && line.startsWith("  ")) {
+        const content = indentedListItemMatch[1];
+
+        // If the content is a subcategory header (e.g., "  * **API Integration:**")
+        const subCategoryMatch = content.match(/^\*\*([^*\n]+):\*\*$/);
+        if (subCategoryMatch) {
+          const subCategory = subCategoryMatch[1];
+          currentSubCategory = subCategory;
+          indentLevel = 1;
+          result.push(`  - ${content}`);
+        } else {
+          // This is a nested list item
+          indentLevel = 3;
+          result.push(`      - ${content}`);
+        }
+        continue;
+      }
+
+      // If we get here, it's not a recognized pattern
+      // Add it with indentation based on the current level
+      const prefix = "  ".repeat(indentLevel + 1);
+      result.push(`${prefix}${line}`);
+    } else {
+      // Outside technical section, preserve the line as is
+      result.push(line);
+    }
+  }
+
+  return result.join("\n");
+}
+
+/**
+ * Preprocessing function to fix common formatting issues with Airtable content.
+ * Applies general formatting fixes and handles complex list structures.
+ *
  * @param text The raw markdown text
  * @returns Fixed markdown text
  */
 function preprocessMarkdown(text: string): string {
   if (!text) return "";
 
-  // Preserve literal asterisks in text by temporarily replacing them
-  // This prevents them from being interpreted as markdown syntax
-  let fixed = text.replace(/\\\*/g, "___ESCAPED_ASTERISK___");
+  // First, normalize the list structure
+  let fixed = normalizeListStructure(text);
 
-  // Fix for bold text with extra spaces inside the markers
-  // This handles cases like "**cloud engineering **" or "** infrastructure-as-code**"
-  // We need to be careful to only trim spaces at the edges of the content, not within the content
-  fixed = fixed.replace(/\*\*\s*([^*\n]+?)\s*\*\*/g, (match, content) => {
-    // Only trim if there are actual spaces at the beginning or end
-    if (content.startsWith(" ") || content.endsWith(" ")) {
-      return `**${content.trim()}**`;
-    }
-    // Otherwise, leave it as is to avoid affecting correctly formatted bold text
-    return match;
+  // Preserve literal asterisks in text by temporarily replacing them
+  fixed = fixed.replace(/\\\*/g, "___ESCAPED_ASTERISK___");
+
+  // Handle bold text formatting (preserve original spacing)
+  fixed = fixed.replace(/\*\*\s*([^*\n]+?)\s*\*\*/g, (_, content) => {
+    return `**${content}**`;
   });
 
   // Fix missing spaces between bold text and opening parentheses
-  // This ensures there's always a space between bold text and following parentheses
-  // Example: "**cloud engineering**(AWS/Azure/GCP)" -> "**cloud engineering** (AWS/Azure/GCP)"
   fixed = fixed.replace(/\*\*([^*\n]+?)\*\*\(/g, "**$1** (");
 
-  // Fix missing spaces between words and bold text
-  // This ensures there's always a space between words and following bold text
-  // Example: "and**infrastructure-as-code**" -> "and **infrastructure-as-code**"
-  fixed = fixed.replace(/(\s[a-z]+)\*\*([^*\n]+?)\*\*/g, "$1 **$2**");
+  // Fix bolded text with colons
+  fixed = fixed.replace(/\*\*([^*\n:]+):\s*\*\*\s*/g, "**$1:** ");
 
-  // Fix for common technical terms followed by bold text with extra spaces
-  // This ensures proper spacing and formatting for technical terms
-  // We use a more general pattern to catch various technical terms
-  fixed = fixed.replace(
-    /(Proficiency|Experience|Fluency|Knowledge|Skills|Expertise) (in|with)\s*\*\*([^*\n]+?)\s*\*\*/g,
-    "$1 $2 **$3**"
-  );
-
-  // Ensure proper paragraph breaks after sentences ending with periods
-  // This adds a blank line after sentences that should start a new paragraph
+  // Ensure proper paragraph breaks after sentences
   fixed = fixed.replace(/([.!?])\s*\n([A-Z])/g, "$1\n\n$2");
 
-  // CRITICAL FIXES FOR SPECIFIC PATTERNS IN JOB DESCRIPTIONS
-
-  // Fix for "For more information about the company and the team" appearing in a list item
-  // Using a more specific pattern to match exactly what's in the Airtable content
-  fixed = fixed.replace(
-    /(\* [^\n]+)\n(\s*)(For more information about the company and the team)/g,
-    "$1\n\n$3"
-  );
-
-  // Fix for "As a distributed team" appearing in a list item
-  // Using a more specific pattern to match exactly what's in the Airtable content
-  fixed = fixed.replace(
-    /(\* [^\n]+)\n(\s*)(As a distributed team)/g,
-    "$1\n\n$3"
-  );
-
-  // Fix for "What we're looking for" appearing in a list item
-  // Using a more specific pattern to match exactly what's in the Airtable content
-  fixed = fixed.replace(
-    /(\* [^\n]+)\n(\s*)(What we're looking for)/g,
-    "$1\n\n$3"
-  );
-
-  // Fix for "Residency and authorization to work in the U.S. is required." appearing in a list item
-  // Using a more specific pattern to match exactly what's in the Airtable content
-  fixed = fixed.replace(
-    /(\* [^\n]*Location: remote within the U\.S\.)\n(\s*)(Residency and authorization)/g,
-    "$1\n\n$3"
-  );
-
-  // More general fix for sentences that should be separate paragraphs
-  // This looks for sentences that start with specific words that indicate they should be separate
-  fixed = fixed.replace(
-    /([\-\*]\s+[^\n]+)\n\s*(If this role|For our employees|Please note|Important|Note:)/g,
-    "$1\n\n$2"
-  );
+  // Ensure proper separation between paragraphs and lists
+  fixed = fixed.replace(/([^\n])\n([\-\*]\s)/g, "$1\n\n$2");
 
   // Ensure proper separation between headings and lists
-  // This adds a blank line after headings that are followed by lists
   fixed = fixed.replace(/(\*\*[^*\n]+\*\*)\s*\n([\-\*]\s)/g, "$1\n\n$2");
 
   // Ensure proper separation between sections in lists
-  // This adds a blank line when a heading appears after a list item
   fixed = fixed.replace(/([\-\*]\s[^\n]+)\n(\*\*[^*\n]+\*\*)/g, "$1\n\n$2");
 
   // Fix indentation after list items
-  // This ensures that paragraphs after list items are not indented
   fixed = fixed.replace(/([\-\*]\s+[^\n]+)\n\s+([^\-\*\s][^\n]+)/g, "$1\n$2");
 
-  // Ensure proper list continuation after a heading within a list
-  // This ensures that when a heading is inside a list, the next list items are properly formatted
-  fixed = fixed.replace(
-    /([\-\*]\s+\*\*[^*\n]+\*\*)\s*\n(?!\s*[\-\*]\s)([^\n]+)/g,
-    "$1\n  $2"
-  );
-
-  // Add proper spacing between list sections
-  // This adds a blank line between different list sections to ensure proper rendering
-  fixed = fixed.replace(
-    /([\-\*]\s[^\n]+)\n([\-\*]\s+\*\*[^*\n]+\*\*)/g,
-    "$1\n\n$2"
-  );
-
-  // Fix bolded text with colons
-  // This ensures colons are inside the bold markers and followed by a space
-  fixed = fixed.replace(/\*\*([^*\n:]+):\s*\*\*\s*/g, "**$1:** ");
-
-  // Ensure proper paragraph breaks after URLs
-  // This adds a blank line after URLs that should be followed by a new paragraph
-  fixed = fixed.replace(/(\]\([^)]+\))\s*\n([A-Z])/g, "$1\n\n$2");
+  // Handle section headers followed by dash and plain text
+  fixed = fixed.replace(/(\*\*[^*\n]+:\*\*)\s*-\s+([^*\n])/g, "$1\n\n- $2");
+  fixed = fixed.replace(/([^*\n]+:)\s*-\s+([^*\n])/g, "$1\n\n- $2");
 
   // Restore literal asterisks
   fixed = fixed.replace(/___ESCAPED_ASTERISK___/g, "\\*");
@@ -127,12 +209,11 @@ function preprocessMarkdown(text: string): string {
 }
 
 /**
- * Normalize raw Markdown into GitHub-Flavored Markdown.
- * This function preserves the original content while ensuring it follows
- * standard Markdown rules. It doesn't edit or remove spaces, but ensures
- * the content will render correctly according to CommonMark specification.
+ * Normalize raw Markdown from Airtable into GitHub-Flavored Markdown.
+ * Processes Airtable's markdown-like content into standard, well-formatted markdown
+ * with proper list structure and consistent formatting.
  *
- * @param raw The raw Markdown text
+ * @param raw The raw Markdown text from Airtable
  * @returns A cleaned, standardized Markdown string
  */
 export function normalizeMarkdown(raw: string): string {
@@ -141,18 +222,16 @@ export function normalizeMarkdown(raw: string): string {
   // First, preprocess the markdown to fix common formatting issues
   const preprocessed = preprocessMarkdown(raw);
 
-  // Then process the Markdown through unified with standard settings
-  // This will parse the Markdown into an AST, apply GFM transformations,
-  // and then stringify it back to Markdown following standard rules
+  // Process the Markdown through unified with standard settings
   const file = unified()
     .use(remarkParse)
     .use(remarkGfm)
+    .use(remarkBreaks) // Handle line breaks more naturally
     .use(remarkStringify, {
-      // Use standard settings that align with CommonMark
       bullet: "*", // Use asterisks for bullet points
       listItemIndent: "one", // Use one space for list item indentation
       emphasis: "_", // Use underscores for emphasis
-      strong: "*", // Use asterisks for strong emphasis (will output as **text**)
+      strong: "*", // Use asterisks for strong emphasis
       fence: "`", // Use backticks for fenced code blocks
       fences: true, // Always use fenced code blocks
       resourceLink: false, // Use autolinks when possible
