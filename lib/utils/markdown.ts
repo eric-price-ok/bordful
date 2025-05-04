@@ -11,117 +11,116 @@ import remarkStringify from "remark-stringify";
 function preprocessMarkdown(text: string): string {
   if (!text) return "";
 
-  // Fix 0: Preserve literal asterisks in text by temporarily replacing them
+  // Preserve literal asterisks in text by temporarily replacing them
   // This prevents them from being interpreted as markdown syntax
   let fixed = text.replace(/\\\*/g, "___ESCAPED_ASTERISK___");
 
-  // Fix 1: Handle the specific case of "**Being fluent... is essential **" with trailing space
-  // This preserves the bold formatting even with the trailing space
+  // Fix for bold text with extra spaces inside the markers
+  // This handles cases like "**cloud engineering **" or "** infrastructure-as-code**"
+  // We need to be careful to only trim spaces at the edges of the content, not within the content
+  fixed = fixed.replace(/\*\*\s*([^*\n]+?)\s*\*\*/g, (match, content) => {
+    // Only trim if there are actual spaces at the beginning or end
+    if (content.startsWith(" ") || content.endsWith(" ")) {
+      return `**${content.trim()}**`;
+    }
+    // Otherwise, leave it as is to avoid affecting correctly formatted bold text
+    return match;
+  });
+
+  // Fix missing spaces between bold text and opening parentheses
+  // This ensures there's always a space between bold text and following parentheses
+  // Example: "**cloud engineering**(AWS/Azure/GCP)" -> "**cloud engineering** (AWS/Azure/GCP)"
+  fixed = fixed.replace(/\*\*([^*\n]+?)\*\*\(/g, "**$1** (");
+
+  // Fix missing spaces between words and bold text
+  // This ensures there's always a space between words and following bold text
+  // Example: "and**infrastructure-as-code**" -> "and **infrastructure-as-code**"
+  fixed = fixed.replace(/(\s[a-z]+)\*\*([^*\n]+?)\*\*/g, "$1 **$2**");
+
+  // Fix for common technical terms followed by bold text with extra spaces
+  // This ensures proper spacing and formatting for technical terms
+  // We use a more general pattern to catch various technical terms
   fixed = fixed.replace(
-    /\*\*([^*\n]+?)\s+\*\*/g,
-    (_, content) => `**${content.trim()}**`
+    /(Proficiency|Experience|Fluency|Knowledge|Skills|Expertise) (in|with)\s*\*\*([^*\n]+?)\s*\*\*/g,
+    "$1 $2 **$3**"
   );
 
-  // Fix 2: Ensure proper separation between headings and lists
+  // Ensure proper paragraph breaks after sentences ending with periods
+  // This adds a blank line after sentences that should start a new paragraph
+  fixed = fixed.replace(/([.!?])\s*\n([A-Z])/g, "$1\n\n$2");
+
+  // CRITICAL FIXES FOR SPECIFIC PATTERNS IN JOB DESCRIPTIONS
+
+  // Fix for "For more information about the company and the team" appearing in a list item
+  // Using a more specific pattern to match exactly what's in the Airtable content
+  fixed = fixed.replace(
+    /(\* [^\n]+)\n(\s*)(For more information about the company and the team)/g,
+    "$1\n\n$3"
+  );
+
+  // Fix for "As a distributed team" appearing in a list item
+  // Using a more specific pattern to match exactly what's in the Airtable content
+  fixed = fixed.replace(
+    /(\* [^\n]+)\n(\s*)(As a distributed team)/g,
+    "$1\n\n$3"
+  );
+
+  // Fix for "What we're looking for" appearing in a list item
+  // Using a more specific pattern to match exactly what's in the Airtable content
+  fixed = fixed.replace(
+    /(\* [^\n]+)\n(\s*)(What we're looking for)/g,
+    "$1\n\n$3"
+  );
+
+  // Fix for "Residency and authorization to work in the U.S. is required." appearing in a list item
+  // Using a more specific pattern to match exactly what's in the Airtable content
+  fixed = fixed.replace(
+    /(\* [^\n]*Location: remote within the U\.S\.)\n(\s*)(Residency and authorization)/g,
+    "$1\n\n$3"
+  );
+
+  // More general fix for sentences that should be separate paragraphs
+  // This looks for sentences that start with specific words that indicate they should be separate
+  fixed = fixed.replace(
+    /([\-\*]\s+[^\n]+)\n\s*(If this role|For our employees|Please note|Important|Note:)/g,
+    "$1\n\n$2"
+  );
+
+  // Ensure proper separation between headings and lists
   // This adds a blank line after headings that are followed by lists
-  // Example: "**Heading**\n- List item" -> "**Heading**\n\n- List item"
   fixed = fixed.replace(/(\*\*[^*\n]+\*\*)\s*\n([\-\*]\s)/g, "$1\n\n$2");
 
-  // Fix 3: Ensure proper separation between sections in lists
-  // This adds a blank line and proper formatting when a heading appears after a list item
-  // Example: "- List item\n**Heading**" -> "- List item\n\n**Heading**"
+  // Ensure proper separation between sections in lists
+  // This adds a blank line when a heading appears after a list item
   fixed = fixed.replace(/([\-\*]\s[^\n]+)\n(\*\*[^*\n]+\*\*)/g, "$1\n\n$2");
 
-  // Fix 4: Ensure proper list continuation after a heading within a list
+  // Fix indentation after list items
+  // This ensures that paragraphs after list items are not indented
+  fixed = fixed.replace(/([\-\*]\s+[^\n]+)\n\s+([^\-\*\s][^\n]+)/g, "$1\n$2");
+
+  // Ensure proper list continuation after a heading within a list
   // This ensures that when a heading is inside a list, the next list items are properly formatted
   fixed = fixed.replace(
-    /(\*\*[^*\n]+\*\*)\s*\n(?!\s*[\-\*]\s)([^\n]+)/g,
-    "$1\n$2"
+    /([\-\*]\s+\*\*[^*\n]+\*\*)\s*\n(?!\s*[\-\*]\s)([^\n]+)/g,
+    "$1\n  $2"
   );
 
-  // Fix 5: Handle section headings within list items
-  // This ensures that when a bold heading appears at the start of a list item, it's properly formatted
-  // Example: "* **Section Heading**\nContent" -> "* **Section Heading**\n  Content"
-  fixed = fixed.replace(
-    /([\-\*]\s+)(\*\*[^*\n]+\*\*)\s*\n(?!\s*[\-\*]\s)([^\n]+)/g,
-    "$1$2\n  $3"
-  );
-
-  // Fix 6: Add proper spacing between list sections
+  // Add proper spacing between list sections
   // This adds a blank line between different list sections to ensure proper rendering
   fixed = fixed.replace(
     /([\-\*]\s[^\n]+)\n([\-\*]\s+\*\*[^*\n]+\*\*)/g,
     "$1\n\n$2"
   );
 
-  // Fix 7: Fix bolded text with colons followed by spaces
-  // Example: "**Privacy Policy: **Please review" -> "**Privacy Policy:** Please review"
-  fixed = fixed.replace(/\*\*([^*\n]+):\s*\*\*\s*/g, "**$1:** ");
+  // Fix bolded text with colons
+  // This ensures colons are inside the bold markers and followed by a space
+  fixed = fixed.replace(/\*\*([^*\n:]+):\s*\*\*\s*/g, "**$1:** ");
 
-  // Fix 8: Handle the specific case where literal asterisks are used for bold text
-  // This ensures that text like "\*\*Being fluent in the English language, written and verbal, is essential \*\*"
-  // is properly rendered as bold
-  fixed = fixed.replace(
-    /\\\*\\\*([^*\n]+?)\\\*\\\*/g,
-    (_, content) => `**${content.trim()}**`
-  );
+  // Ensure proper paragraph breaks after URLs
+  // This adds a blank line after URLs that should be followed by a new paragraph
+  fixed = fixed.replace(/(\]\([^)]+\))\s*\n([A-Z])/g, "$1\n\n$2");
 
-  // Fix 9: Fix indentation after list items with bold text
-  // This ensures that paragraphs after list items are not indented
-  fixed = fixed.replace(
-    /([\-\*]\s+\*\*[^*\n]+\*\*)\n\s+([^\-\*\s][^\n]+)/g,
-    "$1\n$2"
-  );
-
-  // Fix 10: Handle the specific case of "Additional Qualifications:" followed by bolded list items
-  // This ensures proper formatting of the list after this heading
-  fixed = fixed.replace(
-    /(\*\*Additional Qualifications:\*\*)\s*-\s*(\*\*[^*\n]+\*\*)/g,
-    "$1\n\n- $2"
-  );
-
-  // Fix 11: Properly format list items that contain bold text
-  // This ensures that list items like "- **Bold text**" are properly rendered
-  fixed = fixed.replace(/([\-\*]\s+)(\*\*[^*\n]+\*\*)/g, "$1$2");
-
-  // Fix 12: Fix indentation after "Must be legally authorized to work in Canada"
-  // This ensures the "For information about..." text is not indented and starts a new paragraph
-  fixed = fixed.replace(
-    /(\*\*Must be legally authorized to work in Canada\*\*)\s*\n\s*(For information about)/g,
-    "$1\n\n$2"
-  );
-
-  // Fix 13: Specifically handle the "Being fluent" case
-  fixed = fixed.replace(
-    /\*\*Being fluent in the English language, written and verbal, is essential \*\*/g,
-    "**Being fluent in the English language, written and verbal, is essential**"
-  );
-
-  // Fix 14: Handle the case where "Being fluent" appears in a list item with escaped asterisks
-  fixed = fixed.replace(
-    /([\-\*]\s+)\\\*\\\*Being fluent in the English language, written and verbal, is essential \\\*\\\*/g,
-    "$1**Being fluent in the English language, written and verbal, is essential**"
-  );
-
-  // Fix 15: Handle the case where "Being fluent" appears in a list item with regular asterisks
-  fixed = fixed.replace(
-    /([\-\*]\s+)\*\*Being fluent in the English language, written and verbal, is essential \*\*/g,
-    "$1**Being fluent in the English language, written and verbal, is essential**"
-  );
-
-  // Fix 16: Fix the "InnQuest Software," bolding issue
-  fixed = fixed.replace(
-    /For information about\s*\*\*InnQuest Software,\*\*\s*/g,
-    "For information about **InnQuest Software**, "
-  );
-
-  // Fix 17: Ensure "We thank all applicants..." is a separate paragraph
-  fixed = fixed.replace(
-    /(\[www\.innquest\.com\]\([^)]+\))\s*(\*\*We thank all applicants)/g,
-    "$1\n\n$2"
-  );
-
-  // Fix 18: Restore literal asterisks
+  // Restore literal asterisks
   fixed = fixed.replace(/___ESCAPED_ASTERISK___/g, "\\*");
 
   return fixed;

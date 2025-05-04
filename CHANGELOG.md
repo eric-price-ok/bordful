@@ -5,17 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.49] - 2025-04-25
+## [0.1.49] - 2025-05-04
 
 ### Fixed
-- Fixed specific Markdown rendering issues in job descriptions:
-  - Fixed bolded text with trailing spaces in list items (e.g., `**Being fluent... is essential **`)
-  - Fixed bolded text with commas inside bold markers (e.g., `**InnQuest Software,**` → `**InnQuest Software**,`)
-  - Fixed paragraph indentation after list items with bold text
-  - Fixed "We thank all applicants..." paragraph not appearing on a new line
-  - Added targeted fixes for specific formatting patterns without breaking existing functionality
-  - Enhanced preprocessing with more robust pattern matching for edge cases
+- Improved Markdown preprocessing for job descriptions with targeted fixes:
+  - Fixed bold text with extra spaces (e.g., `**cloud engineering **` → `**cloud engineering**`)
+  - Added proper spacing between bold text and parentheses (e.g., `**term**(details)` → `**term** (details)`)
+  - Fixed spacing between words and bold text (e.g., `and**term**` → `and **term**`)
+  - Improved handling of technical terms followed by bold text
+  - Enhanced paragraph break detection for better readability
+  - Fixed sentences like "Residency and authorization to work in the U.S. is required." to appear as separate paragraphs
+  - Fixed paragraph breaks for specific patterns in job descriptions using more precise regex patterns
+  - Added general patterns to ensure proper paragraph breaks after list items
   - Maintained compatibility with existing well-rendered job posts
+  - Used targeted pattern matching to avoid unintended side effects
 
 ## [0.1.48] - 2025-04-24
 
