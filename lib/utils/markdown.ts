@@ -509,7 +509,7 @@ export function normalizeMarkdown(raw: string): string {
         }
 
         if (indentation >= lastItem.indent) {
-          // This is content for the previous list item
+          // This is content at the same or greater indentation level as the list item
           const listIndent = "  ".repeat(listStack.length - 1);
           const contentIndent = "  "; // Standard markdown indentation for content
 
@@ -543,12 +543,12 @@ export function normalizeMarkdown(raw: string): string {
           }
           // Check if this line appears to be a new paragraph starting with a capital letter
           else if (
-            /^[A-Z][a-z]/.test(trimmedLine) &&
-            !trimmedLine.match(/^[A-Z][a-z]+:/) && // Not a label like "Note:"
-            i > 0 &&
-            lines[i - 1].trim() !== ""
+            /^[A-Z][a-z]/.test(trimmedLine) || // Line starts with a capital letter
+            (!trimmedLine.match(/^[-*+]|^\d+\.|^[a-z]\./) && // Not a list marker
+              trimmedLine !== "" && // Not an empty line
+              indentation === lastItem.indent) // At the exact same indentation as the list item
           ) {
-            // This looks like a new paragraph
+            // This looks like a new paragraph or non-list content
 
             // If we have accumulated content for a list item, push it
             if (insideListItem && currentListItemContent) {
