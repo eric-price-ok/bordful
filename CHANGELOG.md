@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.50] - 2025-05-05
+
+### Changed
+- Optimized job description markdown rendering:
+  - Implemented single-pass processing for better performance
+  - Enhanced paragraph formatting to render each line as a separate paragraph
+  - Consolidated multiple functions into a cleaner, more maintainable solution
+  - Removed redundant code and simplified logic
+  - Improved handling of special line types (lists, headings, code blocks)
+  - Reduced memory usage with fewer intermediate data structures
+
 ## [0.1.49] - 2025-05-04
 
 ### Fixed

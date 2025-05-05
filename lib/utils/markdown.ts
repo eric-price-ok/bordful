@@ -2,47 +2,53 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
 import remarkStringify from "remark-stringify";
-import remarkBreaks from "remark-breaks";
 
 /**
- * Normalize list structure in markdown content.
- * This function specifically targets the complex nested list structures in technical requirements sections.
+ * Normalize raw Markdown from Airtable into GitHub-Flavored Markdown.
+ * Processes Airtable's markdown-like content into standard, well-formatted markdown
+ * with proper list structure and consistent formatting.
  *
- * @param text The markdown text to normalize
- * @returns Normalized markdown with proper list structure
+ * This function applies all necessary transformations in a single pass through the content
+ * for better performance.
+ *
+ * @param raw The raw Markdown text from Airtable
+ * @returns A cleaned, standardized Markdown string with proper paragraphs
  */
-function normalizeListStructure(text: string): string {
-  if (!text) return "";
+export function normalizeMarkdown(raw: string): string {
+  if (!raw) return "";
 
-  // First, normalize complex structures to make line-by-line processing easier
-  let normalized = text;
+  // First, apply some general regex replacements to standardize content
+  let fixed = raw;
 
   // Fix the technical requirements header line that has multiple sections on one line
-  // Example: "**Technical Requirements:** - **Frontend Development:** - **Frameworks & Libraries:**"
-  normalized = normalized.replace(
+  fixed = fixed.replace(
     /(\*\*Technical Requirements:\*\*)\s*-\s*(\*\*[^*\n]+:\*\*)\s*-\s*(\*\*[^*\n]+:\*\*)/g,
     "$1\n\n- $2\n  - $3"
   );
 
   // Fix lines where a category and subcategory are on the same line
-  // Example: "* **Backend Development:** - **Frameworks & Tools:**"
-  normalized = normalized.replace(
+  fixed = fixed.replace(
     /(\*\s+\*\*[^*\n]+:\*\*)\s*-\s*(\*\*[^*\n]+:\*\*)/g,
     "$1\n  - $2"
   );
 
-  // Process line by line with the normalized text
-  const lines = normalized.split("\n");
+  // Preserve literal asterisks in text by temporarily replacing them
+  fixed = fixed.replace(/\\\*/g, "___ESCAPED_ASTERISK___");
+
+  // Handle all line processing in a single pass for better performance
+  const lines = fixed.split("\n");
   const result: string[] = [];
 
-  // Track section state
+  // Track section and formatting state
   let inTechnicalSection = false;
   let currentMainCategory = "";
   let currentSubCategory = "";
   let indentLevel = 0;
 
+  // Process each line once
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
+    const nextLine = i + 1 < lines.length ? lines[i + 1].trim() : "";
 
     // Skip empty lines but preserve them in the output
     if (line === "") {
@@ -75,7 +81,19 @@ function normalizeListStructure(text: string): string {
       continue;
     }
 
-    // Process lines in technical section
+    // Is this a special line type? (list item, heading, code block, etc.)
+    const isSpecialLine =
+      line.startsWith("- ") ||
+      line.startsWith("* ") ||
+      line.startsWith("+ ") ||
+      line.startsWith("#") ||
+      line.startsWith("```") ||
+      line.startsWith(">") ||
+      (nextLine.startsWith("- ") && line !== "") ||
+      (nextLine.startsWith("* ") && line !== "") ||
+      (nextLine.startsWith("+ ") && line !== "");
+
+    // Process lines in technical section with special handling
     if (inTechnicalSection) {
       // Check if this is a main category (e.g., "- **Frontend Development:**")
       const mainCategoryMatch = line.match(/^-\s+\*\*([^*\n]+):\*\*$/);
@@ -148,85 +166,71 @@ function normalizeListStructure(text: string): string {
       const prefix = "  ".repeat(indentLevel + 1);
       result.push(`${prefix}${line}`);
     } else {
-      // Outside technical section, preserve the line as is
-      result.push(line);
+      // Outside technical section
+      if (isSpecialLine) {
+        // For special lines like lists and headings, just add them as-is
+        result.push(line);
+      } else {
+        // Regular content line - add the line and potentially create a paragraph break
+        result.push(line);
+
+        // Add paragraph break if next line is not empty or a heading
+        // and this isn't a special formatting element
+        if (nextLine !== "" && !nextLine.startsWith("#")) {
+          result.push("");
+        }
+      }
     }
   }
 
-  return result.join("\n");
-}
+  // Join the processed lines
+  let processed = result.join("\n");
 
-/**
- * Preprocessing function to fix common formatting issues with Airtable content.
- * Applies general formatting fixes and handles complex list structures.
- *
- * @param text The raw markdown text
- * @returns Fixed markdown text
- */
-function preprocessMarkdown(text: string): string {
-  if (!text) return "";
-
-  // First, normalize the list structure
-  let fixed = normalizeListStructure(text);
-
-  // Preserve literal asterisks in text by temporarily replacing them
-  fixed = fixed.replace(/\\\*/g, "___ESCAPED_ASTERISK___");
+  // Apply additional fixes that are better handled with regex
 
   // Handle bold text formatting (preserve original spacing)
-  fixed = fixed.replace(/\*\*\s*([^*\n]+?)\s*\*\*/g, (_, content) => {
+  processed = processed.replace(/\*\*\s*([^*\n]+?)\s*\*\*/g, (_, content) => {
     return `**${content}**`;
   });
 
   // Fix missing spaces between bold text and opening parentheses
-  fixed = fixed.replace(/\*\*([^*\n]+?)\*\*\(/g, "**$1** (");
+  processed = processed.replace(/\*\*([^*\n]+?)\*\*\(/g, "**$1** (");
 
   // Fix bolded text with colons
-  fixed = fixed.replace(/\*\*([^*\n:]+):\s*\*\*\s*/g, "**$1:** ");
+  processed = processed.replace(/\*\*([^*\n:]+):\s*\*\*\s*/g, "**$1:** ");
 
   // Ensure proper paragraph breaks after sentences
-  fixed = fixed.replace(/([.!?])\s*\n([A-Z])/g, "$1\n\n$2");
+  processed = processed.replace(/([.!?])\s*\n([A-Z])/g, "$1\n\n$2");
 
   // Ensure proper separation between paragraphs and lists
-  fixed = fixed.replace(/([^\n])\n([\-\*]\s)/g, "$1\n\n$2");
+  processed = processed.replace(/([^\n])\n([\-\*]\s)/g, "$1\n\n$2");
 
   // Ensure proper separation between headings and lists
-  fixed = fixed.replace(/(\*\*[^*\n]+\*\*)\s*\n([\-\*]\s)/g, "$1\n\n$2");
+  processed = processed.replace(
+    /(\*\*[^*\n]+\*\*)\s*\n([\-\*]\s)/g,
+    "$1\n\n$2"
+  );
 
   // Ensure proper separation between sections in lists
-  fixed = fixed.replace(/([\-\*]\s[^\n]+)\n(\*\*[^*\n]+\*\*)/g, "$1\n\n$2");
-
-  // Fix indentation after list items
-  fixed = fixed.replace(/([\-\*]\s+[^\n]+)\n\s+([^\-\*\s][^\n]+)/g, "$1\n$2");
+  processed = processed.replace(
+    /([\-\*]\s[^\n]+)\n(\*\*[^*\n]+\*\*)/g,
+    "$1\n\n$2"
+  );
 
   // Handle section headers followed by dash and plain text
-  fixed = fixed.replace(/(\*\*[^*\n]+:\*\*)\s*-\s+([^*\n])/g, "$1\n\n- $2");
-  fixed = fixed.replace(/([^*\n]+:)\s*-\s+([^*\n])/g, "$1\n\n- $2");
+  processed = processed.replace(
+    /(\*\*[^*\n]+:\*\*)\s*-\s+([^*\n])/g,
+    "$1\n\n- $2"
+  );
+  processed = processed.replace(/([^*\n]+:)\s*-\s+([^*\n])/g, "$1\n\n- $2");
 
   // Restore literal asterisks
-  fixed = fixed.replace(/___ESCAPED_ASTERISK___/g, "\\*");
-
-  return fixed;
-}
-
-/**
- * Normalize raw Markdown from Airtable into GitHub-Flavored Markdown.
- * Processes Airtable's markdown-like content into standard, well-formatted markdown
- * with proper list structure and consistent formatting.
- *
- * @param raw The raw Markdown text from Airtable
- * @returns A cleaned, standardized Markdown string
- */
-export function normalizeMarkdown(raw: string): string {
-  if (!raw) return "";
-
-  // First, preprocess the markdown to fix common formatting issues
-  const preprocessed = preprocessMarkdown(raw);
+  processed = processed.replace(/___ESCAPED_ASTERISK___/g, "\\*");
 
   // Process the Markdown through unified with standard settings
   const file = unified()
     .use(remarkParse)
     .use(remarkGfm)
-    .use(remarkBreaks) // Handle line breaks more naturally
     .use(remarkStringify, {
       bullet: "*", // Use asterisks for bullet points
       listItemIndent: "one", // Use one space for list item indentation
@@ -238,7 +242,7 @@ export function normalizeMarkdown(raw: string): string {
       rule: "-", // Use hyphens for thematic breaks
       ruleSpaces: false, // No spaces between markers in thematic breaks
     })
-    .processSync(preprocessed);
+    .processSync(processed);
 
   return String(file);
 }

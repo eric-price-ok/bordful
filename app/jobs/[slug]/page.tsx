@@ -274,7 +274,7 @@ export default async function JobPostPage({
               </div>
               {/* Use our custom utility to process Airtable's markdown format */}
               <ReactMarkdown
-                remarkPlugins={[remarkGfm, remarkBreaks]}
+                remarkPlugins={[remarkGfm]}
                 components={{
                   // Customize heading styles - consistent with the rest of the app
                   h1: ({ ...props }) => (
