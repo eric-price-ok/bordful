@@ -276,15 +276,18 @@ export default async function JobPostPage({
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkBreaks]}
                 components={{
-                  // Customize heading styles
+                  // Customize heading styles - consistent with the rest of the app
                   h1: ({ ...props }) => (
-                    <h1 className="text-2xl font-bold my-4" {...props} />
+                    <h1 className="text-2xl font-semibold mb-2" {...props} />
                   ),
                   h2: ({ ...props }) => (
-                    <h2 className="text-xl font-bold my-3" {...props} />
+                    <h2 className="text-xl font-semibold mb-2" {...props} />
                   ),
                   h3: ({ ...props }) => (
-                    <h3 className="text-lg font-bold my-2" {...props} />
+                    <h3 className="text-lg font-semibold mb-2" {...props} />
+                  ),
+                  h4: ({ ...props }) => (
+                    <h4 className="text-base font-semibold mb-2" {...props} />
                   ),
                   // Style links
                   a: ({ ...props }) => (
@@ -377,7 +380,7 @@ export default async function JobPostPage({
 
                     if (isBoldListItem) {
                       return (
-                        <li className="font-bold my-2" {...props}>
+                        <li className="font-semibold my-2" {...props}>
                           {children}
                         </li>
                       );
