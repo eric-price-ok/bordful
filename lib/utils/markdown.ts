@@ -725,6 +725,11 @@ export function normalizeMarkdown(raw: string): string {
     }
   );
 
+  // Fix bold headers with colons to preserve spaces after the colon
+  processed = processed.replace(/\*\*([^*\n:]+):\s*\*\*/g, (match, title) => {
+    return `**${title}:** `;
+  });
+
   // Ensure proper nesting for nested lists following bold headers
   processed = processed.replace(
     /^(\s*)[-*+]\s+\*\*([^*\n]+):\*\*\s*\n(\s*)[-*+]\s+/gm,
