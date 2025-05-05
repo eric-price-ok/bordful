@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.51] - 2025-05-05
+
+### Fixed
+- Enhanced markdown rendering with robust stack-based list tracking:
+  - Implemented advanced stack-based approach for tracking list hierarchy
+  - Fixed complex nested list rendering with bolded headers and sublists
+  - Added intelligent context-aware list item formatting
+  - Improved handling of mixed formatting (bold headers followed by nested lists)
+  - Enhanced indentation management based on list hierarchy depth
+  - Added special treatment for paragraph spacing around bolded headers
+  - Preserved list hierarchy across multiple nesting levels
+  - Fixed regression issues with complex list structures
+
 ## [0.1.50] - 2025-05-05
 
 ### Changed
