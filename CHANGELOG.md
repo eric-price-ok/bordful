@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.53] - 2025-05-05
+
+### Fixed
+- Fixed Cumulative Layout Shift (CLS) issues with images:
+  - Added explicit width and height styles to the navigation logo image
+  - Replaced `maxHeight` and `width: "auto"` with fixed pixel dimensions in the footer logo
+  - Fixed social icons in navigation to use explicit pixel dimensions instead of relative classes
+  - Reduced layout shifts caused by missing image dimensions during page load
+  - Improved overall CLS score for better page performance
+
 ## [0.1.52] - 2025-05-05
 
 ### Fixed

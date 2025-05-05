@@ -97,8 +97,10 @@ function SocialIcon({ src, alt }: SocialIconProps) {
         alt={alt}
         width={16}
         height={16}
-        className="h-4 w-4 group-hover:opacity-0 transition-opacity"
+        className="group-hover:opacity-0 transition-opacity"
         style={{
+          width: "16px",
+          height: "16px",
           filter:
             "invert(41%) sepia(9%) saturate(380%) hue-rotate(202deg) brightness(94%) contrast(91%)", // zinc-600
         }}
@@ -110,8 +112,10 @@ function SocialIcon({ src, alt }: SocialIconProps) {
         alt=""
         width={16}
         height={16}
-        className="h-4 w-4 absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
         style={{
+          width: "16px",
+          height: "16px",
           filter:
             "invert(14%) sepia(8%) saturate(427%) hue-rotate(202deg) brightness(93%) contrast(90%)", // zinc-900
         }}
@@ -464,6 +468,10 @@ export function Nav() {
                 height={config.nav.logo.height}
                 className="object-contain"
                 priority
+                style={{
+                  width: `${config.nav.logo.width}px`,
+                  height: `${config.nav.logo.height}px`,
+                }}
               />
             ) : (
               <>

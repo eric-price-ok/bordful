@@ -107,8 +107,8 @@ export function Footer() {
               width={config.footer.brand.logo.width || 130}
               height={config.footer.brand.logo.height || 34}
               style={{
-                maxHeight: `${config.footer.brand.logo.height || 34}px`,
-                width: "auto",
+                width: `${config.footer.brand.logo.width || 130}px`,
+                height: `${config.footer.brand.logo.height || 34}px`,
               }}
               className="dark:brightness-100 dark:invert-0" // Don't invert in dark mode as it's already a light logo
             />
