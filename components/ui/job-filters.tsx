@@ -484,7 +484,7 @@ export function JobFilters({
       >
         {/* Job Type */}
         <div className="space-y-4">
-          <h2 className="text-md font-semibold">Job Type</h2>
+          <h3 className="text-md font-semibold">Job Type</h3>
           <div className="space-y-3">
             {/* Map over job types from constants instead of hardcoding */}
             {Object.entries(JOB_TYPE_DISPLAY_NAMES).map(
@@ -504,7 +504,7 @@ export function JobFilters({
 
         {/* Career Level */}
         <div className="space-y-4">
-          <h2 className="text-md font-semibold">Career Level</h2>
+          <h3 className="text-md font-semibold">Career Level</h3>
           <div className="space-y-3">
             {visibleLevels.map((level) => (
               <FilterItem
@@ -527,7 +527,7 @@ export function JobFilters({
 
         {/* Remote Only */}
         <div className="space-y-4">
-          <h2 className="text-md font-semibold">Remote Only</h2>
+          <h3 className="text-md font-semibold">Remote Only</h3>
           <SwitchItem
             id="remote-only"
             checked={remoteParam}
@@ -539,7 +539,7 @@ export function JobFilters({
 
         {/* Salary Range */}
         <div className="space-y-4">
-          <h2 className="text-md font-semibold">Salary Range</h2>
+          <h3 className="text-md font-semibold">Salary Range</h3>
           <div className="space-y-3">
             {Object.entries(counts.salary).map(([range, count]) => (
               <FilterItem
@@ -558,7 +558,7 @@ export function JobFilters({
 
         {/* Visa Sponsorship */}
         <div className="space-y-4">
-          <h2 className="text-md font-semibold">Visa Sponsorship</h2>
+          <h3 className="text-md font-semibold">Visa Sponsorship</h3>
           <SwitchItem
             id="visa-sponsorship"
             checked={visaParam}
@@ -569,7 +569,7 @@ export function JobFilters({
 
         {/* Languages */}
         <div className="space-y-4">
-          <h2 className="text-md font-semibold">Languages</h2>
+          <h3 className="text-md font-semibold">Languages</h3>
           <div className="space-y-3">
             {languageEntries.visible.map(([lang, count]) => (
               <FilterItem

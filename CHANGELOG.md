@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.52] - 2025-05-05
+
+### Fixed
+- Improved semantic HTML structure in sidebar components:
+  - Changed filter category headings in JobFilters sidebar from h2 to h3 elements
+  - Changed detail section headings in JobDetailsSidebar from h2 to h3 elements
+  - Made "Job Details" heading size consistent with "Filters" heading
+  - Enhanced SEO and accessibility with proper heading hierarchy
+  - Maintained visual appearance with consistent styling
+
 ## [0.1.51] - 2025-05-05
 
 ### Fixed

@@ -138,7 +138,7 @@ export function JobDetailsSidebar({
   return (
     <div className="p-5 border rounded-lg space-y-4 bg-gray-50">
       <div className="flex justify-between items-center mb-2">
-        <h2 className="text-lg font-semibold">Job Details</h2>
+        <h2 className="text-md font-semibold">Job Details</h2>
         {config.jobReport.enabled && config.jobReport.showInSidebar && (
           <a
             href={`mailto:${
@@ -161,7 +161,7 @@ export function JobDetailsSidebar({
       <div>
         <div className="flex items-center gap-2 mb-1">
           <Calendar className="h-4 w-4 text-gray-500 shrink-0" />
-          <h2 className="text-sm font-medium">Date Posted</h2>
+          <h3 className="text-sm font-medium">Date Posted</h3>
         </div>
         <p className="text-sm text-gray-600 ml-6">
           {fullDate} ({relativeTime})
@@ -173,7 +173,7 @@ export function JobDetailsSidebar({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Calendar className="h-4 w-4 text-gray-500 shrink-0" />
-            <h2 className="text-sm font-medium">Application Deadline</h2>
+            <h3 className="text-sm font-medium">Application Deadline</h3>
           </div>
           <div className="ml-6">
             <p className="text-sm text-gray-600">
@@ -192,7 +192,7 @@ export function JobDetailsSidebar({
       <div>
         <div className="flex items-center gap-2 mb-1">
           <MapPin className="h-4 w-4 text-gray-500 shrink-0" />
-          <h2 className="text-sm font-medium">Job Location</h2>
+          <h3 className="text-sm font-medium">Job Location</h3>
         </div>
         {workplace_type === "Remote" ? (
           <>
@@ -218,7 +218,7 @@ export function JobDetailsSidebar({
       <div>
         <div className="flex items-center gap-2 mb-1">
           <Laptop className="h-4 w-4 text-gray-500 shrink-0" />
-          <h2 className="text-sm font-medium">Workplace Type</h2>
+          <h3 className="text-sm font-medium">Workplace Type</h3>
         </div>
         <div className="ml-6">
           <JobBadge
@@ -242,7 +242,7 @@ export function JobDetailsSidebar({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Wallet className="h-4 w-4 text-gray-500 shrink-0" />
-            <h2 className="text-sm font-medium">Salary</h2>
+            <h3 className="text-sm font-medium">Salary</h3>
           </div>
           <div className="ml-6">
             <p className="text-sm text-gray-600">
@@ -258,7 +258,7 @@ export function JobDetailsSidebar({
       <div>
         <div className="flex items-center gap-2 mb-1">
           <Briefcase className="h-4 w-4 text-gray-500 shrink-0" />
-          <h2 className="text-sm font-medium">Career Level</h2>
+          <h3 className="text-sm font-medium">Career Level</h3>
         </div>
         <div className="flex flex-wrap gap-1.5 ml-6">
           {careerLevels.map((level, index) => (
@@ -281,7 +281,7 @@ export function JobDetailsSidebar({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Link className="h-4 w-4 text-gray-500 shrink-0" />
-            <h2 className="text-sm font-medium">Job Source</h2>
+            <h3 className="text-sm font-medium">Job Source</h3>
           </div>
           <a
             href={apply_url}
@@ -299,7 +299,7 @@ export function JobDetailsSidebar({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Hash className="h-4 w-4 text-gray-500 shrink-0" />
-            <h2 className="text-sm font-medium">Job ID</h2>
+            <h3 className="text-sm font-medium">Job ID</h3>
           </div>
           <p className="text-sm text-gray-600 ml-6">{job_identifier}</p>
         </div>
@@ -308,7 +308,7 @@ export function JobDetailsSidebar({
       <div>
         <div className="flex items-center gap-2 mb-1">
           <Globe className="h-4 w-4 text-gray-500 shrink-0" />
-          <h2 className="text-sm font-medium">Visa Sponsorship</h2>
+          <h3 className="text-sm font-medium">Visa Sponsorship</h3>
         </div>
         <div className="ml-6">
           <JobBadge
@@ -328,7 +328,7 @@ export function JobDetailsSidebar({
       <div>
         <div className="flex items-center gap-2 mb-1">
           <Clock className="h-4 w-4 text-gray-500 shrink-0" />
-          <h2 className="text-sm font-medium">Job Timezones</h2>
+          <h3 className="text-sm font-medium">Job Timezones</h3>
         </div>
         <p className="text-sm text-gray-600 ml-6">
           {timezone_requirements || "Not specified"}
@@ -340,7 +340,7 @@ export function JobDetailsSidebar({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Languages className="h-4 w-4 text-gray-500 shrink-0" />
-            <h2 className="text-sm font-medium">Languages</h2>
+            <h3 className="text-sm font-medium">Languages</h3>
           </div>
           <div className="flex flex-wrap gap-1.5 ml-6">
             {languages.map((langCode) => (
@@ -361,7 +361,7 @@ export function JobDetailsSidebar({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Gift className="h-4 w-4 text-gray-500 shrink-0" />
-            <h2 className="text-sm font-medium">Benefits & Perks</h2>
+            <h3 className="text-sm font-medium">Benefits & Perks</h3>
           </div>
           <div className="ml-6">
             <CollapsibleText text={benefits} maxLength={150} />
