@@ -4,7 +4,6 @@ import { generateJobSlug } from "@/lib/utils/slugify";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import remarkBreaks from "remark-breaks";
 import { PostJobBanner } from "@/components/ui/post-job-banner";
 import { JobDetailsSidebar } from "@/components/ui/job-details-sidebar";
 import { SimilarJobs } from "@/components/ui/similar-jobs";
