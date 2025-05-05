@@ -79,7 +79,7 @@ export function normalizeMarkdown(raw: string): string {
   // Process each line with stack-based list tracking
   for (let i = 0; i < lines.length; i++) {
     const originalLine = lines[i];
-    let line = originalLine;
+    const line = originalLine;
     const trimmedLine = line.trim();
 
     // Skip completely empty lines but preserve them
@@ -767,7 +767,7 @@ export function normalizeMarkdown(raw: string): string {
   // Fix nested numbering for ordered lists
   processed = processed.replace(
     /^(\s*)(\d+)\.\s+(.+)\n(\s*)(\d+)\.\s+/gm,
-    (match, indent1, number1, content, indent2, number2) => {
+    (match, indent1, number1, content, indent2) => {
       // If indentation increases, this is a nested list
       if (indent2.length > indent1.length) {
         // Reset the numbering to 1 for nested lists
@@ -780,7 +780,7 @@ export function normalizeMarkdown(raw: string): string {
   // Find section introductions that aren't properly separated
   processed = processed.replace(
     /([^\n])(\n)([A-Z][a-z].*?\s\*\*[^*\n]+\*\*[^:\n]*:)(\n)/g,
-    (match, prevContent, newline1, sectionIntro, newline2) => {
+    (match, prevContent, newline1, sectionIntro) => {
       // Make sure section intros have paragraphs breaks
       return `${prevContent}\n\n${sectionIntro}\n\n`;
     }
