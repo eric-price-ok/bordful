@@ -798,41 +798,15 @@ For detailed documentation on the RSS Feed System, see [RSS Feed System](/docs/r
 
 ## Robots.txt Generation
 
-The job board automatically generates a comprehensive robots.txt file at `/robots.txt` that helps search engines understand which parts of your site to crawl.
+Bordful automatically generates a comprehensive robots.txt file at `/robots.txt` that helps search engines understand which parts of your site to crawl:
 
-### Features
-- **Dynamic Generation**: Programmatically created using Next.js's Metadata API
-- **Customizable Rules**: Configure which user agents can access which parts of your site
-- **Protected Routes**: Automatically blocks crawlers from accessing admin and private routes
-- **Sitemap Integration**: Automatically links to your sitemap.xml for better indexing
-- **Canonical Host**: Defines the canonical hostname to prevent duplicate content issues
+- Dynamic generation using Next.js's Metadata API
+- Customizable crawling rules for different user agents
+- Protected routes to prevent crawling of admin and private areas
+- Automatic sitemap integration for better indexing
+- Canonical host definition to prevent duplicate content issues
 
-### Implementation
-The robots.txt file is generated using Next.js's built-in Metadata API in `app/robots.ts`:
-
-```typescript
-// Example robots.ts
-export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/admin/', '/private/', '/api/*'],
-    },
-    sitemap: 'https://yourdomain.com/sitemap.xml',
-    host: 'https://yourdomain.com',
-  }
-}
-```
-
-### Configuration
-The robots.txt file automatically uses your site URL from the config file, ensuring consistency across your entire site.
-
-### Benefits
-- **SEO Improvement**: Helps search engines crawl your site more efficiently
-- **Content Control**: Prevents indexing of private or admin sections
-- **No Maintenance**: Automatically updated when you deploy changes
-- **Type Safety**: Leverages TypeScript for error prevention
+For detailed documentation on robots.txt generation, see [Robots.txt Generation](/docs/reference/robots-generation.md).
 
 ## Email Provider Integration
 

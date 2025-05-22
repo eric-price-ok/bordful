@@ -87,6 +87,7 @@ docs/
 │   ├── language-system.md ✅
 │   ├── faq-system.md ✅
 │   ├── rss-feed-system.md ✅
+│   ├── robots-generation.md ✅
 │   ├── career-levels.md
 │   ├── glossary.md
 │   ├── cli-commands.md
