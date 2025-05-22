@@ -468,27 +468,9 @@ Current implementation uses Airtable. To use a different data source:
 
 ## Deployment
 
-### Local Build Verification
+Bordful can be deployed to various platforms, with Vercel being the recommended option due to its excellent support for Next.js applications.
 
-Before deploying to production, it's recommended to verify your build locally:
-
-```bash
-# Build the project
-npm run build
-
-# Test the production build
-npm start
-```
-
-This ensures that your changes work correctly in a production environment before deploying to Vercel.
-
-### Deploying to Vercel
-
-1. Push to GitHub
-2. Deploy on Vercel:
-   - Connect your GitHub repository
-   - Add environment variables
-   - Deploy
+For comprehensive deployment instructions, including local build verification and platform-specific guides for Vercel, Netlify, and Docker, see our [Deployment Guide](/docs/getting-started/deployment.md).
 
 ## Contributing
 
