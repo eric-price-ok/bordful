@@ -220,15 +220,3 @@ If you find this helpful, please ⭐️ this repository!
 ## Credits
 
 Built by [Craftled](https://craftled.com)
-
-### Hero Section Customization
-
-Bordful's hero section is fully configurable, supporting three background styles:
-
-- Solid background colors
-- Gradient backgrounds (linear or radial)
-- Background images with optional overlays
-
-You can also customize text colors and badge styling to match your brand identity.
-
-For comprehensive documentation on hero section customization, see [Hero Section Customization](/docs/guides/hero-section.md).
