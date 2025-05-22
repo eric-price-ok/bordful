@@ -14,6 +14,18 @@ Bordful provides a fully customizable navigation system that allows you to tailo
 - Mobile-responsive design with hamburger menu
 - Accessible navigation with ARIA attributes
 - Configurable via a single configuration file
+- Smart dropdown management with custom hooks
+
+## Component Architecture
+
+The navigation bar is built using several subcomponents:
+
+- `Nav`: The main component that orchestrates the layout and behavior
+- `NavLink`: Reusable component for navigation links
+- `SocialLink`: Component for social media links
+- `SocialIcon`: Component for social media icons with hover effects
+- `DropdownItem`: Component for dropdown menu items
+- `useDropdownMenu`: Custom hook for dropdown state management
 
 ## Navigation Configuration
 
@@ -53,6 +65,8 @@ nav: {
     show: true, // Show/hide Post Job button
     label: "Post a Job", // Button text
     link: "/post", // Button URL
+    external: false, // Set to true for external links
+    variant: "default", // Button variant (default, outline, etc.)
   },
   topMenu: [
     // Navigation menu items
@@ -128,6 +142,12 @@ nav: {
 }
 ```
 
+Each social platform:
+- Has a custom SVG icon in `/assets/social/`
+- Includes hover effects (color transitions)
+- Uses proper accessibility labels
+- Opens in a new tab with security attributes
+
 You can enable or disable each platform individually by setting its `show` property to `true` or `false`.
 
 ## Post Job Button
@@ -140,9 +160,17 @@ nav: {
     show: true, // Show/hide Post Job button
     label: "Post a Job", // Button text
     link: "/post", // Button URL
+    external: false, // Set to true for external links
+    variant: "default", // Button variant (default, outline, etc.)
   },
 }
 ```
+
+The button supports:
+- Custom label text
+- Internal or external linking
+- Different visual variants
+- Optional primary color theming
 
 ## Navigation Menu Options
 
@@ -194,6 +222,12 @@ nav: {
 }
 ```
 
+Each menu item supports:
+- `label`: Display text
+- `link`: Target URL
+- `dropdown`: Boolean to enable dropdown functionality
+- `items`: Array of submenu items (when dropdown is true)
+
 **Note**: If both `topMenu` and `menu` are configured, the `menu` configuration takes precedence.
 
 ## Helper Functions
@@ -216,11 +250,22 @@ nav: {
 
 ## Mobile Responsiveness
 
-The navigation system automatically adapts to mobile devices:
+The navigation bar implements a clean binary responsive approach:
 
-- On desktop: Full horizontal menu with dropdowns on hover
-- On mobile: Hamburger menu icon that opens a full-screen menu
-- Dropdowns in mobile view: Tap to expand/collapse
+1. **Desktop View (≥1024px)**: 
+   - Full horizontal menu with all elements at their proper size
+   - Dropdowns on hover with 300ms close delay
+   - All social icons and navigation items visible without scaling
+   - No text wrapping or layout breaking
+   
+2. **Mobile View (<1024px)**:
+   - "Post a Job" button remains visible next to the hamburger menu for easy access
+   - Hamburger icon toggle for menu access
+   - Vertical accordion-style menu when expanded
+   - Nested items with proper indentation
+   - Social links in a separate section
+
+This approach avoids problematic "in-between" states where content might scale down inappropriately or wrap to multiple lines, breaking the layout. By using the `lg` breakpoint (1024px) instead of the standard `md` breakpoint (768px), the navbar has enough space to display all elements at their full size before switching to the mobile view.
 
 No additional configuration is required for mobile support.
 
@@ -228,11 +273,30 @@ No additional configuration is required for mobile support.
 
 The navigation system includes several accessibility features:
 
-- ARIA attributes for menu items and dropdowns
-- Keyboard navigation support
-- Focus indicators for keyboard users
+- Proper `aria-label` attributes on all interactive elements
+- `aria-expanded` state for dropdowns
+- Focus management for keyboard navigation
+- Color contrast that meets WCAG guidelines
 - Screen reader-friendly markup
-- Sufficient color contrast for text elements
+
+## Custom Hooks
+
+The navigation component uses a custom `useDropdownMenu` hook to manage dropdown state and behavior:
+
+1. **State Management**: Tracks which dropdowns are open
+2. **Click Outside Detection**: Closes dropdowns when clicking elsewhere
+3. **Hover Management**: Handles mouse enter/leave with delay for better UX
+4. **Multiple Dropdown Support**: Manages state for multiple independent dropdowns
+
+This approach separates logic from UI rendering, making the component more maintainable and easier to extend.
+
+## Adding Custom Social Platforms
+
+To add a new social platform:
+
+1. Add an SVG icon to `/public/assets/social/`
+2. Update the `SOCIAL_PLATFORMS` array in `components/ui/nav.tsx`
+3. Add the new platform to your configuration
 
 ## Best Practices
 
@@ -242,13 +306,86 @@ The navigation system includes several accessibility features:
 4. **Clear Labels**: Use clear, concise labels for menu items
 5. **Testing**: Test navigation on both desktop and mobile devices
 
+## Complete Configuration Example
+
+```typescript
+nav: {
+  title: "JobBoard", // Navigation bar text
+  logo: {
+    enabled: false, // Set to true to use a custom logo instead of icon + text
+    src: "/your-logo.svg", // Path to your logo image
+    width: 120, // Width in pixels
+    height: 32, // Height in pixels
+    alt: "Your Company Logo", // Alt text
+  },
+  // Social media links with individual toggle
+  github: {
+    show: true,
+    url: "https://github.com/yourusername/yourrepo",
+  },
+  linkedin: {
+    show: true,
+    url: "https://linkedin.com/company/yourcompany",
+  },
+  twitter: {
+    show: true,
+    url: "https://x.com/yourhandle",
+  },
+  bluesky: {
+    show: true,
+    url: "https://bsky.app/profile/yourdomain.com",
+  },
+  reddit: {
+    show: true,
+    url: "https://reddit.com/r/yoursubreddit",
+  },
+  // Post job button configuration
+  postJob: {
+    show: true,
+    label: "Post a Job",
+    link: "/post",
+    external: false, // Set to true for external links
+    variant: "default", // Button variant (default, outline, etc.)
+  },
+  // Navigation menu with dropdown support
+  menu: [
+    { label: "Home", link: "/" },
+    // Example dropdown menu
+    { 
+      label: "Jobs", 
+      link: "/jobs",
+      dropdown: true,
+      items: [
+        { label: "All Jobs", link: "/jobs" },
+        { label: "Job Types", link: "/jobs/types" },
+        { label: "Job Locations", link: "/jobs/locations" },
+        { label: "Job Levels", link: "/jobs/levels" },
+        { label: "Job Languages", link: "/jobs/languages" }
+      ]
+    },
+    { label: "About", link: "/about" },
+    { label: "Resources", link: "#", dropdown: true, items: [
+      { label: "FAQ", link: "/faq" },
+      { label: "Job Alerts", link: "/job-alerts" },
+      { label: "RSS Feed", link: "/feed.xml" }
+    ]},
+  ],
+},
+```
+
 ## Implementation Details
 
 The navigation system is implemented in:
 
 - `components/ui/nav.tsx`: Main navigation component
 - `components/ui/mobile-nav.tsx`: Mobile navigation component
-- `lib/menu-helpers.ts`: Helper functions for creating common menu structures
+
+The navigation bar uses:
+- React state for managing mobile menu and dropdown visibility
+- Next.js Link component for optimized navigation
+- CSS transitions for smooth animations
+- Tailwind CSS for responsive styling
+- React useRef for managing dropdown references
 
 ## Related Documentation
 
