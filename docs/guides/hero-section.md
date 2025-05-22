@@ -270,6 +270,6 @@ The hero section is implemented in `components/ui/hero-section.tsx`, which uses 
 
 ## Related Documentation
 
-- [Theming and Color Customization](/docs/theming-customization.md)
+- [Theming and Color Customization](/docs/guides/theming-customization.md)
 - [Navigation Customization](/docs/guides/navigation.md)
 - [Configuration Options](/docs/reference/configuration-options.md) 

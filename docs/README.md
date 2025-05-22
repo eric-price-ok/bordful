@@ -85,23 +85,23 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 ## Customization
 
 - **[Customization Guide](/docs/guides/customization.md)**: Comprehensive guide to styling, script management, and data source customization
-- **[Theming and Color Customization](./theming-customization.md)**: Configure primary colors and theming
+- **[Theming and Color Customization](/docs/guides/theming-customization.md)**: Configure primary colors and theming
 - **[Post Job Banner](/docs/guides/post-job-banner.md)**: Customize the "Post a Job" banner
 - **[Currencies](/docs/reference/currencies.md)**: Configure and customize currency display
 
 ## Advanced Features
 
-- **[Schema Implementation](./schema-implementation.md)**: Structured data for better SEO
-- **[Rate Limiting](./rate-limiting.md)**: Protect your API endpoints from abuse
+- **[Schema Implementation](/docs/advanced/schema-implementation.md)**: Structured data for better SEO
+- **[Rate Limiting](/docs/advanced/rate-limiting.md)**: Protect your API endpoints from abuse
 
 ## Table of Contents
 
 - [Email Providers](/docs/guides/email-integration.md) - Documentation for email provider integrations
 - [Encharge Integration](/docs/integrations/encharge.md) - Detailed guide for setting up Encharge
-- [Rate Limiting](./rate-limiting.md) - Information about the rate limiting implementation
+- [Rate Limiting](/docs/advanced/rate-limiting.md) - Information about the rate limiting implementation
 - [Deployment Guide](/docs/getting-started/deployment.md) - Instructions for deploying the job board to production
-- [Currencies](./currencies.md) - Guide to using and configuring the 50+ supported currencies
-- [Schema.org Implementation](./schema-implementation.md) - Documentation for the comprehensive schema.org job posting implementation
+- [Currencies](/docs/reference/currencies.md) - Guide to using and configuring the 50+ supported currencies
+- [Schema.org Implementation](/docs/advanced/schema-implementation.md) - Documentation for the comprehensive schema.org job posting implementation
 
 ## Overview
 

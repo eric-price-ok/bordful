@@ -386,4 +386,3 @@ Bordful's hero section is fully configurable, supporting three background styles
 You can also customize text colors and badge styling to match your brand identity.
 
 For comprehensive documentation on hero section customization, see [Hero Section Customization](/docs/guides/hero-section.md).
-```
