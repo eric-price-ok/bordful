@@ -245,6 +245,6 @@ The footer is implemented in `components/ui/footer.tsx`, which reads the configu
 ## Related Documentation
 
 - [Navigation Customization](/docs/guides/navigation.md)
+- [Logo Customization](/docs/guides/logo-customization.md)
 - [Theming and Color Customization](/docs/guides/theming-customization.md)
-- [Configuration Options](/docs/reference/configuration-options.md)
-- [Logo Customization](/docs/guides/logo-customization.md) 
+- [Configuration Options](/docs/reference/configuration-options.md) 

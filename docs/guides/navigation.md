@@ -390,6 +390,6 @@ The navigation bar uses:
 ## Related Documentation
 
 - [Footer Customization](/docs/guides/footer.md)
+- [Logo Customization](/docs/guides/logo-customization.md)
 - [Theming and Color Customization](/docs/guides/theming-customization.md)
-- [Configuration Options](/docs/reference/configuration-options.md)
-- [Logo Customization](/docs/guides/logo-customization.md) 
+- [Configuration Options](/docs/reference/configuration-options.md) 

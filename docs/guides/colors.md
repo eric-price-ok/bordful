@@ -167,6 +167,7 @@ ui: {
 
 ## Related Documentation
 
+- [Logo Customization](/docs/guides/logo-customization.md)
 - [Background Customization](/docs/guides/backgrounds.md)
 - [Gradient System](/docs/guides/gradients.md)
 - [Hero Section Customization](/docs/guides/hero-section.md) 

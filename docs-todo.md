@@ -116,6 +116,7 @@ docs/
 │   ├── filtering-system.md
 │   ├── navigation.md ✅
 │   ├── footer.md ✅
+│   ├── logo-customization.md ✅
 │   ├── hero-section.md ✅
 │   ├── pricing.md ✅
 │   ├── contact.md ✅
