@@ -54,6 +54,7 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 - [Comprehensive FAQ System](/docs/reference/faq-system.md) - Documentation for the feature-rich FAQ page system
 - [RSS Feed System](/docs/reference/rss-feed-system.md) - Documentation for the comprehensive RSS feed system
 - [Robots.txt Generation](/docs/reference/robots-generation.md) - Documentation for automatic robots.txt generation
+- [Sitemap Generation](/docs/reference/sitemap-generation.md) - Documentation for automatic XML sitemap generation
 - [Currencies](/docs/reference/currencies.md) - Guide to supported currencies and formatting options
 - [Language Codes](/docs/reference/language-codes.md) - Reference for supported language codes
 - [Career Levels](/docs/reference/career-levels.md) - Documentation for standardized career levels

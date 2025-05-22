@@ -88,6 +88,7 @@ docs/
 │   ├── faq-system.md ✅
 │   ├── rss-feed-system.md ✅
 │   ├── robots-generation.md ✅
+│   ├── sitemap-generation.md ✅
 │   ├── career-levels.md
 │   ├── glossary.md
 │   ├── cli-commands.md

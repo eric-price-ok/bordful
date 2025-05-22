@@ -728,61 +728,16 @@ Example URLs:
 
 ## Sitemap Generation
 
-The job board automatically generates a comprehensive XML sitemap at `/sitemap.xml` that includes:
+Bordful automatically generates a comprehensive XML sitemap at `/sitemap.xml` that enhances your job board's visibility to search engines:
 
-### Structure
-- Homepage and static pages
-- Individual job listings with descriptive URLs
-- Job category pages (types, levels, locations)
-- All with proper priorities and change frequencies
+- SEO-friendly URLs with descriptive slugs for all job listings
+- Dynamic updates through Incremental Static Regeneration (ISR)
+- Intelligent priority levels (1.0 for homepage, 0.9 for featured jobs, etc.)
+- Appropriate change frequencies for different content types
+- Automatic inclusion of all job listings and category pages
+- Zero-maintenance implementation with 5-minute revalidation
 
-### Features
-- **SEO-Friendly URLs**: Uses descriptive slugs (e.g., `senior-developer-at-company`)
-- **Dynamic Updates**: Automatically includes new jobs through ISR
-- **Priority Levels**:
-  - Homepage: 1.0
-  - Featured Jobs: 0.9
-  - Regular Jobs: 0.7
-  - Category Pages: 0.6
-- **Change Frequencies**:
-  - Job Listings: Daily
-  - Static Pages: Weekly/Monthly
-  - Category Pages: Daily
-
-### Implementation
-The sitemap is generated using Next.js's built-in Metadata API in `app/sitemap.ts`:
-
-```typescript
-// Example sitemap entry
-{
-  url: 'https://yourdomain.com/jobs/senior-developer-at-company',
-  lastModified: new Date(),
-  changeFrequency: 'daily',
-  priority: 0.7
-}
-```
-
-### Configuration
-1. Set your production URL in `.env`:
-```env
-NEXT_PUBLIC_APP_URL=https://yourdomain.com
-```
-
-2. The sitemap will be available at:
-```
-https://yourdomain.com/sitemap.xml
-```
-
-3. Submit your sitemap to search engines:
-- Google Search Console
-- Bing Webmaster Tools
-- Other search engines as needed
-
-### Automatic Updates
-- Sitemap updates automatically with new jobs
-- Uses Incremental Static Regeneration (ISR)
-- No manual rebuilds required
-- 5-minute revalidation period
+For detailed documentation on sitemap generation, see [Sitemap Generation](/docs/reference/sitemap-generation.md).
 
 ## RSS Feed System
 
