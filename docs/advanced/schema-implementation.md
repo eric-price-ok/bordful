@@ -1,3 +1,9 @@
+---
+title: Schema.org Job Posting Implementation
+description: Learn how Bordful implements comprehensive schema.org structured data for job listings and website information.
+lastUpdated: "2025-05-22"
+---
+
 # Schema.org Job Posting Implementation
 
 Bordful implements comprehensive schema.org structured data for job listings, enhancing SEO and enabling rich search results in Google and other search engines.

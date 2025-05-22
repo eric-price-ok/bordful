@@ -1,3 +1,9 @@
+---
+title: Rate Limiting Implementation
+description: Learn about Bordful's rate limiting system that protects API endpoints from abuse.
+lastUpdated: "2025-05-22"
+---
+
 # Rate Limiting Implementation
 
 ## Overview
