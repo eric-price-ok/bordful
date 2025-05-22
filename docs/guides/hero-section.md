@@ -4,6 +4,8 @@ description: Learn how to fully customize the hero section of your Bordful job b
 lastUpdated: "2024-05-22"
 ---
 
+> **Note:** Some of the gradient background configuration documented here overlaps with content in [`gradients.md`](/docs/guides/gradients.md). For comprehensive gradient system documentation, please refer to the dedicated [`gradients.md`](/docs/guides/gradients.md) file, while this document focuses specifically on hero section configuration and customization.
+
 # Hero Section Customization
 
 The hero section is the prominent banner at the top of your Bordful job board that displays the main title, subtitle, and search functionality. This guide explains how to customize its appearance.

@@ -192,7 +192,6 @@ Bordful provides a fully customizable navigation system and footer with features
 
 - For navigation customization, see [Navigation Customization](/docs/guides/navigation.md)
 - For footer customization, see [Footer Customization](/docs/guides/footer.md)
-- For an overview of both, see [Navigation & Footer Customization](/docs/guides/navigation-footer.md)
 
 ### Pricing Page Customization
 
@@ -204,8 +203,6 @@ Bordful includes a fully customizable pricing page that allows you to showcase y
 - Flexible configuration for enabling/disabling the pricing page
 
 For detailed documentation on pricing page customization, see [Pricing Page Customization](/docs/guides/pricing.md).
-
-
 
 ### Contact Page Customization
 

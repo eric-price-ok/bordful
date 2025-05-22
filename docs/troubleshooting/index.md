@@ -11,7 +11,14 @@ Welcome to the Bordful troubleshooting section. Here you'll find solutions to co
 ## Available Guides
 
 - [Installation Issues](/docs/troubleshooting/installation-issues.md) - Solutions for common problems during installation and initial setup
-- More guides coming soon...
+
+## Coming Soon
+
+- **Configuration Problems** - Resolving issues with configuration files and settings
+- **Deployment Troubleshooting** - Fixing common deployment errors on Vercel, Netlify, and other platforms
+- **Database Connection Issues** - Resolving Airtable connection problems
+- **API Error Resolution** - Fixing common API-related errors
+- **Performance Problems** - Addressing slow loading and performance bottlenecks
 
 ## General Troubleshooting Tips
 
@@ -22,6 +29,15 @@ Before diving into specific guides, try these general troubleshooting steps:
 3. **Clear Cache**: Delete the `.next` folder and node_modules to start fresh
 4. **Check Console Errors**: Look for specific error messages in your terminal or browser console
 5. **Restart Development Server**: Sometimes a simple restart resolves temporary issues
+6. **Check Dependencies**: Ensure all dependencies are correctly installed with `npm install`
+7. **Verify Node Version**: Confirm you're using a compatible Node.js version (v18+ recommended)
+
+## Frequently Asked Questions
+
+For quick answers to common questions, check these resources:
+
+- [General FAQ](/docs/faq.md) - General questions about Bordful features and capabilities
+- [Technical FAQ](/docs/troubleshooting/faq.md) - Technical questions related to development and customization (coming soon)
 
 ## Getting Help
 

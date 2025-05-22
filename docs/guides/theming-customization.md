@@ -4,6 +4,13 @@ description: Learn how to customize the visual appearance of your Bordful job bo
 lastUpdated: "2025-05-22"
 ---
 
+> **Note:** This documentation file has been split into multiple smaller, more focused files for better organization:
+> - [`colors.md`](/docs/guides/colors.md) - Primary color system and theming
+> - [`backgrounds.md`](/docs/guides/backgrounds.md) - Background customization
+> - [`gradients.md`](/docs/guides/gradients.md) - Gradient system and configuration
+>
+> Please use the links above to access the updated documentation. The content below is maintained for backward compatibility.
+
 # Theming and Color Customization
 
 This document explains how to customize the visual appearance of your job board by configuring colors and other theming options.
