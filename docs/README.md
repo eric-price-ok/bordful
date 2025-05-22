@@ -59,6 +59,7 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 ## Advanced Topics
 
 - [Script Management & Analytics](/docs/advanced/script-management.md) - Documentation for script loading and analytics integration
+- [Data Revalidation](/docs/advanced/data-revalidation.md) - How Bordful keeps data fresh with ISR
 - [Schema Implementation](/docs/advanced/schema-implementation.md) - Structured data for better SEO
 - [Rate Limiting](/docs/advanced/rate-limiting.md) - Protect your API endpoints from abuse
 - [Performance Optimization](/docs/advanced/performance-optimization.md) - Tips for optimizing your job board's performance

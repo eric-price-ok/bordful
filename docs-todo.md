@@ -75,6 +75,7 @@ docs/
 │   ├── api-endpoints.md
 │   ├── security.md
 │   ├── script-management.md ✅
+│   ├── data-revalidation.md ✅
 │   └── performance-optimization.md
 ├── reference/
 │   ├── index.md (Reference Documentation Overview)

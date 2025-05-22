@@ -641,48 +641,14 @@ Create a `.env` file in your project root and add these variables there.
 
 ## Data Revalidation
 
-The job board uses Next.js Incremental Static Regeneration (ISR) and server-side caching to keep data fresh:
+Bordful uses Next.js Incremental Static Regeneration (ISR) and server-side caching to keep data fresh while maintaining fast page loads.
 
 - Pages automatically revalidate every 5 minutes
-- Server-side caching with unstable_cache
-- Content-specific loading states
 - New jobs appear without manual rebuilds
-- Maintains fast static page delivery
 - Zero downtime updates
+- Maintains fast static page delivery
 
-### Customizing Revalidation Periods
-
-You can adjust the revalidation interval by modifying the `revalidate` constant in page files:
-
-```typescript
-// Set revalidation period in seconds (e.g., 300 = 5 minutes)
-export const revalidate = 300;
-```
-
-Considerations when adjusting revalidation periods:
-- **Shorter periods** (e.g., 60 seconds): More frequent updates but more API calls to Airtable
-- **Longer periods** (e.g., 3600 seconds): Fewer API calls but less frequent content updates
-- **Static content** (e.g., about, terms pages): Consider using `export const dynamic = "force-static"` instead
-
-All page files consistently use a 5-minute (300 seconds) revalidation period by default. Files with revalidation settings:
-
-- `app/page.tsx` (home page)
-- `app/jobs/[slug]/page.tsx` (individual job pages)
-- `app/jobs/page.tsx` (main jobs listing page)
-- `app/jobs/levels/page.tsx` (career levels directory)
-- `app/jobs/languages/page.tsx` (languages directory)
-- `app/jobs/location/[location]/page.tsx` (location-specific jobs)
-- `app/jobs/level/[level]/page.tsx` (career level-specific jobs)
-- `app/jobs/language/[language]/page.tsx` (language-specific jobs)
-- `app/jobs/locations/page.tsx` (locations directory)
-- `app/jobs/types/page.tsx` (job types directory)
-- `app/jobs/type/[type]/page.tsx` (job type-specific jobs)
-
-For static content that rarely changes, the app uses `export const dynamic = "force-static"` in these files:
-- `app/about/page.tsx`
-- `app/privacy/page.tsx`
-- `app/terms/page.tsx`
-- `app/changelog/page.tsx`
+For complete documentation on data revalidation, see [Data Revalidation](/docs/advanced/data-revalidation.md).
 
 ## Project Structure
 
