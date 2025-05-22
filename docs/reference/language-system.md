@@ -101,6 +101,42 @@ export function getAllLanguageOptions() {
 }
 ```
 
+### Route Configuration (`lib/config/routes.ts`)
+
+The language system relies on the application's route configuration defined in `lib/config/routes.ts`:
+
+```typescript
+// Route configuration
+export const routes: RouteConfig[] = [
+  // ... other routes
+  {
+    path: "/jobs/language/[language]",
+    name: "Language",
+  },
+  {
+    path: "/jobs/languages",
+    name: "Languages",
+  },
+  // ... other routes
+];
+```
+
+These routes define:
+- `/jobs/language/[language]` - Dynamic route for language-specific job listings (e.g., `/jobs/language/en`)
+- `/jobs/languages` - Static route for the languages directory page
+
+The route system includes helper functions for working with dynamic parameters:
+
+```typescript
+// Helper function to extract params from dynamic route
+export function extractParams(
+  path: string,
+  route: RouteConfig
+): Record<string, string> {
+  // Implementation that extracts language code from the URL
+}
+```
+
 ### Parsing Language Strings
 
 The system uses regular expressions to extract language codes from the formatted strings:
