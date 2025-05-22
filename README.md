@@ -344,110 +344,17 @@ For comprehensive documentation on email provider integration, see [Email Provid
 
 ## Customization
 
-### Styling
+Bordful is designed to be highly customizable, allowing you to tailor your job board to match your brand identity and specific requirements.
 
-The project uses Tailwind CSS for styling. Main configuration files:
+Key customization options include:
 
-- `tailwind.config.ts`: Theme configuration
-- `app/globals.css`: Global styles
-- `components/*`: Individual component styles
+- **Styling**: Configure Tailwind CSS theme, global styles, and component-specific styling
+- **Script Management**: Add analytics, tracking, or any third-party scripts with optimized loading strategies
+- **Data Source**: Modify or replace the Airtable implementation with your preferred database
+- **Theme Customization**: Set colors, typography, and other design elements through configuration
+- **Component Customization**: Modify specific components to match your requirements
 
-### Script Management
-
-The job board provides a flexible system for adding analytics, tracking, or any third-party scripts using Next.js's built-in Script component. Scripts can be easily configured in `config/config.ts`:
-
-```typescript
-scripts: {
-  head: [
-    // Scripts to be loaded in <head>
-    {
-      src: "https://analytics.com/script.js",
-      strategy: "afterInteractive",
-      attributes: {
-        "data-website-id": "xxx",
-        defer: ""  // Boolean attributes should use empty string
-      }
-    }
-  ],
-  body: [
-    // Scripts to be loaded at end of <body>
-    {
-      src: "https://widget.com/embed.js",
-      strategy: "lazyOnload",
-      attributes: {
-        async: ""  // Boolean attributes should use empty string
-      }
-    }
-  ]
-}
-```
-
-#### Loading Strategies
-
-Next.js provides three loading strategies for scripts:
-
-- `beforeInteractive`: Loads and executes before the page becomes interactive
-  - Use for critical scripts that must load first
-  - Example: Polyfills, core functionality that's needed immediately
-  - Note: This blocks page interactivity, so use sparingly
-
-- `afterInteractive` (recommended for analytics): Loads after the page becomes interactive
-  - Best for analytics and tracking scripts
-  - Example: Google Analytics, Umami, Plausible
-  - Doesn't block page loading but still loads early enough to track user behavior
-
-- `lazyOnload`: Loads during idle time
-  - Use for non-critical scripts
-  - Example: Chat widgets, social media embeds
-  - Loads last to prioritize page performance
-
-#### Example: Adding Analytics
-
-To add Umami Analytics:
-
-```typescript
-scripts: {
-  head: [
-    {
-      src: "https://analytics.example.com/script.js",
-      strategy: "afterInteractive",  // Best for analytics
-      attributes: {
-        "data-website-id": "your-website-id",
-        defer: ""  // Boolean attributes should use empty string
-      }
-    }
-  ]
-}
-```
-
-#### Script Attributes
-
-You can add any HTML script attributes using the `attributes` object:
-
-```typescript
-attributes: {
-  defer: "",     // Boolean attributes use empty string
-  async: "",     // Boolean attributes use empty string
-  "data-id": "xxx",  // Regular attributes use values
-  id: "my-script",
-  crossorigin: "anonymous"
-  // ... any valid script attribute
-}
-```
-
-This implementation:
-- Uses Next.js best practices for script loading
-- Provides type safety with TypeScript
-- Allows easy configuration in one place
-- Supports any third-party script
-- Optimizes performance with proper loading strategies
-
-### Data Source
-
-Current implementation uses Airtable. To use a different data source:
-
-1. Modify `lib/db/airtable.ts`
-2. Implement the same interface for job data
+For comprehensive customization documentation, including detailed examples and best practices, see our [Customization Guide](/docs/guides/customization.md).
 
 ## Deployment
 
