@@ -1,6 +1,50 @@
 # Bordful Documentation
 
-This directory contains the documentation for setting up and customizing your Bordful job board.
+Welcome to the Bordful documentation. This directory contains comprehensive guides for setting up, configuring, and customizing your Bordful job board.
+
+## Documentation Structure
+
+- **[Getting Started](/docs/getting-started/)**: Quick setup guides and installation instructions
+- **[Guides](/docs/guides/)**: Detailed guides for specific features and customizations
+- **[Integrations](/docs/integrations/)**: Documentation for third-party service integrations
+- **[Examples](/docs/examples/)**: Example configurations and usage scenarios
+- **[Advanced](/docs/advanced/)**: Advanced topics like schema implementation and performance optimization
+- **[Reference](/docs/reference/)**: Reference documentation for configuration options and APIs
+- **[Troubleshooting](/docs/troubleshooting/)**: Solutions to common issues and frequently asked questions
+- **[Contributing](/docs/contributing/)**: Guidelines for contributing to Bordful
+
+## Documentation Standards
+
+All documentation files follow a consistent format with:
+
+1. **Frontmatter**: Each file includes title, description, and lastUpdated date
+2. **Numbered Steps**: Clear, sequential steps for procedures
+3. **Code Examples**: Syntax-highlighted code blocks with clear comments
+4. **Next Steps**: Suggestions for related actions after completing the guide
+5. **Related Guides**: Links to related documentation
+
+## Creating New Documentation
+
+To create new documentation:
+
+1. Copy the `_template.md` file to the appropriate directory
+2. Rename it to match your topic
+3. Update the frontmatter with the correct title, description, and date
+4. Fill in the content following the established structure
+5. Add links to related documentation
+
+## Documentation Formatting
+
+- Use H2 (`##`) for main sections
+- Use H3 (`###`) for subsections
+- Use numbered lists for sequential steps
+- Use bullet points for non-sequential items
+- Include code blocks with appropriate language tags (bash, typescript, etc.)
+- Include screenshots where helpful (place in `/public/docs/images/`)
+
+## Contributing to Documentation
+
+We welcome contributions to improve our documentation. Please see the [Documentation Contributing Guide](/docs/contributing/documentation-contribution.md) for details on our documentation standards and contribution process.
 
 ## Getting Started
 
