@@ -69,6 +69,7 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 
 - **[Navigation Customization](./guides/navigation.md)**: Configure and customize the navigation bar
 - **[Footer Customization](./guides/footer.md)**: Configure and customize the footer
+- **[Hero Section Customization](./guides/hero-section.md)**: Configure backgrounds, colors, and styling for the hero section
 - **[Pricing Page Customization](./guides/pricing.md)**: Configure and customize the pricing plans and options
 - **[Contact Page Customization](./guides/contact.md)**: Configure and customize the contact page and support channels
 - **[Deployment](./deployment.md)**: Instructions for deploying your job board

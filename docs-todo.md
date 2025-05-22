@@ -47,6 +47,7 @@ docs/
 │   ├── navigation-footer.md ✅
 │   ├── navigation.md ✅
 │   ├── footer.md ✅
+│   ├── hero-section.md ✅
 │   ├── pricing.md ✅
 │   ├── contact.md ✅
 │   ├── job-alerts.md
