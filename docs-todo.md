@@ -113,7 +113,7 @@ docs/
 │   ├── backgrounds.md ✅
 │   ├── gradients.md ✅
 │   ├── job-listings.md ✅
-│   ├── filtering-system.md
+│   ├── filtering-system.md ✅
 │   ├── navigation.md ✅
 │   ├── footer.md ✅
 │   ├── logo-customization.md ✅
