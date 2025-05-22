@@ -211,7 +211,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-MIT License - feel free to use this for your own job board!
+MIT License - feel free to use this for your own job board! 100% free for personal and commercial use.
 
 ## Support
 
