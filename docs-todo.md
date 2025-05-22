@@ -50,7 +50,7 @@ docs/
 │   ├── hero-section.md ✅
 │   ├── pricing.md ✅
 │   ├── contact.md ✅
-│   ├── job-alerts.md
+│   ├── job-alerts.md ✅
 │   └── email-integration.md ✅
 ├── integrations/
 │   ├── index.md (Integrations Overview) ✅
