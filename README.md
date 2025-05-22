@@ -101,26 +101,14 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
 
 ### Enhanced Language System
 
-Bordful features a comprehensive internationalization-ready language system:
+Bordful features a comprehensive internationalization-ready language system that supports multilingual job listings:
 
 - Full ISO 639-1 support with all 184 language codes
 - User-friendly Airtable format: "Language Name (code)" (e.g., "English (en)")
-- Flexible matching for both language names and codes
-- Language filtering with alphabetical sorting
 - SEO-optimized language URLs using standard codes
-- Automatic bidirectional mapping between codes and names
-- Foundational support for multilingual job boards
+- Automatic language-specific job pages
 
-**Airtable Setup:** In your Airtable base, set up the `languages` field as a Multiple Select with options formatted as `Language Name (code)`, for example:
-```
-English (en)
-Spanish (es)
-French (fr)
-German (de)
-Japanese (ja)
-```
-
-This approach combines human readability in Airtable with the benefits of standardized language codes in your application.
+For complete documentation on the language system, see [Enhanced Language System](/docs/reference/language-system.md).
 
 ### Comprehensive FAQ System
 

@@ -46,7 +46,16 @@ To create new documentation:
 
 We welcome contributions to improve our documentation. Please see the [Documentation Contributing Guide](/docs/contributing/documentation-contribution.md) for details on our documentation standards and contribution process.
 
-## Getting Started
+## Reference Documentation
+
+- [Configuration Options](/docs/reference/configuration-options.md) - Complete reference for all configuration options
+- [Environment Variables](/docs/reference/environment-variables.md) - Guide to required and optional environment variables
+- [Enhanced Language System](/docs/reference/language-system.md) - Documentation for the internationalization-ready language system
+- [Currencies](/docs/reference/currencies.md) - Guide to supported currencies and formatting options
+- [Language Codes](/docs/reference/language-codes.md) - Reference for supported language codes
+- [Career Levels](/docs/reference/career-levels.md) - Documentation for standardized career levels
+
+## Guides
 
 - **[Deployment](./deployment.md)**: Instructions for deploying your job board
 - **[Job Alerts Configuration](./job-alerts-configuration.md)**: How to set up and customize job alerts
