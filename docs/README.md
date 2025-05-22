@@ -52,6 +52,7 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 - [Environment Variables](/docs/reference/environment-variables.md) - Guide to required and optional environment variables
 - [Enhanced Language System](/docs/reference/language-system.md) - Documentation for the internationalization-ready language system
 - [Comprehensive FAQ System](/docs/reference/faq-system.md) - Documentation for the feature-rich FAQ page system
+- [RSS Feed System](/docs/reference/rss-feed-system.md) - Documentation for the comprehensive RSS feed system
 - [Currencies](/docs/reference/currencies.md) - Guide to supported currencies and formatting options
 - [Language Codes](/docs/reference/language-codes.md) - Reference for supported language codes
 - [Career Levels](/docs/reference/career-levels.md) - Documentation for standardized career levels

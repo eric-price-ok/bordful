@@ -786,127 +786,15 @@ https://yourdomain.com/sitemap.xml
 
 ## RSS Feed System
 
-The job board includes a comprehensive RSS feed system that allows users to subscribe to job listings:
+Bordful includes a comprehensive RSS feed system that allows users to subscribe to job listings in multiple formats:
 
-### Available Feed Formats
-- **RSS 2.0**: Available at `/feed.xml` (most widely supported format)
-- **Atom**: Available at `/atom.xml` (more standardized format)
-- **JSON Feed**: Available at `/feed.json` (modern JSON-based format)
+- Support for RSS 2.0, Atom, and JSON Feed formats
+- Rich job content with customizable preview length
+- Auto-discovery links for feed readers
+- Navigation and footer integration
+- Full configuration control via config file
 
-### Feed Content
-Each feed includes:
-- Job titles with company names
-- Job descriptions (configurable preview length)
-- Job metadata (type, location, salary, posting date)
-- Direct links to apply
-- Author information (company with apply link)
-- Categories based on job type, career level, and languages
-- Featured job indicators
-
-### Discovery and Access
-- Auto-discovery links in HTML head for feed readers
-- RSS icon in the navigation for quick access
-- Feed links in the footer with format options
-- Each feed uses the proper MIME type for optimal compatibility:
-  - `application/rss+xml` for RSS
-  - `application/atom+xml` for Atom
-  - `application/feed+json` for JSON Feed
-
-### Implementation
-The feeds are implemented using Next.js route handlers with 5-minute revalidation and configuration-based settings:
-
-```typescript
-// app/feed.xml/route.ts (and similar for other formats)
-export const revalidate = 300; // 5 minutes
-
-export async function GET() {
-  // Check if RSS feeds are enabled in the configuration
-  if (!config.rssFeed?.enabled || !config.rssFeed?.formats?.rss) {
-    return new Response("RSS feed not enabled", { status: 404 });
-  }
-
-  // Feed setup with configuration options
-  const feed = new Feed({
-    title: config.rssFeed?.title || `${config.title} | Job Feed`,
-    // ... other feed settings
-  });
-  
-  // Use the configured description length
-  const descriptionLength = config.rssFeed?.descriptionLength || 500;
-  
-  // Add job items with the configured description length
-  jobs.forEach(job => {
-    // ... job processing
-    const jobDescription = `
-      // ... job description formatting
-      ${job.description.substring(0, descriptionLength)}...
-    `;
-    
-    // Add to feed
-    // ...
-  });
-  
-  // Return with proper content type
-  return new Response(feed.rss2(), {
-    headers: {
-      'Content-Type': 'application/rss+xml; charset=utf-8',
-    },
-  });
-}
-```
-
-### Configuration
-
-The RSS feed system is fully configurable through the configuration file:
-
-```typescript
-rssFeed: {
-  // Enable or disable RSS feeds
-  enabled: true,
-
-  // Show RSS feed links in navigation
-  showInNavigation: true,
-  
-  // Show RSS feed links in footer
-  showInFooter: true,
-
-  // Navigation label (if showing in navigation)
-  navigationLabel: "RSS Feed",
-  
-  // Footer label (if showing in footer)
-  footerLabel: "Job Feeds",
-  
-  // Title for the RSS feed
-  title: "Latest Jobs Feed",
-  
-  // Number of job description characters to include (preview length)
-  descriptionLength: 500,
-
-  // Available formats (enable/disable specific formats)
-  formats: {
-    rss: true,    // RSS 2.0 format
-    atom: true,   // Atom format
-    json: true,   // JSON Feed format
-  },
-},
-```
-
-### Configuration Features
-
-- **Full Enable/Disable Control**: Turn on or off the entire feed system
-- **Per-Format Control**: Enable or disable specific formats (RSS, Atom, JSON)
-- **Custom Feed Title**: Set a custom title for all feed formats
-- **Configurable Description Length**: Control how much of the job description is included
-- **UI Integration Control**: Show/hide RSS icons in navigation and footer
-- **Custom Labels**: Change the text displayed for RSS links
-- **Graceful Degradation**: 404 responses for disabled feed formats
-
-### Use Cases
-- Subscribe to job listings in your preferred feed reader
-- Integrate job listings with other applications
-- Get notified of new jobs automatically
-- Share feed URLs with interested candidates
-- Disable unused formats to reduce server load
+For detailed documentation on the RSS Feed System, see [RSS Feed System](/docs/reference/rss-feed-system.md).
 
 ## Robots.txt Generation
 
