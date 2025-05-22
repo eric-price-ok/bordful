@@ -72,6 +72,7 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 - **[Hero Section Customization](./guides/hero-section.md)**: Configure backgrounds, colors, and styling for the hero section
 - **[Pricing Page Customization](./guides/pricing.md)**: Configure and customize the pricing plans and options
 - **[Contact Page Customization](./guides/contact.md)**: Configure and customize the contact page and support channels
+- **[Email Provider Integration](./guides/email-integration.md)**: Configure email providers for job alerts and subscriptions
 - **[Deployment](./deployment.md)**: Instructions for deploying your job board
 - **[Job Alerts Configuration](./job-alerts-configuration.md)**: How to set up and customize job alerts
 - **[Email Providers](./email-providers.md)**: Configuring email providers for notifications

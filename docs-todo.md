@@ -51,7 +51,7 @@ docs/
 │   ├── pricing.md ✅
 │   ├── contact.md ✅
 │   ├── job-alerts.md
-│   └── email-integration.md
+│   └── email-integration.md ✅
 ├── integrations/
 │   ├── index.md (Integrations Overview) ✅
 │   ├── email-providers.md

@@ -836,68 +836,15 @@ The robots.txt file automatically uses your site URL from the config file, ensur
 
 ## Email Provider Integration
 
-The job board includes a flexible email provider system for handling job alert subscriptions. This allows users to subscribe to receive notifications when new jobs are posted.
+Bordful includes a flexible email provider system for handling job alert subscriptions. This allows users to subscribe to receive notifications when new jobs are posted.
 
-Sending emails is handled by the email provider.
+- Server-side API route for secure handling of subscription data
+- Multiple configuration options (environment variables or config file)
+- Enhanced data collection for better targeting
+- Support for Encharge with more providers planned
+- Rich segmentation data for targeted email campaigns
 
-Current integration is Encharge and only allows subscribing to job alerts.
-
-### Features
-
-- **Server-side API Route**: Secure handling of subscription data
-- **Multiple Configuration Options**: Environment variables or config file
-- **Enhanced Data Collection**: IP address, referrer, user agent, and more
-- **Flexible Provider System**: Currently supports Encharge with more providers planned
-- **Rich Segmentation Data**: Enables targeted email campaigns
-
-### Setting Up Encharge Integration
-
-#### Quick Setup
-
-1. Set the following variables in the `.env` file:
-   ```
-   EMAIL_PROVIDER=encharge
-   ENCHARGE_WRITE_KEY=your_encharge_write_key_here
-   ```
-
-2. Restart your development server
-
-#### Advanced Configuration
-
-For more control, create a custom configuration file:
-
-1. Copy `config/config.example.ts` to `config/config.ts`
-2. Customize the email provider settings:
-   ```typescript
-   email: {
-     provider: "encharge",
-     encharge: {
-       writeKey: process.env.ENCHARGE_WRITE_KEY || "your_key_here",
-       defaultTags: "job-alerts-subscriber, custom-tag",
-       eventName: "Job Alert Subscription",
-     }
-   },
-   ```
-
-### Data Collected
-
-The integration automatically collects and sends the following data:
-
-- Email address and name (if provided)
-- IP address (for geolocation)
-- Referrer URL and origin
-- User agent (browser/device information)
-- Timestamp and formatted date
-- Custom tags for segmentation
-
-### Security
-
-- API keys are never exposed to the client
-- All API calls are made server-side
-- User data is validated before being sent to Encharge
-- IP addresses are collected securely from request headers
-
-For detailed documentation, see [Email Provider Configuration](docs/email-providers.md) and [Encharge Integration](docs/encharge-integration.md).
+For comprehensive documentation on email provider integration, see [Email Provider Integration](/docs/guides/email-integration.md).
 
 ## Customization
 
