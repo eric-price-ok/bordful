@@ -56,6 +56,13 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 - [Language Codes](/docs/reference/language-codes.md) - Reference for supported language codes
 - [Career Levels](/docs/reference/career-levels.md) - Documentation for standardized career levels
 
+## Advanced Topics
+
+- [Script Management & Analytics](/docs/advanced/script-management.md) - Documentation for script loading and analytics integration
+- [Schema Implementation](/docs/advanced/schema-implementation.md) - Structured data for better SEO
+- [Rate Limiting](/docs/advanced/rate-limiting.md) - Protect your API endpoints from abuse
+- [Performance Optimization](/docs/advanced/performance-optimization.md) - Tips for optimizing your job board's performance
+
 ## Guides
 
 - **[Deployment](./deployment.md)**: Instructions for deploying your job board

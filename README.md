@@ -125,47 +125,20 @@ For complete documentation on the FAQ system, see [Comprehensive FAQ System](/do
 
 ## Script Management & Analytics
 
-Bordful uses Next.js's built-in Script component for optimal script loading and performance. Scripts can be configured in `config/config.ts`:
+Bordful uses Next.js's built-in Script component for optimal script loading and performance:
 
-```typescript
-scripts: {
-  head: [
-    // Scripts to load in the <head> section
-    {
-      src: "your-script-url",
-      strategy: "afterInteractive", // or "beforeInteractive", "lazyOnload"
-      attributes: {
-        // Additional script attributes
-        "data-custom": "value",
-        defer: "", // Boolean attributes should use empty string
-      },
-    },
-  ],
-  body: [
-    // Scripts to load at the end of <body>
-  ],
-}
-```
+- Optimized script loading with multiple loading strategies
+- Pre-configured analytics integration
+- Support for all script attributes and properties
+- Separate head and body script configuration
+- Non-blocking script loading for optimal performance
 
-### Script Loading Strategies
+Three loading strategies are available:
+- **beforeInteractive**: For critical scripts that must load before page interaction
+- **afterInteractive**: For analytics and non-critical tracking (default)
+- **lazyOnload**: For low-priority scripts that load during browser idle time
 
-- **beforeInteractive**: Use for critical scripts that must load before page becomes interactive
-- **afterInteractive**: Best for analytics and non-critical tracking (default)
-- **lazyOnload**: For low-priority scripts that can load last
-
-### Analytics Integration
-
-The starter comes pre-configured for Umami Analytics:
-1. Scripts are loaded using Next.js's optimized Script component
-2. Analytics code runs after the page becomes interactive
-3. Proper boolean attribute handling for script tags
-4. Non-blocking script loading for optimal performance
-
-To add your own analytics or third-party scripts:
-1. Add your script configuration to `config/config.ts`
-2. Scripts in `head` array load in `<head>`, scripts in `body` array load at end of `<body>`
-3. Choose appropriate loading strategy based on script priority
-4. Use empty string (`""`) for boolean attributes like `defer` or `async`
+For complete documentation on script management and analytics integration, see [Script Management & Analytics](/docs/advanced/script-management.md).
 
 ## Quick Start
 

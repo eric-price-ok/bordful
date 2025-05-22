@@ -70,6 +70,7 @@ docs/
 │   ├── analytics-integration.md
 │   ├── api-endpoints.md
 │   ├── security.md
+│   ├── script-management.md ✅
 │   └── performance-optimization.md
 ├── reference/
 │   ├── index.md (Reference Documentation Overview)
@@ -110,7 +111,7 @@ Implement consistent documentation standards across all files:
 
 #### 3.1 Root Documentation Update
 
-- **README.md**: Streamline and focus on quick start, with clear links to docs ✅ (Enhanced Language System and FAQ System sections moved to docs)
+- **README.md**: Streamline and focus on quick start, with clear links to docs ✅ (Enhanced Language System, FAQ System, and Script Management sections moved to docs)
 - **CONTRIBUTING.md**: Enhance with detailed development workflow and standards
 - **CHANGELOG.md**: Ensure proper semantic versioning format
 - **bordful-plan.md**: Update to reflect current status and v1.0 scope
