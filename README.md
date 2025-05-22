@@ -4,141 +4,16 @@ Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Air
 
 ![Job Board Starter Screenshot](public/screenshot.png)
 
-## Features
+## Why Bordful?
 
-- Built with Next.js
-- Styled with Tailwind CSS
-- Airtable as the backend
-- Client-side search with memoization
-- Server-side caching with 5-minute revalidation
-- Content-specific loading states
-- Fully responsive
-- Comprehensive SEO features:
-  - Complete schema.org JobPosting structured data implementation with schema-dts typing
-  - Google Jobs integration with rich search results
-  - Comprehensive schema markup with 20+ job properties
-  - Support for remote job schema requirements
-  - Automatic XML sitemap generation with ISR updates
-  - Programmatic robots.txt with fine-grained crawling control
-  - SEO-friendly URLs with descriptive job slugs
-  - Prioritized URLs (1.0 for homepage, 0.9 for featured jobs)
-  - Dynamic sitemap updates every 5 minutes
-  - Complete coverage of all job listings and category pages
-  - Protection of private routes from indexing
-- Modern UI with Geist font, Tailwind CSS, and Shadcn UI
-- Incremental Static Regeneration (ISR) for real-time updates
-- Rich text support for job descriptions
-- Comprehensive job metadata with multi-select career levels
-- Enhanced hero section with customization options:
-  - Configurable background colors
-  - Support for both linear and radial gradients
-  - Background image support with overlay capabilities
-  - Customizable gradient directions, colors, and stops
-  - Consistent styling with application theme
-  - Seamless fallbacks for solid background colors
-- Job benefits and perks displaying in the sidebar
-- Application requirements for clear candidate expectations
-- Application deadline display with relative time indicators
-- Job identifier display for better reference and tracking
-- Google-compliant status handling:
-  - Active/inactive status management for job listings
-  - Automatic 404 responses for inactive job listings (Google best practice)
-  - Enhanced 404 pages with explanatory messaging
-  - Consistent status checking across all job-related routes
-  - API routes with proper status-based responses
-  - OpenGraph images following the same status rules
-- Advanced salary structure with currency and time unit support
-  - Supports 50+ global fiat currencies
-  - Cryptocurrency support (Bitcoin, Ethereum, etc.)
-  - Stablecoin support (USDT, USDC, etc.)
-  - Intelligent symbol formatting
-  - USD conversion for comparison
-- Smart pagination with URL-based navigation
-- Sorting options (newest, oldest, highest salary)
-- Dynamic jobs per page selection
-- Featured job posts with distinct styling
-- Similar jobs suggestions based on title and location
-- URL-based filter persistence for sharing and bookmarking
-- Comprehensive filtering system with multiple parameters
-  - Job type (Full-time, Part-time, Contract, Freelance)
-  - Career level (18 standardized levels)
-  - Remote work preference
-  - Salary ranges
-  - Visa sponsorship status
-  - Languages (supports all 184 ISO 639-1 language codes)
-- Enhanced user experience
-  - Keyboard navigation for search (Escape to clear)
-  - Loading states with smooth transitions
-  - Smart pagination with dynamic range
-  - No page jumps during filtering
-  - Accessible UI with ARIA labels
-- Comprehensive FAQ system
-  - Client-side search with URL persistence
-  - Anchor links for direct navigation to specific categories
-  - Rich text support with markdown rendering
-  - FAQ schema markup for improved SEO
-  - Copy-to-clipboard feature for section links
-  - Responsive design with consistent styling
-- Configurable contact page
-  - Support channels section with customizable cards
-  - Detailed contact information section
-  - Fully customizable via config file
-  - Consistent styling with the rest of the application
-- Social Links
-  - GitHub
-  - LinkedIn
-  - Twitter (X)
-  - Bluesky
-  - Reddit
-  - Each social link can be individually enabled/disabled and configured with custom URLs
-- Post Job Banner
-  - Configurable banner in job detail sidebar
-  - Trust indicators with company avatars
-  - Customizable CTA with pricing
-  - Trust message support
-  - Fully configurable via config file
-  - Responsive design with consistent styling
+- **Modern Tech Stack:** Built with Next.js, Tailwind CSS, and Airtable for a fast, flexible, and easy-to-manage job board.
+- **Comprehensive SEO:** Rich schema.org JobPosting data, automatic XML sitemaps, Google Jobs integration, and more to maximize visibility.
+- **Highly Customizable:** Easily tailor the theme, layout, navigation, hero section, and every other aspect to match your brand.
+- **Real-time Updates:** Leverages Next.js Incremental Static Regeneration (ISR) to keep job listings fresh without manual rebuilds.
+- **User-Friendly:** Clean UI with Geist font, client-side search, rich text support for job descriptions, and smart pagination.
+- **Full-Featured:** Packed with features like job alerts, multi-currency salary support, advanced filtering, RSS feeds, and robust email integration.
 
-### Enhanced Language System
-
-Bordful features a comprehensive internationalization-ready language system that supports multilingual job listings:
-
-- Full ISO 639-1 support with all 184 language codes
-- User-friendly Airtable format: "Language Name (code)" (e.g., "English (en)")
-- SEO-optimized language URLs using standard codes
-- Automatic language-specific job pages
-
-For complete documentation on the language system, see [Enhanced Language System](/docs/reference/language-system.md).
-
-### Comprehensive FAQ System
-
-Bordful includes a feature-rich FAQ page with advanced functionality:
-
-- Client-side search with real-time filtering and URL persistence
-- Rich text support with markdown rendering
-- Anchor links for direct navigation to specific categories
-- Schema.org FAQ markup for improved SEO and rich search results
-- Copy-to-clipboard feature for sharing specific sections
-- Fully configurable through the configuration file
-
-For complete documentation on the FAQ system, see [Comprehensive FAQ System](/docs/reference/faq-system.md).
-
-## Script Management & Analytics
-
-Bordful uses Next.js's built-in Script component for optimal script loading and performance:
-
-- Optimized script loading with multiple loading strategies
-- Pre-configured analytics integration
-- Support for all script attributes and properties
-- Separate head and body script configuration
-- Non-blocking script loading for optimal performance
-
-Three loading strategies are available:
-- **beforeInteractive**: For critical scripts that must load before page interaction
-- **afterInteractive**: For analytics and non-critical tracking (default)
-- **lazyOnload**: For low-priority scripts that load during browser idle time
-
-For complete documentation on script management and analytics integration, see [Script Management & Analytics](/docs/advanced/script-management.md).
+Explore all features in detail in our [Core Features Guide](/docs/guides/core-features.md).
 
 ## Getting Started
 
@@ -153,9 +28,9 @@ Get your Bordful job board up and running in just a few steps:
    npm install
    ```
 
-2. **Set up Airtable**: Either use our pre-configured template or set up your own Airtable base
+2. **Set up Airtable**: Either use our [pre-configured template](https://airtable.com/appLx3b8wF3cyfoMd/shrWo1VUVq7mJS6CB) or set up your own Airtable base. See the [Airtable Setup Guide](/docs/getting-started/airtable-setup.md).
 
-3. **Configure environment variables**: Set up your API keys and database connections
+3. **Configure environment variables**: Set up your API keys and database connections. See [Environment Variables](#environment-variables) below.
 
 4. **Start the development server**:
    ```bash
@@ -164,7 +39,7 @@ Get your Bordful job board up and running in just a few steps:
 
 Visit `http://localhost:3000` to see your job board.
 
-For detailed installation instructions, see our [Installation Guide](/docs/getting-started/installation.md). For setting up Airtable, see our [Airtable Setup Guide](/docs/getting-started/airtable-setup.md).
+For detailed installation instructions, see our [Installation Guide](/docs/getting-started/installation.md).
 
 ## Configuration
 
@@ -176,45 +51,15 @@ Bordful uses a flexible configuration system that allows you to customize virtua
    ```bash
    cp config/config.example.ts config/config.ts
    ```
-2. Customize the settings to match your needs
-3. The app will automatically use your custom configuration
+2. Customize the settings in `config/config.ts` to match your needs.
+3. The app will automatically use your custom configuration.
 
 The configuration system is:
-- **Easy to use**: Simple file copying to get started
-- **Flexible**: Customize everything from site title to component behavior
-- **Maintainable**: Pull updates without losing your customizations
+- **Easy to use**: Simple file copying to get started.
+- **Flexible**: Customize everything from site title to component behavior.
+- **Maintainable**: Pull updates without losing your customizations.
 
 For comprehensive configuration documentation, see our [Configuration Guide](/docs/getting-started/configuration.md).
-
-### Navigation & Footer Customization
-
-Bordful provides a fully customizable navigation system and footer with features like dropdown menus, social media integration, and mobile responsiveness.
-
-- For navigation customization, see [Navigation Customization](/docs/guides/navigation.md)
-- For footer customization, see [Footer Customization](/docs/guides/footer.md)
-
-### Pricing Page Customization
-
-Bordful includes a fully customizable pricing page that allows you to showcase your job board's plans and payment options with a professional layout. Features include:
-
-- Complete control over pricing plans and features
-- Customizable plan highlighting and badges
-- Payment method icons and processing information
-- Flexible configuration for enabling/disabling the pricing page
-
-For detailed documentation on pricing page customization, see [Pricing Page Customization](/docs/guides/pricing.md).
-
-### Contact Page Customization
-
-Bordful includes a fully customizable contact page that allows you to provide multiple support channels and contact information to your users. Features include:
-
-- Configurable support channels with customizable cards
-- Detailed contact information section
-- Schema.org structured data for better SEO
-- Support for all Lucide icons
-- Mobile-responsive design
-
-For detailed documentation on contact page customization, see [Contact Page Customization](/docs/guides/contact.md).
 
 ## Environment Variables
 
@@ -222,22 +67,23 @@ For detailed documentation on contact page customization, see [Contact Page Cust
 
 Required environment variables:
 
-- AIRTABLE_ACCESS_TOKEN=your_token_here
-- AIRTABLE_BASE_ID=your_base_id_here
-- AIRTABLE_TABLE_NAME=your_table_name_here (defaults to "Jobs" if not specified)
+- `AIRTABLE_ACCESS_TOKEN=your_token_here`
+- `AIRTABLE_BASE_ID=your_base_id_here`
+- `AIRTABLE_TABLE_NAME=your_table_name_here` (defaults to "Jobs" if not specified)
 
-Create a `.env` file in your project root and add these variables there.
+Create a `.env` file in your project root and add these variables there. For more details, see the [Environment Variables Guide](/docs/reference/environment-variables.md).
 
-## Data Revalidation
+## Dive Deeper: Features & Documentation
 
-Bordful uses Next.js Incremental Static Regeneration (ISR) and server-side caching to keep data fresh while maintaining fast page loads.
+Bordful is packed with features. Explore the documentation to learn more:
 
-- Pages automatically revalidate every 5 minutes
-- New jobs appear without manual rebuilds
-- Zero downtime updates
-- Maintains fast static page delivery
+- **Core Functionality & Guides:** Understand Bordful's capabilities. ([Core Features](/docs/guides/core-features.md), [All Guides](/docs/guides/index.md))
+- **Customization:** Tailor the look, feel, and functionality. ([Customization Guide](/docs/guides/customization.md), [Theming](/docs/guides/theming-customization.md), [Hero Section](/docs/guides/hero-section.md), [Navigation](/docs/guides/navigation.md), [Footer](/docs/guides/footer.md))
+- **SEO & Content:** Maximize visibility with built-in SEO tools. ([Schema Implementation](/docs/advanced/schema-implementation.md), [Sitemaps](/docs/reference/sitemap-generation.md), [Robots.txt](/docs/reference/robots-generation.md), [RSS Feeds](/docs/reference/rss-feed-system.md), [FAQ System](/docs/reference/faq-system.md))
+- **Data & Backend:** Learn about Airtable integration and data handling. ([Airtable Setup](/docs/getting-started/airtable-setup.md), [Data Revalidation (ISR)](/docs/advanced/data-revalidation.md))
+- **Advanced Topics:** For developers looking to extend Bordful. ([Script Management](/docs/advanced/script-management.md), [Email Integration](/docs/guides/email-integration.md), [Salary Structure](/docs/reference/salary-structure.md), [Language Support](/docs/reference/language-system.md))
 
-For complete documentation on data revalidation, see [Data Revalidation](/docs/advanced/data-revalidation.md).
+For a full overview of all documentation, visit the [Documentation Hub](/docs/README.md).
 
 ## Project Structure
 
@@ -345,11 +191,11 @@ Bordful is designed to be highly customizable, allowing you to tailor your job b
 
 Key customization options include:
 
-- **Styling**: Configure Tailwind CSS theme, global styles, and component-specific styling
-- **Script Management**: Add analytics, tracking, or any third-party scripts with optimized loading strategies
-- **Data Source**: Modify or replace the Airtable implementation with your preferred database
-- **Theme Customization**: Set colors, typography, and other design elements through configuration
-- **Component Customization**: Modify specific components to match your requirements
+- **Styling**: Configure Tailwind CSS theme, global styles, and component-specific styling.
+- **Script Management**: Add analytics, tracking, or any third-party scripts with optimized loading strategies.
+- **Data Source**: Modify or replace the Airtable implementation with your preferred database.
+- **Theme Customization**: Set colors, typography, and other design elements through configuration.
+- **Component Customization**: Modify specific components to match your requirements.
 
 For comprehensive customization documentation, including detailed examples and best practices, see our [Customization Guide](/docs/guides/customization.md).
 
