@@ -17,29 +17,148 @@ Explore all features in detail in our [Bordful Features Guide](/docs/guides/feat
 
 ## Getting Started
 
-### Quick Installation
+### 5-Minute Quick Start
 
-Get your Bordful job board up and running in just a few steps:
+Get your Bordful job board up and running in just 5 minutes with this step-by-step guide:
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/craftled/bordful
-   cd bordful
-   npm install
-   ```
+#### Step 1: Clone and Install (1 minute)
 
-2. **Set up Airtable**: Either use our [pre-configured template](https://airtable.com/apprhCjWTxfG3JX5p/shrLqfxgbensCY393) or set up your own Airtable base. See the [Airtable Setup Guide](/docs/getting-started/airtable-setup.md).
+```bash
+# Clone the repository
+git clone https://github.com/craftled/bordful
+cd bordful
 
-3. **Configure environment variables**: Set up your API keys and database connections. See [Environment Variables](#environment-variables) below.
+# Install dependencies
+npm install
+```
 
-4. **Start the development server**:
-   ```bash
-   npm run dev
-   ```
+#### Step 2: Set Up Airtable Database (2 minutes)
 
-Visit `http://localhost:3000` to see your job board.
+**Option A: Use Our Template (Recommended)**
+1. Click this link: [Bordful Airtable Template](https://airtable.com/apprhCjWTxfG3JX5p/shrLqfxgbensCY393)
+2. Click "Copy base" to add it to your Airtable workspace
+3. Note down your Base ID (found in the URL: `https://airtable.com/appXXXXXXXXXXXXXX`)
 
-For detailed installation instructions, see our [Installation Guide](/docs/getting-started/installation.md).
+**Option B: Create Your Own**
+- See our [Airtable Setup Guide](/docs/getting-started/airtable-setup.md) for detailed instructions
+
+#### Step 3: Get Your Airtable API Token (1 minute)
+
+1. Go to [Airtable Tokens](https://airtable.com/create/tokens)
+2. Click "Create new token"
+3. Give it a name like "Bordful Job Board"
+4. Add these scopes: `data.records:read`, `data.records:write`
+5. Add your base from Step 2
+6. Click "Create token" and copy the token (starts with `pat...`)
+
+#### Step 4: Configure Environment Variables (1 minute)
+
+Copy the example environment file and add your credentials:
+
+```bash
+# Copy the example file to create your environment file
+cp .env.example .env
+```
+
+Now edit your `.env` file and add your actual values:
+
+```env
+# REQUIRED: Your application URL
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# REQUIRED: Airtable credentials (from steps 2 & 3)
+AIRTABLE_ACCESS_TOKEN=pat_your_token_from_step_3
+AIRTABLE_BASE_ID=app_your_base_id_from_step_2
+AIRTABLE_TABLE_NAME=Jobs
+
+# OPTIONAL: Email provider for job alerts (you can add this later)
+EMAIL_PROVIDER=encharge
+ENCHARGE_WRITE_KEY=your_encharge_key_here
+```
+
+> ⚠️ **IMPORTANT**: Never commit your `.env` file to Git! It's already in `.gitignore` to protect your secrets.
+
+#### Step 5: Start Your Job Board (30 seconds)
+
+```bash
+# Start the development server
+npm run dev
+```
+
+🎉 **That's it!** Visit `http://localhost:3000` to see your job board in action.
+
+### What You Get Out of the Box
+
+- ✅ Fully functional job board with search and filtering
+- ✅ Responsive design that works on all devices
+- ✅ SEO-optimized with automatic sitemaps
+- ✅ RSS feeds for job listings
+- ✅ Admin-friendly Airtable interface for managing jobs
+
+### Next Steps
+
+1. **Add Some Jobs**: Go to your Airtable base and add a few test jobs
+2. **Customize Your Brand**: Copy `config/config.example.ts` to `config/config.ts` and customize
+3. **Set Up Job Alerts**: Add email provider credentials to enable job alert subscriptions
+4. **Deploy to Production**: See our [Deployment Guide](#deployment-to-vercel) below
+
+### Deployment to Vercel (Production)
+
+Ready to go live? Deploy to Vercel in 3 steps:
+
+#### Step 1: Prepare for Deployment
+
+```bash
+# Test your build locally first
+npm run build
+npm run start
+```
+
+#### Step 2: Deploy to Vercel
+
+1. Push your code to GitHub (without the `.env` file!)
+2. Go to [Vercel](https://vercel.com) and sign in
+3. Click "New Project" and import your GitHub repository
+4. Vercel will auto-detect it's a Next.js project
+
+#### Step 3: Add Environment Variables to Vercel
+
+1. In your Vercel project dashboard, go to "Settings" → "Environment Variables"
+2. Add these variables one by one:
+
+```
+NEXT_PUBLIC_APP_URL = https://your-domain.vercel.app
+AIRTABLE_ACCESS_TOKEN = pat_your_token_here
+AIRTABLE_BASE_ID = app_your_base_id_here
+AIRTABLE_TABLE_NAME = Jobs
+```
+
+3. Click "Deploy" and your job board will be live!
+
+### Environment Variables Explained
+
+| Variable                | Required | Description              | Example                    |
+| ----------------------- | -------- | ------------------------ | -------------------------- |
+| `NEXT_PUBLIC_APP_URL`   | ✅ Yes    | Your website URL         | `https://jobs.company.com` |
+| `AIRTABLE_ACCESS_TOKEN` | ✅ Yes    | Your Airtable API token  | `pat_abc123...`            |
+| `AIRTABLE_BASE_ID`      | ✅ Yes    | Your Airtable base ID    | `appABC123...`             |
+| `AIRTABLE_TABLE_NAME`   | No       | Table name in Airtable   | `Jobs` (default)           |
+| `EMAIL_PROVIDER`        | No       | Email service for alerts | `encharge`, `mailchimp`    |
+| `ENCHARGE_WRITE_KEY`    | No       | Encharge API key         | For job alert emails       |
+
+### Troubleshooting
+
+**Jobs not showing up?**
+- Check your Airtable base has jobs with `status` field set to "Published"
+- Verify your `AIRTABLE_ACCESS_TOKEN` and `AIRTABLE_BASE_ID` are correct
+
+**Build failing?**
+- Make sure all required environment variables are set
+- Check the console for specific error messages
+
+**Need help?**
+- Check our [Installation Guide](/docs/getting-started/installation.md) for detailed instructions
+- See [Environment Variables Guide](/docs/reference/environment-variables.md) for all configuration options
 
 ## Configuration
 
@@ -63,15 +182,23 @@ For comprehensive configuration documentation, see our [Configuration Guide](/do
 
 ## Environment Variables
 
-⚠️ IMPORTANT: Never commit your API keys or sensitive credentials to the repository!
+⚠️ **IMPORTANT**: Never commit your API keys or sensitive credentials to the repository!
 
-Required environment variables:
+**Quick Setup**: See the [5-Minute Quick Start](#5-minute-quick-start) above for step-by-step environment variable setup.
 
-- `AIRTABLE_ACCESS_TOKEN=your_token_here`
-- `AIRTABLE_BASE_ID=your_base_id_here`
-- `AIRTABLE_TABLE_NAME=your_table_name_here` (defaults to "Jobs" if not specified)
+**Template Available**: Copy `.env.example` to `.env` and fill in your values - it includes all the variables you need with helpful comments.
 
-Create a `.env` file in your project root and add these variables there. For more details, see the [Environment Variables Guide](/docs/reference/environment-variables.md).
+**Required Variables**:
+- `NEXT_PUBLIC_APP_URL` - Your website URL
+- `AIRTABLE_ACCESS_TOKEN` - Your Airtable API token  
+- `AIRTABLE_BASE_ID` - Your Airtable base ID
+- `AIRTABLE_TABLE_NAME` - Table name (defaults to "Jobs")
+
+**Optional Variables**:
+- `EMAIL_PROVIDER` - Email service for job alerts (`encharge`, `mailchimp`, etc.)
+- `ENCHARGE_WRITE_KEY` - Encharge API key for job alert emails
+
+For a complete list of all supported environment variables, see the [Environment Variables Guide](/docs/reference/environment-variables.md).
 
 ## Dive Deeper: Features & Documentation
 
