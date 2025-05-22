@@ -112,7 +112,7 @@ docs/
 │   ├── colors.md ✅
 │   ├── backgrounds.md ✅
 │   ├── gradients.md ✅
-│   ├── job-listings.md
+│   ├── job-listings.md ✅
 │   ├── filtering-system.md
 │   ├── navigation.md ✅
 │   ├── footer.md ✅
