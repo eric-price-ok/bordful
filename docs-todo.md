@@ -48,6 +48,7 @@ docs/
 │   ├── navigation.md ✅
 │   ├── footer.md ✅
 │   ├── pricing.md ✅
+│   ├── contact.md ✅
 │   ├── job-alerts.md
 │   └── email-integration.md
 ├── integrations/
