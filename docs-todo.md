@@ -10,7 +10,6 @@ The Bordful documentation is currently scattered across multiple locations:
    - CONTRIBUTING.md - Contribution guidelines
    - LICENSE - Project license
    - SECURITY.md - Security guidelines
-   - bordful-plan.md - Project roadmap
 
 2. **Docs Directory**:
    - README.md - Overview of documentation structure
