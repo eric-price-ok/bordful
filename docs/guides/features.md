@@ -1,10 +1,10 @@
 ---
-title: Core Features and Capabilities
+title: Bordful Features
 description: An overview of Bordful's core features, with examples and configuration options.
-lastUpdated: "2024-05-29"
+lastUpdated: "2025-05-22"
 ---
 
-# Core Features and Capabilities
+# Bordful Features
 
 Bordful includes a comprehensive set of features designed to create a modern, functional job board. This guide provides an overview of the core features with configuration examples and practical usage scenarios.
 

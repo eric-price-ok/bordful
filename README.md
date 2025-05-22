@@ -1,19 +1,19 @@
-# Bordful: Job Board Starter
+# Bordful: Open-Source Job Board Software
 
-Bordful is a modern, minimal job board built with Next.js, Tailwind CSS, and Airtable. Features static generation, client-side search, and a clean UI with Geist font.
+Bordful is a modern, minimal job board software built with Next.js, Tailwind CSS, and Airtable. Features static generation, client-side search, and a clean customizable UI.
 
 ![Job Board Starter Screenshot](public/screenshot.png)
 
 ## Why Bordful?
 
 - **Modern Tech Stack:** Built with Next.js, Tailwind CSS, and Airtable for a fast, flexible, and easy-to-manage job board.
-- **Comprehensive SEO:** Rich schema.org JobPosting data, automatic XML sitemaps, Google Jobs integration, and more to maximize visibility.
+- **Comprehensive SEO:** Rich schema.org JobPosting data, automatic XML sitemaps, and more to maximize visibility.
 - **Highly Customizable:** Easily tailor the theme, layout, navigation, hero section, and every other aspect to match your brand.
 - **Real-time Updates:** Leverages Next.js Incremental Static Regeneration (ISR) to keep job listings fresh without manual rebuilds.
-- **User-Friendly:** Clean UI with Geist font, client-side search, rich text support for job descriptions, and smart pagination.
-- **Full-Featured:** Packed with features like job alerts, multi-currency salary support, advanced filtering, RSS feeds, and robust email integration.
+- **User-Friendly:** Clean UI with customizable fonts, client-side search, rich text support for job descriptions, and smart pagination.
+- **Full-Featured:** Packed with features like job alerts, multi-currency salary support, advanced filtering, and RSS feeds.
 
-Explore all features in detail in our [Core Features Guide](/docs/guides/core-features.md).
+Explore all features in detail in our [Bordful Features Guide](/docs/guides/features.md).
 
 ## Getting Started
 
