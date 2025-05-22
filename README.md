@@ -604,95 +604,16 @@ Bordful provides a fully customizable navigation system and footer with features
 
 ### Pricing Page Customization
 
-The pricing page is fully configurable through the `pricing` section in the configuration file:
+Bordful includes a fully customizable pricing page that allows you to showcase your job board's plans and payment options with a professional layout. Features include:
 
-#### Basic Configuration
+- Complete control over pricing plans and features
+- Customizable plan highlighting and badges
+- Payment method icons and processing information
+- Flexible configuration for enabling/disabling the pricing page
 
-- **Enable/Disable**: Turn the entire pricing page on or off with `pricing.enabled`
-- **Navigation**: Control whether the pricing link appears in navigation with `pricing.showInNavigation`
-- **Footer**: Control whether the pricing link appears in footer with `pricing.showInFooter`
-- **Navigation Label**: Customize the label in the navigation with `pricing.navigationLabel`
-- **Page Title**: Set the page title with `pricing.title`
-- **Page Description**: Set the page description with `pricing.description`
-- **Currency Symbol**: Set the currency symbol with `pricing.currencySymbol`
+For detailed documentation on pricing page customization, see [Pricing Page Customization](/docs/guides/pricing.md).
 
-#### Payment Information
 
-- **Payment Processing Text**: Add a customizable message about payment processing with `pricing.paymentProcessingText`
-- **Payment Method Icons**: Enable/disable and customize payment method icons with `pricing.paymentMethods.enabled` and `pricing.paymentMethods.icons`
-
-#### Pricing Plans
-
-Each plan in the `pricing.plans` array can be customized with:
-
-1. **Basic Information**:
-   - `name`: The name of the plan (e.g., "Free", "Pro", "Business")
-   - `price`: The price of the plan (0 for free plans)
-   - `billingTerm`: A string describing the billing term (e.g., "forever", "job posting", "year", "month")
-   - `description`: A description of the plan
-
-2. **Features**:
-   - `features`: An array of strings describing the features included in the plan
-
-3. **Call to Action**:
-   - `cta.label`: The text for the CTA button
-   - `cta.link`: The URL the button links to
-   - `cta.variant`: The visual style of the button ("outline" or "default")
-
-4. **Visual Styling**:
-   - `badge`: Can be `null` (no badge) or an object with:
-     - `text`: Custom text for the badge (e.g., "Popular", "Best Value")
-     - `type`: The visual style of the badge (using predefined types from the JobBadge component)
-   - `highlighted`: Boolean that controls whether the plan gets a prominent border and shadow
-
-#### Example Customizations
-
-```typescript
-// Free plan with no badge or highlighting
-{
-  name: "Free",
-  price: 0,
-  billingTerm: "forever",
-  // ... other properties
-  badge: null,
-  highlighted: false,
-}
-
-// Popular plan with badge and highlighting
-{
-  name: "Pro",
-  price: 99,
-  billingTerm: "job posting",
-  // ... other properties
-  badge: {
-    text: "Popular",
-    type: "featured",
-  },
-  highlighted: true,
-}
-
-// Best value plan with badge but no highlighting
-{
-  name: "Business",
-  price: 999,
-  billingTerm: "year",
-  // ... other properties
-  badge: {
-    text: "Best Value",
-    type: "featured",
-  },
-  highlighted: false,
-}
-```
-
-#### Available Badge Types
-
-The `badge.type` property accepts any of the following values from the JobBadge component:
-
-- `"featured"`: Dark background with light text (good for "Popular" or "Best Value")
-- `"new"`: Green background (good for "New" or "Limited Time")
-- `"default"`: Simple border with dark text (subtle option)
-- Other types: `"remote"`, `"onsite"`, `"hybrid"`, etc. (see JobBadge component for all options)
 
 ### Contact Page Customization
 
