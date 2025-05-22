@@ -171,7 +171,7 @@ After starting the development server, check the following to ensure everything 
 3. Test the filters and search functionality
 4. Check that the navigation and footer are displaying correctly
 
-If you encounter any issues, see the [Troubleshooting](/docs/troubleshooting/index.md) guide.
+If you encounter any issues, see the [Installation Troubleshooting](/docs/troubleshooting/installation-issues.md) guide for solutions to common problems.
 
 ## Next Steps
 
