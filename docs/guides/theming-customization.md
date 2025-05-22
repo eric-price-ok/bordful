@@ -1,3 +1,9 @@
+---
+title: Theming and Color Customization
+description: Learn how to customize the visual appearance of your Bordful job board by configuring colors and other theming options.
+lastUpdated: "2025-05-22"
+---
+
 # Theming and Color Customization
 
 This document explains how to customize the visual appearance of your job board by configuring colors and other theming options.
@@ -447,11 +453,9 @@ When customizing colors, consider the following best practices:
 
 4. **Color Psychology**: Consider the psychological impact of your color choices. Different colors evoke different emotions and reactions.
 
-## Future Enhancements
+## Related Documentation
 
-Planned enhancements to the theming system include:
-
-- Secondary color configuration
-- Text color customization
-- Full theme configuration with dark mode support
-- Custom CSS variables for advanced theming 
+- [Navigation Customization](/docs/guides/navigation.md)
+- [Hero Section Customization](/docs/guides/hero-section.md)
+- [Footer Customization](/docs/guides/footer.md)
+- [Customization Guide](/docs/guides/customization.md) 
