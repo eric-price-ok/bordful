@@ -90,6 +90,7 @@ docs/
 │   ├── robots-generation.md ✅
 │   ├── sitemap-generation.md ✅
 │   ├── salary-structure.md ✅
+│   ├── pagination-sorting.md ✅
 │   ├── career-levels.md
 │   ├── glossary.md
 │   ├── cli-commands.md
@@ -141,6 +142,7 @@ Implement consistent documentation standards across all files:
    - [ ] Document each core feature with examples and configuration options
    - [ ] Create visual guides for theming and customization
    - [ ] Develop detailed job filtering documentation
+   - [x] Document pagination, sorting, and URL parameters
    - [ ] Write comprehensive job alerts setup guide
    - [ ] Document all navigation and footer customization options
    - [ ] Add real-world usage examples for each feature

@@ -280,35 +280,18 @@ Bordful includes a sophisticated salary handling system with multiple currencies
 
 For detailed documentation on the salary structure, see [Salary Structure](/docs/reference/salary-structure.md).
 
-## Pagination and Sorting
+## Pagination, Sorting, and URL Parameters
+
+Bordful includes a comprehensive pagination and sorting system with powerful URL parameter support:
 
 - URL-based pagination for better UX and SEO
 - Configurable items per page (10, 25, 50, 100)
-- Sort by newest, oldest, or highest salary
-- Maintains state in URL parameters
-- Elegant pagination UI with ellipsis for large page counts
+- Multiple sorting options (newest, oldest, salary)
+- Comprehensive URL parameter system for all filters and settings
+- Elegant pagination UI with intelligent page number display
+- Complete state persistence through URL parameters
 
-## URL Parameters
-
-The job board supports comprehensive URL parameters for sharing and bookmarking:
-
-- `page` - Current page number
-- `per_page` - Items per page (10, 25, 50, 100)
-- `sort` - Sort order (newest, oldest, salary)
-- `types` - Comma-separated job types (Full-time, Part-time, Contract, Freelance)
-- `roles` - Comma-separated career levels
-- `remote` - Remote work filter (true)
-- `salary` - Comma-separated salary ranges
-- `visa` - Visa sponsorship filter (true)
-- `languages` - Comma-separated language requirements
-
-Example URLs:
-
-```
-/?types=Full-time,Contract&roles=Senior,Lead&remote=true
-/?salary=50K-100K,100K-200K&visa=true&page=2
-/?sort=salary&per_page=25
-```
+For detailed documentation on pagination, sorting, and URL parameters, see [Pagination, Sorting, and URL Parameters](/docs/reference/pagination-sorting.md).
 
 ## Sitemap Generation
 

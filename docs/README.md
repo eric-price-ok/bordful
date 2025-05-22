@@ -56,6 +56,7 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 - [Robots.txt Generation](/docs/reference/robots-generation.md) - Documentation for automatic robots.txt generation
 - [Sitemap Generation](/docs/reference/sitemap-generation.md) - Documentation for automatic XML sitemap generation
 - [Salary Structure](/docs/reference/salary-structure.md) - Documentation for the comprehensive salary handling system
+- [Pagination, Sorting, and URL Parameters](/docs/reference/pagination-sorting.md) - Documentation for the pagination system, sorting options, and URL parameters
 - [Currencies](/docs/reference/currencies.md) - Guide to supported currencies and formatting options
 - [Language Codes](/docs/reference/language-codes.md) - Reference for supported language codes
 - [Career Levels](/docs/reference/career-levels.md) - Documentation for standardized career levels
