@@ -164,7 +164,7 @@ Get your Bordful job board up and running in just a few steps:
 
 Visit `http://localhost:3000` to see your job board.
 
-For detailed installation instructions, see our [Installation Guide](/docs/getting-started/installation.md).
+For detailed installation instructions, see our [Installation Guide](/docs/getting-started/installation.md). For setting up Airtable, see our [Airtable Setup Guide](/docs/getting-started/airtable-setup.md).
 
 ## Configuration
 

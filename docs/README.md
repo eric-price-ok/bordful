@@ -111,6 +111,7 @@ Bordful is an open-source job board platform built with Next.js, Tailwind CSS, a
 
 - [Quick Start Guide](/docs/getting-started/index.md) - Overview of how to get started with Bordful
 - [Installation Guide](/docs/getting-started/installation.md) - Detailed instructions for installing and setting up Bordful
+- [Airtable Setup Guide](/docs/getting-started/airtable-setup.md) - Comprehensive guide to setting up Airtable as the backend database
 - [Configuration Guide](/docs/getting-started/configuration.md) - Comprehensive guide to configuring your Bordful job board
-- [Airtable Setup](/docs/getting-started/airtable-setup.md) - Detailed guide for setting up Airtable as your database
+
 - [Deployment Guide](/docs/getting-started/deployment.md) - Instructions for deploying your job board to production 

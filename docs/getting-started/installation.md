@@ -150,6 +150,8 @@ cp config/config.example.ts config/config.ts
 
 For detailed configuration options, see [Configuration Reference](/docs/reference/configuration-options.md).
 
+For detailed information about setting up Airtable, see [Airtable Setup Guide](/docs/getting-started/airtable-setup.md).
+
 ## Step 6: Start the Development Server
 
 Now that you've set up your environment and configuration, start the development server:
@@ -199,6 +201,6 @@ This ensures that your changes work correctly in a production environment before
 ## Related Documentation
 
 - [Configuration Guide](/docs/reference/configuration-options.md)
-- [Airtable Setup Details](/docs/guides/airtable-setup.md)
+- [Airtable Setup Guide](/docs/getting-started/airtable-setup.md)
 - [Deployment Guide](/docs/guides/deployment.md)
 - [Theming Customization](/docs/guides/theming-customization.md) 
