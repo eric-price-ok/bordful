@@ -1,26 +1,33 @@
 ```
 bordful
+├─ .cursor
+│  └─ rules
 ├─ .eslintrc.json
 ├─ CHANGELOG.md
 ├─ CONTRIBUTING.md
 ├─ LICENSE
+├─ PROJECT-TREE.md
 ├─ README.md
 ├─ SECURITY.md
 ├─ app
 │  ├─ about
 │  │  └─ page.tsx
 │  ├─ api
-│  │  ├─ encharge-logs
-│  │  └─ subscribe
-│  │     └─ route.ts
+│  │  ├─ og
+│  │  │  ├─ jobs
+│  │  │  │  └─ [slug]
+│  │  │  │     └─ route.tsx
+│  │  │  └─ route.tsx
+│  │  ├─ subscribe
+│  │  │  └─ route.ts
+│  │  └─ temp-markdown-fix
+│  │     └─ jobs
 │  ├─ atom.xml
 │  │  └─ route.ts
 │  ├─ changelog
 │  │  └─ page.tsx
-│  ├─ components
 │  ├─ contact
 │  │  └─ page.tsx
-│  ├─ cookies
 │  ├─ faq
 │  │  └─ page.tsx
 │  ├─ favicon.ico
@@ -66,6 +73,8 @@ bordful
 │  │  └─ page.tsx
 │  ├─ robots.ts
 │  ├─ sitemap.ts
+│  ├─ temp-markdown-fix
+│  │  └─ nested-list-test
 │  └─ terms
 │     └─ page.tsx
 ├─ bordful-plan.md
@@ -88,6 +97,7 @@ bordful
 │  │  └─ JobsLayout.tsx
 │  ├─ server
 │  └─ ui
+│     ├─ about-schema.tsx
 │     ├─ accordion.tsx
 │     ├─ avatar.tsx
 │     ├─ badge.tsx
@@ -97,6 +107,7 @@ bordful
 │     ├─ checkbox.tsx
 │     ├─ client-breadcrumb.tsx
 │     ├─ collapsible-text.tsx
+│     ├─ contact-schema.tsx
 │     ├─ dropdown-menu.tsx
 │     ├─ faq-content.tsx
 │     ├─ footer.tsx
@@ -107,17 +118,22 @@ bordful
 │     ├─ job-details-sidebar.tsx
 │     ├─ job-filters.tsx
 │     ├─ job-schema.tsx
+│     ├─ job-search-input.tsx
+│     ├─ jobs-per-page-select.tsx
 │     ├─ label.tsx
 │     ├─ metadata-breadcrumb.tsx
 │     ├─ nav.tsx
+│     ├─ pagination-control.tsx
 │     ├─ pagination.tsx
 │     ├─ post-job-banner.tsx
 │     ├─ select.tsx
 │     ├─ server-breadcrumb.tsx
 │     ├─ similar-jobs.tsx
+│     ├─ sort-order-select.tsx
 │     ├─ switch.tsx
 │     ├─ toast.tsx
-│     └─ toaster.tsx
+│     ├─ toaster.tsx
+│     └─ website-schema.tsx
 ├─ components.json
 ├─ config
 │  ├─ README.md
@@ -130,7 +146,11 @@ bordful
 │  ├─ email-providers.md
 │  ├─ encharge-integration.md
 │  ├─ job-alerts-configuration.md
-│  └─ rate-limiting.md
+│  ├─ navbar-customization.md
+│  ├─ post-job-banner.md
+│  ├─ rate-limiting.md
+│  ├─ schema-implementation.md
+│  └─ theming-customization.md
 ├─ hooks
 │  └─ use-toast.ts
 ├─ lib
@@ -152,8 +172,17 @@ bordful
 │  │  │  └─ encharge.ts
 │  │  └─ types.ts
 │  ├─ hooks
+│  │  ├─ useJobSearch.ts
+│  │  ├─ useJobsPerPage.ts
+│  │  ├─ usePagination.ts
+│  │  └─ useSortOrder.ts
+│  ├─ providers
 │  ├─ utils
+│  │  ├─ colors.ts
+│  │  ├─ filter-jobs.ts
+│  │  ├─ fonts.ts
 │  │  ├─ formatDate.ts
+│  │  ├─ markdown.ts
 │  │  ├─ metadata.ts
 │  │  └─ slugify.ts
 │  └─ utils.ts
@@ -168,20 +197,32 @@ bordful
 │  │  ├─ googlepay.svg
 │  │  ├─ mastercard.svg
 │  │  ├─ paypal.svg
+│  │  ├─ social
+│  │  │  ├─ bluesky.svg
+│  │  │  ├─ github.svg
+│  │  │  ├─ linkedin.svg
+│  │  │  ├─ reddit.svg
+│  │  │  ├─ rss.svg
+│  │  │  └─ twitter.svg
 │  │  └─ visa.svg
 │  ├─ avatars
 │  │  ├─ bestwriting.png
 │  │  ├─ marketful.png
 │  │  └─ uithings.png
+│  ├─ bordful-light.svg
 │  ├─ bordful.svg
 │  ├─ file.svg
 │  ├─ globe.svg
+│  ├─ hero-background.jpg
+│  ├─ images
 │  ├─ next.svg
+│  ├─ office.jpg
+│  ├─ og-images
+│  ├─ optimized-images
 │  ├─ screenshot.png
 │  ├─ vercel.svg
 │  └─ window.svg
 ├─ tailwind.config.ts
-├─ tsconfig.json
-└─ types
+└─ tsconfig.json
 
 ```
