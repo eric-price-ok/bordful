@@ -75,6 +75,9 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 - **[Footer Customization](./guides/footer.md)**: Configure and customize the footer
 - **[Logo Customization](./guides/logo-customization.md)**: Configure and optimize your logo across the job board
 - **[Hero Section Customization](./guides/hero-section.md)**: Configure backgrounds, colors, and styling for the hero section
+- **[Core Features](./guides/core-features.md)**: Overview of Bordful's core features and capabilities
+- **[Job Listings](./guides/job-listings.md)**: Configure and customize job listings display
+- **[Filtering System](./guides/filtering-system.md)**: Configure the comprehensive job filtering system
 - **[Pricing Page Customization](./guides/pricing.md)**: Configure and customize the pricing plans and options
 - **[Contact Page Customization](./guides/contact.md)**: Configure and customize the contact page and support channels
 - **[Email Provider Integration](./guides/email-integration.md)**: Configure email providers for job alerts and subscriptions
@@ -114,4 +117,10 @@ Bordful is an open-source job board platform built with Next.js, Tailwind CSS, a
 - [Airtable Setup Guide](/docs/getting-started/airtable-setup.md) - Comprehensive guide to setting up Airtable as the backend database
 - [Configuration Guide](/docs/getting-started/configuration.md) - Comprehensive guide to configuring your Bordful job board
 
-- [Deployment Guide](/docs/getting-started/deployment.md) - Instructions for deploying your job board to production 
+- [Deployment Guide](/docs/getting-started/deployment.md) - Instructions for deploying your job board to production
+
+## Examples
+
+- **[Feature Examples](/docs/examples/feature-examples.md)**: Real-world usage examples for key Bordful features
+- **[Configuration Examples](/docs/examples/configuration-examples.md)**: Example configurations for different use cases
+- **[Design Examples](/docs/examples/design-examples.md)**: Examples of different design approaches 
