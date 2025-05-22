@@ -140,459 +140,51 @@ Three loading strategies are available:
 
 For complete documentation on script management and analytics integration, see [Script Management & Analytics](/docs/advanced/script-management.md).
 
-## Quick Start
+## Getting Started
 
-1. Clone the repository:
+### Quick Installation
 
-```bash
-git clone https://github.com/craftled/bordful
-cd bordful
-npm install
-```
+Get your Bordful job board up and running in just a few steps:
 
-2. Set up Airtable:
-
-**Option A** - Quick Setup with Template:
-
-- Visit the demo base template: https://airtable.com/appLx3b8wF3cyfoMd/shrWo1VUVq7mJS6CB
-- Click "Use this data" in the top right corner
-- Make sure to note the name of your table (default is "Jobs") - you'll need this for the AIRTABLE_TABLE_NAME environment variable
-- The base includes demo data and all required fields properly configured
-
-**Option B** - Manual Setup:
-
-- Create a new base in Airtable
-- Create a table with your desired name (default is "Jobs") with these fields:
-  ```
-  title: Single line text
-  company: Single line text
-  type: Single select (Full-time, Part-time, Contract, Freelance)
-  salary_min: Number
-  salary_max: Number
-  salary_currency: Single select (USD, EUR, GBP, USDT, USDC, BTC, ETH, etc.)
-  salary_unit: Single select (hour, day, week, month, year, project)
-  description: Long text (with rich text enabled)
-  benefits: Long text (plain text, recommended format: "• Benefit 1\n• Benefit 2\n• Benefit 3", max 500 characters)
-  application_requirements: Long text (plain text, comma-separated format, max 500 characters)
-  apply_url: URL
-  posted_date: Date
-  valid_through: Date (application deadline date)
-  job_identifier: Single line text (unique identifier/reference code for the job)
-  job_source_name: Single line text (the name of the job source platform, e.g. "LinkedIn Jobs", "Workable", "Figma Careers")
-  status: Single select (active, inactive)
-  workplace_type: Single select (On-site, Hybrid, Remote, Not specified)
-  remote_region: Single select (Worldwide, Americas Only, Europe Only, Asia-Pacific Only, US Only, EU Only, UK/EU Only, US/Canada Only)
-  timezone_requirements: Single line text
-  workplace_city: Single line text
-  workplace_country: Single select (from ISO 3166 country list)
-  career_level: Multiple select (Internship, Entry Level, Associate, Junior, Mid Level, Senior, Staff, Principal, Lead, Manager, Senior Manager, Director, Senior Director, VP, SVP, EVP, C-Level, Founder, Not Specified)
-  visa_sponsorship: Single select (Yes, No, Not specified)
-  featured: Checkbox
-  languages: Multiple select (format: "Language Name (code)", e.g. "English (en)", "Spanish (es)", "French (fr)")
-  # Schema.org enhanced fields (optional but recommended for better SEO)
-  skills: Long text (skills required for the position)
-  qualifications: Long text (specific qualifications needed)
-  education_requirements: Long text (educational background needed)
-  experience_requirements: Long text (experience needed for the position)
-  responsibilities: Long text (key responsibilities of the role)
-  industry: Single line text (industry associated with the job)
-  occupational_category: Single line text (preferably using O*NET-SOC codes, e.g. "15-1252.00 Software Developers")
-  ```
-
-  **Note on Currency**: For `salary_currency`, it's recommended to use the format "CODE (Name)" such as "USD (United States Dollar)" or "BTC (Bitcoin)" for clarity. The system supports both traditional fiat currencies and cryptocurrencies.
-  
-  **Note on Schema.org Fields**: The additional schema.org fields are optional but highly recommended for improved SEO and Google Jobs integration. See [Schema.org Implementation](./docs/schema-implementation.md) for more details.
-
-For both options:
-
-- Create a Personal Access Token at https://airtable.com/create/tokens
-- Add these scopes to your token:
-  - data.records:read
-  - schema.bases:read
-- Add your base to the token's access list
-
-3. Environment Setup:
-
-   - Copy the `.env.example` file to `.env` (keep the example file for reference):
-
+1. **Clone the repository**:
    ```bash
-   cp .env.example .env  # or copy manually if you're on Windows
+   git clone https://github.com/craftled/bordful
+   cd bordful
+   npm install
    ```
 
-   - Fill in your Airtable credentials in the `.env` file:
+2. **Set up Airtable**: Either use our pre-configured template or set up your own Airtable base
 
-   ```env
-   AIRTABLE_ACCESS_TOKEN=your_token_here
-   AIRTABLE_BASE_ID=your_base_id_here
-   AIRTABLE_TABLE_NAME=your_table_name_here (defaults to "Jobs" if not specified)
+3. **Configure environment variables**: Set up your API keys and database connections
+
+4. **Start the development server**:
+   ```bash
+   npm run dev
    ```
-
-   > Note: Keep the `.env.example` file intact. If you need to start fresh or share the project, you'll have a reference for the required environment variables.
-
-4. Development:
-
-```bash
-npm run dev
-```
 
 Visit `http://localhost:3000` to see your job board.
 
+For detailed installation instructions, see our [Installation Guide](/docs/getting-started/installation.md).
+
 ## Configuration
 
-### Quick Start
+Bordful uses a flexible configuration system that allows you to customize virtually every aspect of your job board without modifying the core code.
+
+### Quick Configuration
 
 1. Copy the example configuration:
    ```bash
    cp config/config.example.ts config/config.ts
    ```
-2. Customize `config.ts` with your settings
-3. The app will now use your custom configuration
+2. Customize the settings to match your needs
+3. The app will automatically use your custom configuration
 
-### How It Works
+The configuration system is:
+- **Easy to use**: Simple file copying to get started
+- **Flexible**: Customize everything from site title to component behavior
+- **Maintainable**: Pull updates without losing your customizations
 
-The configuration system is designed to be:
-- Easy to set up (just copy and customize)
-- Flexible (customize any aspect of your job board)
-- Maintainable (pull updates without losing your customizations)
-
-When the app starts:
-1. It first tries to load your custom `config.ts`
-2. If not found, falls back to `config.example.ts`
-3. TypeScript ensures type safety in both cases
-
-### Updating
-
-When pulling updates from upstream:
-1. Your `config.ts` stays as is with your customizations
-2. You might get updates to `config.example.ts`
-3. Check `config.example.ts` for new options
-4. Add desired new options to your `config.ts`
-
-### Configuration Options
-
-The job board can be customized through the configuration file:
-
-```typescript
-export const config = {
-  // Marketing & SEO
-  badge: "The #1 Open Source Tech Job Board",
-  title: "Find Your Next Tech Role",
-  description: "Browse curated tech opportunities...",
-  url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-
-  // Scripts Configuration (analytics, tracking, etc.)
-  scripts: {
-    head: [
-      // Scripts to be loaded in <head>
-      {
-        src: "https://analytics.com/script.js",
-        strategy: "afterInteractive",
-        attributes: {
-          "data-website-id": "xxx",
-          defer: ""  // Boolean attributes should use empty string
-        }
-      }
-    ],
-    body: [
-      // Scripts to be loaded at end of <body>
-      {
-        src: "https://widget.com/embed.js",
-        strategy: "lazyOnload",
-        attributes: {
-          async: ""  // Boolean attributes should use empty string
-        }
-      }
-    ]
-  },
-
-  // Navigation
-  nav: {
-    title: "JobBoard", // Navigation bar text
-    logo: {
-      enabled: false, // Set to true to use a custom logo instead of icon + text
-      src: "/your-logo.svg", // Path to your logo image (place it in the public directory)
-      width: 120, // Width of the logo in pixels
-      height: 32, // Height of the logo in pixels
-      alt: "Your Company Logo", // Alt text for the logo
-    },
-    github: {
-      show: true, // Show/hide GitHub button
-      url: "https://github.com/yourusername/yourrepo",
-    },
-    linkedin: {
-      show: true, // Show/hide LinkedIn button
-      url: "https://linkedin.com/company/yourcompany",
-    },
-    twitter: {
-      show: true, // Show/hide Twitter/X button
-      url: "https://x.com/yourhandle",
-    },
-    bluesky: {
-      show: true, // Show/hide Bluesky button
-      url: "https://bsky.app/profile/yourdomain.com",
-    },
-    postJob: {
-      show: true, // Show/hide Post Job button
-      label: "Post a Job", // Button text
-      link: "/post", // Button URL
-    },
-    topMenu: [
-      // Navigation menu items
-      { label: "Home", link: "/" },
-      { label: "Jobs", link: "/jobs" },
-      { label: "About", link: "/about" },
-      { label: "Changelog", link: "/changelog" },
-    ],
-    
-    // Navigation menu with dropdown support
-    menu: [
-      { label: "Home", link: "/" },
-      // Example dropdown menu
-      { 
-        label: "Jobs", 
-        link: "/jobs",
-        dropdown: true,
-        items: [
-          { label: "All Jobs", link: "/jobs" },
-          { label: "Job Types", link: "/jobs/types" },
-          { label: "Job Locations", link: "/jobs/locations" },
-          { label: "Job Levels", link: "/jobs/levels" },
-          { label: "Job Languages", link: "/jobs/languages" }
-        ]
-      },
-      { label: "About", link: "/about" },
-      { label: "Resources", link: "#", dropdown: true, items: [
-        { label: "FAQ", link: "/faq" },
-        { label: "Job Alerts", link: "/job-alerts" },
-        { label: "RSS Feed", link: "/feed.xml" }
-      ]},
-    ],
-    // Helper functions are also available:
-    // import { createJobsMenu, createResourcesMenu } from "@/lib/menu-helpers";
-  },
-  
-  // Pricing Configuration
-  pricing: {
-    // Enable or disable the pricing page
-    enabled: true,
-    
-    // Show pricing link in navigation
-    showInNavigation: true,
-    
-    // Show pricing link in footer resources
-    showInFooter: true,
-    
-    // Navigation label
-    navigationLabel: "Pricing",
-    
-    // Page title and description
-    title: "Simple, Transparent Pricing",
-    description: "Choose the plan that's right for your job board needs.",
-    
-    // Currency symbol
-    currencySymbol: "$",
-    
-    // Payment processing information (displayed below pricing cards)
-    paymentProcessingText: "Payments are processed & secured by Stripe. Price in USD. VAT may apply.",
-    
-    // Payment method icons to display
-    paymentMethods: {
-      enabled: true,
-      icons: [
-        { name: "visa", alt: "Visa" },
-        { name: "mastercard", alt: "Mastercard" },
-        { name: "amex", alt: "American Express" },
-        { name: "applepay", alt: "Apple Pay" },
-        { name: "googlepay", alt: "Google Pay" },
-        { name: "paypal", alt: "PayPal" },
-      ],
-    },
-    
-    // Plans configuration
-    plans: [
-      {
-        name: "Free",
-        price: 0,
-        billingTerm: "forever",
-        description: "Perfect for getting started with basic hiring needs.",
-        features: [
-          "1 active job posting",
-          "Basic job listing",
-          "30-day visibility",
-          "Standard support",
-        ],
-        cta: {
-          label: "Get Started",
-          link: "/post",
-          variant: "outline", // Using button variants
-        },
-        badge: null, // No badge
-        highlighted: false, // No highlighted border
-      },
-      {
-        name: "Pro",
-        price: 99,
-        billingTerm: "job posting",
-        description: "Great for occasional hiring needs with better visibility.",
-        features: [
-          "3 active job postings",
-          "Standard job listings",
-          "30-day visibility",
-          "Email support",
-        ],
-        cta: {
-          label: "Choose Pro",
-          link: "https://stripe.com",
-          variant: "outline",
-        },
-        badge: {
-          text: "Popular",
-          type: "featured", // Using badge types from JobBadge component
-        },
-        highlighted: true, // Highlighted with prominent border
-      },
-      {
-        name: "Business",
-        price: 999,
-        billingTerm: "year",
-        description: "Unlimited jobs postings for one year for serious recruiters.",
-        features: [
-          "5 active job postings",
-          "Featured job listings",
-          "30-day visibility",
-          "Priority support",
-        ],
-        cta: {
-          label: "Upgrade Now",
-          link: "https://stripe.com",
-          variant: "default",
-        },
-        badge: {
-          text: "Best Value",
-          type: "featured",
-        },
-        highlighted: false,
-      },
-    ],
-  },
-
-  // Contact Page Customization
-  contact: {
-    // Enable or disable the contact page
-    enabled: true,
-
-    // Show contact link in navigation
-    showInNavigation: true,
-
-    // Show contact link in footer
-    showInFooter: true,
-
-    // Navigation label
-    navigationLabel: "Contact",
-
-    // Page title and description
-    title: "Get in Touch",
-    description: "Have questions or feedback? We'd love to hear from you.",
-    
-    // Support channels section
-    supportChannels: {
-      title: "Support Channels",
-      channels: [
-        {
-          type: "email",
-          title: "Email Support",
-          description: "Our support team is available to help you with any questions or issues you might have.",
-          buttonText: "Contact via Email",
-          buttonLink: "mailto:hello@bordful.com",
-          icon: "Mail"
-        },
-        {
-          type: "twitter",
-          title: "Twitter/X Support",
-          description: "Get quick responses and stay updated with our latest announcements on Twitter/X.",
-          buttonText: "Follow on Twitter/X",
-          buttonLink: "https://twitter.com/bordful",
-          icon: "Twitter"
-        },
-        {
-          type: "faq",
-          title: "FAQ",
-          description: "Browse our comprehensive FAQ section to find answers to the most common questions.",
-          buttonText: "View FAQ",
-          buttonLink: "/faq",
-          icon: "HelpCircle"
-        }
-      ]
-    },
-    
-    // Contact information section
-    contactInfo: {
-      title: "Contact Information",
-      description: "Here's how you can reach us directly.",
-      companyName: "Bordful Inc.",
-      email: "hello@bordful.com",
-      phone: "+1 (555) 123-4567",
-      address: "123 Main Street, San Francisco, CA 94105"
-    }
-  },
-
-  // Currency Configuration
-  currency: {
-    // Default currency code used when no currency is specified
-    defaultCurrency: "USD" as CurrencyCode,
-
-    // Allowed currencies for job listings
-    // This list can include any valid CurrencyCode from lib/constants/currencies.ts
-    // Set to null to allow all currencies, or specify a subset
-    allowedCurrencies: ["USD", "EUR", "GBP", "BTC", "ETH", "USDT", "USDC"] as CurrencyCode[] | null, // null means all currencies are allowed
-  },
-
-  // UI Configuration
-  ui: {
-    // Hero section background color (CSS color value)
-    // Can be hex, rgb, hsl, etc. Leave empty for default.
-    heroBackgroundColor: "#005450", // Example: light gray background
-
-    // Hero section gradient background
-    // Takes precedence over heroBackgroundColor when enabled
-    heroGradient: {
-      enabled: false, // Set to true to enable gradient background
-      type: "linear", // Type of gradient: "linear" or "radial"
-      direction: "to right", // For linear gradients: "to right", "to bottom", "45deg", etc.
-      // For radial gradients: "circle", "ellipse at center", etc.
-      colors: [
-        "#005450", // Start color
-        "#007a73", // Optional middle color(s)
-        "#00a59c", // End color
-      ],
-      // Optional stops for precise control (0-100%)
-      // If not provided, colors will be evenly distributed
-      stops: ["0%", "50%", "100%"],
-    },
-
-    // Hero section main title color (CSS color value)
-    // Can be hex, rgb, hsl, etc. Leave empty for default.
-    heroTitleColor: "#fff", // Example: "text-gray-900"
-
-    // Hero section subtitle color (CSS color value)
-    // Can be hex, rgb, hsl, etc. Leave empty for default.
-    heroSubtitleColor: "#fff", // Example: "text-gray-600"
-
-    // Hero section background image
-    heroBackgroundImage: {
-      enabled: false, // Make sure background image is disabled
-    },
-  },
-};
-```
-
-### Environment-Aware URLs
-
-The site URL automatically adjusts based on the environment:
-
-1. Uses `NEXT_PUBLIC_APP_URL` if provided
-2. Falls back to `localhost:3000` in development
-3. Uses production URL in production
+For comprehensive configuration documentation, see our [Configuration Guide](/docs/getting-started/configuration.md).
 
 ### Navigation & Footer Customization
 

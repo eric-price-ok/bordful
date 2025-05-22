@@ -35,8 +35,8 @@ docs/
 ├── _template.md (Documentation template with standardized format) ✅
 ├── getting-started/
 │   ├── index.md (Quick Start Guide) ✅
-│   ├── installation.md
-│   ├── configuration.md
+│   ├── installation.md ✅
+│   ├── configuration.md ✅
 │   ├── airtable-setup.md
 │   └── deployment.md
 ├── guides/
