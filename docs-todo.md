@@ -44,7 +44,9 @@ docs/
 │   ├── theming-customization.md
 │   ├── job-listings.md
 │   ├── filtering-system.md
-│   ├── navigation-footer.md
+│   ├── navigation-footer.md ✅
+│   ├── navigation.md ✅
+│   ├── footer.md ✅
 │   ├── job-alerts.md
 │   └── email-integration.md
 ├── integrations/

@@ -65,6 +65,9 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 
 ## Guides
 
+- **[Navigation Customization](./guides/navigation.md)**: Configure and customize the navigation bar
+- **[Footer Customization](./guides/footer.md)**: Configure and customize the footer
+- **[Navigation & Footer Overview](./guides/navigation-footer.md)**: Overview of navigation and footer customization
 - **[Deployment](./deployment.md)**: Instructions for deploying your job board
 - **[Job Alerts Configuration](./job-alerts-configuration.md)**: How to set up and customize job alerts
 - **[Email Providers](./email-providers.md)**: Configuring email providers for notifications

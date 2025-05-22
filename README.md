@@ -594,17 +594,13 @@ The site URL automatically adjusts based on the environment:
 2. Falls back to `localhost:3000` in development
 3. Uses production URL in production
 
-### Navigation Customization
+### Navigation & Footer Customization
 
-The navigation bar is fully customizable to match your branding and navigation needs. Key features include:
+Bordful provides a fully customizable navigation system and footer with features like dropdown menus, social media integration, and mobile responsiveness.
 
-- Brand display with icon+text or custom logo
-- Dropdown menu support with hover effects
-- Social media integration (GitHub, LinkedIn, Twitter/X, Bluesky, Reddit)
-- Mobile-responsive design with hamburger menu
-- Accessible navigation with ARIA attributes
-
-For detailed documentation on navigation bar customization, see [Navigation Bar Customization](./docs/navbar-customization.md).
+- For navigation customization, see [Navigation Customization](/docs/guides/navigation.md)
+- For footer customization, see [Footer Customization](/docs/guides/footer.md)
+- For an overview of both, see [Navigation & Footer Customization](/docs/guides/navigation-footer.md)
 
 ### Pricing Page Customization
 
