@@ -28,7 +28,7 @@ Get your Bordful job board up and running in just a few steps:
    npm install
    ```
 
-2. **Set up Airtable**: Either use our [pre-configured template](https://airtable.com/appLx3b8wF3cyfoMd/shrWo1VUVq7mJS6CB) or set up your own Airtable base. See the [Airtable Setup Guide](/docs/getting-started/airtable-setup.md).
+2. **Set up Airtable**: Either use our [pre-configured template](https://airtable.com/apprhCjWTxfG3JX5p/shrLqfxgbensCY393) or set up your own Airtable base. See the [Airtable Setup Guide](/docs/getting-started/airtable-setup.md).
 
 3. **Configure environment variables**: Set up your API keys and database connections. See [Environment Variables](#environment-variables) below.
 

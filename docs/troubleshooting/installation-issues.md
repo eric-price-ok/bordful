@@ -34,7 +34,7 @@ This guide addresses the most common issues you might encounter when installing 
    - `data.records:read`
    - `schema.bases:read`
 2. Confirm your base is added to the token's access list
-3. Double-check your Base ID by going to [airtable.com](https://airtable.com), opening your base, and checking the URL (it will contain `airtable.com/[YOUR_BASE_ID]`)
+3. Double-check your Base ID by going to [Airtable](https://airtable.com/invite/r/y2hcMqpl), opening your base, and checking the URL (it will contain `airtable.com/[YOUR_BASE_ID]`)
 4. Ensure your token is still valid and has not expired
 
 ## Node.js and NPM Issues

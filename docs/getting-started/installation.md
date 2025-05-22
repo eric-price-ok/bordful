@@ -14,7 +14,7 @@ Before you begin, ensure you have the following:
 
 - [Node.js](https://nodejs.org/) (v18 or later)
 - [npm](https://www.npmjs.com/) (v9 or later)
-- An [Airtable](https://airtable.com/) account
+- An [Airtable](https://airtable.com/invite/r/y2hcMqpl) account
 - Basic knowledge of JavaScript/TypeScript and React
 - Git installed on your system
 
@@ -43,7 +43,7 @@ Bordful uses Airtable as its backend database. You have two options for setting 
 
 ### Option A: Quick Setup with Template (Recommended)
 
-1. Visit the demo base template: [https://airtable.com/appLx3b8wF3cyfoMd/shrWo1VUVq7mJS6CB](https://airtable.com/appLx3b8wF3cyfoMd/shrWo1VUVq7mJS6CB)
+1. Visit the [demo base template](https://airtable.com/apprhCjWTxfG3JX5p/shrLqfxgbensCY393/tblBFcWLWFxosr0ey)
 2. Click "Use this data" in the top right corner
 3. Make a note of your table name (default is "Jobs") - you'll need this for the `AIRTABLE_TABLE_NAME` environment variable
 4. The template includes demo data and all required fields properly configured

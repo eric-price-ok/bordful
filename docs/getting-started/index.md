@@ -29,7 +29,7 @@ Bordful uses Airtable as its database. You have two options for setting up Airta
 
 ### Option A: Use the Template (Recommended)
 
-- Visit the [Bordful Airtable template](https://airtable.com/appLx3b8wF3cyfoMd/shrWo1VUVq7mJS6CB)
+- Visit the [Bordful Airtable template](https://airtable.com/apprhCjWTxfG3JX5p/shrLqfxgbensCY393/tblBFcWLWFxosr0ey)
 - Click "Use this data" in the top right corner
 - Note the name of your table (default is "Jobs")
 

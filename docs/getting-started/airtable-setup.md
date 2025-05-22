@@ -6,7 +6,7 @@ lastUpdated: "2024-05-22"
 
 # Airtable Setup Guide
 
-Bordful uses [Airtable](https://airtable.com) as its backend database. This guide provides detailed instructions for setting up and configuring your Airtable base to work seamlessly with Bordful.
+Bordful uses [Airtable](https://airtable.com/invite/r/y2hcMqpl) as its backend database. This guide provides detailed instructions for setting up and configuring your Airtable base to work seamlessly with Bordful.
 
 ## Why Airtable?
 
@@ -49,7 +49,7 @@ This will create a fully configured Airtable base with:
 If you prefer to set up your Airtable base from scratch or need to customize the structure:
 
 1. **Create a new Airtable base**:
-   - Go to [airtable.com](https://airtable.com) and sign in
+   - Go to [airtable.com](https://airtable.com/invite/r/y2hcMqpl) and sign in
    - Click "Add a base" → "Start from scratch"
    - Name your base (e.g., "Bordful Job Board")
 
