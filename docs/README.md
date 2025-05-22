@@ -85,7 +85,7 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 
 - **[Customization Guide](/docs/guides/customization.md)**: Comprehensive guide to styling, script management, and data source customization
 - **[Theming and Color Customization](./theming-customization.md)**: Configure primary colors and theming
-- **[Post Job Banner](./post-job-banner.md)**: Customize the "Post a Job" banner
+- **[Post Job Banner](/docs/guides/post-job-banner.md)**: Customize the "Post a Job" banner
 - **[Currencies](/docs/reference/currencies.md)**: Configure and customize currency display
 
 ## Advanced Features

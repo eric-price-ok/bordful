@@ -22,6 +22,7 @@ Welcome to the Bordful guides section. These detailed guides will help you confi
 - [Job Alerts](/docs/guides/job-alerts.md) - Set up and configure job alert subscriptions for your users
 - [Pricing Page](/docs/guides/pricing.md) - Customize the pricing page to showcase your job posting plans
 - [Contact Page](/docs/guides/contact.md) - Configure your contact page with support channels and information
+- [Post Job Banner](/docs/guides/post-job-banner.md) - Customize the sidebar banner for job posting promotion
 
 ### Integrations
 
