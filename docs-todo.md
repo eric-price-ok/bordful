@@ -55,12 +55,10 @@ docs/
 ├── integrations/
 │   ├── index.md (Integrations Overview) ✅
 │   ├── email-providers.md
-│   ├── encharge.md
-│   ├── mailchimp.md
-│   ├── sendgrid.md
-│   ├── analytics-integration.md
-│   ├── slack.md
-│   └── zapier.md
+│   └── encharge.md ✅
+
+
+
 ├── examples/
 │   ├── index.md (Examples Overview) ✅
 │   ├── configuration-examples.md
