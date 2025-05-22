@@ -260,4 +260,114 @@ If you're still experiencing issues after trying these solutions:
 | "TypeError: Cannot read property 'X' of undefined" | Missing data or wrong data structure | Check your Airtable fields and data format              |
 | "Failed to compile"                                | TypeScript or Next.js build errors   | Check error details and fix the specific file mentioned |
 
-Remember that most installation issues are related to environment variables, Airtable configuration, or missing dependencies. Double-checking these areas will resolve the majority of problems you might encounter. 
+Remember that most installation issues are related to environment variables, Airtable configuration, or missing dependencies. Double-checking these areas will resolve the majority of problems you might encounter.
+
+## Common Installation Workflows
+
+Here are comprehensive troubleshooting workflows for common installation scenarios:
+
+### Fresh Installation on a New System
+
+If you're setting up Bordful on a fresh system and encountering issues:
+
+1. **Verify System Requirements**:
+   ```bash
+   node -v  # Should be v18.0.0 or higher
+   npm -v   # Should be v9.0.0 or higher
+   ```
+
+2. **Installation Order**:
+   - Clone repository
+   - Install dependencies
+   - Set up environment variables
+   - Copy and configure config.ts
+   - Start development server
+
+3. **Common Issues**:
+   - Node.js version too old → Update Node.js
+   - Permission errors → Run with proper permissions or use nvm
+   - Network issues → Check firewall or proxy settings
+
+### Airtable Connection Problems
+
+For Airtable connection issues:
+
+1. **Authentication Flow**:
+   - Create Personal Access Token with correct scopes
+   - Add base to access list
+   - Add token to .env file
+   - Restart development server
+
+2. **Troubleshooting Steps**:
+   - Verify token permissions (should have `data.records:read` and `schema.bases:read`)
+   - Check base ID format (should be in `appXXXXXXXXXXXXX` format)
+   - Ensure table name is correct (case-sensitive)
+   - Test token with Airtable API directly (use curl or Postman)
+
+3. **Solutions**:
+   - Regenerate token if expired
+   - Check for typos in environment variables
+   - Verify Airtable service status
+
+### Configuration File Problems
+
+If you're having issues with the configuration file:
+
+1. **Validation Steps**:
+   - Check for TypeScript errors in your editor
+   - Verify all required fields are present
+   - Ensure configuration is syntactically correct
+
+2. **Common Configuration Errors**:
+   - Missing trailing commas
+   - Incorrect nesting of properties
+   - Type mismatches (e.g., using number instead of string)
+   - Using undefined properties
+
+3. **Quick Fix**:
+   - Start with a fresh config.example.ts
+   - Add your customizations one section at a time
+   - Test after each major section
+
+### Development Server Won't Start
+
+If your development server won't start:
+
+1. **Error Pattern Analysis**:
+   - Port conflicts → Change port with `--port` flag
+   - Memory issues → Increase Node.js memory limit
+   - Build errors → Check for syntax errors in custom code
+
+2. **Clean Start Procedure**:
+   ```bash
+   # Clean environment
+   rm -rf .next node_modules/.cache
+   # Reinstall dependencies if needed
+   npm install
+   # Start with verbose logging
+   npm run dev -- --verbose
+   ```
+
+3. **Last Resort Options**:
+   - Delete node_modules and reinstall dependencies
+   - Clone a fresh copy of the repository
+   - Check for system-level issues (disk space, permissions)
+
+### Deployment Problems
+
+If you're having issues deploying to production:
+
+1. **Pre-deployment Checklist**:
+   - Verify local build works (`npm run build && npm start`)
+   - Check environment variables are set in deployment platform
+   - Ensure all dependencies are in package.json
+
+2. **Platform-Specific Issues**:
+   - **Vercel**: Check for Node.js version, environment variables, and build settings
+   - **Netlify**: Verify build command and publish directory
+   - **Self-hosted**: Check server permissions and Node.js version
+
+3. **Post-deployment Debugging**:
+   - Check deployment logs for specific errors
+   - Verify API routes are working correctly
+   - Test Airtable connection from deployed environment 

@@ -447,4 +447,201 @@ After making changes to your configuration:
 - [Navigation & Footer Customization](/docs/guides/navigation.md)
 - [Hero Section Customization](/docs/guides/hero-section.md)
 - [Pricing Page Customization](/docs/guides/pricing.md)
-- [Contact Page Customization](/docs/guides/contact.md) 
+- [Contact Page Customization](/docs/guides/contact.md)
+
+## Step-by-Step Configuration Workflow
+
+Follow this step-by-step workflow to configure your Bordful job board effectively:
+
+### 1. Initial Setup
+
+1. Copy the example configuration file:
+   ```bash
+   cp config/config.example.ts config/config.ts
+   ```
+
+2. Open the file in your code editor and review the overall structure
+3. Start by setting basic information (title, description, URL)
+
+### 2. Basic Branding
+
+Configure your job board's basic branding:
+
+```typescript
+// Basic branding
+badge: "Open Source Job Board",
+title: "Find Your Next Tech Role",
+description: "Browse curated tech opportunities from top companies around the world. No sign-up required.",
+url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+```
+
+### 3. Hero Section Configuration
+
+The hero section is the prominent banner at the top of your homepage:
+
+```typescript
+// Hero section configuration
+hero: {
+  title: "Find Your Dream Tech Job",
+  description: "Browse hundreds of jobs from top companies in tech, design, and marketing.",
+  showSearchInput: true,
+  searchPlaceholder: "Search jobs, skills, or companies...",
+  badge: {
+    text: "New Jobs Added Daily",
+    variant: "secondary",
+  },
+},
+```
+
+### 4. Configure Navigation and Footer
+
+Set up your site's navigation structure and footer content:
+
+```typescript
+// Navigation configuration
+nav: {
+  title: "Bordful",
+  // Configure logo, social links, and menu items
+  // See Navigation Configuration section for details
+},
+
+// Footer configuration
+footer: {
+  brand: {
+    name: "Bordful",
+    description: "The modern job board for tech teams.",
+    showLogo: true,
+  },
+  // Configure footer columns and links
+  // See Footer Configuration section for details
+},
+```
+
+### 5. Job Listing Configuration
+
+Configure how job listings appear and function:
+
+```typescript
+// Job listing configuration
+jobListing: {
+  jobsPerPage: 10,
+  defaultSort: "newest",
+  showSimilarJobs: true,
+  similarJobsCount: 3,
+  showExpiredJobs: false,
+  // Configure card display options
+  // See Job Listing Configuration section for details
+},
+```
+
+### 6. Filtering System Configuration
+
+Set up the job filtering system:
+
+```typescript
+// Filtering configuration
+filtering: {
+  enabled: true,
+  filters: {
+    jobTypes: true,
+    careerLevels: true,
+    remote: true,
+    salary: true,
+    visa: true,
+    languages: true,
+  },
+  // Configure salary ranges and default filters
+  // See Filtering System Configuration section for details
+},
+```
+
+### 7. UI Customization
+
+Configure the visual appearance of your job board:
+
+```typescript
+// UI customization
+ui: {
+  primaryColor: "#4f46e5", // Main brand color
+  // Configure text colors, button styles, and other UI elements
+  // See UI Customization section for details
+},
+```
+
+### 8. Additional Features
+
+Configure additional features like email integration, pricing page, and contact page:
+
+```typescript
+// Email provider configuration
+email: {
+  provider: "encharge",
+  apiKey: process.env.ENCHARGE_API_KEY,
+  // Configure additional email settings
+  // See Email Provider Configuration section for details
+},
+
+// Pricing page configuration
+pricing: {
+  enabled: true,
+  // Configure pricing plans and options
+  // See Pricing Configuration section for details
+},
+
+// Contact page configuration
+contact: {
+  enabled: true,
+  // Configure contact channels and information
+  // See Contact Page Configuration section for details
+},
+```
+
+### 9. Scripts and Analytics
+
+Add any third-party scripts for analytics or other functionality:
+
+```typescript
+// Scripts configuration
+scripts: {
+  head: [
+    // Scripts to load in <head>
+    {
+      src: "https://analytics.example.com/script.js",
+      strategy: "afterInteractive",
+      attributes: {
+        "data-website-id": "your-id-here",
+        defer: "",
+      },
+    },
+  ],
+  body: [
+    // Scripts to load at end of <body>
+  ],
+},
+```
+
+### 10. Final Review and Testing
+
+After completing your configuration:
+
+1. Save your changes
+2. Restart your development server:
+   ```bash
+   npm run dev
+   ```
+3. Verify all settings are applied correctly
+4. Test each configured feature
+5. Make any necessary adjustments
+6. Build and deploy your job board
+
+## Configuration Best Practices
+
+Follow these best practices when configuring your Bordful job board:
+
+1. **Keep Environment Variables Separate**: Use environment variables for sensitive information rather than hardcoding in config.ts
+2. **Use TypeScript Autocompletion**: Take advantage of TypeScript's autocompletion to discover available options
+3. **Comment Your Customizations**: Add comments for significant customizations to remind yourself of changes
+4. **Test Each Section**: After configuring each section, test to make sure it works as expected
+5. **Back Up Your Configuration**: Keep a backup of your configuration file when making significant changes
+6. **Follow the Type Definitions**: Respect the TypeScript types to prevent runtime errors
+7. **Check for New Options**: When updating Bordful, review the latest config.example.ts for new features 
