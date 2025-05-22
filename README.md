@@ -268,25 +268,17 @@ components/
 
 ## Salary Structure
 
-The job board supports a comprehensive salary structure:
+Bordful includes a sophisticated salary handling system with multiple currencies and formats:
 
-- Minimum and maximum salary ranges
-- Support for 50+ global currencies with proper symbols and formatting
-- Support for cryptocurrencies and stablecoins:
-  - Major cryptocurrencies (BTC, ETH, XRP, etc.) with proper symbols (₿, Ξ)
-  - USD-pegged stablecoins (USDT, USDC, USDS, PYUSD, TUSD)
-  - Properly normalized exchange rates for sorting and filtering
-- Smart currency display with intelligent spacing:
-  - No spaces for common symbols ($, £, €, ¥, ₩, etc.)
-  - Appropriate spacing for multi-character symbols (CHF, Rp, etc.)
-  - Proper spacing for non-Latin script symbols (Arabic, etc.)
-- Consistent scale formatting in salary ranges (both values shown in k or M)
-- Compact number formatting with appropriate scale:
-  - Values over 10,000 use "k" format (e.g., "$50k")
-  - Values over 1,000,000 use "M" format (e.g., "₩50M")
-- Various time units (hour, day, week, month, year, project)
-- Optional display of currency codes (e.g., "$50k/year (USD)" or "₿0.5/year (BTC)")
-- Salary-based sorting with normalization to annual USD
+- Support for 50+ global currencies and cryptocurrencies with proper symbols (₿, Ξ)
+- Smart currency display with intelligent spacing based on currency type
+- Consistent and readable salary ranges with compact formatting (e.g., "$50k - $75k")
+- Multiple time units (hour, day, week, month, year, project)
+- Optional currency code display for international clarity
+- Intelligent salary sorting with normalization across currencies and time periods
+- Customizable display options and formatting preferences
+
+For detailed documentation on the salary structure, see [Salary Structure](/docs/reference/salary-structure.md).
 
 ## Pagination and Sorting
 
