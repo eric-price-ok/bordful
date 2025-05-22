@@ -1,7 +1,7 @@
 ---
 title: Third-Party Service Integrations
 description: Learn how to integrate Bordful with various third-party services and platforms to extend functionality.
-lastUpdated: "2024-05-29"
+lastUpdated: "2025-05-22"
 ---
 
 # Third-Party Service Integrations

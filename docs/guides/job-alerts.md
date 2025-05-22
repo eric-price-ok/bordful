@@ -1,7 +1,7 @@
 ---
 title: Job Alerts Configuration Guide
 description: Learn how to set up, configure, and customize the job alerts subscription feature in your Bordful job board.
-lastUpdated: "2024-05-28"
+lastUpdated: "2025-05-22"
 ---
 
 # Job Alerts Configuration Guide

@@ -1,7 +1,7 @@
 ---
 title: Data Revalidation
 description: Learn how Bordful uses Next.js Incremental Static Regeneration (ISR) and server-side caching to keep data fresh and maintain performance.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Data Revalidation

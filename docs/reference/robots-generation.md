@@ -1,7 +1,7 @@
 ---
 title: Robots.txt Generation
 description: Learn how Bordful automatically generates a comprehensive robots.txt file to help search engines understand which parts of your site to crawl.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Robots.txt Generation

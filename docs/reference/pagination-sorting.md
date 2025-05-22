@@ -1,7 +1,7 @@
 ---
 title: Pagination, Sorting, and URL Parameters
 description: Comprehensive guide to Bordful's pagination system, sorting options, and URL parameter handling.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Pagination, Sorting, and URL Parameters

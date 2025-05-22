@@ -1,7 +1,7 @@
 ---
 title: Gradient System
 description: Learn how to create and customize gradient backgrounds in your Bordful job board.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Gradient System

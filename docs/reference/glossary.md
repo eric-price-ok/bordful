@@ -1,7 +1,7 @@
 ---
 title: Technical Glossary
 description: Comprehensive glossary of technical terms used throughout the Bordful job board platform.
-lastUpdated: "2024-05-29"
+lastUpdated: "2025-05-22"
 ---
 
 # Technical Glossary

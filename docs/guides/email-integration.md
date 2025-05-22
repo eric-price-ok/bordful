@@ -1,7 +1,7 @@
 ---
 title: Email Provider Integration
 description: Learn how to configure and customize email provider integrations for job alerts in your Bordful job board.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Email Provider Integration

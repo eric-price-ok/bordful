@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting Guides
 description: Find solutions to common issues with Bordful job board setup and operation.
-lastUpdated: "2024-05-28"
+lastUpdated: "2025-05-22"
 ---
 
 # Troubleshooting Guides

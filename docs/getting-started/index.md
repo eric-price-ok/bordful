@@ -1,7 +1,7 @@
 ---
 title: Getting Started with Bordful
 description: Learn how to set up and configure your Bordful job board in minutes.
-lastUpdated: "2024-06-01"
+lastUpdated: "2025-05-22"
 ---
 
 Bordful is a modern, open-source job board built with Next.js, Tailwind CSS, and Airtable. This guide will help you get your job board up and running quickly.

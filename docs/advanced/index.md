@@ -1,7 +1,7 @@
 ---
 title: Advanced Features
 description: Documentation for advanced features and configurations in Bordful job board.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Advanced Bordful Features

@@ -1,7 +1,7 @@
 ---
 title: Deployment Guide
 description: Comprehensive guide to deploying your Bordful job board to various platforms including Vercel, Netlify, and Docker.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Deployment Guide

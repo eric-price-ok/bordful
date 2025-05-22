@@ -1,7 +1,7 @@
 ---
 title: RSS Feed System
 description: Documentation for Bordful's comprehensive RSS feed system that allows users to subscribe to job listings in multiple formats.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # RSS Feed System

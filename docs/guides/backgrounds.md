@@ -1,7 +1,7 @@
 ---
 title: Background Customization
 description: Learn how to customize background colors and images across different sections of your Bordful job board.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Background Customization

@@ -1,7 +1,7 @@
 ---
 title: Configuration Options Reference
 description: Comprehensive documentation for all Bordful configuration options and their effects.
-lastUpdated: "2024-05-29"
+lastUpdated: "2025-05-22"
 ---
 
 # Configuration Options Reference

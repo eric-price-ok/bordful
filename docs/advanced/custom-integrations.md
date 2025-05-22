@@ -1,7 +1,7 @@
 ---
 title: Custom Integration Development
 description: Learn how to create and implement custom integrations to extend Bordful's functionality.
-lastUpdated: "2024-05-29"
+lastUpdated: "2025-05-22"
 ---
 
 # Custom Integration Development

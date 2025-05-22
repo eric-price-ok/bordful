@@ -1,7 +1,7 @@
 ---
 title: Bordful Integrations
 description: Connect your Bordful job board with third-party services and platforms.
-lastUpdated: "2024-06-01"
+lastUpdated: "2025-05-22"
 ---
 
 Bordful supports integration with various third-party services to extend functionality and enhance your job board. This section covers all available integrations and how to set them up.

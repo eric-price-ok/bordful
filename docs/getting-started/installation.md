@@ -1,7 +1,7 @@
 ---
 title: Installation Guide
 description: A step-by-step guide to installing and setting up your Bordful job board.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Installation Guide

@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting Common Installation Issues
 description: Solutions to the most common issues encountered when installing and setting up Bordful.
-lastUpdated: "2024-05-28"
+lastUpdated: "2025-05-22"
 ---
 
 # Troubleshooting Common Installation Issues

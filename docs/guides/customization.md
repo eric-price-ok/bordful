@@ -1,7 +1,7 @@
 ---
 title: Customization Guide
 description: Comprehensive guide to customizing and styling your Bordful job board, including Tailwind CSS configuration, script management, and data source customization.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Customization Guide

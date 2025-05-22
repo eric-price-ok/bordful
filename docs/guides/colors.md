@@ -1,7 +1,7 @@
 ---
 title: Primary Color System
 description: Learn how to customize the primary color used throughout your Bordful job board.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Primary Color System

@@ -1,7 +1,7 @@
 ---
 title: Language Codes Reference
 description: Complete reference for all language codes supported in Bordful job board.
-lastUpdated: "2024-05-29"
+lastUpdated: "2025-05-22"
 ---
 
 # Language Codes Reference

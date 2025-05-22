@@ -1,7 +1,7 @@
 ---
 title: Airtable Setup Guide
 description: Comprehensive guide to setting up and configuring Airtable as the backend database for your Bordful job board.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Airtable Setup Guide

@@ -1,7 +1,7 @@
 ---
 title: Reference Documentation
 description: Complete reference documentation for Bordful job board configurations, systems, and features.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Bordful Reference Documentation

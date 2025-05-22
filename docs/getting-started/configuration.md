@@ -1,7 +1,7 @@
 ---
 title: Configuration Guide
 description: Learn how to configure and customize your Bordful job board using the flexible configuration system.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Configuration Guide

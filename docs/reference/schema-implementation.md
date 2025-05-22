@@ -1,7 +1,7 @@
 ---
 title: Schema.org Implementation Guide
 description: Comprehensive documentation for Bordful's schema.org structured data implementation for enhanced SEO and rich search results.
-lastUpdated: "2024-05-29"
+lastUpdated: "2025-05-22"
 ---
 
 # Schema.org Implementation Guide

@@ -1,7 +1,7 @@
 ---
 title: Sitemap Generation
 description: Learn how Bordful automatically generates a comprehensive XML sitemap to improve your job board's search engine visibility.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Sitemap Generation

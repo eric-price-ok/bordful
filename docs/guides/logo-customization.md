@@ -1,7 +1,7 @@
 ---
 title: Logo Customization
 description: Learn how to customize the logo and branding across your Bordful job board.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Logo Customization

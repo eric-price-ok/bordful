@@ -1,7 +1,7 @@
 ---
 title: Hero Section Customization
 description: Learn how to fully customize the hero section of your Bordful job board, including background colors, gradients, images, and text styling.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 > **Note:** Some of the gradient background configuration documented here overlaps with content in [`gradients.md`](/docs/guides/gradients.md). For comprehensive gradient system documentation, please refer to the dedicated [`gradients.md`](/docs/guides/gradients.md) file, while this document focuses specifically on hero section configuration and customization.

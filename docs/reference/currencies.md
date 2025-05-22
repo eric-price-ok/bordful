@@ -1,7 +1,7 @@
 ---
 title: Currency System Reference
 description: Documentation for Bordful's comprehensive currency support system including traditional currencies and cryptocurrencies.
-lastUpdated: "2024-05-28"
+lastUpdated: "2025-05-22"
 ---
 
 # Currency System Reference

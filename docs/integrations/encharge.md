@@ -1,7 +1,7 @@
 ---
 title: Encharge Integration
 description: Set up Encharge.io integration for job alerts and email automation in your Bordful job board.
-lastUpdated: "2024-05-28"
+lastUpdated: "2025-05-22"
 ---
 
 # Encharge Integration

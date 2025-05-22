@@ -1,7 +1,7 @@
 ---
 title: Analytics Platform Integrations
 description: Learn how to integrate analytics platforms with your Bordful job board for user tracking and performance insights.
-lastUpdated: "2024-05-29"
+lastUpdated: "2025-05-22"
 ---
 
 # Analytics Platform Integrations

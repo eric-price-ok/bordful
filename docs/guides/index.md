@@ -1,7 +1,7 @@
 ---
 title: Guides
 description: Comprehensive guides for configuring and customizing your Bordful job board.
-lastUpdated: "2024-05-28"
+lastUpdated: "2025-05-22"
 ---
 
 # Bordful Guides

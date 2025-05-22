@@ -1,7 +1,7 @@
 ---
 title: Salary Structure
 description: Learn about Bordful's comprehensive salary handling system supporting global currencies, cryptocurrencies, and various display formats.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Salary Structure

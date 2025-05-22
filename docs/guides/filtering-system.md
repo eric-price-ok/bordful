@@ -1,7 +1,7 @@
 ---
 title: Job Filtering System
 description: Learn how to configure and customize the comprehensive job filtering system in your Bordful job board.
-lastUpdated: "2024-05-22"
+lastUpdated: "2025-05-22"
 ---
 
 # Job Filtering System

@@ -1,7 +1,7 @@
 ---
 title: Environment Variables Reference
 description: Comprehensive documentation for all environment variables used by Bordful job board.
-lastUpdated: "2024-05-29"
+lastUpdated: "2025-05-22"
 ---
 
 # Environment Variables Reference

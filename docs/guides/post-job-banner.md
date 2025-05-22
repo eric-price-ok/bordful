@@ -1,7 +1,7 @@
 ---
 title: Post Job Banner Customization
 description: Learn how to configure and customize the post job banner that appears in the job detail sidebar.
-lastUpdated: "2024-05-28"
+lastUpdated: "2025-05-22"
 ---
 
 # Post Job Banner Customization
