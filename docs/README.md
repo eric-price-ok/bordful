@@ -78,9 +78,8 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 - **[Contact Page Customization](./guides/contact.md)**: Configure and customize the contact page and support channels
 - **[Email Provider Integration](./guides/email-integration.md)**: Configure email providers for job alerts and subscriptions
 - **[Deployment](/docs/getting-started/deployment.md)**: Instructions for deploying your job board
-- **[Job Alerts Configuration](./job-alerts-configuration.md)**: How to set up and customize job alerts
-- **[Email Providers](./email-providers.md)**: Configuring email providers for notifications
-- **[Encharge Integration](./encharge-integration.md)**: Detailed guide for setting up Encharge
+- **[Job Alerts Configuration](/docs/guides/job-alerts.md)**: How to set up and customize job alerts
+- **[Email Providers](/docs/guides/email-integration.md)**: Configuring email providers for notifications
 
 ## Customization
 
@@ -96,8 +95,8 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 
 ## Table of Contents
 
-- [Email Providers](./email-providers.md) - Documentation for email provider integrations
-- [Encharge Integration](./encharge-integration.md) - Detailed guide for setting up Encharge
+- [Email Providers](/docs/guides/email-integration.md) - Documentation for email provider integrations
+- [Encharge Integration](/docs/integrations/encharge.md) - Detailed guide for setting up Encharge
 - [Rate Limiting](./rate-limiting.md) - Information about the rate limiting implementation
 - [Deployment Guide](/docs/getting-started/deployment.md) - Instructions for deploying the job board to production
 - [Currencies](./currencies.md) - Guide to using and configuring the 50+ supported currencies

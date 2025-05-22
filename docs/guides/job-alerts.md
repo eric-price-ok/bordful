@@ -397,6 +397,7 @@ When disabled:
 ## Related Documentation
 
 - [Email Provider Integration](/docs/guides/email-integration.md)
+- [Encharge Integration](/docs/integrations/encharge.md)
 - [Navigation Customization](/docs/guides/navigation.md)
 - [Footer Customization](/docs/guides/footer.md)
 - [Hero Section Customization](/docs/guides/hero-section.md) 

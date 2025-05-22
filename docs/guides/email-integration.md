@@ -63,44 +63,11 @@ You have two options for configuring email providers:
 
 [Encharge](https://encharge.io) is a marketing automation platform that allows you to create advanced email workflows.
 
-#### Setting Up Encharge
-
-1. Create an account at [Encharge.io](https://encharge.io)
-2. Get your API write key from the Encharge dashboard (Settings > API)
-3. Configure Bordful to use Encharge as described above
-
-#### Encharge Account Setup
-
-1. **Create Custom Fields** - In your Encharge account, create the following custom fields:
-   - `subscriptionDate` (Date type)
-   - `subscriptionTimestamp` (Number type)
-   - `referer` (Text type)
-   - `origin` (Text type)
-   - `userAgent` (Text type)
-   - `ip` (Text type)
-   - `hasName` (Boolean type)
-
-2. **Create Tags** - Create the following tags to automatically label subscribers:
-   - `job-alerts-subscriber` - Main tag for all job alert subscribers
-   - `website-form` - Indicates the subscription came from the website form
-   - `api-route` - Indicates the subscription was processed through the API route
-   - `bordful-user` - Identifies users from your Bordful job board
-
-3. **Set Up Automation Flow** - Create a flow that triggers when the `job-alerts-subscriber` tag is added to a person. This flow should:
-   - Send a welcome email confirming their subscription
-   - Set up a regular schedule for sending job alerts (e.g., weekly digest)
+For detailed Encharge setup instructions, see our [Encharge Integration Guide](/docs/integrations/encharge.md).
 
 ### Future Providers
 
-Support for additional email providers is planned for future releases:
-
-- Mailchimp
-- ConvertKit
-- SendGrid
-- MailerLite
-- Campaign Monitor
-
-The system is designed to be easily extensible with new providers through the provider interface in `lib/email/types.ts`.
+Support for additional email providers is planned for future releases. The system is designed to be easily extensible with new providers through the provider interface in `lib/email/types.ts`.
 
 ## Data Collection
 
@@ -229,8 +196,25 @@ To add a new email provider:
    - Check that required fields are provided
    - Verify that the form data is correctly formatted
 
+## Email Templates
+
+Create at least two email templates in Encharge:
+1. **Subscription Confirmation** - Sent immediately after someone subscribes
+2. **Job Alerts Digest** - Sent on a regular schedule with new job listings
+
+For the job alerts digest, consider including:
+- Featured jobs at the top
+- Clear categorization by job type
+- "Apply Now" buttons for each job
+- Brief job descriptions with salary ranges
+
+## Unsubscribe Management
+
+Encharge automatically handles unsubscribe links in emails. When a user unsubscribes, they will be flagged in Encharge and will no longer receive emails.
+
+For GDPR compliance, you may want to implement a specific endpoint for users to request complete removal of their data.
+
 ## Related Documentation
 
-- [Job Alerts Configuration](/docs/job-alerts-configuration.md)
-- [Encharge Integration](/docs/encharge-integration.md)
-- [API Endpoints](/docs/advanced/api-endpoints.md) 
+- [Job Alerts Configuration](/docs/guides/job-alerts.md)
+- [API Endpoints](/docs/advanced/api-endpoints.md)

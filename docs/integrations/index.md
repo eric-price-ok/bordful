@@ -13,21 +13,15 @@ Bordful currently supports the following integrations:
 ### Email Providers
 
 - [Encharge](/docs/integrations/encharge.md) - Marketing automation platform for email campaigns
-- [Mailchimp](/docs/integrations/mailchimp.md) - Email marketing platform
-- [SendGrid](/docs/integrations/sendgrid.md) - Email delivery service
-- [Custom Email Provider](/docs/integrations/custom-email.md) - Implement your own email provider
 
-### Analytics
+### Future Integrations
 
-- [Google Analytics](/docs/integrations/google-analytics.md) - Web analytics service
-- [Umami](/docs/integrations/umami.md) - Privacy-focused analytics
-- [Plausible](/docs/integrations/plausible.md) - Lightweight analytics
+Additional integrations are planned for future releases, including:
 
-### Other Services
-
-- [Zapier](/docs/integrations/zapier.md) - Automation platform
-- [Slack](/docs/integrations/slack.md) - Communication platform for teams
-- [Discord](/docs/integrations/discord.md) - Communication platform for communities
+- More email providers (Mailchimp, SendGrid)
+- Analytics platforms
+- Notification services
+- Automation tools
 
 ## Adding a New Integration
 
