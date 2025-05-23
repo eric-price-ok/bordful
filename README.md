@@ -168,7 +168,7 @@ ENCHARGE_WRITE_KEY=your_encharge_key_here
 npm run dev
 ```
 
-🎉 **That's it!** Visit `http://localhost:3000` to see your job board in action.
+🎉 **That's it!** Visit [http://localhost:3000](http://localhost:3000) to see your job board in action.
 
 **What you should see:**
 - A homepage with job listings (from your Airtable template)
