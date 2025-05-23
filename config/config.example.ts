@@ -193,7 +193,7 @@ export const config = {
     heroBadgeBgColor: "#fff", // Example: "#ffffff"
 
     // Optional: Override badge text color (CSS color value)
-    heroBadgeTextColor: "#005450", // Example: "#005450"
+    heroBadgeTextColor: "#083344", // Example: "#005450"
 
     // Optional: Override badge border color (CSS color value, mainly for outline variant)
     heroBadgeBorderColor: "#fff", // Example: "#ffffff"
@@ -203,7 +203,7 @@ export const config = {
 
     // Primary color used throughout the site (buttons, links, etc.)
     // Can be hex, rgb, hsl, etc. Leave empty for default.
-    primaryColor: "#005450", // Example: amber color
+    primaryColor: "#164e63", // Example: amber color
 
     // Optional: Configure an image for the right side of the hero section
     heroImage: {
