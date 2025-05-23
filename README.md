@@ -319,24 +319,116 @@ For a full overview of all documentation, visit the [Documentation Hub](/docs/RE
 
 ```
 app/
-  layout.tsx          # Root layout with Geist font
-  page.tsx           # Home page with job listings
+  layout.tsx              # Root layout with Geist font
+  page.tsx               # Home page with job listings
+  globals.css            # Global styles
+  sitemap.ts             # Dynamic sitemap generation
+  robots.ts              # Dynamic robots.txt generation
+  not-found.tsx          # 404 page
+  favicon.ico            # Favicon route handler
   jobs/
-    [id]/
-      page.tsx       # Individual job page
-      loading.tsx    # Loading state for job page
+    [slug]/
+      page.tsx           # Individual job page (SEO-friendly URLs)
+    [category]/          # Category-based job listings
+    language/[language]/ # Language-filtered job listings
+    level/[level]/       # Experience level filtered listings
+    location/[location]/ # Location-filtered job listings
+    type/[type]/         # Job type filtered listings
+    page.tsx             # Main jobs listing page
+    not-found.tsx        # Jobs-specific 404 page
+  api/
+    subscribe/
+      route.ts           # Job alerts subscription endpoint
+    og/
+      route.tsx          # General Open Graph image generation
+      jobs/[slug]/
+        route.tsx        # Individual job OG image generation
+  about/
+    page.tsx             # About page
+  contact/
+    page.tsx             # Contact page
+  faq/
+    page.tsx             # FAQ page
+  pricing/
+    page.tsx             # Pricing page
+  job-alerts/
+    page.tsx             # Job alerts subscription page
+  changelog/
+    page.tsx             # Changelog page
+  terms/
+    page.tsx             # Terms of service
+  privacy/
+    page.tsx             # Privacy policy
+  feed.xml/
+    route.ts             # RSS feed generation
+  atom.xml/
+    route.ts             # Atom feed generation
+  feed.json/
+    route.ts             # JSON feed generation
+
 lib/
+  utils.ts               # Main utility functions
   db/
-    airtable.ts     # Airtable integration and salary formatting
+    airtable.ts          # Airtable integration and salary formatting
   utils/
-    formatDate.ts   # Date formatting utilities
+    formatDate.ts        # Date formatting utilities
+    markdown.ts          # Markdown processing
+    metadata.ts          # SEO metadata generation
+    slugify.ts           # URL slug generation
+    colors.ts            # Color utilities
+    fonts.ts             # Font utilities
+    filter-jobs.ts       # Job filtering logic
+  config/
+    routes.ts            # Route configuration
+    index.ts             # Main configuration exports
+  constants/             # Application constants
+  email/
+    index.ts             # Email provider exports
+    types.ts             # Email type definitions
+    providers/           # Email provider integrations
+  hooks/                 # Custom React hooks
+  providers/             # Context providers
+
 components/
   ui/
-    job-details-sidebar.tsx  # Job details sidebar
-    post-job-banner.tsx     # Post job promotion banner
-    similar-jobs.tsx        # Similar jobs suggestions
+    job-details-sidebar.tsx    # Job details sidebar
+    post-job-banner.tsx       # Post job promotion banner
+    similar-jobs.tsx          # Similar jobs suggestions
+    job-filters.tsx           # Job search and filter UI
+    job-search-input.tsx      # Search input component
+    job-badge.tsx             # Job category/type badges
+    pagination-control.tsx    # Pagination controls
+    nav.tsx                   # Navigation component
+    footer.tsx                # Footer component
+    hero-section.tsx          # Homepage hero section
+    breadcrumb.tsx            # Breadcrumb navigation
+    # ... and many more UI components
   jobs/
-    JobCard.tsx     # Job listing card
+    JobCard.tsx               # Job listing card
+    JobsLayout.tsx            # Jobs page layout
+    JobListings.tsx           # Job listings container
+    CompactJobCard.tsx        # Compact job card variant
+  home/                       # Homepage-specific components
+  contact/                    # Contact page components
+  job-alerts/                 # Job alerts components
+  analytics/                  # Analytics components
+  server/                     # Server-side components
+
+config/
+  config.example.ts           # Example configuration file
+  index.ts                    # Configuration exports
+  README.md                   # Configuration documentation
+
+hooks/
+  use-toast.ts                # Toast notification hook
+
+public/
+  assets/                     # Static assets
+    social/                   # Social media assets
+  images/                     # Image files
+  og-images/                  # Open Graph images
+  avatars/                    # User avatar images
+  # Various image files and SVG icons
 ```
 
 ## Salary Structure
