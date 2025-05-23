@@ -264,7 +264,11 @@ AIRTABLE_TABLE_NAME = Jobs
 
 ### AI-Powered Customization
 
-With Cursor or Windsurf AI editors, you can easily customize your job board. Try these prompts:
+With [Cursor](https://cursor.com/) or [Windsurf](https://windsurf.com/refer?referral_code=d886df4b0e) AI editors, you can easily customize your job board.
+
+![Use Cursor to Customize Your Job Board Using Natural Language](public/use-cursor-to-customize-your-job-board-using-natural-language.jpg)
+
+Try these prompts:
 
 **🎨 Change Colors:**
 ```
