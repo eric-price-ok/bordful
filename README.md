@@ -1,8 +1,23 @@
 # Bordful: Open-Source Job Board Software
 
-Bordful is a modern, minimal job board software built with Next.js, Tailwind CSS, and Airtable. Features static generation, client-side search, and a clean customizable UI.
+Bordful is a modern, minimal job board software built with Next.js, Tailwind CSS, and 
+Airtable. Features static generation, client-side search, and a clean customizable UI.
 
-![Job Board Starter Screenshot](public/screenshot.png)
+**Create a professional job board in 5 minutes** - no coding experience required! Bordful lets you build a job board like Indeed or AngelList, customized for your brand.
+
+**Perfect for:** Startups, agencies, communities, or anyone who needs to hire people.
+
+## What You'll Build
+
+By following this guide, you'll have a fully functional job board website with:
+- Job listings with search and filters
+- Mobile-responsive design
+- SEO optimization for Google visibility
+- Admin dashboard through Airtable
+
+**Live Demo:** [See Bordful in action](https://demo.bordful.com)
+
+![Bordful Job Board Demo](public/bordful-job-board-software-demo.jpg)
 
 ## Why Bordful?
 
@@ -28,22 +43,35 @@ Get your Bordful job board up and running in just 5 minutes with this step-by-st
 - **[Windsurf](https://windsurf.com/refer?referral_code=d886df4b0e)** - Agentic AI coding assistant
 - **Why?** These editors will help you customize your job board with AI assistance, even if you're not a developer!
 
-**2. Install Node.js**
+**2. Install Node.js (Required)**
+
+**Easy Method - Download Installer:**
+1. Go to [nodejs.org](https://nodejs.org/)
+2. Download the LTS version (recommended for most users)
+3. Run the installer and follow the prompts
+
+![Download Node.js](public/download-nodejs.jpg)
+
+**Advanced Method - Command Line:**
 ```bash
-# On macOS (using Homebrew)
+# On macOS (if you have Homebrew)
 brew install node
 
-# On Windows (using Chocolatey)
+# On Windows (if you have Chocolatey)
 choco install nodejs
-
-# Or download from: https://nodejs.org/ (version 18 or higher)
 ```
 
 **3. Verify Installation**
+Open your Terminal (Mac) or Command Prompt (Windows) and run:
+
+![Check Node and NPM Versions](public/check-node-and-npm-versions.jpg)
+
 ```bash
 node --version  # Should show v18+ or higher
 npm --version   # Should show 8+ or higher
 ```
+
+✅ **Success Check:** If you see version numbers, you're ready to continue!
 
 #### Step 1: Get the Code (1 minute)
 
@@ -73,10 +101,17 @@ npm install
 
 #### Step 2: Set Up Airtable Database (2 minutes)
 
+**What is Airtable?** It's like a smart spreadsheet that will store your job listings. Think of it as your job board's database, but easier to use than Excel.
+
 **Option A: Use Our Template (Recommended)**
 1. Click this link: [Bordful Airtable Template](https://airtable.com/apprhCjWTxfG3JX5p/shrLqfxgbensCY393)
-2. Click "Copy base" to add it to your Airtable workspace
-3. Note down your Base ID (found in the URL: `https://airtable.com/appXXXXXXXXXXXXXX`)
+2. Click "Use this data" to add it to your Airtable workspace
+3. **Find your Base ID:** Look at the URL in your browser - it will look like `https://airtable.com/appABC123DEFGHIJK/...`
+4. Copy the part that starts with `app` (e.g., `appABC123DEFGHIJK`) - this is your Base ID
+
+![Copy Airtable Base ID](public/copy-airtable-base-id.jpg)
+
+✅ **Success Check:** You should see a table with sample job listings and fields like "Title", "Company", "Status", etc.
 
 **Option B: Create Your Own**
 - See our [Airtable Setup Guide](/docs/getting-started/airtable-setup.md) for detailed instructions
@@ -92,22 +127,29 @@ npm install
 
 #### Step 4: Configure Environment Variables (1 minute)
 
-Copy the example environment file and add your credentials:
+**What are environment variables?** They're like secret settings that tell your job board how to connect to Airtable. Think of them as your app's private configuration.
 
+**Step 4a: Copy the template file**
 ```bash
 # Copy the example file to create your environment file
 cp .env.example .env
 ```
 
-Now edit your `.env` file and add your actual values:
+**Step 4b: Edit your settings**
+You need to edit the `.env` file with your actual values. Here's how:
+
+**On Mac:** Open the file with TextEdit or your AI editor (Cursor/Windsurf)
+**On Windows:** Open the file with Notepad or your AI editor (Cursor/Windsurf)
+
+Replace the placeholder values with your real information:
 
 ```env
 # REQUIRED: Your application URL
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 # REQUIRED: Airtable credentials (from steps 2 & 3)
-AIRTABLE_ACCESS_TOKEN=pat_your_token_from_step_3
-AIRTABLE_BASE_ID=app_your_base_id_from_step_2
+AIRTABLE_ACCESS_TOKEN=pat_your_actual_token_here
+AIRTABLE_BASE_ID=app_your_actual_base_id_here
 AIRTABLE_TABLE_NAME=Jobs
 
 # OPTIONAL: Email provider for job alerts (you can add this later)
@@ -115,7 +157,9 @@ EMAIL_PROVIDER=encharge
 ENCHARGE_WRITE_KEY=your_encharge_key_here
 ```
 
-> ⚠️ **IMPORTANT**: Never commit your `.env` file to Git! It's already in `.gitignore` to protect your secrets.
+✅ **Success Check:** Your `.env` file should have real values (starting with `pat_` and `app_`) instead of placeholder text.
+
+> ⚠️ **IMPORTANT**: Never share your `.env` file or commit it to Git! It contains your secret keys.
 
 #### Step 5: Start Your Job Board (30 seconds)
 
@@ -125,6 +169,17 @@ npm run dev
 ```
 
 🎉 **That's it!** Visit `http://localhost:3000` to see your job board in action.
+
+**What you should see:**
+- A homepage with job listings (from your Airtable template)
+- Search and filter functionality
+- Clean, professional design
+
+![Bordful Job Board Running](public/bordful-localhost.jpg)
+
+✅ **Success Check:** If you see job listings on your homepage, congratulations! Your job board is working.
+
+❌ **Not working?** Jump to [Troubleshooting](#troubleshooting) below.
 
 ### What You Get Out of the Box
 
@@ -137,7 +192,14 @@ npm run dev
 
 ### Next Steps
 
-1. **Add Some Jobs**: Go to your Airtable base and add a few test jobs
+1. **Add Your First Job**: 
+   - Go to your Airtable base
+   - Click the "+" button to add a new row
+   - Fill in: Title, Company, Description, Status (set to "Published")
+   - Refresh your job board to see it appear!
+
+![Airtable Add New Job](public/airtable-add-new-job.jpg)
+
 2. **Customize Your Brand**: 
    - Copy `config/config.example.ts` to `config/config.ts` and customize
    - 💡 **Pro Tip**: Open the project in Cursor/Windsurf and ask the AI: "Help me customize the colors and branding for my job board"
@@ -183,6 +245,47 @@ AIRTABLE_TABLE_NAME = Jobs
 
 3. Click "Deploy" and your job board will be live!
 
+### Troubleshooting
+
+**Jobs not showing up?**
+- Check your Airtable base has jobs with `status` field set to "Published"
+- Verify your `AIRTABLE_ACCESS_TOKEN` and `AIRTABLE_BASE_ID` are correct in `.env`
+
+**`npm install` not working?**
+- Make sure Node.js is installed: run `node --version`
+- Navigate to the correct folder before running the command
+- On Windows, try running Command Prompt as Administrator
+
+**Can't open Terminal/Command Prompt?**
+- **Mac:** Press `Cmd + Space`, type "Terminal", press Enter
+- **Windows:** Press `Windows key`, type "Command Prompt", press Enter
+
+**Need help?** Check our [Installation Guide](/docs/getting-started/installation.md) for detailed instructions.
+
+### AI-Powered Customization
+
+With Cursor or Windsurf AI editors, you can easily customize your job board. Try these prompts:
+
+**🎨 Change Colors:**
+```
+"Help me change the primary color scheme to match my company brand. 
+My brand colors are [your colors]. Show me which files to edit."
+```
+
+**📝 Update Content:**
+```
+"I want to change the homepage hero text and add my company name. 
+Can you help me find and update the relevant text?"
+```
+
+**🚀 Fix Deployment Issues:**
+```
+"I'm getting this error when deploying to Vercel: [paste error]. 
+Can you help me fix it?"
+```
+
+> 💡 **Pro Tip:** Always describe what you want to achieve rather than asking for specific code!
+
 ### Environment Variables Explained
 
 | Variable                | Required | Description              | Example                    |
@@ -193,99 +296,6 @@ AIRTABLE_TABLE_NAME = Jobs
 | `AIRTABLE_TABLE_NAME`   | No       | Table name in Airtable   | `Jobs` (default)           |
 | `EMAIL_PROVIDER`        | No       | Email service for alerts | `encharge`, `mailchimp`    |
 | `ENCHARGE_WRITE_KEY`    | No       | Encharge API key         | For job alert emails       |
-
-### Troubleshooting
-
-**Jobs not showing up?**
-- Check your Airtable base has jobs with `status` field set to "Published"
-- Verify your `AIRTABLE_ACCESS_TOKEN` and `AIRTABLE_BASE_ID` are correct
-
-**Build failing?**
-- Make sure all required environment variables are set
-- Check the console for specific error messages
-
-**`npm install` not working?**
-- Make sure you have Node.js installed (run `node --version` to check)
-- Try running `npm install` again after navigating to the correct folder
-- On Windows, you might need to run as Administrator
-- **Don't have package managers?** Install [Homebrew](https://brew.sh/) (macOS) or [Chocolatey](https://chocolatey.org/) (Windows) first
-
-**GitHub Import taking too long?**
-- Large repositories can take 5-10 minutes to import
-- You can't cancel once started, so be patient
-- If it fails, try the command line method instead
-
-**Need help?**
-- Check our [Installation Guide](/docs/getting-started/installation.md) for detailed instructions
-- See [Environment Variables Guide](/docs/reference/environment-variables.md) for all configuration options
-
-### AI-Powered Customization
-
-With Cursor or Windsurf AI editors, you can easily customize your job board without deep coding knowledge. Here are some helpful prompts to get you started:
-
-**🎨 Branding & Design**
-```
-"Help me change the primary color scheme to match my company brand. 
-My brand colors are [your colors]. Show me which files to edit."
-```
-
-**📝 Content Customization**
-```
-"I want to change the homepage hero text and add my company name. 
-Can you help me find and update the relevant text?"
-```
-
-**⚙️ Feature Modifications**
-```
-"How can I add a new job category filter for 'Remote Work'? 
-Walk me through the steps."
-```
-
-**🚀 Deployment Help**
-```
-"I'm getting an error when deploying to Vercel. Here's the error: [paste error]. 
-Can you help me fix it?"
-```
-
-> 💡 **Pro Tip**: Always describe what you want to achieve rather than asking for specific code. The AI will guide you through the best approach!
-
-## Configuration
-
-Bordful uses a flexible configuration system that allows you to customize virtually every aspect of your job board without modifying the core code.
-
-### Quick Configuration
-
-1. Copy the example configuration:
-   ```bash
-   cp config/config.example.ts config/config.ts
-   ```
-2. Customize the settings in `config/config.ts` to match your needs.
-3. The app will automatically use your custom configuration.
-
-The configuration system is:
-- **Easy to use**: Simple file copying to get started.
-- **Flexible**: Customize everything from site title to component behavior.
-- **Maintainable**: Pull updates without losing your customizations.
-
-For comprehensive configuration documentation, see our [Configuration Guide](/docs/getting-started/configuration.md).
-
-## Environment Variables
-
-⚠️ **IMPORTANT**: Never commit your API keys or sensitive credentials to the repository!
-
-**Quick Setup**: See the [5-Minute Quick Start](#5-minute-quick-start) above for step-by-step environment variable setup.
-
-**Template Available**: Copy `.env.example` to `.env` and fill in your values - it includes all the variables you need with helpful comments.
-
-**Required Variables**:
-- `NEXT_PUBLIC_APP_URL` - Your website URL
-- `AIRTABLE_ACCESS_TOKEN` - Your Airtable API token  
-- `AIRTABLE_BASE_ID` - Your Airtable base ID
-- `AIRTABLE_TABLE_NAME` - Table name (defaults to "Jobs")
-
-**Optional Variables**:
-- `EMAIL_PROVIDER` - Email service for job alerts (`encharge`, `mailchimp`, etc.)
-- `ENCHARGE_WRITE_KEY` - Encharge API key for job alert emails
 
 For a complete list of all supported environment variables, see the [Environment Variables Guide](/docs/reference/environment-variables.md).
 
