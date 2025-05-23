@@ -21,8 +21,45 @@ Explore all features in detail in our [Bordful Features Guide](/docs/guides/feat
 
 Get your Bordful job board up and running in just 5 minutes with this step-by-step guide:
 
-#### Step 1: Clone and Install (1 minute)
+#### Prerequisites (2 minutes)
 
+**1. Install an AI Code Editor (Highly Recommended)**
+- **[Cursor](https://cursor.com/)** - AI-powered code editor with built-in chat
+- **[Windsurf](https://windsurf.com/refer?referral_code=d886df4b0e)** - Agentic AI coding assistant
+- **Why?** These editors will help you customize your job board with AI assistance, even if you're not a developer!
+
+**2. Install Node.js**
+```bash
+# On macOS (using Homebrew)
+brew install node
+
+# On Windows (using Chocolatey)
+choco install nodejs
+
+# Or download from: https://nodejs.org/ (version 18 or higher)
+```
+
+**3. Verify Installation**
+```bash
+node --version  # Should show v18+ or higher
+npm --version   # Should show 8+ or higher
+```
+
+#### Step 1: Get the Code (1 minute)
+
+**Option A: Using GitHub's Web Interface (No Command Line Required)**
+1. Go to [GitHub Import](https://github.com/new/import)
+2. Enter repository URL: `https://github.com/craftled/bordful`
+3. Choose your username and repository name (e.g., `my-job-board`)
+4. Set visibility to "Private" (recommended)
+5. Click "Begin import"
+6. Once complete, click "Clone or download" → "Download ZIP"
+7. Extract the ZIP file to your desired folder
+8. Open Terminal/Command Prompt in that folder and run: `npm install`
+
+✅ **Benefits**: Private by default, no Git knowledge required, ready for Vercel deployment
+
+**Option B: Using Command Line (For Developers)**
 ```bash
 # Clone the repository
 git clone https://github.com/craftled/bordful
@@ -31,6 +68,8 @@ cd bordful
 # Install dependencies
 npm install
 ```
+
+> 💡 **Tip**: Option A is perfect if you're not comfortable with Git or want to keep your code private from the start.
 
 #### Step 2: Set Up Airtable Database (2 minutes)
 
@@ -94,11 +133,14 @@ npm run dev
 - ✅ SEO-optimized with automatic sitemaps
 - ✅ RSS feeds for job listings
 - ✅ Admin-friendly Airtable interface for managing jobs
+- ✅ AI-assisted customization with Cursor/Windsurf editors
 
 ### Next Steps
 
 1. **Add Some Jobs**: Go to your Airtable base and add a few test jobs
-2. **Customize Your Brand**: Copy `config/config.example.ts` to `config/config.ts` and customize
+2. **Customize Your Brand**: 
+   - Copy `config/config.example.ts` to `config/config.ts` and customize
+   - 💡 **Pro Tip**: Open the project in Cursor/Windsurf and ask the AI: "Help me customize the colors and branding for my job board"
 3. **Set Up Job Alerts**: Add email provider credentials to enable job alert subscriptions
 4. **Deploy to Production**: See our [Deployment Guide](#deployment-to-vercel) below
 
@@ -116,8 +158,14 @@ npm run start
 
 #### Step 2: Deploy to Vercel
 
-1. Push your code to GitHub (without the `.env` file!)
-2. Go to [Vercel](https://vercel.com) and sign in
+**If you used Option A (GitHub Import) in Step 1:**
+1. Your code is already on GitHub - skip to step 2!
+
+**If you used Option B (Command Line) in Step 1:**
+1. Push your code to GitHub (without the `.env` file, `.gitignore` file already ignores it)
+
+**For everyone:**
+2. Go to [Vercel](https://vercel.com) and sign in with GitHub
 3. Click "New Project" and import your GitHub repository
 4. Vercel will auto-detect it's a Next.js project
 
@@ -156,9 +204,50 @@ AIRTABLE_TABLE_NAME = Jobs
 - Make sure all required environment variables are set
 - Check the console for specific error messages
 
+**`npm install` not working?**
+- Make sure you have Node.js installed (run `node --version` to check)
+- Try running `npm install` again after navigating to the correct folder
+- On Windows, you might need to run as Administrator
+- **Don't have package managers?** Install [Homebrew](https://brew.sh/) (macOS) or [Chocolatey](https://chocolatey.org/) (Windows) first
+
+**GitHub Import taking too long?**
+- Large repositories can take 5-10 minutes to import
+- You can't cancel once started, so be patient
+- If it fails, try the command line method instead
+
 **Need help?**
 - Check our [Installation Guide](/docs/getting-started/installation.md) for detailed instructions
 - See [Environment Variables Guide](/docs/reference/environment-variables.md) for all configuration options
+
+### AI-Powered Customization
+
+With Cursor or Windsurf AI editors, you can easily customize your job board without deep coding knowledge. Here are some helpful prompts to get you started:
+
+**🎨 Branding & Design**
+```
+"Help me change the primary color scheme to match my company brand. 
+My brand colors are [your colors]. Show me which files to edit."
+```
+
+**📝 Content Customization**
+```
+"I want to change the homepage hero text and add my company name. 
+Can you help me find and update the relevant text?"
+```
+
+**⚙️ Feature Modifications**
+```
+"How can I add a new job category filter for 'Remote Work'? 
+Walk me through the steps."
+```
+
+**🚀 Deployment Help**
+```
+"I'm getting an error when deploying to Vercel. Here's the error: [paste error]. 
+Can you help me fix it?"
+```
+
+> 💡 **Pro Tip**: Always describe what you want to achieve rather than asking for specific code. The AI will guide you through the best approach!
 
 ## Configuration
 
