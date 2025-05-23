@@ -319,7 +319,7 @@ For a full overview of all documentation, visit the [Documentation Hub](/docs/RE
 
 ```
 app/
-  layout.tsx              # Root layout with Geist font
+  layout.tsx              # Root layout with configurable fonts (Geist, Inter, IBM Plex Serif)
   page.tsx               # Home page with job listings
   globals.css            # Global styles
   sitemap.ts             # Dynamic sitemap generation
