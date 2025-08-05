@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.54] - 2025-08-05
+
+### Changed
+- Updated Next.js to 15.4.5 with React 19.1.1 for latest performance improvements
+- Enhanced data validation with robust error handling for invalid dates and missing fields
+- Improved build stability by adding defensive programming throughout the application
+
+### Fixed
+- Fixed date handling in job metadata generation and RSS/Atom feeds
+- Enhanced slug generation with null/undefined checks for missing job data
+- Improved structured data generation with proper date validation
+- Fixed job type handling in metadata generation for jobs with missing type fields
+
 ## [0.1.53] - 2025-05-05
 
 ### Fixed

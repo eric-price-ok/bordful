@@ -55,11 +55,16 @@ export async function GET() {
           job.workplace_city ? ` - ${job.workplace_city}` : ""
         }${job.workplace_country ? `, ${job.workplace_country}` : ""}
 **Salary:** ${job.salary ? formatSalary(job.salary, true) : "Not specified"}
-**Posted:** ${new Date(job.posted_date).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
+**Posted:** ${(() => {
+          if (!job.posted_date) return "Date not available";
+          const date = new Date(job.posted_date);
+          if (isNaN(date.getTime())) return "Invalid date";
+          return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        })()}
 
 ${job.description.substring(0, descriptionLength)}...
 
@@ -78,7 +83,10 @@ ${job.description.substring(0, descriptionLength)}...
               link: job.apply_url,
             },
           ],
-          date: new Date(job.posted_date),
+          date:
+            job.posted_date && !isNaN(new Date(job.posted_date).getTime())
+              ? new Date(job.posted_date)
+              : new Date(),
           image: job.featured ? `${baseUrl}/featured-job.png` : undefined,
           // Add categories based on job properties - with null checks
           category: [

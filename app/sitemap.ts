@@ -67,15 +67,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const jobs = await getJobs();
 
     // Create sitemap entries for each job using descriptive slugs
-    const jobRoutes = jobs.map((job) => ({
-      url: `${baseUrl}/jobs/${generateJobSlug(job.title, job.company)}`,
-      lastModified: new Date(job.posted_date),
-      changeFrequency: "daily" as const,
-      priority: job.featured ? 0.9 : 0.7,
-    }));
+    const jobRoutes = jobs
+      .filter(
+        (job) => job.posted_date && !isNaN(new Date(job.posted_date).getTime())
+      )
+      .map((job) => ({
+        url: `${baseUrl}/jobs/${generateJobSlug(job.title, job.company)}`,
+        lastModified: new Date(job.posted_date),
+        changeFrequency: "daily" as const,
+        priority: job.featured ? 0.9 : 0.7,
+      }));
 
     // Create sitemap entries for job category pages
-    const uniqueTypes = [...new Set(jobs.map((job) => job.type))];
+    const uniqueTypes = [
+      ...new Set(jobs.map((job) => job.type).filter(Boolean)),
+    ];
     const typeRoutes = uniqueTypes.map((type) => ({
       url: `${baseUrl}/jobs/type/${type.toLowerCase().replace(/\s+/g, "-")}`,
       lastModified: new Date(),
@@ -84,7 +90,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     // Create sitemap entries for career level pages
-    const uniqueLevels = [...new Set(jobs.flatMap((job) => job.career_level))];
+    const uniqueLevels = [
+      ...new Set(jobs.flatMap((job) => job.career_level).filter(Boolean)),
+    ];
     const levelRoutes = uniqueLevels.map((level) => ({
       url: `${baseUrl}/jobs/level/${level.toLowerCase()}`,
       lastModified: new Date(),

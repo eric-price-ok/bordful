@@ -88,13 +88,18 @@ export async function generateMetadata({
   })();
 
   // Format deadline if available
-  const deadlineText = job.valid_through
-    ? `Apply before ${new Date(job.valid_through).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })}`
-    : "Apply now";
+  const deadlineText = (() => {
+    if (!job.valid_through) return "Apply now";
+
+    const deadline = new Date(job.valid_through);
+    if (isNaN(deadline.getTime())) return "Apply now";
+
+    return `Apply before ${deadline.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })}`;
+  })();
 
   // Build description parts dynamically
   const parts = [];
@@ -103,9 +108,9 @@ export async function generateMetadata({
   const cleanTitle = job.title.replace(/\s*\([^)]*\)\s*/g, " ").trim();
 
   // Base description
-  let baseDescription = `${
-    job.company
-  } is hiring ${job.type.toLowerCase()} ${cleanTitle}`;
+  let baseDescription = `${job.company} is hiring ${
+    job.type ? job.type.toLowerCase() : ""
+  } ${cleanTitle}`.trim();
   let baseDescriptionAdded = false;
 
   // Add location only if it exists
@@ -439,16 +444,22 @@ export default async function JobPostPage({
                   <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </a>
               </Button>
-              {job.valid_through && (
-                <span className="text-xs text-gray-500 text-center sm:text-left w-full sm:w-auto">
-                  Apply before:{" "}
-                  {new Date(job.valid_through).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </span>
-              )}
+              {job.valid_through &&
+                (() => {
+                  const deadline = new Date(job.valid_through);
+                  return (
+                    !isNaN(deadline.getTime()) && (
+                      <span className="text-xs text-gray-500 text-center sm:text-left w-full sm:w-auto">
+                        Apply before:{" "}
+                        {deadline.toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </span>
+                    )
+                  );
+                })()}
             </div>
           </div>
         </article>

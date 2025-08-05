@@ -238,15 +238,26 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
 
   // Calculate valid through date if not provided (default to configured days from posted date or 30 days)
   const postDate = new Date(job.posted_date);
-  const defaultValidThrough = new Date(postDate);
+  const isValidPostDate = !isNaN(postDate.getTime());
+
+  // Use current date if posted_date is invalid
+  const safePostDate = isValidPostDate ? postDate : new Date();
+  const defaultValidThrough = new Date(safePostDate);
+
   // Use config value or fallback to 30 days
   const validityDays = config.jobListings?.defaultValidityDays ?? 30;
   defaultValidThrough.setDate(defaultValidThrough.getDate() + validityDays);
 
   // Only add valid_through if the job has it (will need to be added to Airtable)
-  const validThrough = job.valid_through
-    ? new Date(job.valid_through).toISOString()
-    : defaultValidThrough.toISOString();
+  const validThrough = (() => {
+    if (job.valid_through) {
+      const validThroughDate = new Date(job.valid_through);
+      return !isNaN(validThroughDate.getTime())
+        ? validThroughDate.toISOString()
+        : defaultValidThrough.toISOString();
+    }
+    return defaultValidThrough.toISOString();
+  })();
 
   // Create schema data object
   // Use a record approach first to collect all properties
@@ -255,7 +266,7 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
     "@type": "JobPosting",
     title: job.title,
     description: job.description,
-    datePosted: new Date(job.posted_date).toISOString(),
+    datePosted: safePostDate.toISOString(),
     validThrough: validThrough,
     url: jobUrl,
     hiringOrganization: {

@@ -61,7 +61,11 @@ export async function GET() {
           day: "numeric",
         })}
 
-${job.description.substring(0, descriptionLength)}...
+${
+  job.description
+    ? job.description.substring(0, descriptionLength)
+    : "No description available"
+}...
 
 **Apply Now:** ${job.apply_url}
 `;
@@ -78,7 +82,10 @@ ${job.description.substring(0, descriptionLength)}...
               link: job.apply_url,
             },
           ],
-          date: new Date(job.posted_date),
+          date:
+            job.posted_date && !isNaN(new Date(job.posted_date).getTime())
+              ? new Date(job.posted_date)
+              : new Date(),
           image: job.featured ? `${baseUrl}/featured-job.png` : undefined,
           // Add categories based on job properties - with null checks
           category: [

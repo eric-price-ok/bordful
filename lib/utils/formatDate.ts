@@ -1,5 +1,18 @@
-export function formatDate(dateString: string) {
+export function formatDate(dateString: string | null | undefined) {
+  // Handle null, undefined, or empty date strings
+  if (!dateString) {
+    return {
+      fullDate: "Date not available",
+      relativeTime: "Date not available",
+    };
+  }
+
   const date = new Date(dateString);
+
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    return { fullDate: "Invalid date", relativeTime: "Invalid date" };
+  }
 
   // Format full date like "Dec 10, 2024"
   const fullDate = date.toLocaleDateString("en-US", {
