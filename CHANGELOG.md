@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Updated Next.js to 15.4.5 with React 19.1.1 for latest performance improvements
+- Upgraded React Markdown to 10.1.0 for performance improvements
 - Enhanced data validation with robust error handling for invalid dates and missing fields
 - Improved build stability by adding defensive programming throughout the application
 
