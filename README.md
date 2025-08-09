@@ -307,7 +307,7 @@ For a complete list of all supported environment variables, see the [Environment
 
 Bordful is packed with features. Explore the documentation to learn more:
 
-- **Core Functionality & Guides:** Understand Bordful's capabilities. ([Core Features](/docs/guides/core-features.md), [All Guides](/docs/guides/index.md))
+- **Core Functionality & Guides:** Understand Bordful's capabilities. ([Features](/docs/guides/features.md), [All Guides](/docs/guides/index.md))
 - **Customization:** Tailor the look, feel, and functionality. ([Customization Guide](/docs/guides/customization.md), [Theming](/docs/guides/theming-customization.md), [Hero Section](/docs/guides/hero-section.md), [Navigation](/docs/guides/navigation.md), [Footer](/docs/guides/footer.md))
 - **SEO & Content:** Maximize visibility with built-in SEO tools. ([Schema Implementation](/docs/advanced/schema-implementation.md), [Sitemaps](/docs/reference/sitemap-generation.md), [Robots.txt](/docs/reference/robots-generation.md), [RSS Feeds](/docs/reference/rss-feed-system.md), [FAQ System](/docs/reference/faq-system.md))
 - **Data & Backend:** Learn about Airtable integration and data handling. ([Airtable Setup](/docs/getting-started/airtable-setup.md), [Data Revalidation (ISR)](/docs/advanced/data-revalidation.md))

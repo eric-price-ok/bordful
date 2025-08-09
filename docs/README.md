@@ -75,7 +75,7 @@ We welcome contributions to improve our documentation. Please see the [Documenta
 - **[Footer Customization](./guides/footer.md)**: Configure and customize the footer
 - **[Logo Customization](./guides/logo-customization.md)**: Configure and optimize your logo across the job board
 - **[Hero Section Customization](./guides/hero-section.md)**: Configure backgrounds, colors, and styling for the hero section
-- **[Core Features](./guides/core-features.md)**: Overview of Bordful's core features and capabilities
+- **[Features](./guides/features.md)**: Overview of Bordful's core features and capabilities
 - **[Job Listings](./guides/job-listings.md)**: Configure and customize job listings display
 - **[Filtering System](./guides/filtering-system.md)**: Configure the comprehensive job filtering system
 - **[Pricing Page Customization](./guides/pricing.md)**: Configure and customize the pricing plans and options
