@@ -329,27 +329,16 @@ export function JobFilters({
 
   // Predefined lists
   const initialLevels: CareerLevel[] = [
-    "Internship",
+    "Intern",
     "EntryLevel",
-    "Associate",
-    "Junior",
-    "MidLevel",
+    "Trained",
+    "Proficient",
     "Senior",
-    "Staff",
     "Principal",
   ];
 
   const additionalLevels: CareerLevel[] = [
-    "Lead",
     "Manager",
-    "SeniorManager",
-    "Director",
-    "SeniorDirector",
-    "VP",
-    "SVP",
-    "EVP",
-    "CLevel",
-    "Founder",
   ];
 
   // Handle clearing all filters

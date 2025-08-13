@@ -17,13 +17,13 @@ function formatJobLocationType(job: Job): string | null {
 }
 
 function formatEmploymentType(type: string): string {
-  const mappings: Record<string, string> = {
-    "Full-time": "FULL_TIME",
-    "Part-time": "PART_TIME",
-    Contract: "CONTRACTOR",
-    Freelance: "CONTRACTOR",
-  };
-  return mappings[type] || "OTHER";
+    const mappings: Record<string, string> = {
+        "Full Time": "FULL_TIME",
+        "Part Time": "PART_TIME",
+        "Contract (1099)": "CONTRACTOR",
+        "Contract to Hire": "CONTRACT_TO_HIRE",
+    };
+    return mappings[type] || "OTHER";
 }
 
 function formatSalaryForSchema(salary: Salary | null): MonetaryAmount | null {

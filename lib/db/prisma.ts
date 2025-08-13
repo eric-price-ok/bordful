@@ -1,14 +1,19 @@
-import { PrismaClient } from '../generated/prisma'
+import { PrismaClient } from '../generated/prisma' 
 
-let prisma
+declare global {
+    var prisma: PrismaClient | undefined;
+}
+
+let prisma: PrismaClient
 
 if (process.env.NODE_ENV === 'production') {
     prisma = new PrismaClient()
 } else {
-    if (!global.prisma) {
-        global.prisma = new PrismaClient()
+    // Check if globalThis exists and use it, otherwise create a new client
+    if (typeof globalThis !== 'undefined' && !globalThis.prisma) {
+        globalThis.prisma = new PrismaClient()
     }
-    prisma = global.prisma
+    prisma = (typeof globalThis !== 'undefined' && globalThis.prisma) || new PrismaClient()
 }
 
 // Simple stub function - returns null since everything is already USD
@@ -18,7 +23,7 @@ export function formatUSDApproximation(salary: Salary | null): string | null {
 
 export type CareerLevel =
     | "Intern"
-    | "EntryLevel"
+    | "Entry Level"
     | "Trained"
     | "Proficient"
     | "Senior"
@@ -42,7 +47,7 @@ export function normalizeAnnualSalary(salary: Salary | null): number {
     if (!salary || (!salary.min && !salary.max)) return -1;
 
     // Use the conversion rates from the currency constants
-    const exchangeRate = CURRENCY_RATES[salary.currency] || 1;
+    const exchangeRate = 1; // Always USD, no conversion needed
 
     // Annualization multipliers
     const annualMultiplier: Record<SalaryUnit, number> = {
@@ -70,6 +75,7 @@ export interface Job {
     date_posted: string;
     status: "active" | "inactive";
     salary: Salary | null;
+    type: string;
 }
 
 export function formatSalary(salary: Salary | null): string {
@@ -141,6 +147,11 @@ export async function getJobs() {
                         common_name: true,
                         website: true
                     }
+                },
+                jobtype: {
+                    select: {
+                        name: true
+                    }
                 }
             },
             orderBy: {
@@ -153,7 +164,7 @@ export async function getJobs() {
             id: job.id.toString(),
             title: job.job_title,
             company: job.company.common_name,
-            type: "Full-time", // Default for now
+            type: job.jobtype?.name || "Not specified",
             salary: job.minimum_salary ? {
                 min: Number(job.minimum_salary),
                 max: job.maximum_salary ? Number(job.maximum_salary) : null,
