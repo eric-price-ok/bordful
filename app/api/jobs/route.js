@@ -5,7 +5,9 @@ export async function GET(request) {
     try {
         // Get query parameters from the URL
         const { searchParams } = new URL(request.url)
-        const limit = searchParams.get('limit') || '50'
+        const limit = searchParams.get('limit')
+        const limitValue = limit ? parseInt(limit) : null; // null = no limit
+
         const search = searchParams.get('search')
 
         // Build the query with correct field names
@@ -36,7 +38,7 @@ export async function GET(request) {
             orderBy: {
                 date_posted: 'desc'  // Changed from datePosted
             },
-            take: parseInt(limit)
+            take: parseInt(limit && { take: parseInt(limit) }),
         })
 
         // Transform the data to match what the frontend expects

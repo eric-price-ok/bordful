@@ -146,7 +146,6 @@ export async function getJobs() {
             orderBy: {
                 date_posted: 'desc'
             },
-            take: 50  // Limit to 50 for now
         })
 
         // Transform to match Airtable's Job interface
