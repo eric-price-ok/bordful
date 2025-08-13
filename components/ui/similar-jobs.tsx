@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Job } from "@/lib/db/airtable";
+import type { Job } from "@/lib/db/prisma";
 import { generateJobSlug } from "@/lib/utils/slugify";
 
 interface SimilarJobsProps {

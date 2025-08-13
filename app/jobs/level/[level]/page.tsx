@@ -1,4 +1,4 @@
-import { getJobs, CareerLevel } from "@/lib/db/airtable";
+import { getJobs, CareerLevel } from "@/lib/db/prisma";
 import { HeroSection } from "@/components/ui/hero-section";
 import config from "@/config";
 import type { Metadata } from "next";

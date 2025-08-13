@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import type { Job, CareerLevel } from "@/lib/db/airtable";
+import type { Job, CareerLevel } from "@/lib/db/prisma";
 import { JobListings } from "@/components/jobs/JobListings";
 import { PostJobBanner } from "@/components/ui/post-job-banner";
 import { useSearchParams } from "next/navigation";

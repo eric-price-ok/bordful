@@ -6,7 +6,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { Job } from "@/lib/db/airtable";
+import { Job } from "@/lib/db/prisma";
 import { JobSearchInput } from "@/components/ui/job-search-input";
 import { useJobSearch } from "@/lib/hooks/useJobSearch";
 import { filterJobsBySearch } from "@/lib/utils/filter-jobs";

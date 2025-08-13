@@ -1,7 +1,7 @@
 import { Feed } from "feed";
-import { getJobs } from "@/lib/db/airtable";
+import { getJobs } from "@/lib/db/prisma";
 import { generateJobSlug } from "@/lib/utils/slugify";
-import { formatSalary } from "@/lib/db/airtable";
+import { formatSalary } from "@/lib/db/prisma";
 import config from "@/config";
 
 export const revalidate = 300; // 5 minutes, matching other dynamic routes

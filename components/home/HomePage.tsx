@@ -2,8 +2,8 @@
 
 import { useState, useMemo, useCallback, useEffect, Suspense } from "react";
 import { JobCard } from "@/components/jobs/JobCard";
-import type { Job, CareerLevel } from "@/lib/db/airtable";
-import { normalizeAnnualSalary } from "@/lib/db/airtable";
+import type { Job, CareerLevel } from "@/lib/db/prisma";
+import { normalizeAnnualSalary } from "@/lib/db/prisma";
 import { formatDistanceToNow, isToday } from "date-fns";
 import { useRouter, useSearchParams } from "next/navigation";
 import { JobFilters } from "@/components/ui/job-filters";

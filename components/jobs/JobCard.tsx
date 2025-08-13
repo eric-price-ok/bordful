@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Job, formatSalary } from "@/lib/db/airtable";
+import { Job, formatSalary } from "@/lib/db/prisma";
+import { getJobs } from "@/lib/db/prisma";
 import { formatDate } from "@/lib/utils/formatDate";
 import { generateJobSlug } from "@/lib/utils/slugify";
 import { Sparkles, ArrowUpRight } from "lucide-react";

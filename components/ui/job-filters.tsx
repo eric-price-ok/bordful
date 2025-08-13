@@ -2,7 +2,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { useState, useMemo, useCallback, useEffect } from "react";
-import { CareerLevel, Job, normalizeAnnualSalary } from "@/lib/db/airtable";
+import { CareerLevel, Job, normalizeAnnualSalary } from "@/lib/db/prisma";
 import { CAREER_LEVEL_DISPLAY_NAMES } from "@/lib/constants/career-levels";
 import {
   LanguageCode,

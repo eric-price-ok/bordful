@@ -1,4 +1,4 @@
-import { getJobs, CareerLevel } from "@/lib/db/airtable";
+import { getJobs, CareerLevel } from "@/lib/db/prisma";
 import { GraduationCap } from "lucide-react";
 import type { Metadata } from "next";
 import config from "@/config";

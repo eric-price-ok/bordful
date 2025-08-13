@@ -1,4 +1,4 @@
-import { Job, Salary } from "@/lib/db/airtable";
+import { Job, Salary } from "@/lib/db/prisma";
 import Script from "next/script";
 import config from "@/config";
 import type {

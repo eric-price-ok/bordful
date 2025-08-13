@@ -3,7 +3,7 @@ import {
   Salary,
   formatSalary,
   formatUSDApproximation,
-} from "@/lib/db/airtable";
+} from "@/lib/db/prisma";
 import { WorkplaceType, RemoteRegion } from "@/lib/constants/workplace";
 import {
   LanguageCode,

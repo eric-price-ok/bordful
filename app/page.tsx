@@ -1,7 +1,7 @@
 import { HomePage } from "@/components/home/HomePage";
 import { Metadata } from "next";
 import config from "@/config";
-import { getJobs } from "@/lib/db/airtable";
+import { getJobs } from "@/lib/db/prisma";
 import { generateMetadata } from "@/lib/utils/metadata";
 
 // Add metadata for SEO

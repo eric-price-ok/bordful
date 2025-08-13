@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import config from "@/config";
-import { getJobs } from "@/lib/db/airtable";
+import { getJobs } from "@/lib/db/prisma";
 import { generateJobSlug } from "@/lib/utils/slugify";
 
 // Use the nodejs runtime to ensure full environment variable access

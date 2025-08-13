@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { getJobs } from "@/lib/db/airtable";
+import { getJobs } from "@/lib/db/prisma";
 import { generateJobSlug } from "@/lib/utils/slugify";
 
 /**

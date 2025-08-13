@@ -1,4 +1,4 @@
-import { getJobs, formatSalary } from "@/lib/db/airtable";
+import { getJobs, formatSalary } from "@/lib/db/prisma";
 import { formatDate } from "@/lib/utils/formatDate";
 import { generateJobSlug } from "@/lib/utils/slugify";
 import React from "react";

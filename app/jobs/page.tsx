@@ -1,4 +1,4 @@
-import { getJobs } from "@/lib/db/airtable";
+import { getJobs } from "@/lib/db/prisma";
 import {
   Briefcase,
   Globe2,
@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import config from "@/config";
-import type { CareerLevel } from "@/lib/db/airtable";
+import type { CareerLevel } from "@/lib/db/prisma";
 import { Button } from "@/components/ui/button";
 import { PostJobBanner } from "@/components/ui/post-job-banner";
 import { HeroSection } from "@/components/ui/hero-section";

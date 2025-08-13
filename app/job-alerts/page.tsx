@@ -4,7 +4,7 @@ import config from "@/config";
 import { HeroSection } from "@/components/ui/hero-section";
 import { JobAlertsForm } from "@/components/job-alerts/JobAlertsForm";
 import { redirect } from "next/navigation";
-import { getJobs } from "@/lib/db/airtable";
+import { getJobs } from "@/lib/db/prisma";
 import { CompactJobCardList } from "@/components/jobs/CompactJobCardList";
 
 // Add metadata for SEO

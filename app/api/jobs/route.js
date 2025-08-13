@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/db'
+import { prisma } from '../../../lib/db/prisma.ts'
 import { NextResponse } from 'next/server'
 
 export async function GET(request) {
@@ -8,17 +8,17 @@ export async function GET(request) {
         const limit = searchParams.get('limit') || '50'
         const search = searchParams.get('search')
 
-        // Build the query
+        // Build the query with correct field names
         let whereClause = {
             approved: true,
-            jobStatusId: 1
+            job_status_id: 1  // Changed from jobStatusId to job_status_id
         }
 
         // Add search filter if provided
         if (search) {
             whereClause.OR = [
-                { jobTitle: { contains: search, mode: 'insensitive' } },
-                { jobDescription: { contains: search, mode: 'insensitive' } }
+                { job_title: { contains: search, mode: 'insensitive' } },  // Changed from jobTitle
+                { job_description: { contains: search, mode: 'insensitive' } }  // Changed from jobDescription
             ]
         }
 
@@ -28,26 +28,26 @@ export async function GET(request) {
             include: {
                 company: {
                     select: {
-                        commonName: true,
+                        common_name: true,  // Changed from commonName
                         website: true
                     }
                 }
             },
             orderBy: {
-                datePosted: 'desc'
+                date_posted: 'desc'  // Changed from datePosted
             },
             take: parseInt(limit)
         })
 
-        // Transform the data
+        // Transform the data to match what the frontend expects
         const transformedJobs = jobs.map(job => ({
             id: job.id,
-            title: job.jobTitle,
-            company: job.company.commonName,
-            description: job.jobDescription,
-            url: job.postingUrl,
-            date: job.datePosted,
-            salary: job.minimumSalary ? `$${job.minimumSalary}` : null,
+            title: job.job_title,           // Updated field name
+            company: job.company.common_name, // Updated field name
+            description: job.job_description, // Updated field name
+            url: job.posting_url,           // Updated field name
+            date: job.date_posted,          // Updated field name
+            salary: job.minimum_salary ? `$${job.minimum_salary}` : null, // Updated field name
             website: job.company.website
         }))
 
