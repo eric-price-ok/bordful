@@ -188,7 +188,7 @@ export default async function JobPostPage({
     notFound();
   }
 
-  const { fullDate, relativeTime } = formatDate(job.posted_date);
+  const { fullDate, relativeTime } = formatDate(job.date_posted);
   const showSalary =
     job.salary && (job.salary.min !== null || job.salary.max !== null);
 

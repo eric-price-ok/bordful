@@ -55,7 +55,7 @@ export async function GET() {
           job.workplace_city ? ` - ${job.workplace_city}` : ""
         }${job.workplace_country ? `, ${job.workplace_country}` : ""}
 **Salary:** ${job.salary ? formatSalary(job.salary, true) : "Not specified"}
-**Posted:** ${new Date(job.posted_date).toLocaleDateString("en-US", {
+**Posted:** ${new Date(job.date_posted).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",
@@ -83,8 +83,8 @@ ${
             },
           ],
           date:
-            job.posted_date && !isNaN(new Date(job.posted_date).getTime())
-              ? new Date(job.posted_date)
+            job.date_posted && !isNaN(new Date(job.date_posted).getTime())
+              ? new Date(job.date_posted)
               : new Date(),
           image: job.featured ? `${baseUrl}/featured-job.png` : undefined,
           // Add categories based on job properties - with null checks

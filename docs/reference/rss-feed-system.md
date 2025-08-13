@@ -123,7 +123,7 @@ export async function GET() {
           link: job.apply_url,
         },
       ],
-      date: new Date(job.posted_date),
+      date: new Date(job.date__posted),
       image: job.company_logo || `${config.url}/logo.png`,
       // Add categories based on job properties
       category: [

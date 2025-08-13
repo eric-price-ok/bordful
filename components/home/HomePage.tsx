@@ -334,7 +334,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
     if (initialJobs.length === 0) return null;
 
     const mostRecentDate = Math.max(
-      ...initialJobs.map((job) => new Date(job.posted_date).getTime())
+      ...initialJobs.map((job) => new Date(job.date_posted).getTime())
     );
 
     return mostRecentDate; // Return the timestamp
@@ -342,7 +342,7 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
 
   // Calculate jobs added today
   const jobsAddedToday = useMemo(() => {
-    return initialJobs.filter((job) => isToday(new Date(job.posted_date)))
+    return initialJobs.filter((job) => isToday(new Date(job.date_posted)))
       .length;
   }, [initialJobs]);
 

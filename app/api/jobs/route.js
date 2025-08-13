@@ -48,7 +48,7 @@ export async function GET(request) {
             company: job.company.common_name, // Updated field name
             description: job.job_description, // Updated field name
             url: job.posting_url,           // Updated field name
-            date: job.date_posted,          // Updated field name
+            date_posted: job.date_posted,          // Updated field name
             salary: job.minimum_salary ? `$${job.minimum_salary}` : null, // Updated field name
             website: job.company.website
         }))

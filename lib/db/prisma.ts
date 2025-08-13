@@ -67,7 +67,7 @@ export interface Job {
     company: string;
     description: string;
     apply_url: string;
-    posted_date: string;
+    date_posted: string;
     status: "active" | "inactive";
     salary: Salary | null;
 }
@@ -163,7 +163,7 @@ export async function getJobs() {
             benefits: null,
             application_requirements: null,
             apply_url: job.posting_url || "#",
-            posted_date: job.date_posted ? job.date_posted.toISOString().split('T')[0] : "",
+            date_posted: job.date_posted ? job.date_posted.toISOString().split('T')[0] : "",
             status: "active",
             career_level: ["NotSpecified"],
             visa_sponsorship: "Not specified",

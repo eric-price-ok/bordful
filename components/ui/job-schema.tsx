@@ -237,7 +237,7 @@ export function JobSchema({ job, slug }: JobSchemaProps) {
   const jobUrl = `${baseUrl}/jobs/${slug}`;
 
   // Calculate valid through date if not provided (default to configured days from posted date or 30 days)
-  const postDate = new Date(job.posted_date);
+  const postDate = new Date(job.date_posted);
   const isValidPostDate = !isNaN(postDate.getTime());
 
   // Use current date if posted_date is invalid

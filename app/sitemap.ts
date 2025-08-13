@@ -69,11 +69,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Create sitemap entries for each job using descriptive slugs
     const jobRoutes = jobs
       .filter(
-        (job) => job.posted_date && !isNaN(new Date(job.posted_date).getTime())
+        (job) => job.date_posted && !isNaN(new Date(job.date_posted).getTime())
       )
       .map((job) => ({
         url: `${baseUrl}/jobs/${generateJobSlug(job.title, job.company)}`,
-        lastModified: new Date(job.posted_date),
+        lastModified: new Date(job.date_posted),
         changeFrequency: "daily" as const,
         priority: job.featured ? 0.9 : 0.7,
       }));

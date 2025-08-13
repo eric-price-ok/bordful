@@ -10,7 +10,7 @@ import config from "@/config";
 import { resolveColor } from "@/lib/utils/colors";
 
 export function JobCard({ job }: { job: Job }) {
-  const { fullDate, relativeTime } = formatDate(job.posted_date);
+  const { fullDate, relativeTime } = formatDate(job.date_posted);
   const showSalary =
     job.salary && (job.salary.min !== null || job.salary.max !== null);
 
@@ -35,7 +35,7 @@ export function JobCard({ job }: { job: Job }) {
   // Check if job was posted within the last 48 hours
   const isNew = () => {
     const now = new Date();
-    const postedDate = new Date(job.posted_date);
+    const postedDate = new Date(job.date_posted);
     const diffInHours = Math.floor(
       (now.getTime() - postedDate.getTime()) / (1000 * 60 * 60)
     );
@@ -88,7 +88,7 @@ export function JobCard({ job }: { job: Job }) {
               </>
             )}
             <span>•</span>
-            <time dateTime={job.posted_date} className="whitespace-nowrap">
+            <time dateTime={job.date_posted} className="whitespace-nowrap">
               {fullDate} ({relativeTime})
             </time>
           </div>

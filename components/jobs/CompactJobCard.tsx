@@ -7,14 +7,14 @@ import { generateJobSlug } from "@/lib/utils/slugify";
 import { JobBadge } from "@/components/ui/job-badge";
 
 export function CompactJobCard({ job }: { job: Job }) {
-  const { relativeTime } = formatDate(job.posted_date);
+  const { relativeTime } = formatDate(job.date_posted);
   const showSalary =
     job.salary && (job.salary.min !== null || job.salary.max !== null);
 
   // Check if job was posted within the last 48 hours
   const isNew = () => {
     const now = new Date();
-    const postedDate = new Date(job.posted_date);
+    const postedDate = new Date(job.date_posted);
     const diffInHours = Math.floor(
       (now.getTime() - postedDate.getTime()) / (1000 * 60 * 60)
     );
