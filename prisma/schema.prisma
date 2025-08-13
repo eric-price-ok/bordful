@@ -1,0 +1,524 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model benefits {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique @db.VarChar(100)
+  description     String?
+  category        String?           @db.VarChar(50)
+  is_active       Boolean           @default(true)
+  created_at      DateTime          @default(now()) @db.Timestamp(6)
+  companybenefits companybenefits[]
+}
+
+model certification_providers {
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(100)
+  website        String?          @db.VarChar(255)
+  industry_focus String?          @db.VarChar(100)
+  certifications certifications[]
+}
+
+model certifications {
+  id                      Int                      @id @default(autoincrement())
+  name                    String                   @db.VarChar(200)
+  code                    String?                  @db.VarChar(50)
+  provider_id             Int?
+  category                String?                  @db.VarChar(100)
+  level                   String?                  @db.VarChar(50)
+  typical_duration_months Int?
+  description             String?
+  is_active               Boolean?                 @default(true)
+  certification_providers certification_providers? @relation(fields: [provider_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  skills                  skills[]
+}
+
+model cities {
+  id          Int           @id @default(autoincrement())
+  city_name   String        @db.VarChar(100)
+  sort_order  Int?
+  companysite companysite[]
+  joblistings joblistings[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model company {
+  id                                              Int                   @id @default(autoincrement())
+  common_name                                     String                @db.VarChar(255)
+  legal_name                                      String?               @db.VarChar(255)
+  website                                         String?               @db.VarChar(500)
+  jobboard                                        String?               @db.VarChar(500)
+  date_founded                                    DateTime?             @db.Date
+  date_closed                                     DateTime?             @db.Date
+  defunct                                         Boolean               @default(false)
+  approved                                        Boolean               @default(true)
+  company_type                                    Int
+  description                                     String?
+  company_size                                    String?               @db.VarChar(50)
+  created_at                                      DateTime              @default(now()) @db.Timestamp(6)
+  updated_at                                      DateTime              @default(now()) @db.Timestamp(6)
+  last_full_scrape_completed                      DateTime?             @db.Timestamp(6)
+  company_type_company_company_typeTocompany_type company_type          @relation("company_company_typeTocompany_type", fields: [company_type], references: [id], onDelete: SetNull, onUpdate: NoAction, map: "company_companytype_fkey")
+  company_socials                                 company_socials[]
+  companybenefits                                 companybenefits[]
+  companyfunctions                                companyfunctions[]
+  companyindustries                               companyindustries[]
+  companysite                                     companysite[]
+  companytechnologies                             companytechnologies[]
+  joblistings                                     joblistings[]
+  notes                                           notes[]
+  scrapinglog                                     scrapinglog[]
+
+  @@index([approved], map: "idx_company_approved")
+  @@index([common_name], map: "idx_company_common_name")
+  @@index([company_type], map: "idx_company_type")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model company_socials {
+  id                   Int                @id @default(autoincrement())
+  company_id           Int
+  social_media_type_id Int
+  company_url          String             @db.VarChar(500)
+  is_active            Boolean            @default(true)
+  created_at           DateTime           @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime           @default(now()) @db.Timestamptz(6)
+  company              company            @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_company_socials_company")
+  social_media_types   social_media_types @relation(fields: [social_media_type_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_company_socials_social_media_type")
+
+  @@unique([company_id, social_media_type_id], map: "unique_company_social_media")
+  @@index([is_active], map: "idx_company_socials_active")
+  @@index([company_id], map: "idx_company_socials_company")
+  @@index([social_media_type_id], map: "idx_company_socials_type")
+}
+
+model company_type {
+  id                                         Int       @id @default(autoincrement())
+  name                                       String    @unique @db.VarChar(50)
+  description                                String?
+  is_active                                  Boolean   @default(true)
+  created_at                                 DateTime  @default(now()) @db.Timestamp(6)
+  company_company_company_typeTocompany_type company[] @relation("company_company_typeTocompany_type")
+}
+
+model companybenefits {
+  id           Int       @id @default(autoincrement())
+  company_id   Int
+  benefit_id   Int
+  is_featured  Boolean   @default(false)
+  created_at   DateTime  @default(now()) @db.Timestamp(6)
+  last_updated DateTime? @db.Timestamp(6)
+  benefits     benefits  @relation(fields: [benefit_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "companybenefits_benefitid_fkey")
+  company      company   @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "companybenefits_companyid_fkey")
+
+  @@unique([company_id, benefit_id], map: "unique_company_benefit")
+}
+
+model companyfunctions {
+  id          Int       @id @default(autoincrement())
+  company_id  Int
+  function_id Int
+  created_at  DateTime  @default(now()) @db.Timestamp(6)
+  company     company   @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "companyfunctions_companyid_fkey")
+  functions   functions @relation(fields: [function_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "companyfunctions_functionid_fkey")
+
+  @@unique([company_id, function_id], map: "unique_company_function")
+  @@index([company_id], map: "idx_companyfunctions_company")
+  @@index([function_id], map: "idx_companyfunctions_function")
+}
+
+model companyindustries {
+  id          Int        @id @default(autoincrement())
+  company_id  Int
+  industry_id Int
+  created_at  DateTime   @default(now()) @db.Timestamp(6)
+  company     company    @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "companyindustries_companyid_fkey")
+  industries  industries @relation(fields: [industry_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "companyindustries_industryid_fkey")
+
+  @@unique([company_id, industry_id], map: "unique_company_industry")
+  @@index([company_id], map: "idx_companyindustries_company")
+  @@index([industry_id], map: "idx_companyindustries_industry")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model companysite {
+  id              Int              @id @default(autoincrement())
+  company_id      Int
+  site_type       Int?
+  address1        String?          @db.VarChar(255)
+  address2        String?          @db.VarChar(255)
+  country_id      Int?
+  state_id        Int?
+  city            String?          @db.VarChar(100)
+  phone           String?          @db.VarChar(50)
+  site_web        String?          @db.VarChar(500)
+  site_job_board  String?          @db.VarChar(500)
+  is_headquarters Boolean          @default(false)
+  is_active       Boolean          @default(true)
+  employee_count  Int?
+  created_at      DateTime         @default(now()) @db.Timestamp(6)
+  updated_at      DateTime         @default(now()) @db.Timestamp(6)
+  postcode        String?          @db.VarChar(10)
+  shortname       String?          @db.VarChar
+  city_id         Int?
+  company         company          @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "companysite_companyid_fkey")
+  country         country?         @relation(fields: [country_id], references: [id], onUpdate: NoAction, map: "companysite_countryid_fkey")
+  companysitetype companysitetype? @relation(fields: [site_type], references: [id], onUpdate: NoAction, map: "companysite_sitetype_fkey")
+  state           state?           @relation(fields: [state_id], references: [id], onUpdate: NoAction, map: "companysite_stateid_fkey")
+  cities          cities?          @relation(fields: [city_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_companysite_city_id")
+  joblistings     joblistings[]
+  sitefeatures    sitefeatures[]
+
+  @@index([company_id], map: "idx_companysite_company")
+  @@index([country_id], map: "idx_companysite_country")
+  @@index([site_type], map: "idx_companysite_site_type")
+  @@index([state_id], map: "idx_companysite_state")
+  @@index([site_type], map: "idx_companysite_type")
+}
+
+model companysitetype {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique @db.VarChar(50)
+  description String?
+  is_active   Boolean       @default(true)
+  created_at  DateTime      @default(now()) @db.Timestamp(6)
+  companysite companysite[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model companytechnologies {
+  id                Int      @id @default(autoincrement())
+  company_id        Int
+  skill_id          Int
+  proficiency_level String?  @default("unknown") @db.VarChar(20)
+  years_experience  Int?
+  is_primary        Boolean  @default(false)
+  created_at        DateTime @default(now()) @db.Timestamp(6)
+  company           company  @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "companytechnologies_companyid_fkey")
+  skills            skills   @relation(fields: [skill_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "companytechnologies_skillid_fkey")
+
+  @@unique([company_id, skill_id], map: "unique_company_skill")
+  @@index([company_id], map: "idx_companytechnologies_company")
+  @@index([skill_id], map: "idx_companytechnologies_skill")
+}
+
+model country {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique @db.VarChar(100)
+  iso_code_2  String?       @db.Char(2)
+  iso_code_3  String?       @db.Char(3)
+  is_active   Boolean       @default(true)
+  created_at  DateTime      @default(now()) @db.Timestamp(6)
+  companysite companysite[]
+  state       state[]
+}
+
+model experience {
+  id          Int           @id(map: "experience_pk") @default(autoincrement())
+  name        String        @db.VarChar
+  is_active   Boolean       @default(true)
+  joblistings joblistings[]
+}
+
+model features {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique @db.VarChar(100)
+  description  String?
+  category     String?        @db.VarChar(50)
+  is_active    Boolean        @default(true)
+  created_at   DateTime       @default(now()) @db.Timestamp(6)
+  sitefeatures sitefeatures[]
+}
+
+model functions {
+  id                  Int                   @id @default(autoincrement())
+  name                String                @unique @db.VarChar(100)
+  description         String?
+  is_active           Boolean               @default(true)
+  created_at          DateTime              @default(now()) @db.Timestamp(6)
+  companyfunctions    companyfunctions[]
+  functionspecialties functionspecialties[]
+  joblistings         joblistings[]
+}
+
+model functionspecialties {
+  id          Int           @id @default(autoincrement())
+  function_id Int
+  specialty   String        @db.VarChar(100)
+  description String?
+  is_active   Boolean       @default(true)
+  created_at  DateTime      @default(now()) @db.Timestamp(6)
+  functions   functions     @relation(fields: [function_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "functionspecialties_functionid_fkey")
+  joblistings joblistings[]
+
+  @@unique([function_id, specialty], map: "unique_function_specialty")
+  @@index([function_id], map: "idx_functionspecialties_function")
+}
+
+model industries {
+  id                Int                 @id @default(autoincrement())
+  name              String              @unique @db.VarChar(100)
+  description       String?
+  is_active         Boolean             @default(true)
+  created_at        DateTime            @default(now()) @db.Timestamp(6)
+  sort_order        Int?
+  companyindustries companyindustries[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model joblistings {
+  id                        Int                  @id @default(autoincrement())
+  company_id                Int
+  company_site_id           Int?
+  job_title                 String               @db.VarChar(500)
+  posting_id                String?              @db.VarChar(255)
+  posting_url               String?              @db.VarChar(1000)
+  date_posted               DateTime?            @db.Date
+  function                  Int?
+  specialty                 Int?
+  minimum_salary            Decimal?             @db.Decimal(10, 2)
+  maximum_salary            Decimal?             @db.Decimal(10, 2)
+  date_closed               DateTime?            @db.Date
+  perpetual                 Boolean              @default(false)
+  approved                  Boolean              @default(true)
+  job_status_id             Int
+  job_description           String?
+  source_job_board          String?              @db.VarChar(100)
+  external_job_id           String?              @db.VarChar(255)
+  scraping_hash             String?              @db.VarChar(64)
+  created_at                DateTime             @default(now()) @db.Timestamp(6)
+  updated_at                DateTime             @default(now()) @db.Timestamp(6)
+  last_scraped              DateTime?            @default(now()) @db.Timestamp(6)
+  pay_frequency             String?              @db.VarChar(50)
+  office_location_id        Int?
+  job_type_id               Int?
+  experience_id             Int?
+  extraction_confidence     Decimal?             @default(1.0) @db.Decimal(3, 2)
+  extraction_model          String?              @default("claude-3-sonnet") @db.VarChar(50)
+  extraction_timestamp      DateTime?            @db.Timestamptz(6)
+  extraction_version        String?              @default("2.0") @db.VarChar(10)
+  raw_text_length           Int?
+  is_temporary              Boolean?             @default(false)
+  is_seasonal               Boolean?             @default(false)
+  is_volunteer              Boolean?             @default(false)
+  is_individual_contributor Boolean?             @default(false)
+  is_people_manager         Boolean?             @default(false)
+  experience_years_min      Int?
+  experience_years_max      Int?
+  associate_degree          String?              @default("not_mentioned") @db.VarChar(20)
+  bachelors_degree          String?              @default("not_mentioned") @db.VarChar(20)
+  masters_degree            String?              @default("not_mentioned") @db.VarChar(20)
+  doctorate_degree          String?              @default("not_mentioned") @db.VarChar(20)
+  first_shift               Boolean?             @default(false)
+  second_shift              Boolean?             @default(false)
+  third_shift               Boolean?             @default(false)
+  rotating_shift            Boolean?             @default(false)
+  flexible_schedule         Boolean?             @default(false)
+  weekends_required         String?              @default("not_mentioned") @db.VarChar(20)
+  evenings_required         String?              @default("not_mentioned") @db.VarChar(20)
+  holidays_required         String?              @default("not_mentioned") @db.VarChar(20)
+  travel_requirements       String?              @default("not_mentioned") @db.VarChar(20)
+  travel_percentage         Int?
+  city_id                   Int?
+  cities                    cities?              @relation(fields: [city_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_joblistings_city")
+  experience                experience?          @relation(fields: [experience_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_joblistings_experience")
+  jobtype                   jobtype?             @relation(fields: [job_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_joblistings_jobtype")
+  officelocations           officelocations?     @relation(fields: [office_location_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_joblistings_officelocation")
+  company                   company              @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "joblistings_companyid_fkey")
+  companysite               companysite?         @relation(fields: [company_site_id], references: [id], onUpdate: NoAction, map: "joblistings_companysiteid_fkey")
+  functions                 functions?           @relation(fields: [function], references: [id], onUpdate: NoAction)
+  jobstatus                 jobstatus            @relation(fields: [job_status_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "joblistings_jobstatusid_fkey")
+  functionspecialties       functionspecialties? @relation(fields: [specialty], references: [id], onUpdate: NoAction)
+  joblistingskills          joblistingskills[]
+  jobskills                 jobskills[]
+
+  @@index([approved], map: "idx_joblistings_approved")
+  @@index([company_id], map: "idx_joblistings_company")
+  @@index([company_id, job_status_id], map: "idx_joblistings_company_status")
+  @@index([date_posted, job_status_id], map: "idx_joblistings_date_status")
+  @@index([experience_id], map: "idx_joblistings_experience")
+  @@index([extraction_timestamp], map: "idx_joblistings_extraction_timestamp")
+  @@index([function], map: "idx_joblistings_function")
+  @@index([function, job_status_id], map: "idx_joblistings_function_status")
+  @@index([scraping_hash], map: "idx_joblistings_hash")
+  @@index([last_scraped], map: "idx_joblistings_last_scraped")
+  @@index([date_posted(sort: Desc)], map: "idx_joblistings_posted_date")
+  @@index([company_site_id], map: "idx_joblistings_site")
+  @@index([specialty], map: "idx_joblistings_specialty")
+  @@index([job_status_id], map: "idx_joblistings_status")
+  @@index([travel_requirements], map: "idx_joblistings_travel")
+  @@index([posting_url], map: "idx_joblistings_url")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model joblistingskills {
+  id                Int         @id @default(autoincrement())
+  job_listing_id    Int
+  skill_id          Int
+  required_skill    Boolean     @default(false)
+  preferred_skill   Boolean     @default(false)
+  years_required    Int?
+  proficiency_level String?     @default("unknown") @db.VarChar(20)
+  created_at        DateTime    @default(now()) @db.Timestamp(6)
+  joblistings       joblistings @relation(fields: [job_listing_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "joblistingskills_joblistingid_fkey")
+  skills            skills      @relation(fields: [skill_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "joblistingskills_skillid_fkey")
+
+  @@unique([job_listing_id, skill_id], map: "unique_job_skill")
+  @@index([job_listing_id], map: "idx_joblistingskills_job")
+  @@index([skill_id], map: "idx_joblistingskills_skill")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model jobskills {
+  id                Int         @id @default(autoincrement())
+  job_listing_id    Int
+  skill_name        String      @db.VarChar(100)
+  skill_category    String      @default("tools") @db.VarChar(50)
+  confidence_score  Decimal?    @db.Decimal(3, 2)
+  extraction_method String?     @default("ai") @db.VarChar(20)
+  created_at        DateTime    @default(now()) @db.Timestamp(6)
+  joblistings       joblistings @relation(fields: [job_listing_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([job_listing_id, skill_name], map: "unique_job_ai_skill")
+  @@index([skill_category], map: "idx_jobskills_category")
+  @@index([job_listing_id], map: "idx_jobskills_job_id")
+  @@index([skill_name], map: "idx_jobskills_name")
+}
+
+model jobstatus {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique @db.VarChar(50)
+  description String?
+  is_active   Boolean       @default(true)
+  created_at  DateTime      @default(now()) @db.Timestamp(6)
+  joblistings joblistings[]
+}
+
+model jobtype {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique @db.VarChar(50)
+  created_at  DateTime?     @default(now()) @db.Timestamp(6)
+  is_active   Boolean       @default(true)
+  joblistings joblistings[]
+}
+
+model notes {
+  id         Int      @id @default(autoincrement())
+  company_id Int
+  shortname  String?  @db.VarChar(100)
+  fullnote   String?
+  date       DateTime @db.Date
+  created_by String?  @db.VarChar(100)
+  note_type  String?  @default("general") @db.VarChar(50)
+  is_private Boolean  @default(false)
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+  company    company  @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "notes_companyid_fkey")
+}
+
+model officelocations {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique @db.VarChar(50)
+  created_at  DateTime?     @default(now()) @db.Timestamp(6)
+  is_active   Boolean       @default(true)
+  joblistings joblistings[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model scrapinglog {
+  id               Int       @id @default(autoincrement())
+  job_board        String    @db.VarChar(100)
+  company_id       Int?
+  jobs_found       Int       @default(0)
+  jobs_added       Int       @default(0)
+  jobs_updated     Int       @default(0)
+  jobs_skipped     Int       @default(0)
+  errors           String?
+  status           String    @default("running") @db.VarChar(20)
+  started_at       DateTime  @default(now()) @db.Timestamp(6)
+  completed_at     DateTime? @db.Timestamp(6)
+  duration_seconds Int?
+  scraper_version  String?   @db.VarChar(50)
+  ai_model_used    String?   @db.VarChar(50)
+  notes            String?
+  company          company?  @relation(fields: [company_id], references: [id], onUpdate: NoAction)
+
+  @@index([company_id], map: "idx_scrapinglog_company")
+  @@index([job_board], map: "idx_scrapinglog_job_board")
+  @@index([started_at(sort: Desc)], map: "idx_scrapinglog_started")
+  @@index([status], map: "idx_scrapinglog_status")
+}
+
+model sitefeatures {
+  id          Int         @id @default(autoincrement())
+  site_id     Int
+  feature_id  Int
+  created_at  DateTime    @default(now()) @db.Timestamp(6)
+  features    features    @relation(fields: [feature_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "sitefeatures_featureid_fkey")
+  companysite companysite @relation(fields: [site_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "sitefeatures_siteid_fkey")
+
+  @@unique([site_id, feature_id], map: "unique_site_feature")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model skill_categories {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique @db.VarChar(100)
+  active     Boolean  @default(true)
+  sort_order Int      @default(0)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+  skills     skills[]
+
+  @@index([active], map: "idx_skill_categories_active")
+  @@index([sort_order], map: "idx_skill_categories_sort_order")
+}
+
+model skills {
+  id                  Int                   @id @default(autoincrement())
+  name                String                @unique @db.VarChar(100)
+  description         String?
+  is_active           Boolean               @default(true)
+  created_at          DateTime              @default(now()) @db.Timestamp(6)
+  skill_category_id   Int?
+  certification_id    Int?
+  companytechnologies companytechnologies[]
+  joblistingskills    joblistingskills[]
+  skill_categories    skill_categories?     @relation(fields: [skill_category_id], references: [id], onUpdate: NoAction, map: "fk_skills_skill_category")
+  certifications      certifications?       @relation(fields: [certification_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([skill_category_id], map: "idx_skills_category")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model social_media_types {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique @db.VarChar(50)
+  base_url        String            @db.VarChar(255)
+  created_at      DateTime          @default(now()) @db.Timestamptz(6)
+  company_socials company_socials[]
+
+  @@index([name], map: "idx_social_media_types_name")
+}
+
+model state {
+  id           Int           @id @default(autoincrement())
+  country_id   Int
+  name         String        @db.VarChar(100)
+  abbreviation String?       @db.VarChar(10)
+  is_active    Boolean       @default(true)
+  created_at   DateTime      @default(now()) @db.Timestamp(6)
+  companysite  companysite[]
+  country      country       @relation(fields: [country_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "state_countryid_fkey")
+
+  @@unique([country_id, name], map: "unique_state_per_country")
+  @@index([country_id], map: "idx_state_country")
+}
