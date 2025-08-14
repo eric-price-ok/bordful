@@ -76,6 +76,8 @@ export interface Job {
     status: "active" | "inactive";
     salary: Salary | null;
     type: string;
+    featured: boolean;
+    workplace_type: string;
 }
 
 export function formatSalary(salary: Salary | null): string {
@@ -152,6 +154,11 @@ export async function getJobs() {
                     select: {
                         name: true
                     }
+                },
+                officelocations: {
+                    select: {
+                        name: true
+                    }
                 }
             },
             orderBy: {
@@ -165,6 +172,7 @@ export async function getJobs() {
             title: job.job_title,
             company: job.company.common_name,
             type: job.jobtype?.name || "Not specified",
+            workplace_type: job.officelocations?.name || "Not specified",
             salary: job.minimum_salary ? {
                 min: Number(job.minimum_salary),
                 max: job.maximum_salary ? Number(job.maximum_salary) : null,
@@ -178,8 +186,7 @@ export async function getJobs() {
             status: "active",
             career_level: ["NotSpecified"],
             visa_sponsorship: "Not specified",
-            featured: false,
-            workplace_type: "Not specified",
+            featured: job.featured || false,
             remote_region: null,
             timezone_requirements: null,
             workplace_city: null,

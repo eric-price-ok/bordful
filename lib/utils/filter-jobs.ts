@@ -1,4 +1,4 @@
-import { Job } from "@/lib/db/airtable";
+import { Job } from "@/lib/db/prisma";
 
 export function filterJobsBySearch(jobs: Job[], searchTerm: string): Job[] {
   if (!searchTerm) return jobs;

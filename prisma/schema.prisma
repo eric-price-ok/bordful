@@ -328,6 +328,7 @@ model joblistings {
   travel_requirements       String?              @default("not_mentioned") @db.VarChar(20)
   travel_percentage         Int?
   city_id                   Int?
+  featured                  Boolean?
   cities                    cities?              @relation(fields: [city_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_joblistings_city")
   experience                experience?          @relation(fields: [experience_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_joblistings_experience")
   jobtype                   jobtype?             @relation(fields: [job_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_joblistings_jobtype")

@@ -268,8 +268,8 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
       case "oldest":
         filtered.sort(
           (a, b) =>
-            new Date(a.posted_date).getTime() -
-            new Date(b.posted_date).getTime()
+            new Date(a.date_posted).getTime() -
+            new Date(b.date_posted).getTime()
         );
         break;
       case "salary":
@@ -286,8 +286,8 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
       default: // "newest"
         filtered.sort(
           (a, b) =>
-            new Date(b.posted_date).getTime() -
-            new Date(a.posted_date).getTime()
+            new Date(b.date_posted).getTime() -
+            new Date(a.date_posted).getTime()
         );
     }
 
@@ -307,13 +307,13 @@ function HomePageContent({ initialJobs }: { initialJobs: Job[] }) {
       switch (sortOrder) {
         case "newest":
           return (
-            new Date(b.posted_date).getTime() -
-            new Date(a.posted_date).getTime()
+            new Date(b.date_posted).getTime() -
+            new Date(a.date_posted).getTime()
           );
         case "oldest":
           return (
-            new Date(a.posted_date).getTime() -
-            new Date(b.posted_date).getTime()
+            new Date(a.date_posted).getTime() -
+            new Date(b.date_posted).getTime()
           );
         case "salary":
           const aSalary = a.salary ? normalizeAnnualSalary(a.salary) : 0;

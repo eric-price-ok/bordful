@@ -75,7 +75,7 @@ export function CompactJobCard({ job }: { job: Job }) {
             <>
               <span className="text-gray-300">•</span>
               <span className="whitespace-nowrap">
-                {formatSalary(job.salary, true)}
+                {formatSalary(job.salary)}
               </span>
             </>
           )}
