@@ -78,6 +78,7 @@ export interface Job {
     type: string;
     featured: boolean;
     workplace_type: string;
+    workplace_city: string | null;
 }
 
 export function formatSalary(salary: Salary | null): string {
@@ -159,6 +160,11 @@ export async function getJobs() {
                     select: {
                         name: true
                     }
+                },
+                cities: {  // Add this include
+                    select: {
+                        city_name: true
+                    }
                 }
             },
             orderBy: {
@@ -189,7 +195,7 @@ export async function getJobs() {
             featured: job.featured || false,
             remote_region: null,
             timezone_requirements: null,
-            workplace_city: null,
+            workplace_city: job.cities?.city_name || null,
             workplace_country: null,
             languages: []
         }))

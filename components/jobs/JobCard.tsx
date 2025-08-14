@@ -15,22 +15,16 @@ export function JobCard({ job }: { job: Job }) {
     job.salary && (job.salary.min !== null || job.salary.max !== null);
 
   // Format location based on workplace type
-  const location =
-    job.workplace_type === "Remote"
-      ? job.remote_region
-        ? `Remote (${job.remote_region})`
-        : null
-      : job.workplace_type === "Hybrid"
-      ? [
-          job.workplace_city,
-          job.workplace_country,
-          job.remote_region ? `Hybrid (${job.remote_region})` : null,
-        ]
-          .filter(Boolean)
-          .join(", ") || null
-      : [job.workplace_city, job.workplace_country]
-          .filter(Boolean)
-          .join(", ") || null;
+    const location =
+        job.workplace_type === "Remote"
+            ? job.workplace_city
+                ? `Remote (${job.workplace_city})`
+                : "Remote"
+            : job.workplace_type === "Hybrid"
+                ? job.workplace_city
+                    ? `Hybrid (${job.workplace_city})`
+                    : "Hybrid"
+                : job.workplace_city || null;
 
   // Check if job was posted within the last 48 hours
   const isNew = () => {
@@ -77,7 +71,7 @@ export function JobCard({ job }: { job: Job }) {
               <>
                 <span>•</span>
                 <span className="whitespace-nowrap">
-                  {formatSalary(job.salary, true)}
+                  {formatSalary(job.salary)}
                 </span>
               </>
             )}
