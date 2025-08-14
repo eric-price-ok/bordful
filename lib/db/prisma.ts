@@ -79,6 +79,8 @@ export interface Job {
     featured: boolean;
     workplace_type: string;
     workplace_city: string | null;
+    function?: number;
+    experience_id?: number;
 }
 
 export function formatSalary(salary: Salary | null): string {

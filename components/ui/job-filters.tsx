@@ -330,7 +330,7 @@ export function JobFilters({
   // Predefined lists
   const initialLevels: CareerLevel[] = [
     "Intern",
-    "EntryLevel",
+    "Entry Level",
     "Trained",
     "Proficient",
     "Senior",
@@ -378,8 +378,6 @@ export function JobFilters({
       }, {} as Record<CareerLevel, number>),
 
       remote: jobs.filter((job) => job.workplace_type === "Remote").length,
-
-      visa: jobs.filter((job) => job.visa_sponsorship === "Yes").length,
 
       salary: jobs.reduce(
         (acc, job) => {
@@ -543,17 +541,6 @@ export function JobFilters({
               />
             ))}
           </div>
-        </div>
-
-        {/* Visa Sponsorship */}
-        <div className="space-y-4">
-          <h3 className="text-md font-semibold">Visa Sponsorship</h3>
-          <SwitchItem
-            id="visa-sponsorship"
-            checked={visaParam}
-            onCheckedChange={handleVisaChange}
-            count={counts.visa || 0}
-          />
         </div>
 
         {/* Languages */}
